@@ -4,6 +4,9 @@ import {
 } from "@pulumi/policy";
 import * as aws from "@pulumi/aws";
 
+/**
+ * @description Checks that any instance do not have public IP addresses.
+ */
 export const awsEc2InstanceNoPublicIp: ResourceValidationPolicy = {
     name: "disallow-public-ips-on-instance",
     description: "Checks that any instance do not have public IP addresses.",
@@ -15,6 +18,9 @@ export const awsEc2InstanceNoPublicIp: ResourceValidationPolicy = {
     }),
 };
 
+/**
+ * @description Checks that any EC2 instance does not have unencrypted root volumes.
+ */
 export const awsEc2InstanceNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "disallow-unencrypted-root-volume-on-instance",
     description: "Checks that any EC2 instance does not have unencrypted root volumes.",
@@ -26,6 +32,9 @@ export const awsEc2InstanceNoUnencryptedRootBlockDevice: ResourceValidationPolic
     }),
 };
 
+/**
+ * @description Checks that any EC2 instances do not have unencrypted volumes.
+ */
 export const awsEc2InstanceNoUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "disallow-unencrypted-volumes-on-launch-config",
     description: "Checks that any EC2 instances do not have unencrypted volumes.",

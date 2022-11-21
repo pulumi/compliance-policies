@@ -4,6 +4,9 @@ import {
 } from "@pulumi/policy";
 import * as aws from "@pulumi/aws";
 
+/**
+ * @description Checks that all security groups have a description.
+ */
 export const awsEc2SecurityGroupMissingDescription: ResourceValidationPolicy = {
     name: "add-desciption-to-security-group",
     description: "Checks that all security groups have a description.",
@@ -15,6 +18,9 @@ export const awsEc2SecurityGroupMissingDescription: ResourceValidationPolicy = {
     }),
 };
 
+/**
+ * @desciption Check that any security group doesn't allow inbound HTTP traffic.
+ */
 export const awsEc2SecurityGroupNoInboundHttpTraffic: ResourceValidationPolicy = {
     name: "disallow-inbound-http-traffic",
     description: "Check that any security group doesn't allow inbound HTTP traffic.",

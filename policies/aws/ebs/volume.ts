@@ -4,6 +4,9 @@ import {
 } from "@pulumi/policy";
 import * as aws from "@pulumi/aws";
 
+/**
+ * @description Checks that no EBS is unencrypted.
+ */
 export const awsEbsVolumeNoUnencryptedVolume: ResourceValidationPolicy = {
     name: "disallow-unencrypted-volume",
     description: "Checks that no EBS is unencrypted.",
@@ -15,7 +18,10 @@ export const awsEbsVolumeNoUnencryptedVolume: ResourceValidationPolicy = {
     }),
 };
 
-export const awsEbsVolumeWithCustomerManagedKey: ResourceValidationPolicy = {
+/**
+ * @description Check that encrypted EBS volume uses a customer-manager KMS key.
+ */
+ export const awsEbsVolumeWithCustomerManagedKey: ResourceValidationPolicy = {
     name: "disallow-volume-without-customer-managed-key",
     description: "Check that encrypted EBS volume uses a customer-manager KMS key.",
     validateResource: validateResourceOfType(aws.ebs.Volume, (v, args, reportViolation) => {

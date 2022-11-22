@@ -19,7 +19,7 @@ export const awsEbsVolumeNoUnencryptedVolume: ResourceValidationPolicy = {
 };
 
 /**
- * @description Check that encrypted EBS volume uses a customer-manager KMS key.
+ * @description Check that encrypted EBS volume uses a customer-managed KMS key.
  */
  export const awsEbsVolumeWithCustomerManagedKey: ResourceValidationPolicy = {
     name: "disallow-volume-without-customer-managed-key",

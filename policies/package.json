@@ -1,5 +1,5 @@
 {
-    "name": "pulumi-policies",
+    "name": "@bobcatt/pulumi-policies",
     "version": "0.0.1",
     "dependencies": {
         "@pulumi/aws": "^4.0.0",

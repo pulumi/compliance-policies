@@ -8,7 +8,7 @@ import * as aws from "@pulumi/aws";
 /**
  * @description Checks that any launch configuration do not have public IP addresses.
  */
-export const awsEc2LaunchConfigurationNoPublicIp: ResourceValidationPolicy = {
+export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
     name: "disallow-public-ips-on-launch-config",
     description: "Checks that any launch configuration do not have public IP addresses.",
     enforcementLevel: "advisory",
@@ -22,7 +22,7 @@ export const awsEc2LaunchConfigurationNoPublicIp: ResourceValidationPolicy = {
 /**
  * @description Checks that any launch configuration do not have unencrypted root volumes.
  */
- export const awsEc2LaunchConfigurationNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
+ export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "disallow-unencrypted-root-volume-on-launch-config",
     description: "Checks that any launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
@@ -36,7 +36,7 @@ export const awsEc2LaunchConfigurationNoPublicIp: ResourceValidationPolicy = {
 /**
  * @description Checks that any launch configuration do not have unencrypted volumes.
  */
- export const awsEc2LaunchConfigurationNoUnencryptedBlockDevice: ResourceValidationPolicy = {
+ export const launchConfigurationNoUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "disallow-unencrypted-volumes-on-launch-config",
     description: "Checks that any launch configuration do not have unencrypted volumes.",
     enforcementLevel: "advisory",

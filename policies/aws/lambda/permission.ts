@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that lambda function permissions have a source arn specified.
+ * Checks that lambda function permissions have a source arn specified.
  */
 export const functionSourceArn: ResourceValidationPolicy = {
     name: "aws-lambda-permission-disallow-permission-without-source-arn",

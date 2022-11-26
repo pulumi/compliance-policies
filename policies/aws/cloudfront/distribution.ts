@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that any CloudFront distribution has logging enabled.
+ * Checks that any CloudFront distribution has logging enabled.
  */
 export const distributionLoggingEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-logging",
@@ -33,7 +33,7 @@ export const distributionLoggingEnabled: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that any CloudFront distribution has a WAF ACL associated.
+ * Checks that any CloudFront distribution has a WAF ACL associated.
  */
 export const distributionWAFConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-waf-acl",
@@ -47,7 +47,7 @@ export const distributionWAFConfigured: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that CloudFront distributions only allow encypted ingress traffic.
+ * Checks that CloudFront distributions only allow encypted ingress traffic.
  */
 export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-unencrypted-traffic",
@@ -64,7 +64,7 @@ export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that CloudFront distributions uses secure/modern TLS encryption.
+ * Checks that CloudFront distributions uses secure/modern TLS encryption.
  */
 export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-secure-tls-configured",
@@ -78,7 +78,7 @@ export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that CloudFront distributions communicate with custom origins using TLS encryption.
+ * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
  */
 export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-enabled",
@@ -94,7 +94,7 @@ export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.
+ * Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.
  */
 export const distributionOriginSecureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-configured",

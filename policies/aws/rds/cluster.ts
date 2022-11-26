@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that backup retention policy is adequate.
+ * Checks that backup retention policy is adequate.
  */
 export const clusterBackupRetention: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-low-backup-retention-period",
@@ -33,7 +33,7 @@ export const clusterBackupRetention: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that RDS storage is encrypted.
+ * Checks that RDS storage is encrypted.
  */
 export const clusterStorageEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-enabled",
@@ -47,7 +47,7 @@ export const clusterStorageEncrypted: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that storage is encrypted with a customer managed key.
+ * Checks that storage is encrypted with a customer managed key.
  */
 export const clusterStorageCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-with-customer-managed-key",

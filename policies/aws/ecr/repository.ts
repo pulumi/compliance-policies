@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that ECR repositories have scan on push enabled.
+ * Checks that ECR repositories have scan on push enabled.
  */
 export const repositoryImageScans: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-image-scans",
@@ -33,7 +33,7 @@ export const repositoryImageScans: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that ECR repositories have immutable images enabled.
+ * Checks that ECR repositories have immutable images enabled.
  */
 export const repositoryImmutableImage: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-immutable-image",
@@ -47,7 +47,7 @@ export const repositoryImmutableImage: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that no ECR repositories is unencrypted.
+ * Checks that no ECR repositories is unencrypted.
  */
 export const repositoryNoUnencryptedRepository: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-unencrypted-repository",
@@ -61,7 +61,7 @@ export const repositoryNoUnencryptedRepository: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that ECR repositories use a customer-manager KMS key.
+ * Checks that ECR repositories use a customer-manager KMS key.
  */
 export const repositoryCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repository-without-customer-managed-key",

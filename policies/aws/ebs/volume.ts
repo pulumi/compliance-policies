@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that no EBS is unencrypted.
+ * Checks that no EBS is unencrypted.
  */
 export const volumeNoUnencryptedVolume: ResourceValidationPolicy = {
     name: "aws-ebs-volume-disallow-unencrypted-volume",
@@ -33,7 +33,7 @@ export const volumeNoUnencryptedVolume: ResourceValidationPolicy = {
 };
 
 /**
- * @description Check that encrypted EBS volume uses a customer-managed KMS key.
+ * Check that encrypted EBS volume uses a customer-managed KMS key.
  */
 export const volumeWithCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-ebs-volume-disallow-volume-without-customer-managed-key",

@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that all security groups have a description.
+ * Checks that all security groups have a description.
  */
 export const securityGroupMissingDescription: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-missing-desciption",
@@ -52,7 +52,7 @@ export const securityGroupProhibitInboundHttpTraffic: ResourceValidationPolicy =
 };
 
 /**
- * @description Check that any security group doesn't allow inbound traffic from the Internet.
+ * Check that any security group doesn't allow inbound traffic from the Internet.
  */
 export const securityGroupProhibitPublicInternetAccess: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-public-internet",

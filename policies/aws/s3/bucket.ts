@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Prohibits setting the publicRead or publicReadWrite permission on AWS S3 buckets.
+ * Prohibits setting the publicRead or publicReadWrite permission on AWS S3 buckets.
  */
 export const bucketNoPublicRead: ResourceValidationPolicy = {
     name: "aws-s3-bucket-no-public-read",
@@ -35,7 +35,7 @@ export const bucketNoPublicRead: ResourceValidationPolicy = {
 };
 
 /**
- * @description Encourages use of cross-region replication for S3 buckets.
+ * Encourages use of cross-region replication for S3 buckets.
  */
 export const bucketReplicationEnabled: ResourceValidationPolicy = {
     name: "aws-s3-bucket-replication-enabled",

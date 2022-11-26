@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that backup retention policy is adequate.
+ * Checks that backup retention policy is adequate.
  */
 export const instanceBackupRetention: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-low-backup-retention-period",
@@ -44,7 +44,7 @@ export const instanceClassicResources: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that RDS has performance insights enabled.
+ * Checks that RDS has performance insights enabled.
  */
 export const instancePerformanceInsights: ResourceValidationPolicy = {
     name: "aws-rds-instance-performance-insights-enabled",
@@ -58,7 +58,7 @@ export const instancePerformanceInsights: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that performance insights in RDS is encrypted.
+ * Checks that performance insights in RDS is encrypted.
  */
 export const instancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-instance-performance-insights-encrypted",
@@ -72,7 +72,7 @@ export const instancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that public access is not enabled on RDS Instances.
+ * Checks that public access is not enabled on RDS Instances.
  */
 export const instancePublicAccess: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-public-access",
@@ -86,7 +86,7 @@ export const instancePublicAccess: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that RDS storage is encrypted.
+ * Checks that RDS storage is encrypted.
  */
 export const instanceStorageEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-enabled",
@@ -100,7 +100,7 @@ export const instanceStorageEncrypted: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that storage is encrypted with a customer managed key.
+ * Checks that storage is encrypted with a customer managed key.
  */
 export const instanceStorageCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-with-customer-managed-key",

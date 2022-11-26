@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that any launch template do not have public IP addresses.
+ * Checks that any launch template do not have public IP addresses.
  */
 export const launchTemplateNoPublicIp: ResourceValidationPolicy = {
     name: "aws-ec2-launch-template-disallow-public-ips",
@@ -35,7 +35,7 @@ export const launchTemplateNoPublicIp: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that any launch templates do not have unencrypted root volumes.
+ * Checks that any launch templates do not have unencrypted root volumes.
  */
 export const launchTemplateNoUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-template-unencrypted-volume",

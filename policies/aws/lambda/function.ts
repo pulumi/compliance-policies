@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that Lambda functions have tracing enabled.
+ * Checks that Lambda functions have tracing enabled.
  */
 export const functionTracingEnabled: ResourceValidationPolicy = {
     name: "aws-lambda-function-disallow-lambda-without-tracing",

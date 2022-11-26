@@ -19,7 +19,7 @@ import {
 } from "@pulumi/policy";
 
 /**
- * @description Checks that RDS Cluster has performance insights enabled.
+ * Checks that RDS Cluster has performance insights enabled.
  */
 export const clusterInstancePerformanceInsights: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-performance-insights-enabled",
@@ -33,7 +33,7 @@ export const clusterInstancePerformanceInsights: ResourceValidationPolicy = {
 };
 
 /**
- * @description Checks that performance insights in RDS Cluster is encrypted.
+ * Checks that performance insights in RDS Cluster is encrypted.
  */
 export const clusterInstancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-performance-insights-encrypted",
@@ -47,7 +47,7 @@ export const clusterInstancePerformanceInsightsEncrypted: ResourceValidationPoli
 };
 
 /**
- * @description Checks that public access is not enabled on RDS Instances.
+ * Checks that public access is not enabled on RDS Instances.
  */
 export const clusterInstancePublicAccess: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-disallow-public-access",

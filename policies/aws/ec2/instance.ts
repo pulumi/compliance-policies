@@ -8,7 +8,7 @@ import * as aws from "@pulumi/aws";
  * @description Checks that any instance do not have public IP addresses.
  */
 export const instanceNoPublicIp: ResourceValidationPolicy = {
-    name: "disallow-public-ips-on-instance",
+    name: "aws-ec2-instance-disallow-public-ips",
     description: "Checks that any instance do not have public IP addresses.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
@@ -22,7 +22,7 @@ export const instanceNoPublicIp: ResourceValidationPolicy = {
  * @description Checks that any EC2 instance does not have unencrypted root volumes.
  */
 export const instanceNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
-    name: "disallow-unencrypted-root-volume-on-instance",
+    name: "aws-ec2-instance-disallow-unencrypted-root-volume",
     description: "Checks that any EC2 instance does not have unencrypted root volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {
@@ -36,7 +36,7 @@ export const instanceNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
  * @description Checks that any EC2 instances do not have unencrypted volumes.
  */
 export const instanceNoUnencryptedBlockDevice: ResourceValidationPolicy = {
-    name: "disallow-unencrypted-volumes-on-launch-config",
+    name: "aws-ec2-instance-disallow-unencrypted-volumes",
     description: "Checks that any EC2 instances do not have unencrypted volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {

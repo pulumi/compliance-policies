@@ -23,7 +23,7 @@ export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
  * @description Checks that any launch configuration do not have unencrypted root volumes.
  */
  export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
-    name: "disallow-unencrypted-root-volume-on-launch-config",
+    name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
     description: "Checks that any launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
@@ -37,7 +37,7 @@ export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
  * @description Checks that any launch configuration do not have unencrypted volumes.
  */
  export const launchConfigurationNoUnencryptedBlockDevice: ResourceValidationPolicy = {
-    name: "disallow-unencrypted-volumes-on-launch-config",
+    name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
     description: "Checks that any launch configuration do not have unencrypted volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {

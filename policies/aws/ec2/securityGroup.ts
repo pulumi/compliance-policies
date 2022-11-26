@@ -8,7 +8,7 @@ import * as aws from "@pulumi/aws";
  * @description Checks that all security groups have a description.
  */
 export const securityGroupMissingDescription: ResourceValidationPolicy = {
-    name: "add-desciption-to-security-group",
+    name: "aws-ec2-security-group-missing-desciption",
     description: "Checks that all security groups have a description.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {
@@ -22,7 +22,7 @@ export const securityGroupMissingDescription: ResourceValidationPolicy = {
  * @desciption Check that any security group doesn't allow inbound HTTP traffic.
  */
 export const securityGroupNoInboundHttpTraffic: ResourceValidationPolicy = {
-    name: "disallow-inbound-http-traffic",
+    name: "aws-ec2-security-group-disallow-inbound-http-traffic",
     description: "Check that any security group doesn't allow inbound HTTP traffic.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {

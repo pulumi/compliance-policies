@@ -25,8 +25,7 @@ export const repositoryImageScans: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-image-scans",
     description: "Checks that ECR repositories have scan on push enabled.",
     enforcementLevel: "advisory",
-    validateResource:
-    validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+    validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
         if (!repo.imageScanningConfiguration?.scanOnPush) {
             reportViolation("ECR image scanning on push should be enabled.");
         }
@@ -40,10 +39,42 @@ export const repositoryImmutableImage: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-immutable-image",
     description: "Checks that ECR repositories have immutable images enabled.",
     enforcementLevel: "advisory",
-    validateResource:
-    validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+    validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
         if (repo.imageTagMutability !== "IMMUTABLE") {
             reportViolation("ECR repositories should have immutable images");
         }
+    }),
+};
+
+/**
+ * @description Checks that no ECR repositories is unencrypted.
+ */
+export const repositoryNoUnencryptedRepository: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-disallow-unencrypted-repository",
+    description: "Checks that no ECR repositories is unencrypted.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        if (repo.encryptionConfigurations === undefined) {
+            reportViolation("ECR repositories should be encrypted.");
+        }
+    }),
+};
+
+/**
+ * @description Checks that ECR repositories use a customer-manager KMS key.
+ */
+export const repositoryCustomerManagedKey: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-disallow-repository-without-customer-managed-key",
+    description: "Checks that ECR repositories use a customer-manager KMS key.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        repo.encryptionConfigurations?.forEach((encryptionConfiguration) => {
+            if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
+                reportViolation("ECR repositories should be encrypted with a customer-managed KMS key.");
+            }
+            if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
+                reportViolation("ECR repositories should be encrypted with a customer-managed KMS key.");
+            }
+        });
     }),
 };

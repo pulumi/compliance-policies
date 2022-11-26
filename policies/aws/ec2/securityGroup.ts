@@ -1,8 +1,22 @@
+// Copyright 2016-2022, Pulumi Corporation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import * as aws from "@pulumi/aws";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import * as aws from "@pulumi/aws";
 
 /**
  * @description Checks that all security groups have a description.
@@ -27,10 +41,10 @@ export const securityGroupNoInboundHttpTraffic: ResourceValidationPolicy = {
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {
         sg.ingress?.forEach((ingress) => {
-            if (ingress.protocol.toLowerCase() == "tcp" && (ingress.fromPort == 80 || ingress.toPort == 80)) {
+            if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {
                 reportViolation("A security group ingress rule allows inbound HTTP traffic.");
             }
-            if (ingress.protocol.toLowerCase() == "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
+            if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
                 reportViolation("A security group ingress rule allows inbound HTTP traffic.");
             }
         });

@@ -35,7 +35,7 @@ export const securityGroupMissingDescription: ResourceValidationPolicy = {
 /**
  * @desciption Check that any security group doesn't allow inbound HTTP traffic.
  */
-export const securityGroupNoInboundHttpTraffic: ResourceValidationPolicy = {
+export const securityGroupProhibitInboundHttpTraffic: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-inbound-http-traffic",
     description: "Check that any security group doesn't allow inbound HTTP traffic.",
     enforcementLevel: "advisory",
@@ -48,5 +48,22 @@ export const securityGroupNoInboundHttpTraffic: ResourceValidationPolicy = {
                 reportViolation("A security group ingress rule allows inbound HTTP traffic.");
             }
         });
+    }),
+};
+
+/**
+ * @description Check that any security group doesn't allow inbound traffic from the Internet.
+ */
+export const securityGroupProhibitPublicInternetAccess: ResourceValidationPolicy = {
+    name: "aws-ec2-security-group-disallow-public-internet",
+    description: "Check that any security group doesn't allow ingress traffic from the Internet.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (group, _, reportViolation) => {
+        if (group.ingress?.some(ingressRule => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
+            reportViolation("Security groups must not permit ingress traffic from the public internet (0.0.0.0/0).");
+        }
+        if (group.ingress?.some(ingressRule => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
+            reportViolation("Security groups must not permit ingress traffic from the public internet (::/0).");
+        }
     }),
 };

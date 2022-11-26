@@ -1,6 +1,6 @@
 {
     "name": "@bobcatt/pulumi-policies",
-    "version": "0.0.6",
+    "version": "${VERSION}",
     "license": "Apache-2.0",
     "dependencies": {
         "@pulumi/aws": "^5.0.0",

@@ -13,4 +13,7 @@
 // limitations under the License.
 
 // The version that the @pulumi/pulumi-policies package was built as.
+/**
+ * version of these Pulumi policies
+ */
 export const version = "${VERSION}";

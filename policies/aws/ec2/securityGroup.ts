@@ -33,7 +33,7 @@ export const securityGroupMissingDescription: ResourceValidationPolicy = {
 };
 
 /**
- * @desciption Check that any security group doesn't allow inbound HTTP traffic.
+ * Check that any security group doesn't allow inbound HTTP traffic.
  */
 export const securityGroupProhibitInboundHttpTraffic: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-inbound-http-traffic",

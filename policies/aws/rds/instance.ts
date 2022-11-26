@@ -32,6 +32,9 @@ export const instanceBackupRetention: ResourceValidationPolicy = {
     }),
 };
 
+/**
+ * Checks that no RDS classic resources are created.
+ */
 export const instanceClassicResources: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-classic-resources",
     description: "Checks that no RDS classic resources are created.",

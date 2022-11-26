@@ -12,12 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as cloudfront from "./cloudfront";
-import * as ebs from "./ebs";
-import * as ec2 from "./ec2";
-import * as ecr from "./ecr";
-import * as lambda from "./lambda";
-import * as rds from "./rds";
-import * as s3 from "./s3";
-
-export { cloudfront, ebs, ec2, ecr, lambda, rds, s3 };
+export * from "./distribution";

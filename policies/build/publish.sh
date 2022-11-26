@@ -9,7 +9,8 @@ if [ ! -f "./bin/index.js" ]; then
     exit 1
 fi
 
-node $(dirname $0)/promote.js ${@:2} < ./package.json > ./bin/package.json
+# not sure what this does, so commenting out for now
+# node $(dirname $0)/promote.js ${@:2} < ./package.json > ./bin/package.json
 
 cd ./bin/
 
@@ -18,7 +19,7 @@ NPM_TAG="dev"
 # If the package doesn't have a pre-release tag, use the tag of latest instead of
 # dev. NPM uses this tag as the default version to add, so we want it to mean
 # the newest released version.
-if [[ $(jq -r .version package.json) != *-* ]]; then
+if [[ "$(jq -r .version package.json)" != *-* ]]; then
     NPM_TAG="latest"
 fi
 

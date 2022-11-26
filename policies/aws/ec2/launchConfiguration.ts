@@ -22,7 +22,7 @@ import {
  * @description Checks that any launch configuration do not have public IP addresses.
  */
 export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
-    name: "disallow-public-ips-on-launch-config",
+    name: "aws-ec2-launch-configuration-disallow-public-ips",
     description: "Checks that any launch configuration do not have public IP addresses.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {

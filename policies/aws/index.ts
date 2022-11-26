@@ -17,5 +17,6 @@ import * as ec2 from "./ec2";
 import * as ecr from "./ecr";
 import * as lambda from "./lambda";
 import * as rds from "./rds";
+import * as s3 from "./s3";
 
-export { ebs, ec2, ecr, lambda, rds };
+export { ebs, ec2, ecr, lambda, rds, s3 };

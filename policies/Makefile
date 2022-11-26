@@ -26,4 +26,4 @@ test_fast::
 	yarn run test
 
 publish:
-	./build/publish.sh
+	/bin/bash ./build/publish.sh

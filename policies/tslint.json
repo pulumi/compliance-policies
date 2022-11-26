@@ -120,6 +120,20 @@
             "check-module",
             "check-separator",
             "check-type"
+        ],
+        "completed-docs": [
+            true,
+            "classes",
+            "constructors",
+            "enums",
+            "enum-members",
+            "functions",
+            "interfaces",
+            "methods",
+            "namespaces",
+            "properties",
+            "types",
+            "variables"
         ]
     }
 }

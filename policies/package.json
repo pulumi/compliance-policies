@@ -29,6 +29,7 @@
         "typescript": "^3.4.6"
     },
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "lint": "tslint -c tslint.json -p tsconfig.json"
     }
 }

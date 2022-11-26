@@ -1,11 +1,12 @@
 import * as aws from "@pulumi/aws";
 import { PolicyPack } from "@pulumi/policy";
+import * as policies from "@bobcatt/pulumi-policies";
 
-import * as awsEc2SecurityGroupPolicies from "../../policies/aws/ec2/securityGroup";
-
-new PolicyPack("aws-ec2-securitygroup", {
+new PolicyPack("policy-pack-bb5ac361-dc16-4bfe-af4f-78b290241862", {
     policies: [
-        awsEc2SecurityGroupPolicies.awsEc2SecurityGroupMissingDescription,
-        awsEc2SecurityGroupPolicies.awsEc2SecurityGroupNoInboundHttpTraffic
+        policies.aws.ebs.volumeNoUnencryptedVolume,
+        policies.aws.ebs.volumeWithCustomerManagedKey,
+        policies.aws.ec2.securityGroupMissingDescription,
+        policies.aws.ec2.securityGroupNoInboundHttpTraffic,
     ],
 });

@@ -213,10 +213,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi/aws@^4.0.0":
-  version "4.38.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-4.38.1.tgz#323de64ed7d563faa20975b5a6fa0c7e6584005c"
-  integrity sha512-WeOprXm/c9n8QmP5qLNEVk1FZTCa7KGgUj/P1drlazJr1LIvrq+KSWcUxayLeFJvpLCbYd19aI2jdyQqZJAjEw==
+"@pulumi/aws@^5.0.0":
+  version "5.21.1"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-5.21.1.tgz#616e7f3558625a61d0ee73cc7007bba19ca8efbc"
+  integrity sha512-A4ygarp9zaEjPEAhQF0R+vgay254D3Jxh1u01+KEQc5nphaPASSwUUdl721CrimHYFVuMc5BRrntGctIpDpltA==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
     aws-sdk "^2.0.0"

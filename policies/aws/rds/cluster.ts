@@ -25,7 +25,7 @@ import {
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const clusterBackupRetention: ResourceValidationPolicy = {
-    name: "aws-rds-instance-disallow-low-backup-retention-period",
+    name: "aws-rds-cluster-disallow-low-backup-retention-period",
     description: "Checks that backup retention policy is adequate.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {

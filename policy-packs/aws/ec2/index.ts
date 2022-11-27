@@ -6,7 +6,8 @@ import * as policies from "@bobcatt/pulumi-policies";
  * Hre is a quick way to generate a list of all policies
  * ```
  * cd policies
- * grep -r "^export const" ./ | grep -v node_modules/ | grep -v bin/ | grep -v version.ts | sed 's/\// /g; s/://g;' | awk '{printf("policies.%s.%s.%s,\n",$2,$3,$6)}' | sort -du
+ * grep -r "^export const" ./aws | grep -v node_modules/ | grep -v bin/ | grep -v version.ts | sed 's/\// /g; s/://g;' | awk '{printf("policies.%s.%s.%s,\n",$2,$3,$6)}' | sort -du
+ * grep -r "^export const" ./kubernetes/ | grep -v node_modules/ | grep -v bin/ | grep -v version.ts | sed 's/\// /g; s/:/ /g; s/\.ts//g;' | awk '{printf("policies.%s.%s.%s.%s.%s,\n",$2,$3,$4,$5,$8)}' | sort -du
  * ```
  */
 
@@ -56,5 +57,11 @@ new PolicyPack("policy-pack-bb5ac361-dc16-4bfe-af4f-78b290241862", {
         policies.aws.s3.bucketServerSideEncryptionBucketKey,
         policies.aws.s3.bucketServerSideEncryptionKMS,
         policies.aws.s3.bucketServerSideEncryptionKMSWithCustomerManagedKey,
+        policies.kubernetes.apps.v1.deploymentMinimumReplicaCount,
+        policies.kubernetes.apps.v1.deploymentRecommendedLabel,
+        policies.kubernetes.apps.v1.replicaSetMinimumReplicaCount,
+        policies.kubernetes.apps.v1.replicaSetRecommendedLabel,
+        policies.kubernetes.core.v1.podProhibitPod,
+        policies.kubernetes.core.v1.serviceRecommendedLabel,
     ],
 });

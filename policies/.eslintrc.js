@@ -182,6 +182,7 @@ module.exports = {
             }
         ],
         "no-debugger": "error",
+        "no-dupe-keys": "error",
         "no-empty": "error",
         "no-empty-function": "off",
         "no-eval": "error",

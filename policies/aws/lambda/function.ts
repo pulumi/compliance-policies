@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that Lambda functions have tracing enabled.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
 export const functionTracingEnabled: ResourceValidationPolicy = {
     name: "aws-lambda-function-disallow-lambda-without-tracing",

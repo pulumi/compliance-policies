@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that all security groups have a description.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
 export const securityGroupMissingDescription: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-missing-desciption",
@@ -34,6 +37,9 @@ export const securityGroupMissingDescription: ResourceValidationPolicy = {
 
 /**
  * Check that any security group doesn't allow inbound HTTP traffic.
+ *
+ * @severity **Critical**
+ * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const securityGroupProhibitInboundHttpTraffic: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-inbound-http-traffic",
@@ -53,6 +59,9 @@ export const securityGroupProhibitInboundHttpTraffic: ResourceValidationPolicy =
 
 /**
  * Check that any security group doesn't allow inbound traffic from the Internet.
+ *
+ * @severity **Critical**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
 export const securityGroupProhibitPublicInternetAccess: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-public-internet",

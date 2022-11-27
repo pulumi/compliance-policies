@@ -20,6 +20,8 @@ import {
 
 /**
  * Checks that any instance do not have public IP addresses.
+ *
+ * @severity **High**
  */
 export const instanceNoPublicIp: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-public-ips",
@@ -34,6 +36,9 @@ export const instanceNoPublicIp: ResourceValidationPolicy = {
 
 /**
  * Checks that any EC2 instance does not have unencrypted root volumes.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
 export const instanceNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-root-volume",
@@ -48,6 +53,9 @@ export const instanceNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
 
 /**
  * Checks that any EC2 instances do not have unencrypted volumes.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const instanceNoUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-volumes",

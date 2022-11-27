@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that any launch configuration do not have public IP addresses.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
 export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-public-ips",
@@ -34,6 +37,9 @@ export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
 
 /**
  * Checks that any launch configuration do not have unencrypted root volumes.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
 export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
@@ -48,6 +54,9 @@ export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidation
 
 /**
  * Checks that any launch configuration do not have unencrypted volumes.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const launchConfigurationNoUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",

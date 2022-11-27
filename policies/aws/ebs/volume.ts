@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that no EBS is unencrypted.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const volumeNoUnencryptedVolume: ResourceValidationPolicy = {
     name: "aws-ebs-volume-disallow-unencrypted-volume",
@@ -34,6 +37,9 @@ export const volumeNoUnencryptedVolume: ResourceValidationPolicy = {
 
 /**
  * Check that encrypted EBS volume uses a customer-managed KMS key.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const volumeWithCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-ebs-volume-disallow-volume-without-customer-managed-key",

@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that ECR repositories have scan on push enabled.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
 export const repositoryImageScans: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-image-scans",
@@ -34,6 +37,9 @@ export const repositoryImageScans: ResourceValidationPolicy = {
 
 /**
  * Checks that ECR repositories have immutable images enabled.
+ *
+ * @severity **High**
+ * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
 export const repositoryImmutableImage: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repo-without-immutable-image",
@@ -48,6 +54,9 @@ export const repositoryImmutableImage: ResourceValidationPolicy = {
 
 /**
  * Checks that no ECR repositories is unencrypted.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
 export const repositoryNoUnencryptedRepository: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-unencrypted-repository",
@@ -62,6 +71,9 @@ export const repositoryNoUnencryptedRepository: ResourceValidationPolicy = {
 
 /**
  * Checks that ECR repositories use a customer-manager KMS key.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
 export const repositoryCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-repository-without-customer-managed-key",

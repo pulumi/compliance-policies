@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that any CloudFront distribution has logging enabled.
+ *
+ * @severity **Medium**
+ * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
 export const distributionLoggingEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-logging",
@@ -34,6 +37,9 @@ export const distributionLoggingEnabled: ResourceValidationPolicy = {
 
 /**
  * Checks that any CloudFront distribution has a WAF ACL associated.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
 export const distributionWAFConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-waf-acl",
@@ -48,6 +54,9 @@ export const distributionWAFConfigured: ResourceValidationPolicy = {
 
 /**
  * Checks that CloudFront distributions only allow encypted ingress traffic.
+ *
+ * @severity **Critical**
+ * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-unencrypted-traffic",
@@ -65,6 +74,9 @@ export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
 
 /**
  * Checks that CloudFront distributions uses secure/modern TLS encryption.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
 export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-secure-tls-configured",
@@ -79,6 +91,9 @@ export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
 
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
+ *
+ * @severity **Critical**
+ * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
 export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-enabled",
@@ -95,6 +110,9 @@ export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
 
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
 export const distributionOriginSecureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-configured",

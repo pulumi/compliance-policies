@@ -20,6 +20,9 @@ import {
 
 /**
  * Checks that lambda function permissions have a source arn specified.
+ *
+ * @severity **Critical**
+ * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
 export const functionSourceArn: ResourceValidationPolicy = {
     name: "aws-lambda-permission-disallow-permission-without-source-arn",

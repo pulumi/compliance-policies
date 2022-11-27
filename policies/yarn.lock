@@ -268,7 +268,7 @@
     read-package-tree "^5.2.1"
     resolve "^1.7.1"
 
-"@pulumi/kubernetes@^3.22.1":
+"@pulumi/kubernetes@^3.0.0":
   version "3.22.1"
   resolved "https://registry.yarnpkg.com/@pulumi/kubernetes/-/kubernetes-3.22.1.tgz#8596f28edbf5f9c06b1556374d10badc19401bfa"
   integrity sha512-8u+/YfFc+QzMm34nMbmW1V47hQzIlGPDcJK7b5UX03zvrQROdqMuSCqB+2DRE7DZPUZ2sRzHIgAjgSPQQQNNQg==

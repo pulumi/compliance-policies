@@ -2,6 +2,14 @@ import * as aws from "@pulumi/aws";
 import { PolicyPack } from "@pulumi/policy";
 import * as policies from "@bobcatt/pulumi-policies";
 
+/**
+ * Hre is a quick way to generate a list of all policies
+ * ```
+ * cd policies
+ * grep -r "^export const" ./ | grep -v node_modules/ | grep -v bin/ | grep -v version.ts | sed 's/\// /g; s/://g;' | awk '{printf("policies.%s.%s.%s,\n",$2,$3,$6)}' | sort -du
+ * ```
+ */
+
 new PolicyPack("policy-pack-bb5ac361-dc16-4bfe-af4f-78b290241862", {
     policies: [
         policies.aws.cloudfront.distributionLoggingEnabled,

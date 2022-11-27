@@ -12,7 +12,8 @@ module.exports = {
     "plugins": [
         "eslint-plugin-import",
         "@typescript-eslint",
-        "header"
+        "header",
+        "jsdoc"
     ],
     "ignorePatterns": [
         "**/bin/**/*.ts",
@@ -136,6 +137,21 @@ module.exports = {
         "id-match": "error",
         "import/order": "off",
         "indent": "off",
+        "jsdoc/check-alignment": 1,
+        "jsdoc/check-indentation": 1,
+        "jsdoc/check-line-alignment": 1,
+        "jsdoc/check-property-names": 1,
+        "jsdoc/check-tag-names": [
+            "error", {
+                "definedTags": [
+                    "link",
+                    "severity"
+                ]
+            }
+        ],
+        "jsdoc/check-types": 1,
+        "jsdoc/require-description-complete-sentence": 1,
+        "jsdoc/require-jsdoc": 1,
         "no-bitwise": "off",
         "no-caller": "error",
         "no-cond-assign": "off",

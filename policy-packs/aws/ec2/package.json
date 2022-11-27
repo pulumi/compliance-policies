@@ -1,6 +1,6 @@
 {
     "name": "policy-pack-bb5ac361-dc16-4bfe-af4f-78b290241862",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "Apache-2.0",
     "dependencies": {
         "@bobcatt/pulumi-policies": "^0.0.11",

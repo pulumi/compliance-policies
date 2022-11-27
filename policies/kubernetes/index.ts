@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws from "./aws";
-import * as kubernetes from "./kubernetes";
-export * from "./version";
+import * as apps from "./apps";
+import * as core from "./core";
 
-export { aws, kubernetes };
+export { apps, core };

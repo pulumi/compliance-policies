@@ -42,7 +42,7 @@ export const clusterBackupRetention: ResourceValidationPolicy = {
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const clusterStorageEncrypted: ResourceValidationPolicy = {
-    name: "aws-rds-instance-storage-encryption-enabled",
+    name: "aws-rds-cluster-storage-encryption-enabled",
     description: "Checks that RDS storage is encrypted.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
@@ -59,7 +59,7 @@ export const clusterStorageEncrypted: ResourceValidationPolicy = {
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const clusterStorageCustomerManagedKey: ResourceValidationPolicy = {
-    name: "aws-rds-instance-storage-encryption-with-customer-managed-key",
+    name: "aws-rds-cluster-storage-encryption-with-customer-managed-key",
     description: "Checks that storage is encrypted with a customer managed key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {

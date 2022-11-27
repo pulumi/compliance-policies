@@ -24,12 +24,16 @@
     },
     "devDependencies": {
         "@types/node": "^12.7.12",
+        "@typescript-eslint/eslint-plugin": "^5.44.0",
+        "@typescript-eslint/parser": "^5.44.0",
+        "eslint": "^8.28.0",
+        "eslint-plugin-header": "^3.1.1",
+        "eslint-plugin-import": "^2.26.0",
         "ts-node": "^8.4.1",
-        "tslint": "^5.20.1",
         "typescript": "^3.4.6"
     },
     "scripts": {
         "build": "tsc",
-        "lint": "tslint -c tslint.json -p tsconfig.json"
+        "lint": "eslint -c .eslintrc.js --ext .ts ."
     }
 }

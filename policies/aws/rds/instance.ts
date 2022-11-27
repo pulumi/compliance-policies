@@ -72,7 +72,6 @@ export const instancePerformanceInsights: ResourceValidationPolicy = {
 /**
  * Checks that performance insights in RDS is encrypted.
  *
- *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.htm
  */

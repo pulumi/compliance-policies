@@ -25,7 +25,7 @@ import {
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const serviceRecommendedLabel: ResourceValidationPolicy = {
+export const recommendedLabel: ResourceValidationPolicy = {
     name: "kubernetes-core-v1-service-recommended-label",
     description: "Checks that Kubernetes Services have the recommended labels.",
     enforcementLevel: "advisory",

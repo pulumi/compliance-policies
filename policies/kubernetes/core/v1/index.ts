@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * from "./pod";
-export * from "./service";
+export * as Pod from "./pod";
+export * as Service from "./service";

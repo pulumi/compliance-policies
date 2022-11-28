@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * from "./cluster";
-export * from "./clusterInstance";
-export * from "./instance";
+export * as Cluster from "./cluster";
+export * as ClusterInstance from "./clusterInstance";
+export * as Instance from "./instance";

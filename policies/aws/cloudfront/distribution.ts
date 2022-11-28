@@ -24,7 +24,7 @@ import {
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const distributionLoggingEnabled: ResourceValidationPolicy = {
+export const LoggingEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-logging",
     description: "Checks that any CloudFront distribution has logging configured.",
     enforcementLevel: "advisory",
@@ -41,7 +41,7 @@ export const distributionLoggingEnabled: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
-export const distributionWAFConfigured: ResourceValidationPolicy = {
+export const wafConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-waf-acl",
     description: "Checks that any CloudFront distribution has a WAF ACL associated.",
     enforcementLevel: "advisory",
@@ -58,7 +58,7 @@ export const distributionWAFConfigured: ResourceValidationPolicy = {
  * @severity **Critical**
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
-export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
+export const noUncryptedTraffic: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-unencrypted-traffic",
     description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
     enforcementLevel: "advisory",
@@ -78,7 +78,7 @@ export const distributionNoUncryptedTraffic: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
-export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
+export const secureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-secure-tls-configured",
     description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
     enforcementLevel: "advisory",
@@ -95,7 +95,7 @@ export const distributionSecureTLSConfigured: ResourceValidationPolicy = {
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
+export const originSecureTLSEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-enabled",
     description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
     enforcementLevel: "advisory",
@@ -114,7 +114,7 @@ export const distributionOriginSecureTLSEnabled: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const distributionOriginSecureTLSConfigured: ResourceValidationPolicy = {
+export const originSecureTLSConfigured: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-origin-secure-tls-configured",
     description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
     enforcementLevel: "advisory",

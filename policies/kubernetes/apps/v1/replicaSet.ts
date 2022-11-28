@@ -24,7 +24,7 @@ import {
  * @severity **High**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
  */
-export const replicaSetMinimumReplicaCount: ResourceValidationPolicy = {
+export const minimumReplicaCount: ResourceValidationPolicy = {
     name: "kubernetes-core-v1-replica-set-minimum-replica-count",
     description: "Checks that Kubernetes ReplicaSets have at least three replicas.",
     enforcementLevel: "advisory",
@@ -42,7 +42,7 @@ export const replicaSetMinimumReplicaCount: ResourceValidationPolicy = {
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const replicaSetRecommendedLabel: ResourceValidationPolicy = {
+export const recommendedLabel: ResourceValidationPolicy = {
     name: "kubernetes-core-v1-replica-set-recommended-label",
     description: "Checks that Kubernetes ReplicaSets have the recommended labels.",
     enforcementLevel: "advisory",

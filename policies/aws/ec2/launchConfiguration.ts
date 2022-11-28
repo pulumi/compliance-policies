@@ -24,7 +24,7 @@ import {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
+export const noPublicIp: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-public-ips",
     description: "Checks that any launch configuration do not have public IP addresses.",
     enforcementLevel: "advisory",
@@ -41,7 +41,7 @@ export const launchConfigurationNoPublicIp: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidationPolicy = {
+export const noUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
     description: "Checks that any launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
@@ -58,7 +58,7 @@ export const launchConfigurationNoUnencryptedRootBlockDevice: ResourceValidation
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const launchConfigurationNoUnencryptedBlockDevice: ResourceValidationPolicy = {
+export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
     description: "Checks that any launch configuration do not have unencrypted volumes.",
     enforcementLevel: "advisory",

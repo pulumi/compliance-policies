@@ -24,7 +24,7 @@ import {
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const clusterInstancePerformanceInsights: ResourceValidationPolicy = {
+export const performanceInsights: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-performance-insights-enabled",
     description: "Checks that RDS has performance insights enabled.",
     enforcementLevel: "advisory",
@@ -41,7 +41,7 @@ export const clusterInstancePerformanceInsights: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const clusterInstancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
+export const performanceInsightsEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-performance-insights-encrypted",
     description: "Checks that performance insights in RDS is encrypted.",
     enforcementLevel: "advisory",
@@ -58,7 +58,7 @@ export const clusterInstancePerformanceInsightsEncrypted: ResourceValidationPoli
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const clusterInstancePublicAccess: ResourceValidationPolicy = {
+export const publicAccess: ResourceValidationPolicy = {
     name: "aws-rds-cluster-instance-disallow-public-access",
     description: "Checks that public access is not enabled on RDS Instances.",
     enforcementLevel: "advisory",

@@ -24,7 +24,7 @@ import {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const launchTemplateNoPublicIp: ResourceValidationPolicy = {
+export const noPublicIp: ResourceValidationPolicy = {
     name: "aws-ec2-launch-template-disallow-public-ips",
     description: "Checks that any launch template do not have public IP addresses.",
     enforcementLevel: "advisory",
@@ -43,7 +43,7 @@ export const launchTemplateNoPublicIp: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const launchTemplateNoUnencryptedBlockDevice: ResourceValidationPolicy = {
+export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-template-unencrypted-volume",
     description: "Checks that any launch templates do not have unencrypted root volumes.",
     enforcementLevel: "advisory",

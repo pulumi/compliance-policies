@@ -24,7 +24,7 @@ import {
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
-export const bucketNoPublicRead: ResourceValidationPolicy = {
+export const noPublicRead: ResourceValidationPolicy = {
     name: "aws-s3-bucket-no-public-read",
     description: "Prohibits setting the publicRead or publicReadWrite permission on AWS S3 buckets.",
     enforcementLevel: "advisory",
@@ -42,7 +42,7 @@ export const bucketNoPublicRead: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
-export const bucketReplicationEnabled: ResourceValidationPolicy = {
+export const replicationEnabled: ResourceValidationPolicy = {
     name: "aws-s3-bucket-replication-enabled",
     description: "Encourages use of cross-region replication for S3 buckets.",
     enforcementLevel: "advisory",
@@ -59,7 +59,7 @@ export const bucketReplicationEnabled: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html
  */
-export const bucketServerSideEncryption: ResourceValidationPolicy = {
+export const serverSideEncryption: ResourceValidationPolicy = {
     name: "aws-s3-bucket-server-side-encryption",
     description: "Check that Server-Side Encryption (SSE) is enabled on S3 buckets.",
     enforcementLevel: "advisory",
@@ -76,7 +76,7 @@ export const bucketServerSideEncryption: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
-export const bucketServerSideEncryptionKMS: ResourceValidationPolicy = {
+export const serverSideEncryptionKMS: ResourceValidationPolicy = {
     name: "aws-s3-bucket-server-side-encryption-kms",
     description: "Check that Server-Side Encryption (SSE) is enabled on S3 buckets using KMS.",
     enforcementLevel: "advisory",
@@ -93,7 +93,7 @@ export const bucketServerSideEncryptionKMS: ResourceValidationPolicy = {
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html
  */
-export const bucketServerSideEncryptionKMSWithCustomerManagedKey: ResourceValidationPolicy = {
+export const serverSideEncryptionKMSWithCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-s3-bucket-server-side-encryption-customer-managed-key",
     description: "Check that Server-Side Encryption (SSE) is enabled on S3 buckets using a customer managed Key.",
     enforcementLevel: "advisory",
@@ -110,7 +110,7 @@ export const bucketServerSideEncryptionKMSWithCustomerManagedKey: ResourceValida
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html
  */
-export const bucketServerSideEncryptionBucketKey: ResourceValidationPolicy = {
+export const serverSideEncryptionBucketKey: ResourceValidationPolicy = {
     name: "aws-s3-bucket-server-side-encryption-with-bucket-key",
     description: "Check that Server-Side Encryption (SSE) is enabled on S3 buckets using a bucket key.",
     enforcementLevel: "advisory",

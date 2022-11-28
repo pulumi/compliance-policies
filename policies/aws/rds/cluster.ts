@@ -24,7 +24,7 @@ import {
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const clusterBackupRetention: ResourceValidationPolicy = {
+export const backupRetention: ResourceValidationPolicy = {
     name: "aws-rds-cluster-disallow-low-backup-retention-period",
     description: "Checks that backup retention policy is adequate.",
     enforcementLevel: "advisory",
@@ -41,7 +41,7 @@ export const clusterBackupRetention: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const clusterStorageEncrypted: ResourceValidationPolicy = {
+export const storageEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-cluster-storage-encryption-enabled",
     description: "Checks that RDS storage is encrypted.",
     enforcementLevel: "advisory",
@@ -58,7 +58,7 @@ export const clusterStorageEncrypted: ResourceValidationPolicy = {
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const clusterStorageCustomerManagedKey: ResourceValidationPolicy = {
+export const storageCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-rds-cluster-storage-encryption-with-customer-managed-key",
     description: "Checks that storage is encrypted with a customer managed key.",
     enforcementLevel: "advisory",

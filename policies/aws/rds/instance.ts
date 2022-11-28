@@ -24,7 +24,7 @@ import {
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const instanceBackupRetention: ResourceValidationPolicy = {
+export const BackupRetention: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-low-backup-retention-period",
     description: "Checks that backup retention policy is adequate.",
     enforcementLevel: "advisory",
@@ -41,7 +41,7 @@ export const instanceBackupRetention: ResourceValidationPolicy = {
  * @severity **Critical**
  * @link https://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/
  */
-export const instanceClassicResources: ResourceValidationPolicy = {
+export const ClassicResources: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-classic-resources",
     description: "Checks that no RDS classic resources are created.",
     enforcementLevel: "advisory",
@@ -58,7 +58,7 @@ export const instanceClassicResources: ResourceValidationPolicy = {
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const instancePerformanceInsights: ResourceValidationPolicy = {
+export const performanceInsights: ResourceValidationPolicy = {
     name: "aws-rds-instance-performance-insights-enabled",
     description: "Checks that RDS has performance insights enabled.",
     enforcementLevel: "advisory",
@@ -75,7 +75,7 @@ export const instancePerformanceInsights: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.htm
  */
-export const instancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
+export const performanceInsightsEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-instance-performance-insights-encrypted",
     description: "Checks that performance insights in RDS is encrypted.",
     enforcementLevel: "advisory",
@@ -92,7 +92,7 @@ export const instancePerformanceInsightsEncrypted: ResourceValidationPolicy = {
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const instancePublicAccess: ResourceValidationPolicy = {
+export const publicAccess: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-public-access",
     description: "Checks that public access is not enabled on RDS Instances.",
     enforcementLevel: "advisory",
@@ -109,7 +109,7 @@ export const instancePublicAccess: ResourceValidationPolicy = {
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const instanceStorageEncrypted: ResourceValidationPolicy = {
+export const storageEncrypted: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-enabled",
     description: "Checks that RDS storage is encrypted.",
     enforcementLevel: "advisory",
@@ -126,7 +126,7 @@ export const instanceStorageEncrypted: ResourceValidationPolicy = {
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const instanceStorageCustomerManagedKey: ResourceValidationPolicy = {
+export const storageCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-rds-instance-storage-encryption-with-customer-managed-key",
     description: "Checks that storage is encrypted with a customer managed key.",
     enforcementLevel: "advisory",

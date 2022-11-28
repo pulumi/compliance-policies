@@ -24,7 +24,7 @@ import {
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
-export const functionSourceArn: ResourceValidationPolicy = {
+export const sourceArn: ResourceValidationPolicy = {
     name: "aws-lambda-permission-disallow-permission-without-source-arn",
     description: "Checks that lambda function permissions have a source arn specified.",
     enforcementLevel: "advisory",

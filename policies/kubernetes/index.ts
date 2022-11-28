@@ -12,7 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as apps from "./apps";
-import * as core from "./core";
-
-export { apps, core };
+export * as apps from "./apps";
+export * as core from "./core";

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * from "./instance";
-export * from "./launchConfiguration";
-export * from "./launchTemplate";
-export * from "./securityGroup";
+export * as Instance from "./instance";
+export * as LaunchConfiguration from "./launchConfiguration";
+export * as LaunchTemplate from "./launchTemplate";
+export * as SecurityGroup from "./securityGroup";

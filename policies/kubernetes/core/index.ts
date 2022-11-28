@@ -12,6 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as v1 from "./v1";
-
-export { v1 };
+export * as v1 from "./v1";

@@ -24,7 +24,7 @@ import {
  * @severity **Critical**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
-export const podProhibitPod: ResourceValidationPolicy = {
+export const prohibitPod: ResourceValidationPolicy = {
     name: "kubernetes-core-v1-pod-prohibit-pod",
     description: "Checks that Kubernetes Pods are not being used directly.",
     enforcementLevel: "advisory",

@@ -26,7 +26,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const LoggingEnabled: ResourceValidationPolicy = {
+export const loggingEnabled: ResourceValidationPolicy = {
     name: "aws-cloudfront-distribution-disallow-distribution-without-logging",
     description: "Checks that any CloudFront distribution has logging configured.",
     enforcementLevel: "advisory",
@@ -38,7 +38,7 @@ export const LoggingEnabled: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: LoggingEnabled,
+    resourceValidationPolicy: loggingEnabled,
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "medium",

@@ -20,24 +20,24 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
- * Checks that no EBS is unencrypted.
+ * Checks that EBS volumes are encrypted.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const noUnencryptedVolume: ResourceValidationPolicy = {
+export const disallowUnencryptedVolume: ResourceValidationPolicy = {
     name: "aws-ebs-volume-disallow-unencrypted-volume",
-    description: "Checks that no EBS is unencrypted.",
+    description: "Checks that EBS volumes are encrypted.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ebs.Volume, (v, args, reportViolation) => {
         if (!v.encrypted) {
-            reportViolation("An EBS volume is not encrypted.");
+            reportViolation("An EBS volume is currently not encrypted.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedVolume,
+    resourceValidationPolicy: disallowUnencryptedVolume,
     vendors: ["aws"],
     services: ["ebs"],
     severity: "high",
@@ -50,18 +50,18 @@ policyRegistrations.registerPolicy({
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const customerManagedKey: ResourceValidationPolicy = {
-    name: "aws-ebs-volume-disallow-volume-without-customer-managed-key",
-    description: "Check that encrypted EBS volume uses a customer-manager KMS key.",
+export const configureCustomerManagedKey: ResourceValidationPolicy = {
+    name: "aws-ebs-volume-configure-customer-managed-key",
+    description: "Check that encrypted EBS volumes use a customer-manager KMS key.",
     validateResource: validateResourceOfType(aws.ebs.Volume, (v, args, reportViolation) => {
         if (!v.encrypted || v.kmsKeyId !== undefined) {
-            reportViolation("An EBS volume should be encrypted with a customer-managed KMS key.");
+            reportViolation("An EBS volume should be encrypted using a customer-managed KMS key.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: customerManagedKey,
+    resourceValidationPolicy: configureCustomerManagedKey,
     vendors: ["aws"],
     services: ["ebs"],
     severity: "low",

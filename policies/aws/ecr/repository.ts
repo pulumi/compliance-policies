@@ -42,6 +42,7 @@ policyRegistrations.registerPolicy({
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
+    frameworks: ["soc2", "pcidss"],
 });
 
 /**
@@ -130,14 +131,16 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = {
     description: "Checks that ECR repositories use a customer-manager KMS key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
-        repo.encryptionConfigurations?.forEach((encryptionConfiguration) => {
-            if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
-                reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
-            }
-            if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
-                reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
-            }
-        });
+        if (repo.encryptionConfigurations) {
+            repo.encryptionConfigurations.forEach((encryptionConfiguration) => {
+                if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
+                    reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                }
+                if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
+                    reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                }
+            });
+        }
     }),
 };
 

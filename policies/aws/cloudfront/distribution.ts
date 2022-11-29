@@ -17,7 +17,6 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-
 import { policyRegistrations } from "../../utils";
 
 /**

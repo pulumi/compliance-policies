@@ -20,24 +20,49 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
- * Checks that ECR repositories have scan on push enabled.
+ * Checks that ECR repositories have 'scan-on-push' configured.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
-export const imageScans: ResourceValidationPolicy = {
-    name: "aws-ecr-repository-disallow-repo-without-image-scans",
-    description: "Checks that ECR repositories have scan on push enabled.",
+export const configureImageScan: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-configure-image-scans",
+    description: "Checks that ECR repositories have 'scan-on-push' configured.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
-        if (!repo.imageScanningConfiguration?.scanOnPush) {
-            reportViolation("ECR image scanning on push should be enabled.");
+        if (!repo.imageScanningConfiguration) {
+            reportViolation("ECR Repositories should have image scanning configured.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: imageScans,
+    resourceValidationPolicy: configureImageScan,
+    vendors: ["aws"],
+    services: ["ecr"],
+    severity: "high",
+    topics: ["container", "vulnerability"],
+});
+
+/**
+ * Checks that ECR repositories have 'scan-on-push' enabled.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
+ */
+export const enableImageScan: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-enable-image-scans",
+    description: "Checks that ECR repositories have 'scan-on-push' enabled.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        if (repo.imageScanningConfiguration && !repo.imageScanningConfiguration.scanOnPush) {
+            reportViolation("ECR Repositories should enable 'scan-on-push'.");
+        }
+    }),
+};
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: enableImageScan,
     vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
@@ -50,19 +75,19 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
-export const immutableImage: ResourceValidationPolicy = {
-    name: "aws-ecr-repository-disallow-repo-without-immutable-image",
-    description: "Checks that ECR repositories have immutable images enabled.",
+export const disallowMutableImage: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-disallow-mutable-images",
+    description: "Checks that ECR Repositories have immutable images enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
         if (repo.imageTagMutability !== "IMMUTABLE") {
-            reportViolation("ECR repositories should have immutable images");
+            reportViolation("ECR repositories should enable immutable images.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: immutableImage,
+    resourceValidationPolicy: disallowMutableImage,
     vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
@@ -75,9 +100,9 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
-export const noUnencryptedRepository: ResourceValidationPolicy = {
+export const disallowUnencryptedRepository: ResourceValidationPolicy = {
     name: "aws-ecr-repository-disallow-unencrypted-repository",
-    description: "Checks that no ECR repositories is unencrypted.",
+    description: "Checks that ECR Repositories are encrypted.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
         if (repo.encryptionConfigurations === undefined) {
@@ -87,7 +112,7 @@ export const noUnencryptedRepository: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedRepository,
+    resourceValidationPolicy: disallowUnencryptedRepository,
     vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
@@ -100,24 +125,24 @@ policyRegistrations.registerPolicy({
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
-export const customerManagedKey: ResourceValidationPolicy = {
-    name: "aws-ecr-repository-disallow-repository-without-customer-managed-key",
+export const configureCustomerManagedKey: ResourceValidationPolicy = {
+    name: "aws-ecr-repository-configure-customer-managed-key",
     description: "Checks that ECR repositories use a customer-manager KMS key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
         repo.encryptionConfigurations?.forEach((encryptionConfiguration) => {
             if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
-                reportViolation("ECR repositories should be encrypted with a customer-managed KMS key.");
+                reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
             }
             if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
-                reportViolation("ECR repositories should be encrypted with a customer-managed KMS key.");
+                reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: customerManagedKey,
+    resourceValidationPolicy: configureCustomerManagedKey,
     vendors: ["aws"],
     services: ["ecr"],
     severity: "low",

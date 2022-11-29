@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../../utils";
 
 /**
  * Checks that Kubernetes Deployments have the recommended label.
@@ -50,3 +51,11 @@ export const recommendedLabel: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: recommendedLabel,
+    vendors: ["kubernetes"],
+    services: ["core", "service"],
+    severity: "low",
+    topics: ["usability"],
+});

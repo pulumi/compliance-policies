@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that no EBS is unencrypted.
@@ -35,6 +36,14 @@ export const noUnencryptedVolume: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noUnencryptedVolume,
+    vendors: ["aws"],
+    services: ["ebs"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Check that encrypted EBS volume uses a customer-managed KMS key.
  *
@@ -50,3 +59,11 @@ export const customerManagedKey: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: customerManagedKey,
+    vendors: ["aws"],
+    services: ["ebs"],
+    severity: "low",
+    topics: ["encryption", "storage"],
+});

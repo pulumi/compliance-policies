@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that backup retention policy is adequate.
@@ -35,6 +36,14 @@ export const backupRetention: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: backupRetention,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+});
+
 /**
  * Checks that RDS storage is encrypted.
  *
@@ -52,6 +61,14 @@ export const storageEncrypted: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: storageEncrypted,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Checks that storage is encrypted with a customer managed key.
  *
@@ -68,3 +85,11 @@ export const storageCustomerManagedKey: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: storageCustomerManagedKey,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "low",
+    topics: ["encryption", "storage"],
+});

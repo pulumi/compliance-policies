@@ -18,6 +18,8 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 
+import { policyRegistrations } from "../../utils";
+
 /**
  * Checks that any CloudFront distribution has logging enabled.
  *
@@ -35,6 +37,14 @@ export const LoggingEnabled: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: LoggingEnabled,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "medium",
+    topics: ["network", "logging"],
+});
+
 /**
  * Checks that any CloudFront distribution has a WAF ACL associated.
  *
@@ -51,6 +61,14 @@ export const wafConfigured: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: wafConfigured,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "high",
+    topics: ["network"],
+});
 
 /**
  * Checks that CloudFront distributions only allow encypted ingress traffic.
@@ -72,6 +90,14 @@ export const noUncryptedTraffic: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noUncryptedTraffic,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "critical",
+    topics: ["network"],
+});
+
 /**
  * Checks that CloudFront distributions uses secure/modern TLS encryption.
  *
@@ -88,6 +114,14 @@ export const secureTLSConfigured: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: secureTLSConfigured,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "high",
+    topics: ["network", "encryption"],
+});
 
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
@@ -107,6 +141,14 @@ export const originSecureTLSEnabled: ResourceValidationPolicy = {
         });
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: originSecureTLSEnabled,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "critical",
+    topics: ["network", "encryption"],
+});
 
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.
@@ -128,3 +170,11 @@ export const originSecureTLSConfigured: ResourceValidationPolicy = {
         });
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: originSecureTLSConfigured,
+    vendors: ["aws"],
+    services: ["cloudfront"],
+    severity: "high",
+    topics: ["network", "encryption"],
+});

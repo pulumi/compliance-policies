@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that Lambda functions have tracing enabled.
@@ -34,3 +35,11 @@ export const tracingEnabled: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: tracingEnabled,
+    vendors: ["aws"],
+    services: ["lambda"],
+    severity: "low",
+    topics: ["logging", "performance"],
+});

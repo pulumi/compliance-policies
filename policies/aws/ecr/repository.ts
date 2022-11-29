@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that ECR repositories have scan on push enabled.
@@ -35,6 +36,14 @@ export const imageScans: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: imageScans,
+    vendors: ["aws"],
+    services: ["ecr"],
+    severity: "high",
+    topics: ["container", "vulnerability"],
+});
+
 /**
  * Checks that ECR repositories have immutable images enabled.
  *
@@ -52,6 +61,14 @@ export const immutableImage: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: immutableImage,
+    vendors: ["aws"],
+    services: ["ecr"],
+    severity: "high",
+    topics: ["container"],
+});
+
 /**
  * Checks that no ECR repositories is unencrypted.
  *
@@ -68,6 +85,14 @@ export const noUnencryptedRepository: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noUnencryptedRepository,
+    vendors: ["aws"],
+    services: ["ecr"],
+    severity: "high",
+    topics: ["container", "encryption", "storage"],
+});
 
 /**
  * Checks that ECR repositories use a customer-manager KMS key.
@@ -90,3 +115,11 @@ export const customerManagedKey: ResourceValidationPolicy = {
         });
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: customerManagedKey,
+    vendors: ["aws"],
+    services: ["ecr"],
+    severity: "low",
+    topics: ["container", "encryption", "storage"],
+});

@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../../utils";
 
 /**
  * Checks that Kubernetes Deployments have at least three replicas.
@@ -34,6 +35,14 @@ export const minimumReplicaCount: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: minimumReplicaCount,
+    vendors: ["kubernetes"],
+    services: ["apps", "replicaset"],
+    severity: "high",
+    topics: ["availability"],
+});
 
 /**
  * Checks that Kubernetes Deployments have the recommended label.
@@ -67,3 +76,11 @@ export const recommendedLabel: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: recommendedLabel,
+    vendors: ["kubernetes"],
+    services: ["apps", "deployment"],
+    severity: "low",
+    topics: ["usability"],
+});

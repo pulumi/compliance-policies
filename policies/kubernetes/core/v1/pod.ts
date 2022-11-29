@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../../utils";
 
 /**
  * Checks that Kubernetes Pods are not being used directly.
@@ -29,6 +30,14 @@ export const prohibitPod: ResourceValidationPolicy = {
     description: "Checks that Kubernetes Pods are not being used directly.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.core.v1.Pod, (pod, args, reportViolation) => {
-        reportViolation("Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet or Job.");
+        reportViolation("Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job.");
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: prohibitPod,
+    vendors: ["kubernetes"],
+    services: ["core", "pod"],
+    severity: "critical",
+    topics: ["availability"],
+});

@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that backup retention policy is adequate.
@@ -24,7 +25,7 @@ import {
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const BackupRetention: ResourceValidationPolicy = {
+export const backupRetention: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-low-backup-retention-period",
     description: "Checks that backup retention policy is adequate.",
     enforcementLevel: "advisory",
@@ -35,13 +36,21 @@ export const BackupRetention: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: backupRetention,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+});
+
 /**
  * Checks that no RDS classic resources are created.
  *
  * @severity **Critical**
  * @link https://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/
  */
-export const ClassicResources: ResourceValidationPolicy = {
+export const classicResources: ResourceValidationPolicy = {
     name: "aws-rds-instance-disallow-classic-resources",
     description: "Checks that no RDS classic resources are created.",
     enforcementLevel: "advisory",
@@ -51,6 +60,14 @@ export const ClassicResources: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: classicResources,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "critical",
+    topics: ["stability", "availability"],
+});
 
 /**
  * Checks that RDS has performance insights enabled.
@@ -69,6 +86,14 @@ export const performanceInsights: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: performanceInsights,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "low",
+    topics: ["logging", "performance"],
+});
+
 /**
  * Checks that performance insights in RDS is encrypted.
  *
@@ -85,6 +110,14 @@ export const performanceInsightsEncrypted: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: performanceInsightsEncrypted,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
 
 /**
  * Checks that public access is not enabled on RDS Instances.
@@ -103,6 +136,14 @@ export const publicAccess: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: publicAccess,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "critical",
+    topics: ["network"],
+});
+
 /**
  * Checks that RDS storage is encrypted.
  *
@@ -120,6 +161,14 @@ export const storageEncrypted: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: storageEncrypted,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Checks that storage is encrypted with a customer managed key.
  *
@@ -136,3 +185,11 @@ export const storageCustomerManagedKey: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: storageCustomerManagedKey,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "low",
+    topics: ["encryption", "storage"],
+});

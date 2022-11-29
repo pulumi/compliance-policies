@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Prohibits setting the publicRead or publicReadWrite permission on AWS S3 buckets.
@@ -36,6 +37,14 @@ export const noPublicRead: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noPublicRead,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "critical",
+    topics: ["storage", "security"],
+});
+
 /**
  * Encourages use of cross-region replication for S3 buckets.
  *
@@ -52,6 +61,14 @@ export const replicationEnabled: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: replicationEnabled,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "high",
+    topics: ["availability"],
+});
 
 /**
  * Check that Server-Side Encryption (SSE) is enabled on S3 buckets.
@@ -70,6 +87,14 @@ export const serverSideEncryption: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: serverSideEncryption,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Check that Server-Side Encryption (SSE) is enabled on S3 buckets using KMS.
  *
@@ -86,6 +111,14 @@ export const serverSideEncryptionKMS: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: serverSideEncryptionKMS,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
 
 /**
  * Check that Server-Side Encryption (SSE) is enabled on S3 buckets using a customer managed Key.
@@ -104,6 +137,14 @@ export const serverSideEncryptionKMSWithCustomerManagedKey: ResourceValidationPo
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: serverSideEncryptionKMSWithCustomerManagedKey,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "low",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Check that Server-Side Encryption (SSE) is enabled on S3 buckets using a bucket key.
  *
@@ -120,3 +161,11 @@ export const serverSideEncryptionBucketKey: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: serverSideEncryptionBucketKey,
+    vendors: ["aws"],
+    services: ["s3"],
+    severity: "medium",
+    topics: ["encryption", "storage", "cost"],
+});

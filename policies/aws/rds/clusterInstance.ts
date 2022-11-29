@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that RDS Cluster has performance insights enabled.
@@ -35,6 +36,14 @@ export const performanceInsights: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: performanceInsights,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "low",
+    topics: ["logging", "performance"],
+});
+
 /**
  * Checks that performance insights in RDS Cluster is encrypted.
  *
@@ -52,6 +61,14 @@ export const performanceInsightsEncrypted: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: performanceInsightsEncrypted,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
 /**
  * Checks that public access is not enabled on RDS Instances.
  *
@@ -68,3 +85,11 @@ export const publicAccess: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: publicAccess,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "critical",
+    topics: ["network"],
+});

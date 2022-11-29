@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that any launch configuration do not have public IP addresses.
@@ -35,6 +36,14 @@ export const noPublicIp: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noPublicIp,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "high",
+    topics: ["network"],
+});
+
 /**
  * Checks that any launch configuration do not have unencrypted root volumes.
  *
@@ -51,6 +60,14 @@ export const noUnencryptedRootBlockDevice: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noUnencryptedRootBlockDevice,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
 
 /**
  * Checks that any launch configuration do not have unencrypted volumes.
@@ -70,3 +87,11 @@ export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
         });
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: noUnencryptedBlockDevice,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});

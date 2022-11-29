@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that lambda function permissions have a source arn specified.
@@ -34,3 +35,11 @@ export const sourceArn: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: sourceArn,
+    vendors: ["aws"],
+    services: ["lambda"],
+    severity: "critical",
+    topics: ["permissions", "security"],
+});

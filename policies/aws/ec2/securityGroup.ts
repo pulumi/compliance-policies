@@ -17,6 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
+import { policyRegistrations } from "../../utils";
 
 /**
  * Checks that all security groups have a description.
@@ -34,6 +35,15 @@ export const missingDescription: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: missingDescription,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "low",
+    topics: ["documentation"],
+});
+
 
 /**
  * Check that any security group doesn't allow inbound HTTP traffic.
@@ -57,6 +67,14 @@ export const prohibitInboundHttpTraffic: ResourceValidationPolicy = {
     }),
 };
 
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: prohibitInboundHttpTraffic,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "critical",
+    topics: ["network", "encryption"],
+});
+
 /**
  * Check that any security group doesn't allow inbound traffic from the Internet.
  *
@@ -76,3 +94,11 @@ export const prohibitPublicInternetAccess: ResourceValidationPolicy = {
         }
     }),
 };
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: prohibitPublicInternetAccess,
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "critical",
+    topics: ["network"],
+});

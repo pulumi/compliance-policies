@@ -30,7 +30,7 @@ export const enableAccessLogging: ResourceValidationPolicy = {
     description: "Checks that any CloudFront distributions have access logging enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if (distribution.loggingConfig?.bucket === undefined) {
+        if (!distribution.loggingConfig) {
             reportViolation("CloudFront Distributions should have logging enabled.");
         }
     }),

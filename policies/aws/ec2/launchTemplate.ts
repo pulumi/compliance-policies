@@ -25,21 +25,21 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const noPublicIp: ResourceValidationPolicy = {
+export const disallowPublicIP: ResourceValidationPolicy = {
     name: "aws-ec2-launch-template-disallow-public-ips",
-    description: "Checks that any launch template do not have public IP addresses.",
+    description: "Checks that EC2 Launch Templates do not have public IP addresses.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
         lt.networkInterfaces?.forEach((iface) => {
             if (!iface.associatePublicIpAddress) {
-                reportViolation("Launch templates should not have a public IP address.");
+                reportViolation("EC2 Launch templates should not have public IP addresses.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noPublicIp,
+    resourceValidationPolicy: disallowPublicIP,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
@@ -52,21 +52,21 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
-    name: "aws-ec2-launch-template-unencrypted-volume",
-    description: "Checks that any launch templates do not have unencrypted root volumes.",
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
+    name: "aws-ec2-launch-template-disallow-unencrypted-volume",
+    description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
         lt.blockDeviceMappings?.forEach((device) => {
             if (!device.ebs?.encrypted) {
-                reportViolation("A block device for this launch template is not encrypted.");
+                reportViolation("EC2 Launch Templates should not have an unencypted block device.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedBlockDevice,
+    resourceValidationPolicy: disallowUnencryptedBlockDevice,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",

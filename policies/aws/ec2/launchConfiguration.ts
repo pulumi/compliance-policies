@@ -25,19 +25,19 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const noPublicIp: ResourceValidationPolicy = {
+export const disallowPublicIP: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-public-ips",
-    description: "Checks that any launch configuration do not have public IP addresses.",
+    description: "Checks that EC2 Launch Configurations do not have a public IP address.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
         if (!lc.associatePublicIpAddress) {
-            reportViolation("Launch configurations should not have a public IP address.");
+            reportViolation("Launch Configurations should not have a public IP address.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noPublicIp,
+    resourceValidationPolicy: disallowPublicIP,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
@@ -45,24 +45,24 @@ policyRegistrations.registerPolicy({
 });
 
 /**
- * Checks that any launch configuration do not have unencrypted root volumes.
+ * Checks that EC2 launch configuration do not have unencrypted root volumes.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const noUnencryptedRootBlockDevice: ResourceValidationPolicy = {
+export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
-    description: "Checks that any launch configuration do not have unencrypted root volumes.",
+    description: "Checks that EC2 launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
         if (!lc.rootBlockDevice?.encrypted) {
-            reportViolation("The root block device for this launch configuration is not encrypted.");
+            reportViolation("EC2 Launch Configurations should not have an unencypted root block device.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedRootBlockDevice,
+    resourceValidationPolicy: disallowUnencryptedRootBlockDevice,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
@@ -70,26 +70,26 @@ policyRegistrations.registerPolicy({
 });
 
 /**
- * Checks that any launch configuration do not have unencrypted volumes.
+ * Checks that EC2 Launch Configurations do not have unencrypted volumes.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
-    description: "Checks that any launch configuration do not have unencrypted volumes.",
+    description: "Checks that EC2 Launch Configurations do not have unencrypted volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
         lc.ebsBlockDevices?.forEach((device) => {
             if (!device.encrypted) {
-                reportViolation("A block device for this launch configuration is not encrypted.");
+                reportViolation("EC2 Launch Configurations should not have an unencypted block device.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedBlockDevice,
+    resourceValidationPolicy: disallowUnencryptedBlockDevice,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",

@@ -20,23 +20,23 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
- * Checks that any instance do not have public IP addresses.
+ * Checks that EC2 instances do not have public IP addresses.
  *
  * @severity **High**
  */
-export const noPublicIp: ResourceValidationPolicy = {
+export const disallowPublicIP: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-public-ips",
-    description: "Checks that any instance do not have public IP addresses.",
+    description: "Checks that EC2 instances do not have a public IP address.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
         if (!instance.associatePublicIpAddress) {
-            reportViolation("Instances should not have a public IP address.");
+            reportViolation("EC2 Instances should not have a public IP address.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noPublicIp,
+    resourceValidationPolicy: disallowPublicIP,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
@@ -45,24 +45,24 @@ policyRegistrations.registerPolicy({
 
 
 /**
- * Checks that any EC2 instance does not have unencrypted root volumes.
+ * Checks that EC2 instances does not have unencrypted root volumes..
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const noUnencryptedRootBlockDevice: ResourceValidationPolicy = {
+export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-root-volume",
-    description: "Checks that any EC2 instance does not have unencrypted root volumes.",
+    description: "Checks that EC2 instances does not have unencrypted root volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {
         if (!i.rootBlockDevice?.encrypted) {
-            reportViolation("The root block device for this instance is not encrypted.");
+            reportViolation("EC2 instances should not have an unencypted root block device.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedRootBlockDevice,
+    resourceValidationPolicy: disallowUnencryptedRootBlockDevice,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
@@ -76,21 +76,21 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const noUnencryptedBlockDevice: ResourceValidationPolicy = {
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-volumes",
-    description: "Checks that any EC2 instances do not have unencrypted volumes.",
+    description: "Checks that EC2 instances do not have unencrypted volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {
         i.ebsBlockDevices?.forEach((device) => {
             if (!device.encrypted) {
-                reportViolation("A block device for this instance is not encrypted.");
+                reportViolation("EC2 instances should not have an unencypted block device.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: noUnencryptedBlockDevice,
+    resourceValidationPolicy: disallowUnencryptedBlockDevice,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",

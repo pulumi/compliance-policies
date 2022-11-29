@@ -51,24 +51,24 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
-export const prohibitInboundHttpTraffic: ResourceValidationPolicy = {
+export const disallowInboundHttpTraffic: ResourceValidationPolicy = {
     name: "aws-ec2-security-group-disallow-inbound-http-traffic",
-    description: "Check that any security group doesn't allow inbound HTTP traffic.",
+    description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {
         sg.ingress?.forEach((ingress) => {
             if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {
-                reportViolation("A security group ingress rule allows inbound HTTP traffic.");
+                reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
             }
             if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
-                reportViolation("A security group ingress rule allows inbound HTTP traffic.");
+                reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
             }
         });
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: prohibitInboundHttpTraffic,
+    resourceValidationPolicy: disallowInboundHttpTraffic,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "critical",
@@ -81,22 +81,22 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
-export const prohibitPublicInternetAccess: ResourceValidationPolicy = {
-    name: "aws-ec2-security-group-disallow-public-internet",
-    description: "Check that any security group doesn't allow ingress traffic from the Internet.",
+export const disallowPublicInternetIngress: ResourceValidationPolicy = {
+    name: "aws-ec2-security-group-disallow-public-internet-ingress",
+    description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (group, _, reportViolation) => {
         if (group.ingress?.some(ingressRule => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
-            reportViolation("Security groups must not permit ingress traffic from the public internet (0.0.0.0/0).");
+            reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");
         }
         if (group.ingress?.some(ingressRule => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
-            reportViolation("Security groups must not permit ingress traffic from the public internet (::/0).");
+            reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (::/0).");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: prohibitPublicInternetAccess,
+    resourceValidationPolicy: disallowPublicInternetIngress,
     vendors: ["aws"],
     services: ["ec2"],
     severity: "critical",

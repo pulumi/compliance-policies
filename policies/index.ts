@@ -12,8 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws from "./aws";
-import * as kubernetes from "./kubernetes";
+export { policyRegistrations } from "./utils";
 export * from "./version";
 
-export { aws, kubernetes };
+export * as aws from "./aws";
+export * as kubernetes from "./kubernetes";
+
+
+// import { policyRegistrations } from "./utils";
+// console.info(`Number of registered policies: ${policyRegistrations.getStats()}.`);
+
+// const selection = policyRegistrations.filterPolicies({
+//     vendors: ["aWs", "kubernetes"],
+//     severities: ["criTical"],
+// });
+// console.info(`Number of selected policies: ${selection.length}.`);

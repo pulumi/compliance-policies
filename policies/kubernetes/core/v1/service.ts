@@ -26,13 +26,13 @@ import { policyRegistrations } from "../../../utils";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const recommendedLabel: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-service-recommended-label",
-    description: "Checks that Kubernetes Services have the recommended labels.",
+export const configureRecommendedLabel: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-service-configure-recommended-label",
+    description: "Checks that Kubernetes Services use the recommended labels.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.core.v1.Service, (service, args, reportViolation) => {
-        if (!service.metadata?.labels) {
-            reportViolation("Kubernetes Services should have the recommended labels.");
+        if (!service.metadata || !service.metadata.labels) {
+            reportViolation("Kubernetes Services should use the recommended labels.");
         } else {
             for (const key of Object.keys(service.metadata?.labels)) {
                 const recommendedLabels = [
@@ -53,7 +53,7 @@ export const recommendedLabel: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: recommendedLabel,
+    resourceValidationPolicy: configureRecommendedLabel,
     vendors: ["kubernetes"],
     services: ["core", "service"],
     severity: "low",

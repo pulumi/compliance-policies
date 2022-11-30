@@ -25,9 +25,9 @@ import { policyRegistrations } from "../../../utils";
  * @severity **Critical**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
-export const prohibitPod: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-pod-prohibit-pod",
-    description: "Checks that Kubernetes Pods are not being used directly.",
+export const disallowPod: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-pod-disallow-pod",
+    description: "Checks that Kubernetes Pods are not used directly.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.core.v1.Pod, (pod, args, reportViolation) => {
         reportViolation("Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job.");
@@ -35,7 +35,7 @@ export const prohibitPod: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: prohibitPod,
+    resourceValidationPolicy: disallowPod,
     vendors: ["kubernetes"],
     services: ["core", "pod"],
     severity: "critical",

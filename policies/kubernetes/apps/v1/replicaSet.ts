@@ -25,8 +25,8 @@ import { policyRegistrations } from "../../../utils";
  * @severity **High**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
  */
-export const minimumReplicaCount: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-replica-set-minimum-replica-count",
+export const configureMinimumReplicaCount: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-replica-set-configure-minimum-replica-count",
     description: "Checks that Kubernetes ReplicaSets have at least three replicas.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaSet, args, reportViolation) => {
@@ -37,7 +37,7 @@ export const minimumReplicaCount: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: minimumReplicaCount,
+    resourceValidationPolicy: configureMinimumReplicaCount,
     vendors: ["kubernetes"],
     services: ["apps", "replicaset"],
     severity: "high",
@@ -51,13 +51,13 @@ policyRegistrations.registerPolicy({
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const recommendedLabel: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-replica-set-recommended-label",
-    description: "Checks that Kubernetes ReplicaSets have the recommended labels.",
+export const configureRecommendedLabel: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-replica-set-configure-recommended-label",
+    description: "Checks that Kubernetes ReplicaSets use the recommended labels.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaSet, args, reportViolation) => {
-        if (!replicaSet.metadata?.labels) {
-            reportViolation("Kubernetes ReplicaSets should have the recommended labels.");
+        if (!replicaSet.metadata || !replicaSet.metadata.labels) {
+            reportViolation("Kubernetes ReplicaSets should use the recommended labels.");
         } else {
             for (const key of Object.keys(replicaSet.metadata?.labels)) {
                 const recommendedLabels = [
@@ -78,7 +78,7 @@ export const recommendedLabel: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: recommendedLabel,
+    resourceValidationPolicy: configureRecommendedLabel,
     vendors: ["kubernetes"],
     services: ["apps", "replicaset"],
     severity: "low",

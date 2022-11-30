@@ -25,8 +25,8 @@ import { policyRegistrations } from "../../../utils";
  * @severity **High**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
  */
-export const minimumReplicaCount: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-deployment-minimum-replica-count",
+export const configureMinimumReplicaCount: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-deployment-configure-minimum-replica-count",
     description: "Checks that Kubernetes Deployments have at least three replicas.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
@@ -37,7 +37,7 @@ export const minimumReplicaCount: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: minimumReplicaCount,
+    resourceValidationPolicy: configureMinimumReplicaCount,
     vendors: ["kubernetes"],
     services: ["apps", "replicaset"],
     severity: "high",
@@ -51,13 +51,13 @@ policyRegistrations.registerPolicy({
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const recommendedLabel: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-deployment-recommended-label",
-    description: "Checks that Kubernetes Deployments have the recommended labels.",
+export const configureRecommendedLabel: ResourceValidationPolicy = {
+    name: "kubernetes-core-v1-deployment-configure-recommended-labels",
+    description: "Checks that Kubernetes Deployments use the recommended labels.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-        if (!deployment.metadata?.labels) {
-            reportViolation("Kubernetes Deployments should have the recommended labels.");
+        if (!deployment.metadata || !deployment.metadata.labels) {
+            reportViolation("Kubernetes Deployments should use the recommended labels.");
         } else {
             for (const key of Object.keys(deployment.metadata?.labels)) {
                 const recommendedLabels = [
@@ -78,7 +78,7 @@ export const recommendedLabel: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: recommendedLabel,
+    resourceValidationPolicy: configureRecommendedLabel,
     vendors: ["kubernetes"],
     services: ["apps", "deployment"],
     severity: "low",

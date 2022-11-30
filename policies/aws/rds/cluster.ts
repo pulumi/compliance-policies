@@ -20,24 +20,52 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
- * Checks that backup retention policy is adequate.
+ * Checks that RDS Clusters backup retention policy is enabled.
  *
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const backupRetention: ResourceValidationPolicy = {
-    name: "aws-rds-cluster-disallow-low-backup-retention-period",
-    description: "Checks that backup retention policy is adequate.",
+export const enableBackupRetention: ResourceValidationPolicy = {
+    name: "aws-rds-cluster-enable-backup-retention",
+    description: "Checks that RDS Clusters backup retention policy is enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
-        if (!cluster.backupRetentionPeriod ?? 0 > 2) {
-            reportViolation("RDS Cluster backup retention period is lower than 2 days.");
+        if (!cluster.backupRetentionPeriod) {
+            reportViolation("RDS Clusters backup retention should be enabled.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: backupRetention,
+    resourceValidationPolicy: enableBackupRetention,
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+});
+
+/**
+ * Checks that RDS Cluster backup retention policy is configured.
+ *
+ * @severity **Medium**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
+ */
+export const configureBackupRetention: ResourceValidationPolicy = {
+    name: "aws-rds-cluster-configure-backup-retention",
+    description: "Checks that RDS Cluster backup retention policy is configured.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
+        /**
+         * 3 (three) days should be the minimum in order to have full weekend coverage.
+         */
+        if (cluster.backupRetentionPeriod && cluster.backupRetentionPeriod < 3) {
+            reportViolation("RDS Cluster backup retention period is lower than 3 days.");
+        }
+    }),
+};
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: configureBackupRetention,
     vendors: ["aws"],
     services: ["rds"],
     severity: "medium",
@@ -50,9 +78,9 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const storageEncrypted: ResourceValidationPolicy = {
-    name: "aws-rds-cluster-storage-encryption-enabled",
-    description: "Checks that RDS storage is encrypted.",
+export const disallowUnencryptedStorage: ResourceValidationPolicy = {
+    name: "aws-rds-cluster-storage-disallow-unencrypted-storage",
+    description: "Checks that RDS Clusters storage is encrypted.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
         if (!cluster.storageEncrypted) {
@@ -62,7 +90,7 @@ export const storageEncrypted: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: storageEncrypted,
+    resourceValidationPolicy: disallowUnencryptedStorage,
     vendors: ["aws"],
     services: ["rds"],
     severity: "high",
@@ -75,19 +103,19 @@ policyRegistrations.registerPolicy({
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const storageCustomerManagedKey: ResourceValidationPolicy = {
+export const configureCustomerManagedKey: ResourceValidationPolicy = {
     name: "aws-rds-cluster-storage-encryption-with-customer-managed-key",
-    description: "Checks that storage is encrypted with a customer managed key.",
+    description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
         if (cluster.storageEncrypted && cluster.kmsKeyId === undefined) {
-            reportViolation("RDS Cluster storage should be encrypted with a customer managed key.");
+            reportViolation("RDS Cluster storage should be encrypted using a customer-managed key.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: storageCustomerManagedKey,
+    resourceValidationPolicy: configureCustomerManagedKey,
     vendors: ["aws"],
     services: ["rds"],
     severity: "low",

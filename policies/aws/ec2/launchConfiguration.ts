@@ -30,7 +30,7 @@ export const disallowPublicIP: ResourceValidationPolicy = {
     description: "Checks that EC2 Launch Configurations do not have a public IP address.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
-        if (!launchConfiguration.associatePublicIpAddress) {
+        if (launchConfiguration.associatePublicIpAddress === undefined || launchConfiguration.associatePublicIpAddress === true) {
             reportViolation("Launch Configurations should not have a public IP address.");
         }
     }),
@@ -55,7 +55,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     description: "Checks that EC2 launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
-        if (!launchConfiguration.rootBlockDevice?.encrypted) {
+        if (launchConfiguration.rootBlockDevice && !launchConfiguration.rootBlockDevice.encrypted) {
             reportViolation("EC2 Launch Configurations should not have an unencypted root block device.");
         }
     }),

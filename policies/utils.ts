@@ -89,6 +89,33 @@ export class RegisteredPolicies {
     }
 
     /**
+     * This function allows to retrieve an individual policy by providing its
+     * name as an argument. If the policy is found, then it is return. If the
+     * requestes policy doesn't exists, then `undefined` is returned instead.
+     *
+     * @param name The policy name to search for and return.
+     * @returns The ResourceValidationPolicy if found, otherwise `undefined`.
+     */
+    public getPolicyByName(name: string): ResourceValidationPolicy | undefined {
+
+        if(!name || name.length === 0) {
+            return undefined;
+        }
+
+        const match: PolicyInfo | undefined = this.allPolicies.find((policy) => {
+            if (policy.policyName === name) {
+                return true;
+            }
+            return false;
+        });
+
+        if (!match) {
+            return undefined;
+        }
+        return match.resourceValidationPolicy;
+    }
+
+    /**
      * Filter policies based on selection criterias provided as arguments.
      * The filter only returns policies that match selection criterias.
      * Effectively, this function performs an `or` operation within each selection

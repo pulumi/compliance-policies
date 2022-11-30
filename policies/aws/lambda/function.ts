@@ -46,7 +46,7 @@ policyRegistrations.registerPolicy({
 
 
 /**
- * Checks that Lambda functions have tracing enabled.
+ * Checks that Lambda functions have tracing configured.
  *
  * @severity **Low**
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html

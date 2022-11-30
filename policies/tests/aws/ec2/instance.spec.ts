@@ -77,6 +77,12 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", () => {
         args.props.rootBlockDevice.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 instances should not have an unencypted root block device." });
     });
+
+    it("disallowUnencryptedRootBlockDevice #4", async () => {
+        const args = getResourceValidationArgs();
+        args.props.rootBlockDevice = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
 });
 
 describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", () => {
@@ -95,5 +101,11 @@ describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", () => {
         const args = getResourceValidationArgs();
         args.props.ebsBlockDevices[1].encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 instances should not have an unencypted block device." });
+    });
+
+    it("disallowUnencryptedBlockDevice #4", async () => {
+        const args = getResourceValidationArgs();
+        args.props.ebsBlockDevices = undefined;
+        await assertNoResourceViolations(policy, args);
     });
 });

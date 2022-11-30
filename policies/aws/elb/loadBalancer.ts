@@ -90,7 +90,7 @@ export const configureAccessLogging: ResourceValidationPolicy = {
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureMultiAvailabilityZone,
+    resourceValidationPolicy: configureAccessLogging,
     vendors: ["aws"],
     services: ["elb"],
     severity: "medium",

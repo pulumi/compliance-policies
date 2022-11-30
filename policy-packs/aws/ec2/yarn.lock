@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@bobcatt/pulumi-policies@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@bobcatt/pulumi-policies/-/pulumi-policies-0.0.13.tgz#b69aa32c84432d0bbe18c3656b9d3d0cdf5fe32f"
-  integrity sha512-SunNRJWQrkx5gG8j0IP+PpRsmDPIaGrkEmAoDRicuFaJbRdz0kjQQFEbU66c1Qic+aQzmImLoBcHMT5f60qb0g==
+"@bobcatt/pulumi-policies@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@bobcatt/pulumi-policies/-/pulumi-policies-0.0.14.tgz#8ac711f06e52ef7782196c4479592f97419eb30a"
+  integrity sha512-5DDsO8mNp8ISNxI1LRLu+2fBYWdJh6EmzMey2QuuYU5ENCLdypIpiuUfq8QmRpwMnxrWYqvUrm0N6Gj5aYCEjg==
   dependencies:
     "@pulumi/aws" "^5.0.0"
     "@pulumi/kubernetes" "^3.0.0"

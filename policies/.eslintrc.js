@@ -16,10 +16,8 @@ module.exports = {
         "jsdoc"
     ],
     "ignorePatterns": [
-        "**/bin/**/*.ts",
-        "tests/automation/data/tcfg/*.ts",
-        "tests/sxs_ts_test/*.ts",
-        "tests/mockpackage/**/*.ts",
+        "bin/**/*.ts",
+        "tests/**/*.ts",
     ],
     "rules": {
         "header/header": [

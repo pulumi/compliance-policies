@@ -29,8 +29,8 @@ export const disallowPublicIP: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-public-ips",
     description: "Checks that EC2 Launch Configurations do not have a public IP address.",
     enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
-        if (!lc.associatePublicIpAddress) {
+    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
+        if (!launchConfiguration.associatePublicIpAddress) {
             reportViolation("Launch Configurations should not have a public IP address.");
         }
     }),
@@ -54,8 +54,8 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
     description: "Checks that EC2 launch configuration do not have unencrypted root volumes.",
     enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
-        if (!lc.rootBlockDevice?.encrypted) {
+    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
+        if (!launchConfiguration.rootBlockDevice?.encrypted) {
             reportViolation("EC2 Launch Configurations should not have an unencypted root block device.");
         }
     }),
@@ -79,8 +79,8 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
     description: "Checks that EC2 Launch Configurations do not have unencrypted volumes.",
     enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (lc, args, reportViolation) => {
-        lc.ebsBlockDevices?.forEach((device) => {
+    validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
+        launchConfiguration.ebsBlockDevices?.forEach((device) => {
             if (!device.encrypted) {
                 reportViolation("EC2 Launch Configurations should not have an unencypted block device.");
             }

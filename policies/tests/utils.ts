@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import * as policy from "@pulumi/policy";
+import * as policies from "../index";
 
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as q from "@pulumi/pulumi/queryable";
@@ -193,6 +194,12 @@ export async function assertHasStackViolation(
     stackPolicy: policy.StackValidationPolicy, args: policy.StackValidationArgs, wantViolation: PolicyViolation) {
     const allViolations = await runStackPolicy(stackPolicy, args);
     assertHasViolation(allViolations, wantViolation);
+}
+
+export function assetResourcePolicyIsRegistered(policy: policy.ResourceValidationPolicy) {
+    if (!policies.policyRegistrations.getPolicyByName(policy.name)) {
+        assert.fail(`Policy ${policy.name} is not registered.`);
+    }
 }
 
 // Helper to check if `type` is the type of `resourceClass`.

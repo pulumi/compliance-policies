@@ -18,6 +18,7 @@ module.exports = {
     "ignorePatterns": [
         "bin/**/*.ts",
         "tests/**/*.ts",
+        ".eslintrc.*"
     ],
     "rules": {
         "header/header": [

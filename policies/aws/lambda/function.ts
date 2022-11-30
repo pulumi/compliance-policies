@@ -25,19 +25,45 @@ import { policyRegistrations } from "../../utils";
  * @severity **Low**
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
-export const tracingEnabled: ResourceValidationPolicy = {
-    name: "aws-lambda-function-disallow-lambda-without-tracing",
+export const enableTracingConfig: ResourceValidationPolicy = {
+    name: "aws-lambda-function-enable-tracing-config",
     description: "Checks that Lambda functions have tracing enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.lambda.Function, (f, args, reportViolation) => {
-        if (f.tracingConfig?.mode !== "Active") {
+        if (!f.tracingConfig) {
             reportViolation("Lambda functions should have tracing enabled.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: tracingEnabled,
+    resourceValidationPolicy: enableTracingConfig,
+    vendors: ["aws"],
+    services: ["lambda"],
+    severity: "low",
+    topics: ["logging", "performance"],
+});
+
+
+/**
+ * Checks that Lambda functions have tracing enabled.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
+ */
+export const configureTracingConfig: ResourceValidationPolicy = {
+    name: "aws-lambda-function-configure-tracing-config",
+    description: "Checks that Lambda functions have tracing configured.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.lambda.Function, (f, args, reportViolation) => {
+        if (f.tracingConfig && f.tracingConfig.mode !== "Active") {
+            reportViolation("Lambda functions should have tracing configured.");
+        }
+    }),
+};
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: configureTracingConfig,
     vendors: ["aws"],
     services: ["lambda"],
     severity: "low",

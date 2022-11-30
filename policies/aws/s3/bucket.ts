@@ -53,7 +53,7 @@ policyRegistrations.registerPolicy({
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
 export const enableReplicationConfiguration: ResourceValidationPolicy = {
-    name: "aws-s3-bucket-replication-enabled",
+    name: "aws-s3-bucket-enable-replication-configuration",
     description: "Checks that S3 Bucket have cross-region replication enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
@@ -78,7 +78,7 @@ policyRegistrations.registerPolicy({
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
 export const configureReplicationConfiguration: ResourceValidationPolicy = {
-    name: "aws-s3-bucket-replication-enabled",
+    name: "aws-s3-bucket-configure-replication-configuration",
     description: "Checks that S3 Bucket have cross-region replication configured.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
@@ -157,7 +157,7 @@ policyRegistrations.registerPolicy({
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html
  */
 export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = {
-    name: "aws-s3-bucket-server-configure-side-encryption-customer-managed-key",
+    name: "aws-s3-bucket-co9nfigure-server-configure-side-encryption-customer-managed-key",
     description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
@@ -181,19 +181,19 @@ policyRegistrations.registerPolicy({
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html
  */
-export const serverSideEncryptionBucketKey: ResourceValidationPolicy = {
-    name: "aws-s3-bucket-server-side-encryption-with-bucket-key",
+export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = {
+    name: "aws-s3-bucket-enable-server-side-encryption-bucket-key",
     description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a Bucket key.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
-        if (bucket.serverSideEncryptionConfiguration?.rule.bucketKeyEnabled !== true) {
+        if (bucket.serverSideEncryptionConfiguration && bucket.serverSideEncryptionConfiguration.rule.bucketKeyEnabled !== true) {
             reportViolation("S3 Buckets Server-Side Encryption (SSE) should use a Bucket key to reduce cost.");
         }
     }),
 };
 
 policyRegistrations.registerPolicy({
-    resourceValidationPolicy: serverSideEncryptionBucketKey,
+    resourceValidationPolicy: enableServerSideEncryptionBucketKey,
     vendors: ["aws"],
     services: ["s3"],
     severity: "medium",

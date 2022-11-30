@@ -26,7 +26,7 @@ import { policyRegistrations } from "../../utils";
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const enableBackupRetention: ResourceValidationPolicy = {
-    name: "aws-rds-instance-disallow-low-backup-retention-period",
+    name: "aws-rds-instance-enable-retention",
     description: "Checks that RDS Instances backup retention policy is enabled.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
@@ -51,7 +51,7 @@ policyRegistrations.registerPolicy({
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const configureBackupRetention: ResourceValidationPolicy = {
-    name: "aws-rds-instance-disallow-low-backup-retention-period",
+    name: "aws-rds-instance-configure-backup-retention",
     description: "Checks that backup retention policy is adequate.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {

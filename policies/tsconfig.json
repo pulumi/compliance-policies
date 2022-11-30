@@ -17,10 +17,13 @@
     },
     "include": [
         "index.ts",
+        "validate.ts",
         "aws/**/*",
     ],
     "exclude": [
         "node_modules",
+        ".eslintrc.*",
+        "tests/**/*.ts",
         "*.tgz"
     ],
 }

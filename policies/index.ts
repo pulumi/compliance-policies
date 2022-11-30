@@ -17,13 +17,3 @@ export * from "./version";
 
 export * as aws from "./aws";
 export * as kubernetes from "./kubernetes";
-
-
-// import { policyRegistrations } from "./utils";
-// console.info(`Number of registered policies: ${policyRegistrations.getStats()}.`);
-
-// const selection = policyRegistrations.filterPolicies({
-//     vendors: ["aWs", "kubernetes"],
-//     severities: ["criTical"],
-// });
-// console.info(`Number of selected policies: ${selection.length}.`);

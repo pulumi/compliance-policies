@@ -24,6 +24,7 @@
         "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
+        "@types/mocha": "^10.0.1",
         "@types/node": "^12.7.12",
         "@typescript-eslint/eslint-plugin": "^5.44.0",
         "@typescript-eslint/parser": "^5.44.0",
@@ -31,11 +32,13 @@
         "eslint-plugin-header": "^3.1.1",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-jsdoc": "^39.6.4",
+        "mocha": "^10.1.0",
         "ts-node": "^8.4.1",
         "typescript": "^3.4.6"
     },
     "scripts": {
         "build": "tsc",
-        "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts ."
+        "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
+        "test": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts"
     }
 }

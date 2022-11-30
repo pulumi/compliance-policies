@@ -29,7 +29,7 @@ export const disallowPublicIP: ResourceValidationPolicy = {
     description: "Checks that EC2 instances do not have a public IP address.",
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
-        if (!instance.associatePublicIpAddress) {
+        if (instance.associatePublicIpAddress === undefined || instance.associatePublicIpAddress === true) {
             reportViolation("EC2 Instances should not have a public IP address.");
         }
     }),
@@ -54,8 +54,8 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-root-volume",
     description: "Checks that EC2 instances does not have unencrypted root volumes.",
     enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {
-        if (!i.rootBlockDevice?.encrypted) {
+    validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
+        if (instance.rootBlockDevice && !instance.rootBlockDevice.encrypted) {
             reportViolation("EC2 instances should not have an unencypted root block device.");
         }
     }),
@@ -80,8 +80,8 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
     name: "aws-ec2-instance-disallow-unencrypted-volumes",
     description: "Checks that EC2 instances do not have unencrypted volumes.",
     enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.Instance, (i, args, reportViolation) => {
-        i.ebsBlockDevices?.forEach((device) => {
+    validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
+        instance.ebsBlockDevices?.forEach((device) => {
             if (!device.encrypted) {
                 reportViolation("EC2 instances should not have an unencypted block device.");
             }

@@ -20,10 +20,7 @@ build:: lint
 lint::
 	yarn run lint
 
-test_all::
-	yarn run test
-
-test_fast::
+test::
 	yarn run test
 
 publish:

@@ -31,7 +31,7 @@ export const disallowPublicIP: ResourceValidationPolicy = {
     enforcementLevel: "advisory",
     validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
         if (launchConfiguration.associatePublicIpAddress === undefined || launchConfiguration.associatePublicIpAddress === true) {
-            reportViolation("Launch Configurations should not have a public IP address.");
+            reportViolation("EC2 Launch Configurations should not have a public IP address.");
         }
     }),
 };

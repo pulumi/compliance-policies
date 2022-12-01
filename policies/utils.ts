@@ -122,6 +122,7 @@ export class RegisteredPolicies {
      * criteria, and an `and` operation between selection criterias.
      *
      * Note: Criterias are all case-insensitive.
+     * Note: Call `resetPolicyfilter()` to reset the filter and consider all policies again.
      *
      * @param args A bag of options containing the selection criterias.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.

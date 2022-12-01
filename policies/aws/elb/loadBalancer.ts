@@ -96,3 +96,28 @@ policyRegistrations.registerPolicy({
     severity: "medium",
     topics: ["network", "logging"],
 });
+
+/**
+ * Check that ELB Load Balancers have a health check enabled.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
+ */
+export const enableHealthCheck: ResourceValidationPolicy = {
+    name: "aws-elb-load-balancer-enable-health-check",
+    description: "Check that ELB Load Balancers have a health check enabled.",
+    enforcementLevel: "advisory",
+    validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
+        if (!loadBalancer.healthCheck) {
+            reportViolation("ELB Load Balancers should have health checks enabled.");
+        }
+    }),
+};
+
+policyRegistrations.registerPolicy({
+    resourceValidationPolicy: enableHealthCheck,
+    vendors: ["aws"],
+    services: ["elb"],
+    severity: "high",
+    topics: ["network", "availability"],
+});

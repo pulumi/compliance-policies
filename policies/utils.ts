@@ -82,7 +82,7 @@ export class RegisteredPolicies {
      * This is needed to ensure users get policies only once so the Pulumi service doesn't
      * complain about duplicated policies.
      */
-    private readonly remainingPolicies: PolicyInfo[] = [];
+    private remainingPolicies: PolicyInfo[] = [];
 
     public getStats(): number {
         return this.allNames.length;
@@ -232,6 +232,24 @@ export class RegisteredPolicies {
             matches = tmpMatches;
         }
 
+        /**
+         * At this point, `matches` contains only the polcies that have matches
+         * the user submitted criterias. We should then remove them from the
+         * `this.remainingPolicies[]` to avoid duplicates when calling the next
+         * `filterPolicies()`.
+         */
+
+        matches.forEach((match) => {
+            const matchIndex = this.remainingPolicies.findIndex((candidate) => {
+                if (candidate.policyName === match.policyName) {
+                    return true;
+                }
+                return false;
+            });
+            if (matchIndex >= 0) {
+                this.remainingPolicies.splice(matchIndex, 1);
+            }
+        });
 
         matches.forEach((match) => {
             results.push(match.resourceValidationPolicy);
@@ -240,6 +258,15 @@ export class RegisteredPolicies {
         return results;
     }
 
+    /**
+     * When running the policy filter, it's important that the function returns a given
+     * policy only once so the Pulumi service doesn't complain about duplicated policies.
+     * This function, allows to reset the policy filter and start _fresh_ again so
+     * invoking `filterPolicies()` will consider all registered policies again.
+     */
+    public resetPolicyfilter(): void {
+        this.remainingPolicies = this.allPolicies;
+    }
     /**
      * Register a new policy so the policy can be aggregated into group of policies.
      *

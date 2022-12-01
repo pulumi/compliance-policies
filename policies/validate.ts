@@ -18,8 +18,19 @@ export * as kubernetes from "./kubernetes";
 
 console.info(`Number of registered policies: ${policyRegistrations.getStats()}.`); // eslint-disable-line no-console
 
-const selection = policyRegistrations.filterPolicies({
+let selection = policyRegistrations.filterPolicies({
     vendors: ["awS", "kubErnetes"],
-    severities: ["criTical"],
+    // severities: ["criTical"],
 });
 console.info(`Number of selected policies: ${selection.length}.`);  // eslint-disable-line no-console
+
+selection = policyRegistrations.filterPolicies({
+    vendors: ["kubErnetes"],
+});
+console.info(`Number of selected policies: ${selection.length}. Should be 0.`);  // eslint-disable-line no-console
+
+policyRegistrations.resetPolicyfilter();
+selection = policyRegistrations.filterPolicies({
+    vendors: ["kubErnetes"],
+});
+console.info(`Number of selected policies: ${selection.length}. Should be > 0.`);  // eslint-disable-line no-console

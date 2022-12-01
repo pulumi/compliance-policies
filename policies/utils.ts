@@ -238,7 +238,6 @@ export class RegisteredPolicies {
          * `this.remainingPolicies[]` to avoid duplicates when calling the next
          * `filterPolicies()`.
          */
-
         matches.forEach((match) => {
             const matchIndex = this.remainingPolicies.findIndex((candidate) => {
                 if (candidate.policyName === match.policyName) {

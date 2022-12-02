@@ -14,11 +14,13 @@
 
 import * as policy from "@pulumi/policy";
 import * as policies from "../index";
+import { PolicyInfo, PolicyMetadata } from "../utils";
 
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as q from "@pulumi/pulumi/queryable";
 
 import * as assert from "assert";
+import { meta } from "@pulumi/kubernetes";
 
 const empytOptions = {
     protect: false,
@@ -201,6 +203,99 @@ export function assetResourcePolicyIsRegistered(policy: policy.ResourceValidatio
         assert.fail(`Policy ${policy.name} is not registered.`);
     }
 }
+
+export function assetResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
+    const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
+    if (!registeredPolicy) {
+        assert.fail(`Policy ${policy.name} is not registered.`);
+    }
+    if (registeredPolicy) {
+        /**
+         * Frameworks
+         */
+        if (registeredPolicy.policyMetadata.frameworks && metadata.frameworks
+            && registeredPolicy.policyMetadata.frameworks.length && metadata.frameworks.length) {
+            if(!compareArray(registeredPolicy.policyMetadata.frameworks, metadata.frameworks)) {
+                assert.fail(`Policy ${policy.name} 'frameworks' don't match.`);
+            }
+        } else {
+            if (
+                (!registeredPolicy.policyMetadata.frameworks && metadata.frameworks) ||
+                (registeredPolicy.policyMetadata.frameworks && !metadata.frameworks)) {
+                    assert.fail(`Policy ${policy.name} 'frameworks' don't match.`);
+            }
+        }
+        /**
+         * Servces
+         */
+         if (registeredPolicy.policyMetadata.services && metadata.services
+            && registeredPolicy.policyMetadata.services.length && metadata.services.length) {
+            if(!compareArray(registeredPolicy.policyMetadata.services, metadata.services)) {
+                assert.fail(`Policy ${policy.name} 'services' don't match.`);
+            }
+        } else {
+            if (
+                (!registeredPolicy.policyMetadata.services && metadata.services) ||
+                (registeredPolicy.policyMetadata.services && !metadata.services)) {
+                assert.fail(`Policy ${policy.name} 'services' don't match.`);
+            }
+        }
+        /**
+         * Severities
+         */
+         if (registeredPolicy.policyMetadata.severity && metadata.severity) {
+            if (registeredPolicy.policyMetadata.severity !== metadata.severity) {
+                assert.fail(`Policy ${policy.name} 'severity' don't match.`);
+            }
+        } else {
+            if (
+                (!registeredPolicy.policyMetadata.severity && metadata.severity) ||
+                (registeredPolicy.policyMetadata.severity && !metadata.severity)) {
+                assert.fail(`Policy ${policy.name} 'severity' don't match.`);
+            }
+        }
+        /**
+         * Topics
+         */
+         if (registeredPolicy.policyMetadata.topics && metadata.topics
+            && registeredPolicy.policyMetadata.topics.length && metadata.topics.length) {
+            if(!compareArray(registeredPolicy.policyMetadata.topics, metadata.topics)) {
+                assert.fail(`Policy ${policy.name} 'topics' don't match.`);
+            }
+        } else {
+            if (
+                (!registeredPolicy.policyMetadata.topics && metadata.topics) ||
+                (registeredPolicy.policyMetadata.topics && !metadata.topics)) {
+                assert.fail(`Policy ${policy.name} 'topics' don't match.`);
+            }
+        }
+        /**
+         * Vendors
+         */
+         if (registeredPolicy.policyMetadata.vendors && metadata.vendors
+            && registeredPolicy.policyMetadata.vendors.length && metadata.vendors.length) {
+            if(!compareArray(registeredPolicy.policyMetadata.vendors, metadata.vendors)) {
+                assert.fail(`Policy ${policy.name} 'vendors' don't match.`);
+            }
+        } else {
+            if (
+                (!registeredPolicy.policyMetadata.vendors && metadata.vendors) ||
+                (registeredPolicy.policyMetadata.vendors && !metadata.vendors)) {
+                assert.fail(`Policy ${policy.name} 'vendors' don't match.`);
+            }
+        }
+    }
+}
+
+// for context https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript/
+function compareArray(array1: string[], array2: string[]): boolean {
+
+    const array2Sorted = array2.slice().sort();
+    return (array1.length === array2.length && array1.slice().sort().every((value, index) => {
+        return value === array2Sorted[index];
+    }));
+}
+
 
 // Helper to check if `type` is the type of `resourceClass`.
 function isTypeOf<TResource extends Resource>(

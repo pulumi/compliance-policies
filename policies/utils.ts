@@ -39,6 +39,7 @@ export interface RegisterPolicyArgs extends PolicyMetadata {
 export interface PolicyInfo {
     policyName: string;
     resourceValidationPolicy: ResourceValidationPolicy;
+    policyMetadata: PolicyMetadata;
 };
 
 export class RegisteredPolicies {
@@ -275,7 +276,7 @@ export class RegisteredPolicies {
      *
      * @param args An object containing the policy to register as well as its additional attributes.
      */
-    public registerPolicy(args: RegisterPolicyArgs): void {
+    public registerPolicy(args: RegisterPolicyArgs): ResourceValidationPolicy {
 
         if (this.allNames.includes(args.resourceValidationPolicy.name)) {
             throw `Another policy with the name '${args.resourceValidationPolicy.name}' already exists. Either register the policy only once, or ensure policy names are unique.`;
@@ -286,6 +287,13 @@ export class RegisteredPolicies {
         const policyInfo: PolicyInfo = {
             policyName: args.resourceValidationPolicy.name,
             resourceValidationPolicy: args.resourceValidationPolicy,
+            policyMetadata: {
+                frameworks: args.frameworks,
+                services: args.services,
+                severity: args.severity,
+                topics: args.topics,
+                vendors: args.vendors,
+            },
         };
 
         this.allPolicies.push(policyInfo);
@@ -336,6 +344,8 @@ export class RegisteredPolicies {
                 this.severities[args.severity].push(policyInfo);
             }
         }
+
+        return args.resourceValidationPolicy;
     }
 };
 

@@ -24,13 +24,16 @@ export interface FilterPolicyArgs {
     topics?: string[];
 };
 
-export interface RegisterPolicyArgs {
-    resourceValidationPolicy: ResourceValidationPolicy;
+export interface PolicyMetadata {
     vendors?: string[];
     services?: string[];
     frameworks?: string[];
     severity?: string;
     topics?: string[];
+};
+
+export interface RegisterPolicyArgs extends PolicyMetadata {
+    resourceValidationPolicy: ResourceValidationPolicy;
 };
 
 export interface PolicyInfo {

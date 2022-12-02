@@ -93,14 +93,14 @@ export class RegisteredPolicies {
     }
 
     /**
-     * This function allows to retrieve an individual policy by providing its
-     * name as an argument. If the policy is found, then it is return. If the
-     * requestes policy doesn't exists, then `undefined` is returned instead.
+     * This function allows to retrieve an individual policy infor by providing its
+     * name as an argument. If the policy is found, then it is returned. If the
+     * requested policy doesn't exists, then `undefined` is returned instead.
      *
      * @param name The policy name to search for and return.
-     * @returns The ResourceValidationPolicy if found, otherwise `undefined`.
+     * @returns The PolicyInfo if found, otherwise `undefined`.
      */
-    public getPolicyByName(name: string): ResourceValidationPolicy | undefined {
+    public getPolicyByName(name: string): PolicyInfo | undefined {
 
         if(!name || name.length === 0) {
             return undefined;
@@ -116,7 +116,7 @@ export class RegisteredPolicies {
         if (!match) {
             return undefined;
         }
-        return match.resourceValidationPolicy;
+        return match;
     }
 
     /**

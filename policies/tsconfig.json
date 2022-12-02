@@ -14,7 +14,7 @@
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true,
         "strictNullChecks": true,
-        "types": ["mocha", "node"],
+        "types": ["node", "mocha"],
     },
     "include": [
         "index.ts",

@@ -53,7 +53,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
         name: "aws-ebs-volume-configure-customer-managed-key",
         description: "Check that encrypted EBS volumes use a customer-manager KMS key.",
         validateResource: validateResourceOfType(aws.ebs.Volume, (v, args, reportViolation) => {
-            if (!v.encrypted || v.kmsKeyId !== undefined) {
+            if (v.encrypted && !v.kmsKeyId) {
                 reportViolation("An EBS volume should be encrypted using a customer-managed KMS key.");
             }
         }),

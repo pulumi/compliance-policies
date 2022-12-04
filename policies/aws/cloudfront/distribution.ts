@@ -25,19 +25,17 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-enable-access-logging",
-    description: "Checks that any CloudFront distributions have access logging enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if (!distribution.loggingConfig) {
-            reportViolation("CloudFront Distributions should have logging enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enableAccessLogging,
+export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-enable-access-logging",
+        description: "Checks that any CloudFront distributions have access logging enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (!distribution.loggingConfig) {
+                reportViolation("CloudFront Distributions should have logging enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "medium",
@@ -50,19 +48,17 @@ policyRegistrations.registerPolicy({
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-configure-access-logging",
-    description: "Checks that any CloudFront distributions have access logging configured.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if (distribution.loggingConfig && !distribution.loggingConfig.bucket) {
-            reportViolation("CloudFront Distributions should have access logging configured.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureAccessLogging,
+export const configureAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-configure-access-logging",
+        description: "Checks that any CloudFront distributions have access logging configured.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.loggingConfig && !distribution.loggingConfig.bucket) {
+                reportViolation("CloudFront Distributions should have access logging configured.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "medium",
@@ -75,19 +71,17 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
-export const configureWaf: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-configure-waf-acl",
-    description: "Checks that any CloudFront distribution has a WAF ACL associated.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if (distribution.webAclId === undefined) {
-            reportViolation("CloudFront Distributions should have a WAF ACL associated.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureWaf,
+export const configureWaf: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-configure-waf-acl",
+        description: "Checks that any CloudFront distribution has a WAF ACL associated.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.webAclId === undefined) {
+                reportViolation("CloudFront Distributions should have a WAF ACL associated.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",
@@ -100,22 +94,20 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
-export const disallowUnencryptedTraffic: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-disallow-unencrypted-traffic",
-    description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if (distribution.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
-            reportViolation("CloudFront distributions should not allow unencrypted traffic.");
-        }
-        if (distribution.orderedCacheBehaviors?.some(orderedCacheBehavior => orderedCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
-            reportViolation("CloudFront distributions should not allow unencrypted traffic.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowUnencryptedTraffic,
+export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-disallow-unencrypted-traffic",
+        description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
+                reportViolation("CloudFront distributions should not allow unencrypted traffic.");
+            }
+            if (distribution.orderedCacheBehaviors?.some(orderedCacheBehavior => orderedCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
+                reportViolation("CloudFront distributions should not allow unencrypted traffic.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "critical",
@@ -128,19 +120,17 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
-export const configureSecureTLS: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-configure-secure-tls",
-    description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        if ( distribution.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
-            reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureSecureTLS,
+export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-configure-secure-tls",
+        description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if ( distribution.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
+                reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",
@@ -153,21 +143,19 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const enableTLSToOrigin: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-enable-tls-to-origin",
-    description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        distribution.origins.forEach((origin) => {
-            if (origin.customOriginConfig?.originProtocolPolicy.toLowerCase() !== "https-only") {
-                reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");
-            }
-        });
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enableTLSToOrigin,
+export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-enable-tls-to-origin",
+        description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            distribution.origins.forEach((origin) => {
+                if (origin.customOriginConfig?.originProtocolPolicy.toLowerCase() !== "https-only") {
+                    reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");
+                }
+            });
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "critical",
@@ -180,23 +168,21 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const configureSedureTLSToOrgin: ResourceValidationPolicy = {
-    name: "aws-cloudfront-distribution-configure-secure-tls-to-origin",
-    description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-        distribution.origins.forEach((origin) => {
-            origin.customOriginConfig?.originSslProtocols?.forEach((sslProtocol) => {
-                if (sslProtocol.toLowerCase() !== "TLSv1.2".toLowerCase()) {
-                    reportViolation("CloudFront Distributions should only use TLS 1.2 encryption to communicate with custom origins.");
-                }
+export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-cloudfront-distribution-configure-secure-tls-to-origin",
+        description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            distribution.origins.forEach((origin) => {
+                origin.customOriginConfig?.originSslProtocols?.forEach((sslProtocol) => {
+                    if (sslProtocol.toLowerCase() !== "TLSv1.2".toLowerCase()) {
+                        reportViolation("CloudFront Distributions should only use TLS 1.2 encryption to communicate with custom origins.");
+                    }
+                });
             });
-        });
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureSedureTLSToOrgin,
+        }),
+    },
     vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",

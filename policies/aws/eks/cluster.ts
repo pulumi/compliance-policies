@@ -27,19 +27,17 @@ import { policyRegistrations } from "../../utils";
  * @link https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-eks-cluster-encryptionconfig.html
  */
-export const enableClusterEncryptionConfig: ResourceValidationPolicy = {
-    name: "aws-eks-cluster-enable-cluster-encryption-config",
-    description: "Check that EKS Cluster Encryption Config is enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
-        if (!cluster.encryptionConfig) {
-            reportViolation("EKS Cluster Encryption Configuration should be enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enableClusterEncryptionConfig,
+export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-eks-cluster-enable-cluster-encryption-config",
+        description: "Check that EKS Cluster Encryption Config is enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
+            if (!cluster.encryptionConfig) {
+                reportViolation("EKS Cluster Encryption Configuration should be enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["eks"],
     severity: "high",
@@ -52,28 +50,26 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
-export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = {
-    name: "aws-eks-cluster-disallow-api-endpoint-public-access",
-    description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
-        if (cluster.vpcConfig.endpointPublicAccess === undefined || cluster.vpcConfig.endpointPublicAccess === true) {
-            /**
-             * We need to cleck `publicAccessCidrs` for any `0.0.0.0/0`.
-             */
-            if (!cluster.vpcConfig.publicAccessCidrs) {
-                reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");
-            } else {
-                if (cluster.vpcConfig.publicAccessCidrs.includes("0.0.0.0/0") || cluster.vpcConfig.publicAccessCidrs.includes("::/0")) {
+export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-eks-cluster-disallow-api-endpoint-public-access",
+        description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
+            if (cluster.vpcConfig.endpointPublicAccess === undefined || cluster.vpcConfig.endpointPublicAccess === true) {
+                /**
+                 * We need to cleck `publicAccessCidrs` for any `0.0.0.0/0`.
+                 */
+                if (!cluster.vpcConfig.publicAccessCidrs) {
                     reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");
+                } else {
+                    if (cluster.vpcConfig.publicAccessCidrs.includes("0.0.0.0/0") || cluster.vpcConfig.publicAccessCidrs.includes("::/0")) {
+                        reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");
+                    }
                 }
             }
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowAPIEndpointPublicAccess,
+        }),
+    },
     vendors: ["aws"],
     services: ["eks"],
     severity: "critical",

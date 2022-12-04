@@ -26,19 +26,17 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = {
-    name: "aws-apigatewayv2-stage-enable-access-logging",
-    description: "Checks that any ApiGatewayV2 Stages have access logging enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.apigatewayv2.Stage, (stage, args, reportViolation) => {
-        if (!stage.accessLogSettings) {
-            reportViolation("API Gateway V2 stages should have access logging enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enableAccessLogging,
+export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-apigatewayv2-stage-enable-access-logging",
+        description: "Checks that any ApiGatewayV2 Stages have access logging enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.apigatewayv2.Stage, (stage, args, reportViolation) => {
+            if (!stage.accessLogSettings) {
+                reportViolation("API Gateway V2 stages should have access logging enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "medium",
@@ -51,19 +49,17 @@ policyRegistrations.registerPolicy({
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = {
-    name: "aws-apigatewayv2-stage-configure-access-logging",
-    description: "Checks that any ApiGatewayV2 Stages have access logging configured.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.apigatewayv2.Stage, (stage, args, reportViolation) => {
-        if (stage.accessLogSettings && !stage.accessLogSettings.destinationArn) {
-            reportViolation("API Gateway V2 stages should have access logging configured.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureAccessLogging,
+export const configureAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-apigatewayv2-stage-configure-access-logging",
+        description: "Checks that any ApiGatewayV2 Stages have access logging configured.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.apigatewayv2.Stage, (stage, args, reportViolation) => {
+            if (stage.accessLogSettings && !stage.accessLogSettings.destinationArn) {
+                reportViolation("API Gateway V2 stages should have access logging configured.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "medium",

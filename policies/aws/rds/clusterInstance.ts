@@ -25,19 +25,17 @@ import { policyRegistrations } from "../../utils";
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const enablePerformanceInsights: ResourceValidationPolicy = {
-    name: "aws-rds-cluster-instance-enable-performance-insights",
-    description: "Checks that RDS Cluster Instances have performance insights enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
-        if (!clusterInstance.performanceInsightsEnabled) {
-            reportViolation("RDS Cluster Instances should have performance insights enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enablePerformanceInsights,
+export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-rds-cluster-instance-enable-performance-insights",
+        description: "Checks that RDS Cluster Instances have performance insights enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
+            if (!clusterInstance.performanceInsightsEnabled) {
+                reportViolation("RDS Cluster Instances should have performance insights enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["rds"],
     severity: "low",
@@ -50,19 +48,17 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = {
-    name: "aws-rds-cluster-instance-disallow-unencrypted-performance-insights",
-    description: "Checks that RDS Cluster Instances performance insights is encrypted.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
-        if (clusterInstance.performanceInsightsEnabled && clusterInstance.performanceInsightsKmsKeyId === undefined) {
-            reportViolation("RDS Cluster Instances should have performance insights encrypted.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowUnencryptedPerformanceInsights,
+export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-rds-cluster-instance-disallow-unencrypted-performance-insights",
+        description: "Checks that RDS Cluster Instances performance insights is encrypted.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
+            if (clusterInstance.performanceInsightsEnabled && clusterInstance.performanceInsightsKmsKeyId === undefined) {
+                reportViolation("RDS Cluster Instances should have performance insights encrypted.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["rds"],
     severity: "high",
@@ -75,19 +71,17 @@ policyRegistrations.registerPolicy({
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = {
-    name: "aws-rds-cluster-instance-disallow-public-access",
-    description: "Checks that RDS Cluster Instances public access is not enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
-        if (!clusterInstance.publiclyAccessible) {
-            reportViolation("RDS Cluster Instances public access should not be enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowPublicAccess,
+export const disallowPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-rds-cluster-instance-disallow-public-access",
+        description: "Checks that RDS Cluster Instances public access is not enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
+            if (!clusterInstance.publiclyAccessible) {
+                reportViolation("RDS Cluster Instances public access should not be enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["rds"],
     severity: "critical",

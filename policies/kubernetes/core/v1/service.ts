@@ -26,34 +26,32 @@ import { policyRegistrations } from "../../../utils";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = {
-    name: "kubernetes-core-v1-service-configure-recommended-label",
-    description: "Checks that Kubernetes Services use the recommended labels.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(k8s.core.v1.Service, (service, args, reportViolation) => {
-        if (!service.metadata || !service.metadata.labels) {
-            reportViolation("Kubernetes Services should use the recommended labels.");
-        } else {
-            for (const key of Object.keys(service.metadata?.labels)) {
-                const recommendedLabels = [
-                    "app.kubernetes.io/name",
-                    "app.kubernetes.io/instance",
-                    "app.kubernetes.io/version",
-                    "app.kubernetes.io/component",
-                    "app.kubernetes.io/part-of",
-                    "app.kubernetes.io/managed-by",
-                ];
+export const configureRecommendedLabel: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "kubernetes-core-v1-service-configure-recommended-label",
+        description: "Checks that Kubernetes Services use the recommended labels.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(k8s.core.v1.Service, (service, args, reportViolation) => {
+            if (!service.metadata || !service.metadata.labels) {
+                reportViolation("Kubernetes Services should use the recommended labels.");
+            } else {
+                for (const key of Object.keys(service.metadata?.labels)) {
+                    const recommendedLabels = [
+                        "app.kubernetes.io/name",
+                        "app.kubernetes.io/instance",
+                        "app.kubernetes.io/version",
+                        "app.kubernetes.io/component",
+                        "app.kubernetes.io/part-of",
+                        "app.kubernetes.io/managed-by",
+                    ];
 
-                if (recommendedLabels.indexOf(key) === -1) {
-                    reportViolation("Kubernetes Services should have the recommended labels.");
+                    if (recommendedLabels.indexOf(key) === -1) {
+                        reportViolation("Kubernetes Services should have the recommended labels.");
+                    }
                 }
             }
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureRecommendedLabel,
+        }),
+    },
     vendors: ["kubernetes"],
     services: ["core", "service"],
     severity: "low",

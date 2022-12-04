@@ -25,25 +25,23 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIP: ResourceValidationPolicy = {
-    name: "aws-ec2-launch-template-disallow-public-ips",
-    description: "Checks that EC2 Launch Templates do not have public IP addresses.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
-        lt.networkInterfaces?.forEach((iface) => {
-            if (!iface.associatePublicIpAddress) {
-                reportViolation("EC2 Launch templates should not have public IP addresses.");
-            }
-        });
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowPublicIP,
+export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-ec2-launch-template-disallow-public-ips",
+        description: "Checks that EC2 Launch Templates do not have public IP addresses.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
+            lt.networkInterfaces?.forEach((iface) => {
+                if (!iface.associatePublicIpAddress) {
+                    reportViolation("EC2 Launch templates should not have public IP addresses.");
+                }
+            });
+        }),
+    },
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
-    topics: [""],
+    topics: ["network"],
 });
 
 /**
@@ -52,21 +50,19 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = {
-    name: "aws-ec2-launch-template-disallow-unencrypted-volume",
-    description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
-        lt.blockDeviceMappings?.forEach((device) => {
-            if (!device.ebs?.encrypted) {
-                reportViolation("EC2 Launch Templates should not have an unencypted block device.");
-            }
-        });
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: disallowUnencryptedBlockDevice,
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-ec2-launch-template-disallow-unencrypted-volume",
+        description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
+            lt.blockDeviceMappings?.forEach((device) => {
+                if (!device.ebs?.encrypted) {
+                    reportViolation("EC2 Launch Templates should not have an unencypted block device.");
+                }
+            });
+        }),
+    },
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",

@@ -17,7 +17,6 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-
 import { policyRegistrations } from "../../utils";
 
 /**
@@ -26,25 +25,22 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
-export const enableDomainNameConfiguration: ResourceValidationPolicy = {
-    name: "aws-apigatewayv2-stage-enable-domain-name-configuration",
-    description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
-        if (!domainName.domainNameConfiguration) {
-            reportViolation("API GatewayV2 Domain Name Configuration should be enabled.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: enableDomainNameConfiguration,
+export const enableDomainNameConfiguration: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-apigatewayv2-stage-enable-domain-name-configuration",
+        description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
+            if (!domainName.domainNameConfiguration) {
+                reportViolation("API GatewayV2 Domain Name Configuration should be enabled.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "high",
     topics: ["network"],
 });
-
 
 /**
  * Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.
@@ -52,19 +48,17 @@ policyRegistrations.registerPolicy({
  * @severity **High**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
-export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = {
-    name: "aws-apigatewayv2-stage-configure-domain-name-security-policy",
-    description: "Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
-        if (domainName.domainNameConfiguration.securityPolicy.toLowerCase() !== "TLS_1_2".toLowerCase()) {
-            reportViolation("API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureDomainNameSecurityPolicy,
+export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-apigatewayv2-stage-configure-domain-name-security-policy",
+        description: "Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
+            if (domainName.domainNameConfiguration.securityPolicy.toLowerCase() !== "TLS_1_2".toLowerCase()) {
+                reportViolation("API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "high",

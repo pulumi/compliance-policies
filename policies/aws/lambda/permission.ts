@@ -25,19 +25,17 @@ import { policyRegistrations } from "../../utils";
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
-export const configureSourceArn: ResourceValidationPolicy = {
-    name: "aws-lambda-permission-configure-source-arn-permission",
-    description: "Checks that lambda function permissions have a source arn specified.",
-    enforcementLevel: "advisory",
-    validateResource: validateResourceOfType(aws.lambda.Permission, (f, args, reportViolation) => {
-        if (!f.sourceArn) {
-            reportViolation("Lambda functions permissions should have a source ARN defined.");
-        }
-    }),
-};
-
-policyRegistrations.registerPolicy({
-    resourceValidationPolicy: configureSourceArn,
+export const configureSourceArn: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-lambda-permission-configure-source-arn-permission",
+        description: "Checks that lambda function permissions have a source arn specified.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.lambda.Permission, (f, args, reportViolation) => {
+            if (!f.sourceArn) {
+                reportViolation("Lambda functions permissions should have a source ARN defined.");
+            }
+        }),
+    },
     vendors: ["aws"],
     services: ["lambda"],
     severity: "critical",

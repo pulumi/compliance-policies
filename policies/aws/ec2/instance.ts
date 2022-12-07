@@ -43,7 +43,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.re
 
 
 /**
- * Checks that EC2 instances does not have unencrypted root volumes..
+ * Checks that EC2 instances does not have unencrypted root volumes.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html

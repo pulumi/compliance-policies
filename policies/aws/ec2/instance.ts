@@ -26,7 +26,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-instance-disallow-public-ips",
+        name: "aws-ec2-instance-disallow-public-ip",
         description: "Checks that EC2 instances do not have a public IP address.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {

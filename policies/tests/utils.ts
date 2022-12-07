@@ -204,6 +204,12 @@ export function assetResourcePolicyIsRegistered(policy: policy.ResourceValidatio
     }
 }
 
+export function assetResourcePolicyName(policy: policy.ResourceValidationPolicy, name: string) {
+    if (policy.name !== name) {
+        assert.fail(`Policy name '${policy.name}' isn't matching the expected name '${name}'.`);
+    }
+}
+
 export function assetResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
     const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
     if (!registeredPolicy) {

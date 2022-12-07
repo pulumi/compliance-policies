@@ -89,7 +89,7 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", () => {
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedVolume #2", async () => {
+    it("configureCustomerManagedKey #2", async () => {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = undefined;
         await assertHasResourceViolation(policy, args, { message: "Secrets Manager Secrets should be encrypted using a customer-managed KMS key." });

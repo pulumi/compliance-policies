@@ -27,10 +27,10 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-kms-key-enable-key-rotation",
+        name: "aws-native-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.kms.Key, (key, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {
             if (!key.enableKeyRotation) {
                 reportViolation("KMS Keys should have key rotation enabled.");
             }
@@ -51,10 +51,10 @@ export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.r
  */
 export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-kms-key-missing-description",
+        name: "aws-native-kms-key-missing-description",
         description: "Checks that KMS Keys have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.kms.Key, (key, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {
             if (!key.description) {
                 reportViolation("KMS Keys should have a description.");
             } else {
@@ -68,27 +68,4 @@ export const missingDescription: ResourceValidationPolicy = policyRegistrations.
     services: ["kms"],
     severity: "low",
     topics: ["documentation"],
-});
-
-/**
- * Checks that KMS Keys have key rotation enabled.
- *
- * @severity **Critical**
- * @link https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-bypass-policy-lockout-safety-check
- */
-export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyRegistrations.registerPolicy({
-    resourceValidationPolicy: {
-        name: "aws_native-kms-key-disallow-bypass-policy-lockout-safety-check",
-        description: "Checks that KMS Keys do not allow bypassing the key policy lockout safety check.",
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.kms.Key, (key, args, reportViolation) => {
-            if (key.bypassPolicyLockoutSafetyCheck) {
-                reportViolation("KMS Keys should now allow bypassing the key policy lockout safety check.");
-            }
-        }),
-    },
-    vendors: ["aws"],
-    services: ["kms"],
-    severity: "critical",
-    topics: ["encryption"],
 });

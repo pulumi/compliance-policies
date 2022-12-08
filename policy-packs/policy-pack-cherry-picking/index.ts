@@ -18,7 +18,7 @@ import * as policies from "@bobcatt/pulumi-policies";
  * ```
  */
 
-new PolicyPack("policy-pack-acme-corp", {
+new PolicyPack("policy-pack-acme-corp-cherry-picking", {
     policies: [
         policies.aws.apigatewayv2.DomainName.enableDomainNameConfiguration,
         policies.aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy,

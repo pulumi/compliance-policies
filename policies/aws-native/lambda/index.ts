@@ -13,4 +13,3 @@
 // limitations under the License.
 
 export * as Function from "./function";
-export * as Permission from "./permission";

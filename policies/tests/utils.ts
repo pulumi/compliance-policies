@@ -198,19 +198,30 @@ export async function assertHasStackViolation(
     assertHasViolation(allViolations, wantViolation);
 }
 
-export function assetResourcePolicyIsRegistered(policy: policy.ResourceValidationPolicy) {
+export function assertResourcePolicyIsRegistered(policy: policy.ResourceValidationPolicy) {
     if (!policies.policyRegistrations.getPolicyByName(policy.name)) {
         assert.fail(`Policy ${policy.name} is not registered.`);
     }
 }
 
-export function assetResourcePolicyName(policy: policy.ResourceValidationPolicy, name: string) {
+export function assertResourcePolicyName(policy: policy.ResourceValidationPolicy, name: string) {
+    const re = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
+
     if (policy.name !== name) {
         assert.fail(`Policy name '${policy.name}' isn't matching the expected name '${name}'.`);
     }
+
+    const nameMatch = policy.name.match(re);
+    if (!nameMatch) {
+        assert.fail(`Policy name '${policy.name}' should match '${re}' (#1)`);
+    } else {
+        if (nameMatch.length !== 1) {
+            assert.fail(`Policy name '${policy.name}' should match '${re}' (#2)`);
+        }
+    }
 }
 
-export function assetResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
+export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
     const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
     if (!registeredPolicy) {
         assert.fail(`Policy ${policy.name} is not registered.`);

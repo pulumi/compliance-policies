@@ -30,7 +30,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
         name: "aws_native-rds-cluster-enable-backup-retention",
         description: "Checks that RDS Clusters backup retention policy is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             if (!cluster.backupRetentionPeriod) {
                 reportViolation("RDS Clusters backup retention should be enabled.");
             }
@@ -53,7 +53,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
         name: "aws_native-rds-cluster-configure-backup-retention",
         description: "Checks that RDS Cluster backup retention policy is configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             /**
              * 3 (three) days should be the minimum in order to have full weekend coverage.
              */
@@ -79,7 +79,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
         name: "aws_native-rds-cluster-storage-disallow-unencrypted-storage",
         description: "Checks that RDS Clusters storage is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             if (!cluster.storageEncrypted) {
                 reportViolation("RDS Cluster storage should be encrypted.");
             }
@@ -102,7 +102,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
         name: "aws_native-rds-cluster-storage-encryption-with-customer-managed-key",
         description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             if (cluster.storageEncrypted && cluster.kmsKeyId === undefined) {
                 reportViolation("RDS Cluster storage should be encrypted using a customer-managed key.");
             }

@@ -1,0 +1,2 @@
+description: A policy pack for Pulumi to demonstrate policy cherry-picking.
+runtime: nodejs

@@ -125,6 +125,6 @@ describe("aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck", () => {
     it("disallowBypassPolicyLockoutSafetyCheck #2", async () => {
         const args = getResourceValidationArgs();
         args.props.bypassPolicyLockoutSafetyCheck = true;
-        await assertHasResourceViolation(policy, args, { message: "KMS Keys should now allow bypassing the key policy lockout safety check." });
+        await assertHasResourceViolation(policy, args, { message: "KMS Keys should not bypass the key policy lockout safety check." });
     });
 });

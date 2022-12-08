@@ -13,4 +13,4 @@
 // limitations under the License.
 
 export * as DbCluster from "./dbCluster";
-export * as ClusterInstance from "./dbInstance";
+export * as DbInstance from "./dbInstance";

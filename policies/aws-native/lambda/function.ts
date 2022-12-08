@@ -27,10 +27,10 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableTracingConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-lambda-function-enable-tracing-config",
+        name: "aws-native-lambda-function-enable-tracing-config",
         description: "Checks that Lambda functions have tracing enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.lambda.Function, (f, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.lambda.Function, (f, args, reportViolation) => {
             if (!f.tracingConfig) {
                 reportViolation("Lambda functions should have tracing enabled.");
             }
@@ -50,10 +50,10 @@ export const enableTracingConfig: ResourceValidationPolicy = policyRegistrations
  */
 export const configureTracingConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-lambda-function-configure-tracing-config",
+        name: "aws-native-lambda-function-configure-tracing-config",
         description: "Checks that Lambda functions have tracing configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.lambda.Function, (f, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.lambda.Function, (f, args, reportViolation) => {
             if (f.tracingConfig && f.tracingConfig.mode !== "Active") {
                 reportViolation("Lambda functions should have tracing configured.");
             }

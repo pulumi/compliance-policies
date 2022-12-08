@@ -29,10 +29,10 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-eks-cluster-enable-cluster-encryption-config",
+        name: "aws-native-eks-cluster-enable-cluster-encryption-config",
         description: "Check that EKS Cluster Encryption Config is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.eks.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {
             if (!cluster.encryptionConfig) {
                 reportViolation("EKS Cluster Encryption Configuration should be enabled.");
             }
@@ -52,18 +52,18 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyReg
  */
 export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-eks-cluster-disallow-api-endpoint-public-access",
+        name: "aws-native-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.eks.Cluster, (cluster, args, reportViolation) => {
-            if (cluster.vpcConfig.endpointPublicAccess === undefined || cluster.vpcConfig.endpointPublicAccess === true) {
+        validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {
+            if (cluster.resourcesVpcConfig.endpointPublicAccess === undefined || cluster.resourcesVpcConfig.endpointPublicAccess === true) {
                 /**
-                 * We need to cleck `publicAccessCidrs` for any `0.0.0.0/0`.
+                 * We need to cleck `publicAccessCidrs` for any `0.0.0.0/0` and `::/0`.
                  */
-                if (!cluster.vpcConfig.publicAccessCidrs) {
+                if (!cluster.resourcesVpcConfig.publicAccessCidrs) {
                     reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");
                 } else {
-                    if (cluster.vpcConfig.publicAccessCidrs.includes("0.0.0.0/0") || cluster.vpcConfig.publicAccessCidrs.includes("::/0")) {
+                    if (cluster.resourcesVpcConfig.publicAccessCidrs.includes("0.0.0.0/0") || cluster.resourcesVpcConfig.publicAccessCidrs.includes("::/0")) {
                         reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");
                     }
                 }

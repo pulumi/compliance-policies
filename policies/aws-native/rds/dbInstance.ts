@@ -20,6 +20,55 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
+ * Checks that backup retention policy is adequate.
+ *
+ * @severity **Medium**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
+ */
+export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-native-rds-instance-enable-retention",
+        description: "Checks that RDS Instances backup retention policy is enabled.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
+            if (!instance.backupRetentionPeriod) {
+                reportViolation("RDS Instance backup retention should be enabled.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+});
+
+/**
+ * Checks that RDS Instances backup retention policy is adequate.
+ *
+ * @severity **Medium**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
+ */
+export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-native-rds-instance-configure-backup-retention",
+        description: "Checks that RDS Instances backup retention policy is adequate.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
+            /**
+             * 3 (three) days should be the minimum in order to have full weekend coverage.
+             */
+            if (instance.backupRetentionPeriod && instance.backupRetentionPeriod < 3) {
+                reportViolation("RDS Instances backup retention period is lower than 3 days.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+});
+
+/**
  * Checks that RDS Cluster Instances have performance insights enabled.
  *
  * @severity **Low**
@@ -86,4 +135,50 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
     services: ["rds"],
     severity: "critical",
     topics: ["network"],
+});
+
+/**
+ * Checks that RDS storage is encrypted.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ */
+export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws_native-rds-instance-storage-disallow-unencrypted-storage",
+        description: "Checks that RDS instance storage is encrypted.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
+            if (!instance.storageEncrypted) {
+                reportViolation("RDS Instance storage should be encrypted.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["encryption", "storage"],
+});
+
+/**
+ * Checks that storage is encrypted with a customer managed key.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ */
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws_native-rds-instance-storage-encryption-with-customer-managed-key",
+        description: "Checks that RDS Instance storage uses a customer-manager KMS key.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
+            if (instance.storageEncrypted && instance.kmsKeyId === undefined) {
+                reportViolation("RDS Instance storage should be encrypted using a customer-managed key.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "low",
+    topics: ["encryption", "storage"],
 });

@@ -94,7 +94,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRe
  */
 export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-kms-key-disallow-bypass-policy-lockout-safety-check",
+        name: "aws-native-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that EFS File systems do not bypass the File System policy lockout safety check.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {

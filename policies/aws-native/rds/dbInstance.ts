@@ -145,7 +145,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-rds-instance-storage-disallow-unencrypted-storage",
+        name: "aws-native-rds-instance-storage-disallow-unencrypted-storage",
         description: "Checks that RDS instance storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
@@ -168,7 +168,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-rds-instance-storage-encryption-with-customer-managed-key",
+        name: "aws-native-rds-instance-storage-encryption-with-customer-managed-key",
         description: "Checks that RDS Instance storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {

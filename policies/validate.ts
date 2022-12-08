@@ -14,6 +14,7 @@
 
 import { policyRegistrations } from "./utils";
 export * as aws from "./aws";
+export * as awsNative from "./aws-native";
 export * as kubernetes from "./kubernetes";
 
 console.info(`Number of registered policies: ${policyRegistrations.getStats()}.`); // eslint-disable-line no-console

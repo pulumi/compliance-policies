@@ -27,10 +27,10 @@ import { policyRegistrations } from "../../utils";
  */
 export const configureSourceArn: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-lambda-permission-configure-source-arn-permission",
+        name: "aws-native-lambda-permission-configure-source-arn-permission",
         description: "Checks that lambda function permissions have a source arn specified.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.lambda.Permission, (f, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.lambda.Permission, (f, args, reportViolation) => {
             if (!f.sourceArn) {
                 reportViolation("Lambda functions permissions should have a source ARN defined.");
             }

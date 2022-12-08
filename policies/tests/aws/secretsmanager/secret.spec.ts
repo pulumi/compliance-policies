@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assetResourcePolicyIsRegistered, assetResourcePolicyRegistrationDetails, createResourceValidationArgs, assetResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -30,15 +30,15 @@ describe("aws.secretsmanager.Secret.missingDescription", () => {
     const policy = policies.aws.secretsmanager.Secret.missingDescription;
 
     it("missingDescription (name)", async () => {
-        assetResourcePolicyName(policy, "aws-secrets-manager-secret-missing-description");
+        assertResourcePolicyName(policy, "aws-secrets-manager-secret-missing-description");
     });
 
     it("missingDescription (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("missingDescription (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["secretsmanager"],
             severity: "low",
@@ -68,15 +68,15 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", () => {
     const policy = policies.aws.secretsmanager.Secret.configureCustomerManagedKey;
 
     it("configureCustomerManagedKey (name)", async () => {
-        assetResourcePolicyName(policy, "aws-secrets-manager-secret-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "aws-secrets-manager-secret-configure-customer-managed-key");
     });
 
     it("configureCustomerManagedKey (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("configureCustomerManagedKey (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["secretsmanager"],
             severity: "low",

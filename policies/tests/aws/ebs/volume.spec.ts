@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assetResourcePolicyIsRegistered, assetResourcePolicyRegistrationDetails, createResourceValidationArgs, assetResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -32,15 +32,15 @@ describe("aws.ebs.Volume.disallowUnencryptedVolume", () => {
     const policy = policies.aws.ebs.Volume.disallowUnencryptedVolume;
 
     it("disallowUnencryptedVolume (name)", async () => {
-        assetResourcePolicyName(policy, "aws-ebs-volume-disallow-unencrypted-volume");
+        assertResourcePolicyName(policy, "aws-ebs-volume-disallow-unencrypted-volume");
     });
 
     it("disallowUnencryptedVolume (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("disallowUnencryptedVolume (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ebs"],
             severity: "high",
@@ -64,15 +64,15 @@ describe("aws.ebs.Volume.configureCustomerManagedKey", () => {
     const policy = policies.aws.ebs.Volume.configureCustomerManagedKey;
 
     it("configureCustomerManagedKey (name)", async () => {
-        assetResourcePolicyName(policy, "aws-ebs-volume-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "aws-ebs-volume-configure-customer-managed-key");
     });
 
     it("configureCustomerManagedKey (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("configureCustomerManagedKey (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ebs"],
             severity: "low",

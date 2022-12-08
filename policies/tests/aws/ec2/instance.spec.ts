@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assetResourcePolicyIsRegistered, assetResourcePolicyRegistrationDetails, createResourceValidationArgs, assetResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -45,15 +45,15 @@ describe("aws.ec2.Instance.disallowPublicIP", () => {
     const policy = policies.aws.ec2.Instance.disallowPublicIP;
 
     it("disallowPublicIP (name)", async () => {
-        assetResourcePolicyName(policy, "aws-ec2-instance-disallow-public-ip");
+        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-public-ip");
     });
 
     it("disallowPublicIP (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("disallowPublicIP (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
             severity: "high",
@@ -77,15 +77,15 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", () => {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedRootBlockDevice;
 
     it("disallowUnencryptedRootBlockDevice (name)", async () => {
-        assetResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-root-volume");
+        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-root-volume");
     });
 
     it("disallowUnencryptedRootBlockDevice (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("disallowUnencryptedRootBlockDevice (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
             severity: "high",
@@ -115,15 +115,15 @@ describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", () => {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedBlockDevice;
 
     it("disallowUnencryptedBlockDevice (name)", async () => {
-        assetResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-volumes");
+        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-volumes");
     });
 
     it("disallowUnencryptedBlockDevice (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("disallowUnencryptedBlockDevice (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
             severity: "high",

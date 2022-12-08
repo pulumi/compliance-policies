@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assetResourcePolicyIsRegistered, assetResourcePolicyRegistrationDetails, createResourceValidationArgs, assetResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -31,15 +31,15 @@ describe("aws.kms.Key.enableKeyRotation", () => {
     const policy = policies.aws.kms.Key.enableKeyRotation;
 
     it("enableKeyRotation (name)", async () => {
-        assetResourcePolicyName(policy, "aws-kms-key-enable-key-rotation");
+        assertResourcePolicyName(policy, "aws-kms-key-enable-key-rotation");
     });
 
     it("enableKeyRotation (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("enableKeyRotation (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
             severity: "medium",
@@ -63,15 +63,15 @@ describe("aws.kms.Key.missingDescription", () => {
     const policy = policies.aws.kms.Key.missingDescription;
 
     it("missingDescription (name)", async () => {
-        assetResourcePolicyName(policy, "aws-kms-key-missing-description");
+        assertResourcePolicyName(policy, "aws-kms-key-missing-description");
     });
 
     it("missingDescription (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("missingDescription (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
             severity: "low",
@@ -101,15 +101,15 @@ describe("aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck", () => {
     const policy = policies.aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck;
 
     it("disallowBypassPolicyLockoutSafetyCheck (name)", async () => {
-        assetResourcePolicyName(policy, "aws-kms-key-disallow-bypass-policy-lockout-safety-check");
+        assertResourcePolicyName(policy, "aws-kms-key-disallow-bypass-policy-lockout-safety-check");
     });
 
     it("disallowBypassPolicyLockoutSafetyCheck (registration)", async () => {
-        assetResourcePolicyIsRegistered(policy);
+        assertResourcePolicyIsRegistered(policy);
     });
 
     it("disallowBypassPolicyLockoutSafetyCheck (metadata)", async () => {
-        assetResourcePolicyRegistrationDetails(policy, {
+        assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
             severity: "critical",

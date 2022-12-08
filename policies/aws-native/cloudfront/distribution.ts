@@ -122,7 +122,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegist
  */
 export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-configure-secure-tls",
+        name: "aws-native-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -145,7 +145,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.
  */
 export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-enable-tls-to-origin",
+        name: "aws-native-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -170,7 +170,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
  */
 export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-configure-secure-tls-to-origin",
+        name: "aws-native-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {

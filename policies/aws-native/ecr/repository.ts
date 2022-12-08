@@ -27,10 +27,10 @@ import { policyRegistrations } from "../../utils";
  */
 export const configureImageScan: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-ecr-repository-configure-image-scans",
+        name: "aws-native-ecr-repository-configure-image-scans",
         description: "Checks that ECR repositories have 'scan-on-push' configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
             if (!repo.imageScanningConfiguration) {
                 reportViolation("ECR Repositories should have image scanning configured.");
             }
@@ -51,10 +51,10 @@ export const configureImageScan: ResourceValidationPolicy = policyRegistrations.
  */
 export const enableImageScan: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-ecr-repository-enable-image-scans",
+        name: "aws-native-ecr-repository-enable-image-scans",
         description: "Checks that ECR repositories have 'scan-on-push' enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
             if (repo.imageScanningConfiguration && !repo.imageScanningConfiguration.scanOnPush) {
                 reportViolation("ECR Repositories should enable 'scan-on-push'.");
             }
@@ -74,10 +74,10 @@ export const enableImageScan: ResourceValidationPolicy = policyRegistrations.reg
  */
 export const disallowMutableImage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-ecr-repository-disallow-mutable-images",
+        name: "aws-native-ecr-repository-disallow-mutable-images",
         description: "Checks that ECR Repositories have immutable images enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
             if (repo.imageTagMutability !== "IMMUTABLE") {
                 reportViolation("ECR repositories should enable immutable images.");
             }
@@ -97,11 +97,11 @@ export const disallowMutableImage: ResourceValidationPolicy = policyRegistration
  */
 export const disallowUnencryptedRepository: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-ecr-repository-disallow-unencrypted-repository",
+        name: "aws-native-ecr-repository-disallow-unencrypted-repository",
         description: "Checks that ECR Repositories are encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.ecr.Repository, (repo, args, reportViolation) => {
-            if (repo.encryptionConfigurations === undefined) {
+        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
+            if (repo.encryptionConfiguration === undefined) {
                 reportViolation("ECR repositories should be encrypted.");
             }
         }),
@@ -120,19 +120,17 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policyReg
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-ecr-repository-configure-customer-managed-key",
+        name: "aws-native-ecr-repository-configure-customer-managed-key",
         description: "Checks that ECR repositories use a customer-manager KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.ecr.Repository, (repo, args, reportViolation) => {
-            if (repo.encryptionConfigurations) {
-                repo.encryptionConfigurations.forEach((encryptionConfiguration) => {
-                    if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
-                        reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
-                    }
-                    if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
-                        reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
-                    }
-                });
+        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
+            if (repo.encryptionConfiguration) {
+                if (repo.encryptionConfiguration.encryptionType.toLowerCase() === "AES256".toLowerCase()) {
+                    reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                }
+                if (repo.encryptionConfiguration.encryptionType.toLowerCase() === "KMS".toLowerCase() && repo.encryptionConfiguration.kmsKey === undefined) {
+                    reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                }
             }
         }),
     },

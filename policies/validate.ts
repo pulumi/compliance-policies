@@ -19,19 +19,34 @@ export * as kubernetes from "./kubernetes";
 
 console.info(`Number of registered policies: ${policyRegistrations.getStats()}.`); // eslint-disable-line no-console
 
-let selection = policyRegistrations.filterPolicies({
-    vendors: ["awS", "kubErnetes"],
-    // severities: ["criTical"],
-});
-console.info(`Number of selected policies: ${selection.length}.`);  // eslint-disable-line no-console
-
-selection = policyRegistrations.filterPolicies({
-    vendors: ["kubErnetes"],
-});
-console.info(`Number of selected policies: ${selection.length}. Should be 0.`);  // eslint-disable-line no-console
-
+const awsSelection = policyRegistrations.filterPolicies({vendors: ["awS"] });
+console.info(`Number of AWS policies: ${awsSelection.length}.`);  // eslint-disable-line no-console
 policyRegistrations.resetPolicyfilter();
-selection = policyRegistrations.filterPolicies({
-    vendors: ["kubErnetes"],
-});
-console.info(`Number of selected policies: ${selection.length}. Should be > 0.`);  // eslint-disable-line no-console
+
+const k8sSelection = policyRegistrations.filterPolicies({vendors: ["KuBernetes"] });
+console.info(`Number of K8s policies: ${k8sSelection.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const sevCritical = policyRegistrations.filterPolicies({severities: ["critical"] });
+console.info(`Number of 'critical' severity policies: ${sevCritical.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const sevHigh = policyRegistrations.filterPolicies({severities: ["high"] });
+console.info(`Number of 'high' severity policies: ${sevHigh.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const sevMedium = policyRegistrations.filterPolicies({severities: ["medium"] });
+console.info(`Number of 'medium' severity policies: ${sevMedium.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const sevLow = policyRegistrations.filterPolicies({severities: ["low"] });
+console.info(`Number of 'low' severity policies: ${sevLow.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const frameworkPciDss = policyRegistrations.filterPolicies({frameworks: ["pcidss"] });
+console.info(`Number of 'pcidss' policies: ${frameworkPciDss.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();
+
+const frameworkSoc2 = policyRegistrations.filterPolicies({frameworks: ["soc2"] });
+console.info(`Number of 'soc2' policies: ${frameworkSoc2.length}.`);  // eslint-disable-line no-console
+policyRegistrations.resetPolicyfilter();

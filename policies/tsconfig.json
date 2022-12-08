@@ -20,6 +20,8 @@
         "index.ts",
         "validate.ts",
         "aws/**/*",
+        "aws-native/**/*",
+        "kubernetes/**/*",
     ],
     "exclude": [
         "node_modules",

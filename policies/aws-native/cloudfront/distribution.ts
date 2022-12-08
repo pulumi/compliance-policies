@@ -27,11 +27,11 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-enable-access-logging",
+        name: "aws-native-cloudfront-distribution-enable-access-logging",
         description: "Checks that any CloudFront distributions have access logging enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (!distribution.loggingConfig) {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (!distribution.distributionConfig.logging) {
                 reportViolation("CloudFront Distributions should have logging enabled.");
             }
         }),
@@ -50,11 +50,11 @@ export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations
  */
 export const configureAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-configure-access-logging",
+        name: "aws-native-cloudfront-distribution-configure-access-logging",
         description: "Checks that any CloudFront distributions have access logging configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (distribution.loggingConfig && !distribution.loggingConfig.bucket) {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.distributionConfig.logging && !distribution.distributionConfig.logging.bucket) {
                 reportViolation("CloudFront Distributions should have access logging configured.");
             }
         }),
@@ -73,11 +73,11 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
  */
 export const configureWaf: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-configure-waf-acl",
+        name: "aws-native-cloudfront-distribution-configure-waf-acl",
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (distribution.webAclId === undefined) {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.distributionConfig.webACLId === undefined) {
                 reportViolation("CloudFront Distributions should have a WAF ACL associated.");
             }
         }),
@@ -96,14 +96,14 @@ export const configureWaf: ResourceValidationPolicy = policyRegistrations.regist
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws_native-cloudfront-distribution-disallow-unencrypted-traffic",
+        name: "aws-native-cloudfront-distribution-disallow-unencrypted-traffic",
         description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (distribution.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.distributionConfig.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }
-            if (distribution.orderedCacheBehaviors?.some(orderedCacheBehavior => orderedCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
+            if (distribution.distributionConfig.cacheBehaviors?.some(cacheBehaviors => cacheBehaviors.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }
         }),
@@ -125,8 +125,8 @@ export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.
         name: "aws_native-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if ( distribution.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            if (distribution.distributionConfig.viewerCertificate && distribution.distributionConfig.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
                 reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
             }
         }),
@@ -148,9 +148,9 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
         name: "aws_native-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            distribution.origins.forEach((origin) => {
-                if (origin.customOriginConfig?.originProtocolPolicy.toLowerCase() !== "https-only") {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            distribution.distributionConfig.origins?.forEach((origin) => {
+                if (origin.customOriginConfig && origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only") {
                     reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");
                 }
             });
@@ -173,9 +173,9 @@ export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistr
         name: "aws_native-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws_native.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            distribution.origins.forEach((origin) => {
-                origin.customOriginConfig?.originSslProtocols?.forEach((sslProtocol) => {
+        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+            distribution.distributionConfig.origins?.forEach((origin) => {
+                origin.customOriginConfig?.originSSLProtocols?.forEach((sslProtocol) => {
                     if (sslProtocol.toLowerCase() !== "TLSv1.2".toLowerCase()) {
                         reportViolation("CloudFront Distributions should only use TLS 1.2 encryption to communicate with custom origins.");
                     }

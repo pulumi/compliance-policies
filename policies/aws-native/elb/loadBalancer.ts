@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -38,7 +38,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyRegist
             });
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["elb"],
     severity: "critical",
     topics: ["network"],
@@ -61,7 +61,7 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policyRe
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["elb"],
     severity: "high",
     topics: ["network", "availability"],
@@ -84,7 +84,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["elb"],
     severity: "medium",
     topics: ["network", "logging"],
@@ -107,7 +107,7 @@ export const enableHealthCheck: ResourceValidationPolicy = policyRegistrations.r
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["elb"],
     severity: "high",
     topics: ["network", "availability"],

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "medium",
     topics: ["network", "logging"],
@@ -60,7 +60,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["apigatewayv2"],
     severity: "medium",
     topics: ["network", "logging"],

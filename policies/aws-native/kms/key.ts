@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,7 +36,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.r
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["kms"],
     severity: "medium",
     topics: ["encryption"],
@@ -64,7 +64,7 @@ export const missingDescription: ResourceValidationPolicy = policyRegistrations.
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["kms"],
     severity: "low",
     topics: ["documentation"],
@@ -87,7 +87,7 @@ export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = 
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["kms"],
     severity: "critical",
     topics: ["encryption"],

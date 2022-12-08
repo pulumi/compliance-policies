@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,7 +36,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "medium",
     topics: ["network", "logging"],
@@ -59,7 +59,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "medium",
     topics: ["network", "logging"],
@@ -82,7 +82,7 @@ export const configureWaf: ResourceValidationPolicy = policyRegistrations.regist
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",
     topics: ["network"],
@@ -108,7 +108,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegist
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "critical",
     topics: ["network"],
@@ -131,7 +131,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",
     topics: ["network", "encryption"],
@@ -156,7 +156,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
             });
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "critical",
     topics: ["network", "encryption"],
@@ -183,7 +183,7 @@ export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistr
             });
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["cloudfront"],
     severity: "high",
     topics: ["network", "encryption"],

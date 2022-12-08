@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,7 +36,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["rds"],
     severity: "medium",
     topics: ["backup", "resilience"],
@@ -62,7 +62,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["rds"],
     severity: "medium",
     topics: ["backup", "resilience"],
@@ -85,7 +85,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["rds"],
     severity: "high",
     topics: ["encryption", "storage"],
@@ -108,7 +108,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["rds"],
     severity: "low",
     topics: ["encryption", "storage"],

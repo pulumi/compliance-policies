@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,7 +36,7 @@ export const configureImageScan: ResourceValidationPolicy = policyRegistrations.
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
@@ -60,7 +60,7 @@ export const enableImageScan: ResourceValidationPolicy = policyRegistrations.reg
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
@@ -83,7 +83,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policyRegistration
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
     topics: ["container"],
@@ -106,7 +106,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policyReg
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ecr"],
     severity: "high",
     topics: ["container", "encryption", "storage"],
@@ -136,7 +136,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ecr"],
     severity: "low",
     topics: ["container", "encryption", "storage"],

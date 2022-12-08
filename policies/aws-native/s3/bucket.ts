@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -38,7 +38,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policyRegistrations.
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "critical",
     topics: ["storage", "security"],
@@ -61,7 +61,7 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyRe
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "high",
     topics: ["availability"],
@@ -88,7 +88,7 @@ export const configureReplicationConfiguration: ResourceValidationPolicy = polic
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "high",
     topics: ["availability"],
@@ -111,7 +111,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policyRegist
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "high",
     topics: ["encryption", "storage"],
@@ -134,7 +134,7 @@ export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policy
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "high",
     topics: ["encryption", "storage"],
@@ -157,7 +157,7 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "low",
     topics: ["encryption", "storage"],
@@ -180,7 +180,7 @@ export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = pol
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["s3"],
     severity: "medium",
     topics: ["encryption", "storage", "cost"],

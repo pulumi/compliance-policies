@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as aws_native from "@pulumi/aws-native";
+import * as awsNative from "@pulumi/aws-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,7 +36,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policyRegistr
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ebs"],
     severity: "high",
     topics: ["encryption", "storage"],
@@ -58,7 +58,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
             }
         }),
     },
-    vendors: ["aws_native"],
+    vendors: ["aws"],
     services: ["ebs"],
     severity: "low",
     topics: ["encryption", "storage"],

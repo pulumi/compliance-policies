@@ -13,12 +13,16 @@ module.exports = {
         "eslint-plugin-import",
         "@typescript-eslint",
         "header",
-        "jsdoc"
+        "jsdoc",
+        "mocha"
     ],
     "ignorePatterns": [
         "bin/**/*.ts",
         "tests/**/*.ts",
         ".eslintrc.*"
+    ],
+    "extends": [
+        "plugin:mocha/recommended"
     ],
     "rules": {
         "header/header": [

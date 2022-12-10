@@ -168,7 +168,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureSecureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",

@@ -20,7 +20,7 @@
         "index.ts",
         "validate.ts",
         "aws/**/*",
-        "aws-native/**/*",
+        "awsnative/**/*",
         "kubernetes/**/*",
     ],
     "exclude": [

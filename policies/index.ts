@@ -16,5 +16,5 @@ export { policyRegistrations } from "./utils";
 export * from "./version";
 
 export * as aws from "./aws";
-export * as awsnative from "./aws-native";
+export * as awsnative from "./awsnative";
 export * as kubernetes from "./kubernetes";

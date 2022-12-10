@@ -15,7 +15,23 @@
 export const accountId: string = "123456781234";
 export const region: string = "us-west-2";
 
-export const kmsKeyId: string = "key/1234abcd-12ab-34cd-56ef-1234567890ab";
-export const kmsKeyArn: string = `arn:aws:kms:${region}:${accountId}:${kmsKeyId}`;
+export declare const acm: {
+    certificateArn: "arn:aws:acm:us-west-2:123456781234:certificate/1234abcd-12ab-34cd-56ef-1234567890ab";
+}
 
-export const certificateArn: string = `arn:aws:acm:${region}:${accountId}:certificate/1234abcd-12ab-34cd-56ef-1234567890ab`;
+export declare const apigatewayv2: {
+    apiId: "a1b2c3d4";
+    accessLogFormat: "$context.extendedRequestId $context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] $context.httpMethod $context.resourcePath $context.protocol $context.status $context.responseLength $context.requestId";
+};
+export type apigatewayv2 = (typeof apigatewayv2)[keyof typeof apigatewayv2];
+
+export declare const cloudwatch: {
+    logGroupArn: "arn:aws:logs:us-west-2:123456781234:log-group:log-group-name";
+};
+export type cloudwatch = (typeof cloudwatch)[keyof typeof cloudwatch];
+
+export declare const kms: {
+    keyId: "key/1234abcd-12ab-34cd-56ef-1234567890ab";
+    keyArn: "arn:aws:kms:us-west-2:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab";
+}
+export type kms = (typeof kms)[keyof typeof kms];

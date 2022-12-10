@@ -153,6 +153,22 @@ module.exports = {
             }
         ],
         "jsdoc/check-types": 1,
+        'jsdoc/no-restricted-syntax': [
+            'error',
+            {
+                contexts: [
+                    {
+                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=severity]))',
+                        context: 'VariableDeclaration',
+                        message: '@severity required on each block',
+                    },{
+                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=link]))',
+                        context: 'VariableDeclaration',
+                        message: '@link required on each block',
+                    }
+                ],
+            },
+        ],
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-jsdoc": 1,
         "no-bitwise": "off",

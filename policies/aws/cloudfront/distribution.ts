@@ -77,7 +77,7 @@ export const configureWaf: ResourceValidationPolicy = policyRegistrations.regist
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (distribution.webAclId === undefined) {
+            if (!distribution.webAclId) {
                 reportViolation("CloudFront Distributions should have a WAF ACL associated.");
             }
         }),
@@ -126,7 +126,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if ( distribution.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
+            if (!distribution.viewerCertificate.minimumProtocolVersion || distribution.viewerCertificate.minimumProtocolVersion.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
                 reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
             }
         }),
@@ -150,7 +150,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
             distribution.origins.forEach((origin) => {
-                if (origin.customOriginConfig?.originProtocolPolicy.toLowerCase() !== "https-only") {
+                if (origin.customOriginConfig && origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only") {
                     reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");
                 }
             });

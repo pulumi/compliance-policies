@@ -73,7 +73,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
  */
 export const configureWaf: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-cloudfront-distribution-configure-waf-acl",
+        name: "aws-cloudfront-distribution-configure-waf",
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {

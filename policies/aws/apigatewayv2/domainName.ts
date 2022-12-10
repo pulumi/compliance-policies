@@ -54,7 +54,7 @@ export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = polic
         description: "Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
-            if (domainName.domainNameConfiguration.securityPolicy.toLowerCase() !== "TLS_1_2".toLowerCase()) {
+            if (domainName.domainNameConfiguration && domainName.domainNameConfiguration.securityPolicy !== "TLS_1_2") {
                 reportViolation("API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption.");
             }
         }),

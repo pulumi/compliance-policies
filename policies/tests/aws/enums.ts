@@ -39,4 +39,5 @@ export enum kms {
 
 export enum s3 {
     bucketRegionalDomainName = "example-bucket.s3.us-west-2.amazonaws.com",
+    bucketId = "example-bucket",
 }

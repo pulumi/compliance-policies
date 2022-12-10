@@ -18,12 +18,12 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kmsKeyId } from "../types";
+import { kms } from "../enums";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.secretsmanager.Secret, {
         description: "This is a description for this Secrets Manager secret.",
-        kmsKeyId: kmsKeyId,
+        kmsKeyId: kms.keyId,
     });
 }
 

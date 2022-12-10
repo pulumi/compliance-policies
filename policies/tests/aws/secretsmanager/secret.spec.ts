@@ -18,11 +18,12 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { kmsKeyId } from "../types";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.secretsmanager.Secret, {
         description: "This is a description for this Secrets Manager secret.",
-        kmsKeyId: "arn:aws:kms:us-east-1:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+        kmsKeyId: kmsKeyId,
     });
 }
 

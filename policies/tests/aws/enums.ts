@@ -41,3 +41,7 @@ export enum s3 {
     bucketRegionalDomainName = "example-bucket.s3.us-west-2.amazonaws.com",
     bucketId = "example-bucket",
 }
+
+export enum waf {
+    webAclArn = "arn:aws:wafv2:us-east-1:123456789012:global/webacl/ExampleWebACL/1234abcd-12ab-34cd-56ef-1234567890ab",
+}

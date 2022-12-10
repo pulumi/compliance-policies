@@ -24,6 +24,10 @@ export enum apigatewayv2 {
     accessLogFormat = "$context.extendedRequestId $context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] $context.httpMethod $context.resourcePath $context.protocol $context.status $context.responseLength $context.requestId",
 }
 
+export enum cloudfront {
+    originId = "text-DAddwekjfwoijdw-example"
+}
+
 export enum cloudwatch {
     logGroupArn = "arn:aws:logs:us-west-2:123456781234:log-group:log-group-name",
 }
@@ -31,4 +35,8 @@ export enum cloudwatch {
 export enum kms {
     keyId = "key/1234abcd-12ab-34cd-56ef-1234567890ab",
     keyArn = "arn:aws:kms:us-west-2:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+}
+
+export enum s3 {
+    bucketRegionalDomainName = "example-bucket.s3.us-west-2.amazonaws.com",
 }

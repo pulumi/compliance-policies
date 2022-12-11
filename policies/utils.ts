@@ -351,3 +351,34 @@ export class RegisteredPolicies {
 
 export const policyRegistrations: RegisteredPolicies = new RegisteredPolicies();
 
+/**
+ * The function `valToBoolean()` is a helper because some boolean properties
+ * require a string type instead of a boolean type.
+ * The idea for this function is to allow compatibility across multiple versions
+ * of the same provider in case a property type changes from string to boolean.
+ *
+ * @link https://github.com/pulumi/pulumi-aws/issues/2257
+ * @param val A value to convert into a boolean.
+ * @returns The boolean value, or `undefined` is the conversion isn't possible.
+ */
+// Help to help with boolean stored as string
+// see https://github.com/pulumi/pulumi-aws/issues/2257
+export function valToBoolean(val: boolean | string | undefined): boolean | undefined {
+    switch (typeof val) {
+    case "undefined":
+        return undefined;
+    case "boolean":
+        return val;
+    case "string":
+        switch(val.toLowerCase()) {
+        case "false":
+            return false;
+        case "true":
+            return true;
+        default:
+            return undefined;
+        }
+    default:
+        return undefined;
+    }
+}

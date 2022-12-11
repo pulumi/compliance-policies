@@ -36,6 +36,9 @@ export enum ec2 {
     imageId = "ami-12345678",
     instanceType = "t2-micro",
     vpcSecurityGroupId = "sg-12345678",
+    vpcId = "vpc-12345678",
+    cidrBlock = "10.0.0.0/8",
+    ipv6CidrBlock = "fd29:be60:c157:350f::/64"
 }
 
 export enum kms {

@@ -27,16 +27,18 @@ import { policyRegistrations, valToBoolean } from "../../utils";
  */
 export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-template-disallow-public-ips",
+        name: "aws-ec2-launch-template-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (launchTemplate, args, reportViolation) => {
-            launchTemplate.networkInterfaces?.forEach((iface) => {
-                // see https://github.com/pulumi/pulumi-aws/issues/2257
-                if (valToBoolean(iface.associatePublicIpAddress)) {
-                    reportViolation("EC2 Launch templates should not have public IP addresses.");
-                }
-            });
+            if (launchTemplate.networkInterfaces) {
+                launchTemplate.networkInterfaces.forEach((iface) => {
+                    // see https://github.com/pulumi/pulumi-aws/issues/2257
+                    if (valToBoolean(iface.associatePublicIpAddress)) {
+                        reportViolation("EC2 Launch templates should not associate a public IP address to an interface.");
+                    }
+                });
+            }
         }),
     },
     vendors: ["aws"],
@@ -57,16 +59,46 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRe
         description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
-            lt.blockDeviceMappings?.forEach((device) => {
-                // see https://github.com/pulumi/pulumi-aws/issues/2257
-                if (device.ebs && !valToBoolean(device.ebs.encrypted)) {
-                    reportViolation("EC2 Launch Templates should not have an unencypted block device.");
-                }
-            });
+            if (lt.blockDeviceMappings) {
+                lt.blockDeviceMappings.forEach((blockDevice) => {
+                    // see https://github.com/pulumi/pulumi-aws/issues/2257
+                    if (blockDevice.ebs && !valToBoolean(blockDevice.ebs.encrypted)) {
+                        reportViolation("EC2 Launch Templates should not have an unencypted block device.");
+                    }
+                });
+            }
         }),
     },
     vendors: ["aws"],
     services: ["ec2"],
     severity: "high",
+    topics: ["encryption", "storage"],
+});
+
+/**
+ * Check that encrypted EBS volume uses a customer-managed KMS key.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+ */
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-ec2-launch-template-configure-customer-managed-key",
+        description: "Check that encrypted EBS volume uses a customer-managed KMS key.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
+            if (lt.blockDeviceMappings) {
+                lt.blockDeviceMappings.forEach((blockDevice) => {
+                    // see https://github.com/pulumi/pulumi-aws/issues/2257
+                    if (blockDevice.ebs && (valToBoolean(blockDevice.ebs.encrypted) && !blockDevice.ebs.kmsKeyId)) {
+                        reportViolation("EC2 Launch Templates should not have encrypted block device using a customer-managed KMS key.");
+                    }
+                });
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "low",
     topics: ["encryption", "storage"],
 });

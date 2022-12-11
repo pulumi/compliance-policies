@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policyRegistrations, valToBoolean } from "../../utils";
 
 /**
  * Checks that any launch template do not have public IP addresses.
@@ -30,9 +30,10 @@ export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.re
         name: "aws-ec2-launch-template-disallow-public-ips",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
-            lt.networkInterfaces?.forEach((iface) => {
-                if (!iface.associatePublicIpAddress) {
+        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (launchTemplate, args, reportViolation) => {
+            launchTemplate.networkInterfaces?.forEach((iface) => {
+                // see https://github.com/pulumi/pulumi-aws/issues/2257
+                if (valToBoolean(iface.associatePublicIpAddress)) {
                     reportViolation("EC2 Launch templates should not have public IP addresses.");
                 }
             });
@@ -57,7 +58,8 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRe
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
             lt.blockDeviceMappings?.forEach((device) => {
-                if (!device.ebs?.encrypted) {
+                // see https://github.com/pulumi/pulumi-aws/issues/2257
+                if (device.ebs && !valToBoolean(device.ebs.encrypted)) {
                     reportViolation("EC2 Launch Templates should not have an unencypted block device.");
                 }
             });

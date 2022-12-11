@@ -27,12 +27,66 @@ import { policyRegistrations } from "../../utils";
  */
 export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-missing-desciption",
+        name: "aws-ec2-security-group-missing-description",
         description: "Checks that all security groups have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {
-            if (!sg.description) {
-                reportViolation("Security group must have a description.");
+        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (!securityGroup.description) {
+                reportViolation("EC2 Security Groups should have a description.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "low",
+    topics: ["documentation"],
+});
+
+/**
+ * Checks that all Ingress Security Groups rules have a description.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
+ */
+export const missingIngressRuleDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-ec2-security-group-missing-ingress-rule-description",
+        description: "Checks that all Ingress Security Groups rules have a description.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (securityGroup.ingress) {
+                securityGroup.ingress.forEach((ingress) => {
+                    if (!ingress.description) {
+                        reportViolation("EC2 Security Groups Ingress rules should have a description.");
+                    }
+                });
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["ec2"],
+    severity: "low",
+    topics: ["documentation"],
+});
+
+/**
+ * Checks that all Egress Security Groups rules have a description.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
+ */
+export const missingEgressRuleDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-ec2-security-group-missing-egress-rule-description",
+        description: "Checks that all Egress Security Groups rules have a description.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (securityGroup.egress) {
+                securityGroup.egress.forEach((ingress) => {
+                    if (!ingress.description) {
+                        reportViolation("EC2 Security Groups Egress rules should have a description.");
+                    }
+                });
             }
         }),
     },
@@ -53,15 +107,17 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyRegist
         name: "aws-ec2-security-group-disallow-inbound-http-traffic",
         description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (sg, args, reportViolation) => {
-            sg.ingress?.forEach((ingress) => {
-                if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {
-                    reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
-                }
-                if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
-                    reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
-                }
-            });
+        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (securityGroup.ingress) {
+                securityGroup.ingress.forEach((ingress) => {
+                    if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {
+                        reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
+                    }
+                    if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
+                        reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
+                    }
+                });
+            }
         }),
     },
     vendors: ["aws"],
@@ -81,12 +137,14 @@ export const disallowPublicInternetIngress: ResourceValidationPolicy = policyReg
         name: "aws-ec2-security-group-disallow-public-internet-ingress",
         description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (group, _, reportViolation) => {
-            if (group.ingress?.some(ingressRule => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
-                reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");
-            }
-            if (group.ingress?.some(ingressRule => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
-                reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (::/0).");
+        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, _, reportViolation) => {
+            if (securityGroup.ingress) {
+                if (securityGroup.ingress.some(ingressRule => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
+                    reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");
+                }
+                if (securityGroup.ingress.some(ingressRule => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
+                    reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (::/0).");
+                }
             }
         }),
     },

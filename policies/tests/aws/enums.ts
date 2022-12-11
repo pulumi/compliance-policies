@@ -32,6 +32,11 @@ export enum cloudwatch {
     logGroupArn = "arn:aws:logs:us-west-2:123456781234:log-group:log-group-name",
 }
 
+export enum ec2 {
+    imageId = "ami-12345678",
+    instanceType = "t2-micro",
+}
+
 export enum kms {
     keyId = "key/1234abcd-12ab-34cd-56ef-1234567890ab",
     keyArn = "arn:aws:kms:us-west-2:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",

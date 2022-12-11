@@ -18,11 +18,12 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { ec2 } from "../enums";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.Instance, {
-        ami: "ami-12345678",
-        instanceType: "t2.micro",
+        ami: ec2. imageId,
+        instanceType: ec2.instanceType,
         rootBlockDevice: {
             deviceName: "/dev/sda1",
             encrypted: true,

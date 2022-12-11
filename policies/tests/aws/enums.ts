@@ -35,6 +35,7 @@ export enum cloudwatch {
 export enum ec2 {
     imageId = "ami-12345678",
     instanceType = "t2-micro",
+    vpcSecurityGroupId = "sg-12345678",
 }
 
 export enum kms {

@@ -313,7 +313,6 @@ function compareArray(array1: string[], array2: string[]): boolean {
     }));
 }
 
-
 // Helper to check if `type` is the type of `resourceClass`.
 function isTypeOf<TResource extends Resource>(
     type: string,

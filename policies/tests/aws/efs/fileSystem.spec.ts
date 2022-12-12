@@ -122,4 +122,3 @@ describe("aws.efs.FileSystem.disallowSingleAvailabilityZone", () => {
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should use more than one availability zone." });
     });
 });
-

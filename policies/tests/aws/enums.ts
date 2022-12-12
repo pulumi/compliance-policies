@@ -14,7 +14,8 @@
 
 export enum root {
     region = "us-west-2",
-    availabilityZone = "us-west-2a",
+    availabilityZone1 = "us-west-2a",
+    availabilityZone2 = "us-west-2b",
     accountId = "123456781234",
 }
 

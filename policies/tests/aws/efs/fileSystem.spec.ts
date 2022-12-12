@@ -118,7 +118,7 @@ describe("aws.efs.FileSystem.disallowSingleAvailabilityZone", () => {
 
     it("disallowSingleAvailabilityZone #2", async () => {
         const args = getResourceValidationArgs();
-        args.props.availabilityZoneName = root.availabilityZone;
+        args.props.availabilityZoneName = root.availabilityZone1;
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should use more than one availability zone." });
     });
 });

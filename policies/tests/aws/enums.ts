@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export const accountId: string = "123456781234";
-export const region: string = "us-west-2";
+export enum awsroot {
+    region = "us-west-2",
+    availabilityZone = "us-west-2a",
+    accountId = "123456781234",
+}
 
 export enum acm {
     certificateArn = "arn:aws:acm:us-west-2:123456781234:certificate/1234abcd-12ab-34cd-56ef-1234567890ab",

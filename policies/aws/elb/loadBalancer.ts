@@ -32,7 +32,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyRegist
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
             loadBalancer.listeners.forEach((listener) => {
-                if (listener.lbProtocol.toLowerCase() === "http".toLowerCase()) {
+                if (listener.lbProtocol.toLowerCase() === "http") {
                     reportViolation("ELB Load Balancers should now allow inbound HTTP traffic.");
                 }
             });
@@ -79,7 +79,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
         description: "Check that ELB Load Balancers uses access logging.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
-            if (!loadBalancer.accessLogs || loadBalancer.accessLogs.enabled !== true) {
+            if (!loadBalancer.accessLogs || loadBalancer.accessLogs.enabled === false) {
                 reportViolation("ELB Load Balancers should have access logging enabled.");
             }
         }),

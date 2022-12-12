@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const configureImageScan: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ecr-repository-configure-image-scans",
+        name: "aws-ecr-repository-configure-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' configured.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
@@ -51,7 +51,7 @@ export const configureImageScan: ResourceValidationPolicy = policyRegistrations.
  */
 export const enableImageScan: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ecr-repository-enable-image-scans",
+        name: "aws-ecr-repository-enable-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
@@ -64,6 +64,7 @@ export const enableImageScan: ResourceValidationPolicy = policyRegistrations.reg
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
+    frameworks: ["soc2", "pcidss"],
 });
 
 /**
@@ -74,7 +75,7 @@ export const enableImageScan: ResourceValidationPolicy = policyRegistrations.reg
  */
 export const disallowMutableImage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ecr-repository-disallow-mutable-images",
+        name: "aws-ecr-repository-disallow-mutable-image",
         description: "Checks that ECR Repositories have immutable images enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
@@ -126,11 +127,12 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
         validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfigurations) {
                 repo.encryptionConfigurations.forEach((encryptionConfiguration) => {
-                    if (encryptionConfiguration.encryptionType?.toLowerCase() === "AES256".toLowerCase()) {
+                    if (!encryptionConfiguration.encryptionType || encryptionConfiguration.encryptionType.toLowerCase() === "AES256".toLowerCase()) {
                         reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
-                    }
-                    if (encryptionConfiguration.encryptionType?.toLowerCase() === "KMS".toLowerCase() && encryptionConfiguration.kmsKey === undefined) {
-                        reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                    } else {
+                        if (encryptionConfiguration.encryptionType.toLowerCase() === "KMS".toLowerCase() && !encryptionConfiguration.kmsKey) {
+                            reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
+                        }
                     }
                 });
             }

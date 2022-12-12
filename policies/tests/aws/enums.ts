@@ -41,7 +41,13 @@ export enum ec2 {
     vpcSecurityGroupId = "sg-12345678",
     vpcId = "vpc-12345678",
     cidrBlock = "10.0.0.0/8",
-    ipv6CidrBlock = "fd29:be60:c157:350f::/64"
+    ipv6CidrBlock = "fd29:be60:c157:350f::/64",
+    subnetId1 = "subnet-0a8c929d00b5373c1",
+    subnetId2 = "subnet-01969596cadb0d862",
+}
+
+export enum iam {
+    roleArn = "arn:aws:iam::123456781234:role/aws-iam-role-12345678",
 }
 
 export enum kms {

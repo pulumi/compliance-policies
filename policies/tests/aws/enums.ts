@@ -49,6 +49,7 @@ export enum ec2 {
 
 export enum iam {
     roleArn = "arn:aws:iam::123456781234:role/aws-iam-role-12345678",
+    sslCertificateArn = "arn:aws:iam::123456781234:server-certificate/certName",
 }
 
 export enum kms {

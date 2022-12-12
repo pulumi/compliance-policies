@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export enum awsroot {
+export enum root {
     region = "us-west-2",
     availabilityZone = "us-west-2a",
     accountId = "123456781234",

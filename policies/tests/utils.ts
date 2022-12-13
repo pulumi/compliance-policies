@@ -221,6 +221,12 @@ export function assertResourcePolicyName(policy: policy.ResourceValidationPolicy
     }
 }
 
+export function assertResourcePolicyEnforcementLevel(policy: policy.ResourceValidationPolicy) {
+    if (policy.enforcementLevel !== "advisory") {
+        assert.fail(`Policy name '${policy.name}' should have its enforcementLevel set to 'advisory'.`);
+    }
+}
+
 export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
     const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
     if (!registeredPolicy) {

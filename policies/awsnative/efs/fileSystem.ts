@@ -52,6 +52,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
     resourceValidationPolicy: {
         name: "aws-native-efs-file-system-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
+        enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
             if (fileSystem.encrypted && !fileSystem.kmsKeyId) {
                 reportViolation("An EFS File System should be encrypted using a customer-managed KMS key.");
@@ -74,6 +75,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRe
     resourceValidationPolicy: {
         name: "aws-native-efs-file-system-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
+        enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
             if (fileSystem.availabilityZoneName) {
                 reportViolation("EFS File Systems should use more than one availability zone.");

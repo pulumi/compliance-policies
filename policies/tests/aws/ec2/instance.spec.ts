@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2 } from "../enums";
+import { ec2, kms } from "../enums";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.Instance, {
@@ -27,16 +27,16 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         rootBlockDevice: {
             deviceName: "/dev/sda1",
             encrypted: true,
-            kmsKeyId: "arn:aws:kms:us-east-1:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+            kmsKeyId: kms.keyArn,
         },
         ebsBlockDevices: [{
             deviceName: "/dev/sdb",
             encrypted: true,
-            kmsKeyId: "arn:aws:kms:us-east-1:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+            kmsKeyId: kms.keyArn,
         },{
             deviceName: "/dev/sdc",
             encrypted: true,
-            kmsKeyId: "arn:aws:kms:us-east-1:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+            kmsKeyId: kms.keyArn,
         }],
         associatePublicIpAddress: false,
     });

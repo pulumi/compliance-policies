@@ -20,6 +20,29 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
+ * Checks that all Lambda Functions have a description.
+ *
+ * @severity **Low**
+ * @link https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
+ */
+export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-lambda-function-missing-description",
+        description: "Checks that all Lambda Functions have a description.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.lambda.Function, (f, args, reportViolation) => {
+            if (!f.description) {
+                reportViolation("Lambda functions should have a description.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["lambda"],
+    severity: "low",
+    topics: ["documentation"],
+});
+
+/**
  * Checks that Lambda functions have tracing enabled.
  *
  * @severity **Low**

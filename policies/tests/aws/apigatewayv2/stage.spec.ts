@@ -50,6 +50,14 @@ describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    })
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    })
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -80,6 +88,14 @@ describe("aws.apigatewayv2.Stage.configureAccessLogging", () => {
             severity: "medium",
             topics: ["network", "logging"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

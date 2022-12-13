@@ -51,6 +51,14 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -81,6 +89,14 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => 
             severity: "high",
             topics: ["network", "encryption"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

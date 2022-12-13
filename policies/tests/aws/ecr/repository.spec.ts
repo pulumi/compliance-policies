@@ -54,6 +54,14 @@ describe("aws.ecr.Repository.configureImageScan", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -85,6 +93,14 @@ describe("aws.ecr.Repository.enableImageScan", () => {
             topics: ["container", "vulnerability"],
             frameworks: ["soc2", "pcidss"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {
@@ -119,6 +135,14 @@ describe("aws.ecr.Repository.disallowMutableImage", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -151,6 +175,14 @@ describe("aws.ecr.Repository.disallowUnencryptedRepository", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -181,6 +213,14 @@ describe("aws.ecr.Repository.configureCustomerManagedKey", () => {
             severity: "low",
             topics: ["container", "encryption", "storage"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

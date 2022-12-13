@@ -65,6 +65,14 @@ describe("aws.ec2.LaunchConfiguration.disallowPublicIP", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -95,6 +103,14 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", () =>
             severity: "high",
             topics: ["encryption", "storage"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {
@@ -133,6 +149,14 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", () => {
             severity: "high",
             topics: ["encryption", "storage"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

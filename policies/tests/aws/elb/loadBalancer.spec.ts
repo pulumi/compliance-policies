@@ -68,6 +68,14 @@ describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -100,6 +108,14 @@ describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -130,6 +146,14 @@ describe("aws.elb.LoadBalancer.configureAccessLogging", () => {
             severity: "medium",
             topics: ["network", "logging"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {
@@ -174,6 +198,14 @@ describe("aws.elb.LoadBalancer.enableHealthCheck", () => {
             severity: "high",
             topics: ["network", "availability"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

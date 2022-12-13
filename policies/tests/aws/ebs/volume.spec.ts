@@ -48,6 +48,14 @@ describe("aws.ebs.Volume.disallowUnencryptedVolume", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -78,6 +86,14 @@ describe("aws.ebs.Volume.configureCustomerManagedKey", () => {
             severity: "low",
             topics: ["encryption", "storage"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

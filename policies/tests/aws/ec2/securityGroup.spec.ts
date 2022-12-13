@@ -61,6 +61,14 @@ describe("aws.ec2.SecurityGroup.missingDescription", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -91,6 +99,14 @@ describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", () => {
             severity: "low",
             topics: ["documentation"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {
@@ -125,6 +141,14 @@ describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", () => {
         });
     });
 
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -155,6 +179,14 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", () => {
             severity: "critical",
             topics: ["network", "encryption"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {
@@ -195,6 +227,14 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", () => {
             severity: "critical",
             topics: ["network"],
         });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
     });
 
     it("#1", async () => {

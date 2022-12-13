@@ -227,6 +227,37 @@ export function assertResourcePolicyEnforcementLevel(policy: policy.ResourceVali
     }
 }
 
+export function assertResourcePolicyDescription(policy: policy.ResourceValidationPolicy) {
+    if (!policy.description) {
+        assert.fail(`Policy name '${policy.name}' should have a description.`);
+    } else {
+        const sentenceEndGrouping = /([.?!])(?:\s+|$)/gmu;
+        const puntuations = policy.description.match(sentenceEndGrouping);
+
+        if (puntuations === null) {
+            assert.fail(`The policy '${policy.name}' description requires a complete sentence.`);
+        } else {
+            var sentences = policy.description.split(/[.?!](?:\s+|$)/u).map((sentence, idx) => {
+                // re-add the punctuation back to the sentence
+                if(puntuations[idx]) {
+                    return `${sentence}${puntuations[idx]}`;
+                }
+                return sentence;
+            });
+
+            const re = /^[A-Z].*[.?!]/gu;
+            for(let x = 0; x < sentences.length; x++) {
+                if(sentences[x]) {
+                    const descriptionMatch = sentences[x].match(re);
+                    if (!descriptionMatch) {
+                        assert.fail(`The policy '${policy.name}' description requires a complete sentence.`);
+                    }
+                }
+            }
+        }
+    }
+}
+
 export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
     const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
     if (!registeredPolicy) {

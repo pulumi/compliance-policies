@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -43,15 +43,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.eks.Cluster.enableClusterEncryptionConfig", () => {
     const policy = policies.aws.eks.Cluster.enableClusterEncryptionConfig;
 
-    it("enableClusterEncryptionConfig (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-eks-cluster-enable-cluster-encryption-config");
     });
 
-    it("enableClusterEncryptionConfig (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableClusterEncryptionConfig (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["eks"],
@@ -60,12 +60,12 @@ describe("aws.eks.Cluster.enableClusterEncryptionConfig", () => {
         });
     });
 
-    it("enableClusterEncryptionConfig #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableClusterEncryptionConfig #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encryptionConfig = undefined;
         await assertHasResourceViolation(policy, args, { message: "EKS Cluster Encryption Configuration should be enabled." });
@@ -75,15 +75,15 @@ describe("aws.eks.Cluster.enableClusterEncryptionConfig", () => {
 describe("aws.eks.Cluster.disallowAPIEndpointPublicAccess", () => {
     const policy = policies.aws.eks.Cluster.disallowAPIEndpointPublicAccess;
 
-    it("disallowAPIEndpointPublicAccess (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-eks-cluster-disallow-api-endpoint-public-access");
     });
 
-    it("disallowAPIEndpointPublicAccess (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowAPIEndpointPublicAccess (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["eks"],
@@ -92,18 +92,18 @@ describe("aws.eks.Cluster.disallowAPIEndpointPublicAccess", () => {
         });
     });
 
-    it("disallowAPIEndpointPublicAccess #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowAPIEndpointPublicAccess #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.vpcConfig.endpointPublicAccess = undefined;
         await assertHasResourceViolation(policy, args, { message: "EKS Cluster Endpoint API should not be publicly accessible." });
     });
 
-    it("disallowAPIEndpointPublicAccess #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.vpcConfig.endpointPublicAccess = undefined;
         args.props.vpcConfig.publicAccessCidrs = [ "0.0.0.0/0" ];

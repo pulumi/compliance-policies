@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -44,15 +44,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.ec2.SecurityGroup.missingDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingDescription;
 
-    it("missingDescription (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ec2-security-group-missing-description");
     });
 
-    it("missingDescription (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("missingDescription (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -61,12 +61,12 @@ describe("aws.ec2.SecurityGroup.missingDescription", () => {
         });
     });
 
-    it("missingDescription #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("missingDescription #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.description = undefined;
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should have a description." });
@@ -76,15 +76,15 @@ describe("aws.ec2.SecurityGroup.missingDescription", () => {
 describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingIngressRuleDescription;
 
-    it("missingIngressRuleDescription (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ec2-security-group-missing-ingress-rule-description");
     });
 
-    it("missingIngressRuleDescription (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("missingIngressRuleDescription (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -93,12 +93,12 @@ describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", () => {
         });
     });
 
-    it("missingIngressRuleDescription #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("missingIngressRuleDescription #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.ingress[0].description = undefined;
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups Ingress rules should have a description." });
@@ -108,15 +108,15 @@ describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", () => {
 describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingEgressRuleDescription;
 
-    it("missingEgressRuleDescription (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ec2-security-group-missing-egress-rule-description");
     });
 
-    it("missingEgressRuleDescription (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("missingEgressRuleDescription (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -125,12 +125,12 @@ describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", () => {
         });
     });
 
-    it("missingEgressRuleDescription #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("missingEgressRuleDescription #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.egress[0].description = undefined;
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups Egress rules should have a description." });
@@ -140,15 +140,15 @@ describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", () => {
 describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", () => {
     const policy = policies.aws.ec2.SecurityGroup.disallowInboundHttpTraffic;
 
-    it("disallowInboundHttpTraffic (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ec2-security-group-disallow-inbound-http-traffic");
     });
 
-    it("disallowInboundHttpTraffic (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowInboundHttpTraffic (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -157,19 +157,19 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", () => {
         });
     });
 
-    it("disallowInboundHttpTraffic #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowInboundHttpTraffic #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.ingress[0].fromPort = 80;
         args.props.ingress[0].toPort = 80;
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should not allow ingress HTTP traffic." });
     });
 
-    it("disallowInboundHttpTraffic #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.ingress[0].fromPort = 79;
         args.props.ingress[0].toPort = 81;
@@ -180,15 +180,15 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", () => {
 describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", () => {
     const policy = policies.aws.ec2.SecurityGroup.disallowPublicInternetIngress;
 
-    it("disallowPublicInternetIngress (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ec2-security-group-disallow-public-internet-ingress");
     });
 
-    it("disallowPublicInternetIngress (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowPublicInternetIngress (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -197,18 +197,18 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", () => {
         });
     });
 
-    it("disallowPublicInternetIngress #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowPublicInternetIngress #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.ingress[0].cidrBlocks = [ec2.cidrBlock, "0.0.0.0/0"];
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0)." });
     });
 
-    it("disallowPublicInternetIngress #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.ingress[0].ipv6CidrBlocks = [ec2.ipv6CidrBlock, "::/0"];
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should not permit ingress traffic from the public internet (::/0)." });

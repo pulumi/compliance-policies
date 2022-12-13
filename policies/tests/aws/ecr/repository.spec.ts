@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -36,15 +36,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.ecr.Repository.configureImageScan", () => {
     const policy = policies.aws.ecr.Repository.configureImageScan;
 
-    it("configureImageScan (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ecr-repository-configure-image-scan");
     });
 
-    it("configureImageScan (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureImageScan (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ecr"],
@@ -54,12 +54,12 @@ describe("aws.ecr.Repository.configureImageScan", () => {
         });
     });
 
-    it("configureImageScan #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureImageScan #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.imageScanningConfiguration = undefined;
         await assertHasResourceViolation(policy, args, { message: "ECR Repositories should have image scanning configured." });
@@ -69,15 +69,15 @@ describe("aws.ecr.Repository.configureImageScan", () => {
 describe("aws.ecr.Repository.enableImageScan", () => {
     const policy = policies.aws.ecr.Repository.enableImageScan;
 
-    it("enableImageScan (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ecr-repository-enable-image-scan");
     });
 
-    it("enableImageScan (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableImageScan (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ecr"],
@@ -87,12 +87,12 @@ describe("aws.ecr.Repository.enableImageScan", () => {
         });
     });
 
-    it("enableImageScan #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableImageScan #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.imageScanningConfiguration.scanOnPush = false;
         await assertHasResourceViolation(policy, args, { message: "ECR Repositories should enable 'scan-on-push'." });
@@ -102,15 +102,15 @@ describe("aws.ecr.Repository.enableImageScan", () => {
 describe("aws.ecr.Repository.disallowMutableImage", () => {
     const policy = policies.aws.ecr.Repository.disallowMutableImage;
 
-    it("disallowMutableImage (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ecr-repository-disallow-mutable-image");
     });
 
-    it("disallowMutableImage (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowMutableImage (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ecr"],
@@ -119,12 +119,12 @@ describe("aws.ecr.Repository.disallowMutableImage", () => {
         });
     });
 
-    it("disallowMutableImage #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowMutableImage #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.imageTagMutability = undefined;
         await assertHasResourceViolation(policy, args, { message: "ECR repositories should enable immutable images." });
@@ -134,15 +134,15 @@ describe("aws.ecr.Repository.disallowMutableImage", () => {
 describe("aws.ecr.Repository.disallowUnencryptedRepository", () => {
     const policy = policies.aws.ecr.Repository.disallowUnencryptedRepository;
 
-    it("disallowUnencryptedRepository (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ecr-repository-disallow-unencrypted-repository");
     });
 
-    it("disallowUnencryptedRepository (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowUnencryptedRepository (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ecr"],
@@ -151,12 +151,12 @@ describe("aws.ecr.Repository.disallowUnencryptedRepository", () => {
         });
     });
 
-    it("disallowUnencryptedRepository #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedRepository #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encryptionConfigurations = undefined;
         await assertHasResourceViolation(policy, args, { message: "ECR repositories should be encrypted." });
@@ -166,15 +166,15 @@ describe("aws.ecr.Repository.disallowUnencryptedRepository", () => {
 describe("aws.ecr.Repository.configureCustomerManagedKey", () => {
     const policy = policies.aws.ecr.Repository.configureCustomerManagedKey;
 
-    it("configureCustomerManagedKey (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ecr-repository-configure-customer-managed-key");
     });
 
-    it("configureCustomerManagedKey (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureCustomerManagedKey (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ecr"],
@@ -183,18 +183,18 @@ describe("aws.ecr.Repository.configureCustomerManagedKey", () => {
         });
     });
 
-    it("configureCustomerManagedKey #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureCustomerManagedKey #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encryptionConfigurations[0].encryptionType = undefined;
         await assertHasResourceViolation(policy, args, { message: "ECR repositories should be encrypted using a customer-managed KMS key." });
     });
 
-    it("configureCustomerManagedKey #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encryptionConfigurations[0].kmsKey = "";
         await assertHasResourceViolation(policy, args, { message: "ECR repositories should be encrypted using a customer-managed KMS key." });

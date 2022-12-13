@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -112,15 +112,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.cloudfront.Distribution.enableAccessLogging", () => {
     const policy = policies.aws.cloudfront.Distribution.enableAccessLogging;
 
-    it("enableAccessLogging (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-enable-access-logging");
     });
 
-    it("enableAccessLogging (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableAccessLogging (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -129,12 +129,12 @@ describe("aws.cloudfront.Distribution.enableAccessLogging", () => {
         });
     });
 
-    it("enableAccessLogging #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableAccessLogging #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.loggingConfig = undefined;
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should have logging enabled." });
@@ -144,15 +144,15 @@ describe("aws.cloudfront.Distribution.enableAccessLogging", () => {
 describe("aws.cloudfront.Distribution.configureAccessLogging", () => {
     const policy = policies.aws.cloudfront.Distribution.configureAccessLogging;
 
-    it("configureAccessLogging (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-configure-access-logging");
     });
 
-    it("configureAccessLogging (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureAccessLogging (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -161,12 +161,12 @@ describe("aws.cloudfront.Distribution.configureAccessLogging", () => {
         });
     });
 
-    it("configureAccessLogging #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureAccessLogging #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.loggingConfig.bucket = "";
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should have access logging configured." });
@@ -176,15 +176,15 @@ describe("aws.cloudfront.Distribution.configureAccessLogging", () => {
 describe("aws.cloudfront.Distribution.configureWaf", () => {
     const policy = policies.aws.cloudfront.Distribution.configureWaf;
 
-    it("configureWaf (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-configure-waf");
     });
 
-    it("configureWaf (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureWaf (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -193,12 +193,12 @@ describe("aws.cloudfront.Distribution.configureWaf", () => {
         });
     });
 
-    it("configureWaf #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureWaf #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.webAclId = "";
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should have a WAF ACL associated." });
@@ -208,15 +208,15 @@ describe("aws.cloudfront.Distribution.configureWaf", () => {
 describe("aws.cloudfront.Distribution.disallowUnencryptedTraffic", () => {
     const policy = policies.aws.cloudfront.Distribution.disallowUnencryptedTraffic;
 
-    it("disallowUnencryptedTraffic (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-disallow-unencrypted-traffic");
     });
 
-    it("disallowUnencryptedTraffic (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowUnencryptedTraffic (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -225,18 +225,18 @@ describe("aws.cloudfront.Distribution.disallowUnencryptedTraffic", () => {
         });
     });
 
-    it("disallowUnencryptedTraffic #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedTraffic #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.defaultCacheBehavior.viewerProtocolPolicy = "allow-all";
         await assertHasResourceViolation(policy, args, { message: "CloudFront distributions should not allow unencrypted traffic." });
     });
 
-    it("disallowUnencryptedTraffic #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.orderedCacheBehaviors[0].viewerProtocolPolicy = "allow-all";
         await assertHasResourceViolation(policy, args, { message: "CloudFront distributions should not allow unencrypted traffic." });
@@ -247,15 +247,15 @@ describe("aws.cloudfront.Distribution.disallowUnencryptedTraffic", () => {
 describe("aws.cloudfront.Distribution.configureSecureTLS", () => {
     const policy = policies.aws.cloudfront.Distribution.configureSecureTLS;
 
-    it("configureSecureTLS (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-configure-secure-tls");
     });
 
-    it("configureSecureTLS (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureSecureTLS (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -264,12 +264,12 @@ describe("aws.cloudfront.Distribution.configureSecureTLS", () => {
         });
     });
 
-    it("configureSecureTLS #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureSecureTLS #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.viewerCertificate.minimumProtocolVersion = "";
         await assertHasResourceViolation(policy, args, { message: "CloudFront distributions should use secure/modern TLS encryption." });
@@ -279,15 +279,15 @@ describe("aws.cloudfront.Distribution.configureSecureTLS", () => {
 describe("aws.cloudfront.Distribution.enableTLSToOrigin", () => {
     const policy = policies.aws.cloudfront.Distribution.enableTLSToOrigin;
 
-    it("enableTLSToOrigin (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-enable-tls-to-origin");
     });
 
-    it("enableTLSToOrigin (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableTLSToOrigin (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -296,12 +296,12 @@ describe("aws.cloudfront.Distribution.enableTLSToOrigin", () => {
         });
     });
 
-    it("enableTLSToOrigin #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableTLSToOrigin #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.origins[1].customOriginConfig.originProtocolPolicy = "";
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should use TLS encryption to communicate with custom origins." });
@@ -311,15 +311,15 @@ describe("aws.cloudfront.Distribution.enableTLSToOrigin", () => {
 describe("aws.cloudfront.Distribution.configureSecureTLSToOrgin", () => {
     const policy = policies.aws.cloudfront.Distribution.configureSecureTLSToOrgin;
 
-    it("configureSecureTLSToOrgin (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-cloudfront-distribution-configure-secure-tls-to-origin");
     });
 
-    it("configureSecureTLSToOrgin (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureSecureTLSToOrgin (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["cloudfront"],
@@ -328,12 +328,12 @@ describe("aws.cloudfront.Distribution.configureSecureTLSToOrgin", () => {
         });
     });
 
-    it("configureSecureTLSToOrgin #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureSecureTLSToOrgin #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.origins[1].customOriginConfig.originSslProtocols = ["TLSv1.2", "TLSv1"];
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should only use TLS 1.2 encryption to communicate with custom origins." });

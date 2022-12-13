@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -31,15 +31,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.ebs.Volume.disallowUnencryptedVolume", () => {
     const policy = policies.aws.ebs.Volume.disallowUnencryptedVolume;
 
-    it("disallowUnencryptedVolume (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ebs-volume-disallow-unencrypted-volume");
     });
 
-    it("disallowUnencryptedVolume (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowUnencryptedVolume (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ebs"],
@@ -48,12 +48,12 @@ describe("aws.ebs.Volume.disallowUnencryptedVolume", () => {
         });
     });
 
-    it("disallowUnencryptedVolume #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedVolume #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "An EBS volume is currently not encrypted." });
@@ -63,15 +63,15 @@ describe("aws.ebs.Volume.disallowUnencryptedVolume", () => {
 describe("aws.ebs.Volume.configureCustomerManagedKey", () => {
     const policy = policies.aws.ebs.Volume.configureCustomerManagedKey;
 
-    it("configureCustomerManagedKey (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-ebs-volume-configure-customer-managed-key");
     });
 
-    it("configureCustomerManagedKey (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureCustomerManagedKey (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ebs"],
@@ -80,12 +80,12 @@ describe("aws.ebs.Volume.configureCustomerManagedKey", () => {
         });
     });
 
-    it("configureCustomerManagedKey #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedVolume #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = undefined;
         await assertHasResourceViolation(policy, args, { message: "An EBS volume should be encrypted using a customer-managed KMS key." });

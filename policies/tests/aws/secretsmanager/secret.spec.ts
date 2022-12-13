@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -30,15 +30,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.secretsmanager.Secret.missingDescription", () => {
     const policy = policies.aws.secretsmanager.Secret.missingDescription;
 
-    it("missingDescription (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-secrets-manager-secret-missing-description");
     });
 
-    it("missingDescription (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("missingDescription (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["secretsmanager"],
@@ -47,18 +47,18 @@ describe("aws.secretsmanager.Secret.missingDescription", () => {
         });
     });
 
-    it("missingDescription #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("missingDescription #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.description = undefined;
         await assertHasResourceViolation(policy, args, { message: "Secrets Manager Secrets should have a description." });
     });
 
-    it("missingDescription #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.description = "abc";
         await assertHasResourceViolation(policy, args, { message: "Secrets Manager Secrets should have a meaningful description." });
@@ -68,15 +68,15 @@ describe("aws.secretsmanager.Secret.missingDescription", () => {
 describe("aws.secretsmanager.Secret.configureCustomerManagedKey", () => {
     const policy = policies.aws.secretsmanager.Secret.configureCustomerManagedKey;
 
-    it("configureCustomerManagedKey (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-secrets-manager-secret-configure-customer-managed-key");
     });
 
-    it("configureCustomerManagedKey (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureCustomerManagedKey (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["secretsmanager"],
@@ -85,12 +85,12 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", () => {
         });
     });
 
-    it("configureCustomerManagedKey #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureCustomerManagedKey #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = undefined;
         await assertHasResourceViolation(policy, args, { message: "Secrets Manager Secrets should be encrypted using a customer-managed KMS key." });

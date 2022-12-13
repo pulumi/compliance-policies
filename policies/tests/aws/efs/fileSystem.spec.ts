@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -30,15 +30,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.efs.FileSystem.disallowUnencryptedFileSystem", () => {
     const policy = policies.aws.efs.FileSystem.disallowUnencryptedFileSystem;
 
-    it("disallowUnencryptedFileSystem (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-efs-file-system-disallow-unencrypted-file-system");
     });
 
-    it("disallowUnencryptedFileSystem (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowUnencryptedFileSystem (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -47,12 +47,12 @@ describe("aws.efs.FileSystem.disallowUnencryptedFileSystem", () => {
         });
     });
 
-    it("disallowUnencryptedFileSystem #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowUnencryptedFileSystem #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.encrypted = undefined;
         await assertHasResourceViolation(policy, args, { message: "EFS File systems should not have an unencypted file system." });
@@ -62,15 +62,15 @@ describe("aws.efs.FileSystem.disallowUnencryptedFileSystem", () => {
 describe("aws.efs.FileSystem.configureCustomerManagedKey", () => {
     const policy = policies.aws.efs.FileSystem.configureCustomerManagedKey;
 
-    it("configureCustomerManagedKey (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-efs-file-system-configure-customer-managed-key");
     });
 
-    it("configureCustomerManagedKey (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureCustomerManagedKey (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -79,12 +79,12 @@ describe("aws.efs.FileSystem.configureCustomerManagedKey", () => {
         });
     });
 
-    it("configureCustomerManagedKey #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureCustomerManagedKey #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "An EFS File System should be encrypted using a customer-managed KMS key." });
@@ -94,15 +94,15 @@ describe("aws.efs.FileSystem.configureCustomerManagedKey", () => {
 describe("aws.efs.FileSystem.disallowSingleAvailabilityZone", () => {
     const policy = policies.aws.efs.FileSystem.disallowSingleAvailabilityZone;
 
-    it("disallowSingleAvailabilityZone (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-efs-file-system-disallow-single-availability-zone");
     });
 
-    it("disallowSingleAvailabilityZone (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowSingleAvailabilityZone (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -111,12 +111,12 @@ describe("aws.efs.FileSystem.disallowSingleAvailabilityZone", () => {
         });
     });
 
-    it("disallowSingleAvailabilityZone #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowSingleAvailabilityZone #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.availabilityZoneName = root.availabilityZone1;
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should use more than one availability zone." });

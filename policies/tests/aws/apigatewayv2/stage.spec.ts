@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -33,15 +33,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
     const policy = policies.aws.apigatewayv2.Stage.enableAccessLogging;
 
-    it("enableAccessLogging (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-enable-access-logging");
     });
 
-    it("enableAccessLogging (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableAccessLogging (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -50,12 +50,12 @@ describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
         });
     });
 
-    it("enableAccessLogging #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableAccessLogging #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings = undefined;
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging enabled." });
@@ -65,15 +65,15 @@ describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
 describe("aws.apigatewayv2.Stage.configureAccessLogging", () => {
     const policy = policies.aws.apigatewayv2.Stage.configureAccessLogging;
 
-    it("configureAccessLogging (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-configure-access-logging");
     });
 
-    it("configureAccessLogging (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureAccessLogging (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -82,18 +82,18 @@ describe("aws.apigatewayv2.Stage.configureAccessLogging", () => {
         });
     });
 
-    it("configureAccessLogging #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureAccessLogging #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings.destinationArn = "";
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging configured." });
     });
 
-    it("configureAccessLogging #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings.format = "";
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging configured." });

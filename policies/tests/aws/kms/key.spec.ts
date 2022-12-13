@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -30,15 +30,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.kms.Key.enableKeyRotation", () => {
     const policy = policies.aws.kms.Key.enableKeyRotation;
 
-    it("enableKeyRotation (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-kms-key-enable-key-rotation");
     });
 
-    it("enableKeyRotation (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableKeyRotation (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
@@ -47,12 +47,12 @@ describe("aws.kms.Key.enableKeyRotation", () => {
         });
     });
 
-    it("enableKeyRotation #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableKeyRotation #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.enableKeyRotation = undefined;
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have key rotation enabled." });
@@ -62,15 +62,15 @@ describe("aws.kms.Key.enableKeyRotation", () => {
 describe("aws.kms.Key.missingDescription", () => {
     const policy = policies.aws.kms.Key.missingDescription;
 
-    it("missingDescription (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-kms-key-missing-description");
     });
 
-    it("missingDescription (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("missingDescription (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
@@ -79,18 +79,18 @@ describe("aws.kms.Key.missingDescription", () => {
         });
     });
 
-    it("missingDescription #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("missingDescription #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.description = undefined;
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have a description." });
     });
 
-    it("missingDescription #3", async () => {
+    it("#3", async () => {
         const args = getResourceValidationArgs();
         args.props.description = "key";
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have a meaningful description." });
@@ -100,15 +100,15 @@ describe("aws.kms.Key.missingDescription", () => {
 describe("aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck", () => {
     const policy = policies.aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck;
 
-    it("disallowBypassPolicyLockoutSafetyCheck (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-kms-key-disallow-bypass-policy-lockout-safety-check");
     });
 
-    it("disallowBypassPolicyLockoutSafetyCheck (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("disallowBypassPolicyLockoutSafetyCheck (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
@@ -117,12 +117,12 @@ describe("aws.kms.Key.disallowBypassPolicyLockoutSafetyCheck", () => {
         });
     });
 
-    it("disallowBypassPolicyLockoutSafetyCheck #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("disallowBypassPolicyLockoutSafetyCheck #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.bypassPolicyLockoutSafetyCheck = true;
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should not bypass the key policy lockout safety check." });

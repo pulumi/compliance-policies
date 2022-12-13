@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -34,15 +34,15 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
     const policy = policies.aws.apigatewayv2.DomainName.enableDomainNameConfiguration;
 
-    it("enableDomainNameConfiguration (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-enable-domain-name-configuration");
     });
 
-    it("enableDomainNameConfiguration (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("enableDomainNameConfiguration (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -51,12 +51,12 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
         });
     });
 
-    it("enableDomainNameConfiguration #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("enableDomainNameConfiguration #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.domainNameConfiguration = undefined;
         await assertHasResourceViolation(policy, args, { message: "API GatewayV2 Domain Name Configuration should be enabled." });
@@ -66,15 +66,15 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
 describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => {
     const policy = policies.aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy;
 
-    it("configureDomainNameSecurityPolicy (name)", async () => {
+    it("name", async () => {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-configure-domain-name-security-policy");
     });
 
-    it("configureDomainNameSecurityPolicy (registration)", async () => {
+    it("registration", async () => {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("configureDomainNameSecurityPolicy (metadata)", async () => {
+    it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -83,12 +83,12 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => 
         });
     });
 
-    it("configureDomainNameSecurityPolicy #1", async () => {
+    it("#1", async () => {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("configureDomainNameSecurityPolicy #2", async () => {
+    it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.domainNameConfiguration.securityPolicy = "TLS_1_0";
         await assertHasResourceViolation(policy, args, { message: "API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption." });

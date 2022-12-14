@@ -41,6 +41,7 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
-        "test": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts"
+        "test": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts",
+        "watchtest": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts --watch --watch-files tests/**/*.spec.ts"
     }
 }

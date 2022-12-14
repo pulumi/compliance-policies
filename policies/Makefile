@@ -26,3 +26,6 @@ test::
 
 publish:
 	/bin/bash ./build/publish.sh
+
+watchtest::
+	yarn run watchtest

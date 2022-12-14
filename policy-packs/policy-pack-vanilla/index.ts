@@ -1,6 +1,10 @@
 import * as aws from "@pulumi/aws";
 import { PolicyPack } from "@pulumi/policy";
 
+/**
+ * 🔥 Don't use this method.
+ */
+
 import {
     validateResourceOfType,
 } from "@pulumi/policy";

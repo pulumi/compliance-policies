@@ -8,7 +8,7 @@ The project is currently in a `alpha` state and is subject to potentially breaki
 
 ## Policies
 
-The [`policies/`](policies/) folder contains all individual policies for each supported provider and the corresponding unit tests.
+The [`policies/docs/`](policies/docs/) folder contains all individual policies for each supported provider and the corresponding unit tests.
 
 A Policy contains specific logic you would like to enforce. For example, you may want to prevent the creation of public, world-readable storage objects. (e.g. on AWS S3, Azure BlobStore, etc.) or prevent the creation of a virtual machine without the proper security groups in-place.
 

@@ -16,11 +16,11 @@ export enum root {
     region = "us-west-2",
     availabilityZone1 = "us-west-2a",
     availabilityZone2 = "us-west-2b",
-    accountId = "123456781234",
+    accountId = "123456789012",
 }
 
 export enum acm {
-    certificateArn = "arn:aws:acm:us-west-2:123456781234:certificate/1234abcd-12ab-34cd-56ef-1234567890ab",
+    certificateArn = "arn:aws:acm:us-west-2:123456789012:certificate/1234abcd-12ab-34cd-56ef-1234567890ab",
 }
 
 export enum apigatewayv2 {
@@ -33,7 +33,7 @@ export enum cloudfront {
 }
 
 export enum cloudwatch {
-    logGroupArn = "arn:aws:logs:us-west-2:123456781234:log-group:log-group-name",
+    logGroupArn = "arn:aws:logs:us-west-2:123456789012:log-group:log-group-name",
 }
 
 export enum ec2 {
@@ -48,18 +48,22 @@ export enum ec2 {
 }
 
 export enum iam {
-    roleArn = "arn:aws:iam::123456781234:role/aws-iam-role-12345678",
-    sslCertificateArn = "arn:aws:iam::123456781234:server-certificate/certName",
+    roleArn = "arn:aws:iam::123456789012:role/aws-iam-role-12345678",
+    sslCertificateArn = "arn:aws:iam::123456789012:server-certificate/certName",
 }
 
 export enum kms {
     keyId = "key/1234abcd-12ab-34cd-56ef-1234567890ab",
-    keyArn = "arn:aws:kms:us-west-2:123456781234:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+    keyArn = "arn:aws:kms:us-west-2:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab",
 }
 
 export enum s3 {
     bucketRegionalDomainName = "example-bucket.s3.us-west-2.amazonaws.com",
     bucketId = "example-bucket",
+}
+
+export enum sns {
+    arn = "arn:aws:sns:us-west-2:123456789012:MyTopic",
 }
 
 export enum waf {

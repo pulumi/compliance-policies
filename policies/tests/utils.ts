@@ -280,7 +280,7 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
             }
         }
         /**
-         * Servces
+         * Services
          */
          if (registeredPolicy.policyMetadata.services && metadata.services
             && registeredPolicy.policyMetadata.services.length && metadata.services.length) {
@@ -297,7 +297,18 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
         /**
          * Severities
          */
-         if (registeredPolicy.policyMetadata.severity && metadata.severity) {
+        if (registeredPolicy.policyMetadata.severity) {
+            switch(registeredPolicy.policyMetadata.severity) {
+                case "low":
+                case "medium":
+                case "high":
+                case "critical":
+                    break;
+                default:
+                    assert.fail(`Policy ${policy.name} 'severity' isn't valid ('low', 'medium', 'high', 'critical').`);
+            }
+        }
+        if (registeredPolicy.policyMetadata.severity && metadata.severity) {
             if (registeredPolicy.policyMetadata.severity !== metadata.severity) {
                 assert.fail(`Policy ${policy.name} 'severity' don't match.`);
             }

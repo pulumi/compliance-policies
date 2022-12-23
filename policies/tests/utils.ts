@@ -207,6 +207,10 @@ export function assertResourcePolicyIsRegistered(policy: policy.ResourceValidati
 export function assertResourcePolicyName(policy: policy.ResourceValidationPolicy, name: string) {
     const re = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
 
+    if (!isLowerCase(policy.name)) {
+        assert.fail(`Policy name '${policy.name}' should be in lower case.`)
+    }
+
     if (policy.name !== name) {
         assert.fail(`Policy name '${policy.name}' isn't matching the expected name '${name}'.`);
     }
@@ -282,7 +286,12 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
         /**
          * Services
          */
-         if (registeredPolicy.policyMetadata.services && metadata.services
+        if (registeredPolicy.policyMetadata.services && registeredPolicy.policyMetadata.services.length) {
+            if (registeredPolicy.policyMetadata.services.length > 1) {
+                assert.fail(`Policy ${policy.name} should be associated to one service only.`);
+            }
+        }
+        if (registeredPolicy.policyMetadata.services && metadata.services
             && registeredPolicy.policyMetadata.services.length && metadata.services.length) {
             if(!compareArray(registeredPolicy.policyMetadata.services, metadata.services)) {
                 assert.fail(`Policy ${policy.name} 'services' don't match.`);
@@ -337,7 +346,13 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
         /**
          * Vendors
          */
-         if (registeredPolicy.policyMetadata.vendors && metadata.vendors
+        if (registeredPolicy.policyMetadata.vendors && registeredPolicy.policyMetadata.vendors.length) {
+            if (registeredPolicy.policyMetadata.vendors.length > 1) {
+                assert.fail(`Policy ${policy.name} should be associated to one vendor only.`);
+            }
+        }
+
+        if (registeredPolicy.policyMetadata.vendors && metadata.vendors
             && registeredPolicy.policyMetadata.vendors.length && metadata.vendors.length) {
             if(!compareArray(registeredPolicy.policyMetadata.vendors, metadata.vendors)) {
                 assert.fail(`Policy ${policy.name} 'vendors' don't match.`);
@@ -350,6 +365,11 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
             }
         }
     }
+}
+
+// Determine whether the given `input` is a string in lowercase
+function isLowerCase (input: string) {
+    return input === String(input).toLowerCase()
 }
 
 // for context https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript/

@@ -102,7 +102,9 @@ First, a new policy is always registered using `policyRegistrations.registerPoli
 
 ## Coding guide
 
-Below is a list of con
+Policies written and packaged by Pulumi will be consumed by customers. Writing policies in a consistent manner is important to give the best developer and user experience.
+
+Below is a list of guidelines to assist with the goal set above.
 
 ### Policy wording
 

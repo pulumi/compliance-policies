@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-kms-key-enable-key-rotation",
+        name: "awsnative-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {
@@ -51,7 +51,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.r
  */
 export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-kms-key-missing-description",
+        name: "awsnative-kms-key-missing-description",
         description: "Checks that KMS Keys have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {

@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-enable-access-logging",
+        name: "awsnative-cloudfront-distribution-enable-access-logging",
         description: "Checks that any CloudFront distributions have access logging enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations
  */
 export const configureAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-configure-access-logging",
+        name: "awsnative-cloudfront-distribution-configure-access-logging",
         description: "Checks that any CloudFront distributions have access logging configured.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -73,7 +73,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
  */
 export const configureWaf: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-configure-waf-acl",
+        name: "awsnative-cloudfront-distribution-configure-waf-acl",
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -96,7 +96,7 @@ export const configureWaf: ResourceValidationPolicy = policyRegistrations.regist
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-disallow-unencrypted-traffic",
+        name: "awsnative-cloudfront-distribution-disallow-unencrypted-traffic",
         description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -122,7 +122,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegist
  */
 export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-configure-secure-tls",
+        name: "awsnative-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -145,7 +145,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policyRegistrations.
  */
 export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-enable-tls-to-origin",
+        name: "awsnative-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
@@ -170,7 +170,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
  */
 export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-cloudfront-distribution-configure-secure-tls-to-origin",
+        name: "awsnative-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {

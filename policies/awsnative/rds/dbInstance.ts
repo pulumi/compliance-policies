@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-instance-enable-retention",
+        name: "awsnative-rds-instance-enable-retention",
         description: "Checks that RDS Instances backup retention policy is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
  */
 export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-instance-configure-backup-retention",
+        name: "awsnative-rds-instance-configure-backup-retention",
         description: "Checks that RDS Instances backup retention policy is adequate.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
@@ -76,7 +76,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
  */
 export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-instance-enable-performance-insights",
+        name: "awsnative-rds-cluster-instance-enable-performance-insights",
         description: "Checks that RDS Cluster Instances have performance insights enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
@@ -99,7 +99,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistr
  */
 export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-instance-disallow-unencrypted-performance-insights",
+        name: "awsnative-rds-cluster-instance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
@@ -122,7 +122,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-instance-disallow-public-access",
+        name: "awsnative-rds-cluster-instance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
@@ -145,7 +145,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-instance-storage-disallow-unencrypted-storage",
+        name: "awsnative-rds-instance-storage-disallow-unencrypted-storage",
         description: "Checks that RDS instance storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
@@ -168,7 +168,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-instance-storage-encryption-with-customer-managed-key",
+        name: "awsnative-rds-instance-storage-encryption-with-customer-managed-key",
         description: "Checks that RDS Instance storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {

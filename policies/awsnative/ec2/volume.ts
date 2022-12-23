@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const disallowUnencryptedVolume: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-ec2-volume-disallow-unencrypted-volume",
+        name: "awsnative-ec2-volume-disallow-unencrypted-volume",
         description: "Checks that EBS volumes are encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.ec2.Volume, (v, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policyRegistr
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-ec2-volume-configure-customer-managed-key",
+        name: "awsnative-ec2-volume-configure-customer-managed-key",
         description: "Check that encrypted EBS volumes use a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.ec2.Volume, (v, args, reportViolation) => {

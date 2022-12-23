@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-enable-backup-retention",
+        name: "awsnative-rds-cluster-enable-backup-retention",
         description: "Checks that RDS Clusters backup retention policy is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
  */
 export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-configure-backup-retention",
+        name: "awsnative-rds-cluster-configure-backup-retention",
         description: "Checks that RDS Cluster backup retention policy is configured.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
@@ -76,7 +76,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-storage-disallow-unencrypted-storage",
+        name: "awsnative-rds-cluster-storage-disallow-unencrypted-storage",
         description: "Checks that RDS Clusters storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
@@ -99,7 +99,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-rds-cluster-storage-encryption-with-customer-managed-key",
+        name: "awsnative-rds-cluster-storage-encryption-with-customer-managed-key",
         description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {

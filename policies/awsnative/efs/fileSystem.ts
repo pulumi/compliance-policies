@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-efs-file-system-disallow-unencrypted-file-system",
+        name: "awsnative-efs-file-system-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyReg
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-efs-file-system-configure-customer-managed-key",
+        name: "awsnative-efs-file-system-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
@@ -73,7 +73,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-efs-file-system-disallow-single-availability-zone",
+        name: "awsnative-efs-file-system-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
@@ -96,7 +96,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRe
  */
 export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-kms-key-disallow-bypass-policy-lockout-safety-check",
+        name: "awsnative-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that EFS File systems do not bypass the File System policy lockout safety check.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {

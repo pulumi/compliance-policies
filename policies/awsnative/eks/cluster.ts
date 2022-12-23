@@ -29,7 +29,7 @@ import { policyRegistrations } from "../../utils";
  */
 export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-eks-cluster-enable-cluster-encryption-config",
+        name: "awsnative-eks-cluster-enable-cluster-encryption-config",
         description: "Check that EKS Cluster Encryption Config is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {
@@ -52,7 +52,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyReg
  */
 export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-native-eks-cluster-disallow-api-endpoint-public-access",
+        name: "awsnative-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {

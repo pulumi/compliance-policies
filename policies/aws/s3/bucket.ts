@@ -32,8 +32,11 @@ export const disallowPublicRead: ResourceValidationPolicy = policyRegistrations.
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.acl) {
-                if (bucket.acl.toLowerCase() === "public-read".toLowerCase() || bucket.acl.toLowerCase() === "public-read-write".toLowerCase()) {
-                    reportViolation("S3 Buckets ACLs should not be set to 'public-read' or 'public-read-write'.");
+                if (
+                    bucket.acl.toLowerCase() === "public-read" ||
+                    bucket.acl.toLowerCase() === "public-read-write" ||
+                    bucket.acl.toLowerCase() === "authenticated-read") {
+                    reportViolation("S3 Buckets ACLs should not be set to 'public-read', 'public-read-write' or 'authenticated-read'.");
                 }
             }
         }),
@@ -56,7 +59,10 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyRe
         description: "Checks that S3 Bucket have cross-region replication enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
-            if (!bucket.replicationConfiguration || !bucket.replicationConfiguration.rules) {
+            if (
+                !bucket.replicationConfiguration ||
+                !bucket.replicationConfiguration.rules ||
+                bucket.replicationConfiguration.rules.length < 1) {
                 reportViolation("S3 buckets should have cross-region replication enabled.");
             }
         }),
@@ -81,8 +87,8 @@ export const configureReplicationConfiguration: ResourceValidationPolicy = polic
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.replicationConfiguration && bucket.replicationConfiguration.rules) {
                 bucket.replicationConfiguration.rules.forEach((rule) => {
-                    if (rule.status.toLowerCase() !== "enabled".toLowerCase()) {
-                        reportViolation("S3 Buckets replication should be configured.");
+                    if (rule.status.toLowerCase() !== "enabled") {
+                        reportViolation("S3 Buckets replication rules should be configured.");
                     }
                 });
             }
@@ -125,11 +131,11 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policyRegist
  */
 export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-s3-bucket-configyre-server-side-encryption-kms",
+        name: "aws-s3-bucket-configure-server-side-encryption-kms",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
-            if (bucket.serverSideEncryptionConfiguration && bucket.serverSideEncryptionConfiguration.rule.applyServerSideEncryptionByDefault.sseAlgorithm.toLowerCase() !== "aws:kms".toLowerCase()) {
+            if (bucket.serverSideEncryptionConfiguration && bucket.serverSideEncryptionConfiguration.rule.applyServerSideEncryptionByDefault.sseAlgorithm.toLowerCase() !== "aws:kms") {
                 reportViolation("S3 Buckets Server-Side Encryption (SSE) should use AWS KMS.");
             }
         }),
@@ -148,7 +154,7 @@ export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policy
  */
 export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-s3-bucket-co9nfigure-server-configure-side-encryption-customer-managed-key",
+        name: "aws-s3-bucket-configure-server-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {

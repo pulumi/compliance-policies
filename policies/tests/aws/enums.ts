@@ -57,6 +57,10 @@ export enum kms {
     keyArn = "arn:aws:kms:us-west-2:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab",
 }
 
+export enum rds {
+    dbClusterIdentifier = "mydbcluster",
+}
+
 export enum s3 {
     bucketRegionalDomainName = "example-bucket.s3.us-west-2.amazonaws.com",
     bucketId = "example-bucket",

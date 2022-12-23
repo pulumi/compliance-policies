@@ -103,7 +103,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
         description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
-            if (cluster.storageEncrypted && cluster.kmsKeyId === undefined) {
+            if (cluster.storageEncrypted && !cluster.kmsKeyId) {
                 reportViolation("RDS Cluster storage should be encrypted using a customer-managed key.");
             }
         }),
@@ -112,4 +112,27 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
     services: ["rds"],
     severity: "low",
     topics: ["encryption", "storage"],
+});
+
+/**
+ * Check that RDS Cluster doesn't use single availability zone.
+ *
+ * @severity **High**
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
+ */
+export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+    resourceValidationPolicy: {
+        name: "aws-rds-cluster-disallow-single-availability-zone",
+        description: "Check that RDS Cluster doesn't use single availability zone.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
+            if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
+                reportViolation("RDS Clusters should use more than one availability zone.");
+            }
+        }),
+    },
+    vendors: ["aws"],
+    services: ["rds"],
+    severity: "high",
+    topics: ["availability"],
 });

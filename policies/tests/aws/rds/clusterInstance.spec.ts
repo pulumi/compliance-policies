@@ -18,33 +18,23 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, kms, s3 } from "../enums";
+import { kms, rds, root } from "../enums";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(aws.lambda.Function, {
-        description: "This is a lambda function",
-        role: iam.roleArn,
-        handler: "index.js",
-        runtime: "nodejs18.x",
-        s3Bucket: s3.bucketId,
-        s3Key: "/function.zip",
-        environment: {
-            variables: {
-                "SOMEVAR": "some_value"
-            },
-        },
-        kmsKeyArn: kms.keyArn,
-        tracingConfig: {
-            mode: "Active"
-        }
+    return createResourceValidationArgs(aws.rds.ClusterInstance, {
+        clusterIdentifier: rds.dbClusterIdentifier,
+        instanceClass: aws.rds.InstanceType.M1_Large,
+        performanceInsightsEnabled: true,
+        performanceInsightsKmsKeyId: kms.keyArn,
+        publiclyAccessible: false,
     });
 }
 
-describe("aws.aws.lambda.Function.missingDescription", () => {
-    const policy = policies.aws.lambda.Function.missingDescription;
+describe("aws.aws.rds.ClusterInstance.enablePerformanceInsights", () => {
+    const policy = policies.aws.rds.ClusterInstance.enablePerformanceInsights;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-lambda-function-missing-description");
+        assertResourcePolicyName(policy, "aws-rds-cluster-instance-enable-performance-insights");
     });
 
     it("registration", async () => {
@@ -54,47 +44,7 @@ describe("aws.aws.lambda.Function.missingDescription", () => {
     it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
-            services: ["lambda"],
-            severity: "low",
-            topics: ["documentation"],
-        });
-    });
-
-    it("enforcementLevel", async () => {
-        assertResourcePolicyEnforcementLevel(policy);
-    });
-
-    it("description", async () => {
-        assertResourcePolicyDescription(policy);
-    });
-
-    it("#1", async () => {
-        const args = getResourceValidationArgs();
-        await assertNoResourceViolations(policy, args);
-    });
-
-    it("#2", async () => {
-        const args = getResourceValidationArgs();
-        args.props.description = "";
-        await assertHasResourceViolation(policy, args, { message: "Lambda functions should have a description." });
-    });
-});
-
-describe("aws.aws.lambda.Function.enableTracingConfig", () => {
-    const policy = policies.aws.lambda.Function.enableTracingConfig;
-
-    it("name", async () => {
-        assertResourcePolicyName(policy, "aws-lambda-function-enable-tracing-config");
-    });
-
-    it("registration", async () => {
-        assertResourcePolicyIsRegistered(policy);
-    });
-
-    it("metadata", async () => {
-        assertResourcePolicyRegistrationDetails(policy, {
-            vendors: ["aws"],
-            services: ["lambda"],
+            services: ["rds"],
             severity: "low",
             topics: ["logging", "performance"],
         });
@@ -115,16 +65,16 @@ describe("aws.aws.lambda.Function.enableTracingConfig", () => {
 
     it("#2", async () => {
         const args = getResourceValidationArgs();
-        args.props.tracingConfig = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Lambda functions should have tracing enabled." });
+        args.props.performanceInsightsEnabled = undefined;
+        await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances should have performance insights enabled." });
     });
 });
 
-describe("aws.aws.lambda.Function.configureTracingConfig", () => {
-    const policy = policies.aws.lambda.Function.configureTracingConfig;
+describe("aws.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () => {
+    const policy = policies.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-lambda-function-configure-tracing-config");
+        assertResourcePolicyName(policy, "aws-rds-cluster-instance-disallow-unencrypted-performance-insights");
     });
 
     it("registration", async () => {
@@ -134,9 +84,9 @@ describe("aws.aws.lambda.Function.configureTracingConfig", () => {
     it("metadata", async () => {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
-            services: ["lambda"],
-            severity: "low",
-            topics: ["logging", "performance"],
+            services: ["rds"],
+            severity: "high",
+            topics: ["encryption", "storage"],
         });
     });
 
@@ -155,7 +105,47 @@ describe("aws.aws.lambda.Function.configureTracingConfig", () => {
 
     it("#2", async () => {
         const args = getResourceValidationArgs();
-        args.props.tracingConfig.mode = "PassThrough";
-        await assertHasResourceViolation(policy, args, { message: "Lambda functions should have tracing configured." });
+        args.props.performanceInsightsKmsKeyId = "";
+        await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances should have performance insights encrypted." });
+    });
+});
+
+describe("aws.aws.rds.ClusterInstance.disallowPublicAccess", () => {
+    const policy = policies.aws.rds.ClusterInstance.disallowPublicAccess;
+
+    it("name", async () => {
+        assertResourcePolicyName(policy, "aws-rds-cluster-instance-disallow-public-access");
+    });
+
+    it("registration", async () => {
+        assertResourcePolicyIsRegistered(policy);
+    });
+
+    it("metadata", async () => {
+        assertResourcePolicyRegistrationDetails(policy, {
+            vendors: ["aws"],
+            services: ["rds"],
+            severity: "critical",
+            topics: ["network"],
+        });
+    });
+
+    it("enforcementLevel", async () => {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async () => {
+        assertResourcePolicyDescription(policy);
+    });
+
+    it("#1", async () => {
+        const args = getResourceValidationArgs();
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#2", async () => {
+        const args = getResourceValidationArgs();
+        args.props.publiclyAccessible = true;
+        await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances public access should not be enabled." });
     });
 });

@@ -54,7 +54,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
-            if (clusterInstance.performanceInsightsEnabled && clusterInstance.performanceInsightsKmsKeyId === undefined) {
+            if (clusterInstance.performanceInsightsEnabled && !clusterInstance.performanceInsightsKmsKeyId) {
                 reportViolation("RDS Cluster Instances should have performance insights encrypted.");
             }
         }),
@@ -77,7 +77,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
         description: "Checks that RDS Cluster Instances public access is not enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
-            if (!clusterInstance.publiclyAccessible) {
+            if (clusterInstance.publiclyAccessible) {
                 reportViolation("RDS Cluster Instances public access should not be enabled.");
             }
         }),

@@ -32,8 +32,10 @@ export const disallowPublicRead: ResourceValidationPolicy = policyRegistrations.
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.accessControl) {
-                if (bucket.accessControl === awsnative.s3.BucketAccessControl.PublicRead || bucket.accessControl === awsnative.s3.BucketAccessControl.PublicReadWrite) {
-                    reportViolation("S3 Buckets ACLs should not be set to 'PublicRead' or 'PublicReadWrite'.");
+                if (bucket.accessControl === awsnative.s3.BucketAccessControl.PublicRead ||
+                    bucket.accessControl === awsnative.s3.BucketAccessControl.PublicReadWrite ||
+                    bucket.accessControl === awsnative.s3.BucketAccessControl.AuthenticatedRead) {
+                    reportViolation("S3 Buckets ACLs should not be set to 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.");
                 }
             }
         }),
@@ -56,7 +58,7 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyRe
         description: "Checks that S3 Bucket have cross-region replication enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
-            if (!bucket.replicationConfiguration || !bucket.replicationConfiguration.rules) {
+            if (!bucket.replicationConfiguration || !bucket.replicationConfiguration.rules || bucket.replicationConfiguration.rules.length < 1) {
                 reportViolation("S3 buckets should have cross-region replication enabled.");
             }
         }),
@@ -125,7 +127,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policyRegist
  */
 export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-s3-bucket-configyre-server-side-encryption-kms",
+        name: "awsnative-s3-bucket-configure-server-side-encryption-kms",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
@@ -152,7 +154,7 @@ export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policy
  */
 export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-s3-bucket-co9nfigure-server-configure-side-encryption-customer-managed-key",
+        name: "awsnative-s3-bucket-configure-server-configure-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {

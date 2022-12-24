@@ -40,7 +40,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.lambda.Function.missingDescription", () => {
+describe("aws.lambda.Function.missingDescription", () => {
     const policy = policies.aws.lambda.Function.missingDescription;
 
     it("name", async () => {
@@ -80,7 +80,7 @@ describe("aws.aws.lambda.Function.missingDescription", () => {
     });
 });
 
-describe("aws.aws.lambda.Function.enableTracingConfig", () => {
+describe("aws.lambda.Function.enableTracingConfig", () => {
     const policy = policies.aws.lambda.Function.enableTracingConfig;
 
     it("name", async () => {
@@ -120,7 +120,7 @@ describe("aws.aws.lambda.Function.enableTracingConfig", () => {
     });
 });
 
-describe("aws.aws.lambda.Function.configureTracingConfig", () => {
+describe("aws.lambda.Function.configureTracingConfig", () => {
     const policy = policies.aws.lambda.Function.configureTracingConfig;
 
     it("name", async () => {

@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../../utils";
  */
 export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-core-v1-replica-set-configure-minimum-replica-count",
+        name: "kubernetes-apps-v1-replicaset-configure-minimum-replica-count",
         description: "Checks that Kubernetes ReplicaSets have at least three replicas.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaSet, args, reportViolation) => {
@@ -49,9 +49,9 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegi
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-core-v1-replica-set-configure-recommended-label",
+        name: "kubernetes-apps-v1-replicaset-configure-recommended-labels",
         description: "Checks that Kubernetes ReplicaSets use the recommended labels.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaSet, args, reportViolation) => {

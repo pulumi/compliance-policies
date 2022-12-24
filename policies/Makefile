@@ -4,9 +4,9 @@ include build/common.mk
 
 VERSION := $(shell /bin/bash ./build/get-version.sh)
 
-.PHONY: build lint publish test
+.PHONY: build lint publish tests watchtests
 
-build:: lint test
+build:: lint tests
 	@test ! -z "$(VERSION)" || "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	rm -rf bin/
@@ -21,11 +21,11 @@ build:: lint test
 lint::
 	yarn run lint
 
-test::
+tests::
 	yarn run test
 
 publish:
 	/bin/bash ./build/publish.sh
 
-watchtest::
+watchtests::
 	yarn run watchtest

@@ -20,19 +20,19 @@ import {
 import { policyRegistrations } from "../../utils";
 
 /**
- * Checks that backup retention policy is adequate.
+ * Checks that RDS DB Instances backup retention policy is enabled.
  *
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-instance-enable-retention",
-        description: "Checks that RDS Instances backup retention policy is enabled.",
+        name: "awsnative-rds-dbinstance-enable-backup-retention",
+        description: "Checks that RDS DB Instances backup retention policy is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
             if (!instance.backupRetentionPeriod) {
-                reportViolation("RDS Instance backup retention should be enabled.");
+                reportViolation("RDS DB Instances backup retention should be enabled.");
             }
         }),
     },
@@ -43,22 +43,22 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
 });
 
 /**
- * Checks that RDS Instances backup retention policy is adequate.
+ * Checks that RDS DB Instances backup retention policy is adequate.
  *
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-instance-configure-backup-retention",
-        description: "Checks that RDS Instances backup retention policy is adequate.",
+        name: "awsnative-rds-dbinstance-configure-backup-retention",
+        description: "Checks that RDS DB Instances backup retention policy is adequate.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
             /**
              * 3 (three) days should be the minimum in order to have full weekend coverage.
              */
             if (instance.backupRetentionPeriod && instance.backupRetentionPeriod < 3) {
-                reportViolation("RDS Instances backup retention period is lower than 3 days.");
+                reportViolation("RDS DB Instances backup retention period should be greater than 3 days.");
             }
         }),
     },
@@ -69,19 +69,19 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
 });
 
 /**
- * Checks that RDS Cluster Instances have performance insights enabled.
+ * Checks that RDS DB Instances have performance insights enabled.
  *
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
 export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-cluster-instance-enable-performance-insights",
-        description: "Checks that RDS Cluster Instances have performance insights enabled.",
+        name: "awsnative-rds-dbinstance-enable-performance-insights",
+        description: "Checks that RDS DB Instances have performance insights enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
             if (!dbInstance.enablePerformanceInsights) {
-                reportViolation("RDS Cluster Instances should have performance insights enabled.");
+                reportViolation("RDS DB Instances should have performance insights enabled.");
             }
         }),
     },
@@ -92,19 +92,19 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistr
 });
 
 /**
- * Checks that performance insights in RDS Cluster is encrypted.
+ * Checks that RDS DB Instances performance insights is encrypted.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-cluster-instance-disallow-unencrypted-performance-insights",
-        description: "Checks that RDS Cluster Instances performance insights is encrypted.",
+        name: "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights",
+        description: "Checks that RDS DB Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
-            if (dbInstance.enablePerformanceInsights && dbInstance.performanceInsightsKMSKeyId === undefined) {
-                reportViolation("RDS Cluster Instances should have performance insights encrypted.");
+            if (dbInstance.enablePerformanceInsights && !dbInstance.performanceInsightsKMSKeyId) {
+                reportViolation("RDS DB Instances should have performance insights encrypted.");
             }
         }),
     },
@@ -115,19 +115,19 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
 });
 
 /**
- * Checks that RDS Cluster Instances public access is not enabled.
+ * Checks that RDS DB Instances public access is not enabled.
  *
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-cluster-instance-disallow-public-access",
-        description: "Checks that RDS Cluster Instances public access is not enabled.",
+        name: "awsnative-rds-dbinstance-disallow-public-access",
+        description: "Checks that RDS DB Instances public access is not enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
-            if (!dbInstance.publiclyAccessible) {
-                reportViolation("RDS Cluster Instances public access should not be enabled.");
+            if (dbInstance.publiclyAccessible) {
+                reportViolation("RDS DB Instances public access should not be enabled.");
             }
         }),
     },
@@ -138,19 +138,19 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
 });
 
 /**
- * Checks that RDS storage is encrypted.
+ * Checks that RDS DB Instance storage is encrypted.
  *
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-instance-storage-disallow-unencrypted-storage",
-        description: "Checks that RDS instance storage is encrypted.",
+        name: "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage",
+        description: "Checks that RDS DB Instance storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
             if (!instance.storageEncrypted) {
-                reportViolation("RDS Instance storage should be encrypted.");
+                reportViolation("RDS DB Instances storage should be encrypted.");
             }
         }),
     },
@@ -161,19 +161,19 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
 });
 
 /**
- * Checks that storage is encrypted with a customer managed key.
+ * Checks that RDS DB Instance storage uses a customer-manager KMS key.
  *
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-instance-storage-encryption-with-customer-managed-key",
-        description: "Checks that RDS Instance storage uses a customer-manager KMS key.",
+        name: "awsnative-rds-dbinstance-configure-customer-managed-key",
+        description: "Checks that RDS DB Instance storage uses a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
-            if (instance.storageEncrypted && instance.kmsKeyId === undefined) {
-                reportViolation("RDS Instance storage should be encrypted using a customer-managed key.");
+            if (instance.storageEncrypted && !instance.kmsKeyId) {
+                reportViolation("RDS DB Instances storage should be encrypted using a customer-managed key.");
             }
         }),
     },

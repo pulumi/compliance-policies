@@ -33,7 +33,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyReg
         description: "Check that EKS Cluster Encryption Config is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {
-            if (!cluster.encryptionConfig) {
+            if (!cluster.encryptionConfig || cluster.encryptionConfig.length < 1) {
                 reportViolation("EKS Cluster Encryption Configuration should be enabled.");
             }
         }),
@@ -58,7 +58,7 @@ export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policyR
         validateResource: validateResourceOfType(awsnative.eks.Cluster, (cluster, args, reportViolation) => {
             if (cluster.resourcesVpcConfig.endpointPublicAccess === undefined || cluster.resourcesVpcConfig.endpointPublicAccess === true) {
                 /**
-                 * We need to cleck `publicAccessCidrs` for any `0.0.0.0/0` and `::/0`.
+                 * We need to check `publicAccessCidrs` for any `0.0.0.0/0` and `::/0`.
                  */
                 if (!cluster.resourcesVpcConfig.publicAccessCidrs) {
                     reportViolation("EKS Cluster Encryption API endpoint should not be publicly accessible.");

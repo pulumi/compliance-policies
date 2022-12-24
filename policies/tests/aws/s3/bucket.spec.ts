@@ -44,7 +44,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.s3.Bucket.disallowPublicRead", () => {
+describe("aws.s3.Bucket.disallowPublicRead", () => {
     const policy = policies.aws.s3.Bucket.disallowPublicRead;
 
     it("name", async () => {
@@ -90,7 +90,7 @@ describe("aws.aws.s3.Bucket.disallowPublicRead", () => {
     });
 });
 
-describe("aws.aws.s3.Bucket.enableReplicationConfiguration", () => {
+describe("aws.s3.Bucket.enableReplicationConfiguration", () => {
     const policy = policies.aws.s3.Bucket.enableReplicationConfiguration;
 
     it("name", async () => {
@@ -136,7 +136,7 @@ describe("aws.aws.s3.Bucket.enableReplicationConfiguration", () => {
     });
 });
 
-describe("aws.aws.s3.Bucket.configureReplicationConfiguration", () => {
+describe("aws.s3.Bucket.configureReplicationConfiguration", () => {
     const policy = policies.aws.s3.Bucket.configureReplicationConfiguration;
 
     it("name", async () => {
@@ -176,7 +176,7 @@ describe("aws.aws.s3.Bucket.configureReplicationConfiguration", () => {
     });
 });
 
-describe("aws.aws.s3.Bucket.enableServerSideEncryption", () => {
+describe("aws.s3.Bucket.enableServerSideEncryption", () => {
     const policy = policies.aws.s3.Bucket.enableServerSideEncryption;
 
     it("name", async () => {
@@ -216,7 +216,7 @@ describe("aws.aws.s3.Bucket.enableServerSideEncryption", () => {
     });
 });
 
-describe("aws.aws.s3.Bucket.configureServerSideEncryptionKMS", () => {
+describe("aws.s3.Bucket.configureServerSideEncryptionKMS", () => {
     const policy = policies.aws.s3.Bucket.configureServerSideEncryptionKMS;
 
     it("name", async () => {
@@ -256,7 +256,7 @@ describe("aws.aws.s3.Bucket.configureServerSideEncryptionKMS", () => {
     });
 });
 
-describe("aws.aws.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", () => {
+describe("aws.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", () => {
     const policy = policies.aws.s3.Bucket.configureServerSideEncryptionCustomerManagedKey;
 
     it("name", async () => {
@@ -296,7 +296,7 @@ describe("aws.aws.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", ()
     });
 });
 
-describe("aws.aws.s3.Bucket.enableServerSideEncryptionBucketKey", () => {
+describe("aws.s3.Bucket.enableServerSideEncryptionBucketKey", () => {
     const policy = policies.aws.s3.Bucket.enableServerSideEncryptionBucketKey;
 
     it("name", async () => {

@@ -33,7 +33,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.rds.Instance.enableBackupRetention", () => {
+describe("aws.rds.Instance.enableBackupRetention", () => {
     const policy = policies.aws.rds.Instance.enableBackupRetention;
 
     it("name", async () => {
@@ -73,7 +73,7 @@ describe("aws.aws.rds.Instance.enableBackupRetention", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.configureBackupRetention", () => {
+describe("aws.rds.Instance.configureBackupRetention", () => {
     const policy = policies.aws.rds.Instance.configureBackupRetention;
 
     it("name", async () => {
@@ -113,7 +113,7 @@ describe("aws.aws.rds.Instance.configureBackupRetention", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.disallowClassicResource", () => {
+describe("aws.rds.Instance.disallowClassicResource", () => {
     const policy = policies.aws.rds.Instance.disallowClassicResource;
 
     it("name", async () => {
@@ -153,7 +153,7 @@ describe("aws.aws.rds.Instance.disallowClassicResource", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.enablePerformanceInsights", () => {
+describe("aws.rds.Instance.enablePerformanceInsights", () => {
     const policy = policies.aws.rds.Instance.enablePerformanceInsights;
 
     it("name", async () => {
@@ -193,7 +193,7 @@ describe("aws.aws.rds.Instance.enablePerformanceInsights", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.disallowUnencryptedPerformanceInsights", () => {
+describe("aws.rds.Instance.disallowUnencryptedPerformanceInsights", () => {
     const policy = policies.aws.rds.Instance.disallowUnencryptedPerformanceInsights;
 
     it("name", async () => {
@@ -233,7 +233,7 @@ describe("aws.aws.rds.Instance.disallowUnencryptedPerformanceInsights", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.disallowPublicAccess", () => {
+describe("aws.rds.Instance.disallowPublicAccess", () => {
     const policy = policies.aws.rds.Instance.disallowPublicAccess;
 
     it("name", async () => {
@@ -273,7 +273,7 @@ describe("aws.aws.rds.Instance.disallowPublicAccess", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.disallowUnencryptedStorage", () => {
+describe("aws.rds.Instance.disallowUnencryptedStorage", () => {
     const policy = policies.aws.rds.Instance.disallowUnencryptedStorage;
 
     it("name", async () => {
@@ -313,7 +313,7 @@ describe("aws.aws.rds.Instance.disallowUnencryptedStorage", () => {
     });
 });
 
-describe("aws.aws.rds.Instance.configureCustomerManagedKey", () => {
+describe("aws.rds.Instance.configureCustomerManagedKey", () => {
     const policy = policies.aws.rds.Instance.configureCustomerManagedKey;
 
     it("name", async () => {

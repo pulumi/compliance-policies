@@ -30,7 +30,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.rds.ClusterInstance.enablePerformanceInsights", () => {
+describe("aws.rds.ClusterInstance.enablePerformanceInsights", () => {
     const policy = policies.aws.rds.ClusterInstance.enablePerformanceInsights;
 
     it("name", async () => {
@@ -70,7 +70,7 @@ describe("aws.aws.rds.ClusterInstance.enablePerformanceInsights", () => {
     });
 });
 
-describe("aws.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () => {
+describe("aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () => {
     const policy = policies.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights;
 
     it("name", async () => {
@@ -110,7 +110,7 @@ describe("aws.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", (
     });
 });
 
-describe("aws.aws.rds.ClusterInstance.disallowPublicAccess", () => {
+describe("aws.rds.ClusterInstance.disallowPublicAccess", () => {
     const policy = policies.aws.rds.ClusterInstance.disallowPublicAccess;
 
     it("name", async () => {

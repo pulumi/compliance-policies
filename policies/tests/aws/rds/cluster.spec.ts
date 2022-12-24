@@ -32,7 +32,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.rds.Cluster.enableBackupRetention", () => {
+describe("aws.rds.Cluster.enableBackupRetention", () => {
     const policy = policies.aws.rds.Cluster.enableBackupRetention;
 
     it("name", async () => {
@@ -72,7 +72,7 @@ describe("aws.aws.rds.Cluster.enableBackupRetention", () => {
     });
 });
 
-describe("aws.aws.rds.Cluster.configureBackupRetention", () => {
+describe("aws.rds.Cluster.configureBackupRetention", () => {
     const policy = policies.aws.rds.Cluster.configureBackupRetention;
 
     it("name", async () => {
@@ -112,7 +112,7 @@ describe("aws.aws.rds.Cluster.configureBackupRetention", () => {
     });
 });
 
-describe("aws.aws.rds.Cluster.disallowUnencryptedStorage", () => {
+describe("aws.rds.Cluster.disallowUnencryptedStorage", () => {
     const policy = policies.aws.rds.Cluster.disallowUnencryptedStorage;
 
     it("name", async () => {
@@ -152,7 +152,7 @@ describe("aws.aws.rds.Cluster.disallowUnencryptedStorage", () => {
     });
 });
 
-describe("aws.aws.rds.Cluster.configureCustomerManagedKey", () => {
+describe("aws.rds.Cluster.configureCustomerManagedKey", () => {
     const policy = policies.aws.rds.Cluster.configureCustomerManagedKey;
 
     it("name", async () => {

@@ -27,7 +27,7 @@ import { policyRegistrations } from "../../../utils";
  */
 export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-core-v1-deployment-configure-minimum-replica-count",
+        name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
         description: "Checks that Kubernetes Deployments have at least three replicas.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
@@ -51,7 +51,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegi
  */
 export const configureRecommendedLabel: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-core-v1-deployment-configure-recommended-labels",
+        name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
         description: "Checks that Kubernetes Deployments use the recommended labels.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {

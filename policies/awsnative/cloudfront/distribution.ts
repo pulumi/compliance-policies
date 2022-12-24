@@ -71,13 +71,13 @@ export const configureAccessLogging: ResourceValidationPolicy = policyRegistrati
  * @severity **High**
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
-export const configureWaf: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureWafAcl: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-waf-acl",
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
-            if (distribution.distributionConfig.webACLId === undefined) {
+            if (!distribution.distributionConfig.webACLId) {
                 reportViolation("CloudFront Distributions should have a WAF ACL associated.");
             }
         }),
@@ -103,8 +103,10 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyRegist
             if (distribution.distributionConfig.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }
-            if (distribution.distributionConfig.cacheBehaviors?.some(cacheBehaviors => cacheBehaviors.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
-                reportViolation("CloudFront distributions should not allow unencrypted traffic.");
+            if (distribution.distributionConfig.cacheBehaviors) {
+                if (distribution.distributionConfig.cacheBehaviors.some(cacheBehaviors => cacheBehaviors.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
+                    reportViolation("CloudFront distributions should not allow unencrypted traffic.");
+                }
             }
         }),
     },
@@ -150,7 +152,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
             distribution.distributionConfig.origins?.forEach((origin) => {
-                if (origin.customOriginConfig && origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only") {
+                if (origin.customOriginConfig && (!origin.customOriginConfig.originProtocolPolicy || origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only")) {
                     reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");
                 }
             });
@@ -168,7 +170,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policyRegistrations.r
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const configureSedureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureSecureTLSToOrgin: ResourceValidationPolicy = policyRegistrations.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",

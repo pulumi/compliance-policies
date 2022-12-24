@@ -286,9 +286,11 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
         /**
          * Services
          */
-        if (registeredPolicy.policyMetadata.services && registeredPolicy.policyMetadata.services.length) {
-            if (registeredPolicy.policyMetadata.services.length > 1) {
-                assert.fail(`Policy ${policy.name} should be associated to one service only.`);
+        if (registeredPolicy.policyMetadata.vendors && !registeredPolicy.policyMetadata.vendors.includes("kubernetes")) {
+            if (registeredPolicy.policyMetadata.services && registeredPolicy.policyMetadata.services.length) {
+                if (registeredPolicy.policyMetadata.services.length > 1) {
+                    assert.fail(`Policy ${policy.name} should be associated to one service only.`);
+                }
             }
         }
         if (registeredPolicy.policyMetadata.services && metadata.services

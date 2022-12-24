@@ -29,7 +29,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.aws.lambda.Permission.configureSourceArn", () => {
+describe("aws.lambda.Permission.configureSourceArn", () => {
     const policy = policies.aws.lambda.Permission.configureSourceArn;
 
     it("name", async () => {

@@ -42,7 +42,7 @@ export interface PolicyInfo {
     policyMetadata: PolicyMetadata;
 };
 
-export class RegisteredPolicies {
+export class PolicyManagement {
 
     /**
      * An array containing all registered policies.
@@ -359,7 +359,7 @@ export class RegisteredPolicies {
     }
 };
 
-export const policyRegistrations: RegisteredPolicies = new RegisteredPolicies();
+export const policyManagement: PolicyManagement = new PolicyManagement();
 
 /**
  * The function `valToBoolean()` is a helper because some boolean properties

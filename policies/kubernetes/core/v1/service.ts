@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../../utils";
+import { policiesManagement } from "../../../utils";
 
 /**
  * Checks that Kubernetes Deployments have the recommended label.
@@ -26,7 +26,7 @@ import { policyRegistrations } from "../../../utils";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureRecommendedLabel: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-configure-recommended-label",
         description: "Checks that Kubernetes Services use the recommended labels.",

@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that lambda function permissions have a source arn specified.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
-export const configureSourceArn: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureSourceArn: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-lambda-permission-configure-source-arn-permission",
         description: "Checks that lambda function permissions have a source arn specified.",

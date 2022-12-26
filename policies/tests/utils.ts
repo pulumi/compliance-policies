@@ -15,12 +15,8 @@
 import * as policy from "@pulumi/policy";
 import * as policies from "../index";
 import { PolicyInfo, PolicyMetadata } from "../utils";
-
 import { Resource, Unwrap } from "@pulumi/pulumi";
-import * as q from "@pulumi/pulumi/queryable";
-
 import * as assert from "assert";
-import { meta } from "@pulumi/kubernetes";
 
 const empytOptions = {
     protect: false,
@@ -199,7 +195,7 @@ export async function assertHasStackViolation(
 }
 
 export function assertResourcePolicyIsRegistered(policy: policy.ResourceValidationPolicy) {
-    if (!policies.policyRegistrations.getPolicyByName(policy.name)) {
+    if (!policies.policiesManagement.getPolicyByName(policy.name)) {
         assert.fail(`Policy ${policy.name} is not registered.`);
     }
 }
@@ -263,7 +259,7 @@ export function assertResourcePolicyDescription(policy: policy.ResourceValidatio
 }
 
 export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceValidationPolicy, metadata: PolicyMetadata) {
-    const registeredPolicy: PolicyInfo | undefined = policies.policyRegistrations.getPolicyByName(policy.name);
+    const registeredPolicy: PolicyInfo | undefined = policies.policiesManagement.getPolicyByName(policy.name);
     if (!registeredPolicy) {
         assert.fail(`Policy ${policy.name} is not registered.`);
     }

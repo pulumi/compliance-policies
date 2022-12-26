@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../../utils";
+import { policiesManagement } from "../../../utils";
 
 /**
  * Checks that Kubernetes Deployments have at least three replicas.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../../utils";
  * @severity **High**
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
  */
-export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
         description: "Checks that Kubernetes Deployments have at least three replicas.",
@@ -49,7 +49,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policyRegi
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureRecommendedLabel: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
         description: "Checks that Kubernetes Deployments use the recommended labels.",

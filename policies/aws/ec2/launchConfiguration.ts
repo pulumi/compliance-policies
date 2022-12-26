@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that any launch configuration do not have public IP addresses.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-configuration-disallow-public-ip",
         description: "Checks that EC2 Launch Configurations do not have a public IP address.",
@@ -48,7 +48,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.re
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
         description: "Checks that EC2 launch configuration do not have unencrypted root volumes.",
@@ -71,7 +71,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
         description: "Checks that EC2 Launch Configurations do not have unencrypted volumes.",

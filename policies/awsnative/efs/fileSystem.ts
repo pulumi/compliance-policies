@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that EFS File Systems do not have an unencrypted file system.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html
  */
-export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-efs-file-system-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
@@ -48,7 +48,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyReg
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-efs-file-system-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
@@ -71,7 +71,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
  * @severity **High**
  * @link https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
  */
-export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-efs-file-system-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
@@ -94,7 +94,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRe
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-efs-filesystem.html#cfn-efs-filesystem-bypasspolicylockoutsafetycheck
  */
-export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that EFS File systems do not bypass the File System policy lockout safety check.",

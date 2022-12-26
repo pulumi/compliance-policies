@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that RDS Cluster Instances have performance insights enabled.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-instance-enable-performance-insights",
         description: "Checks that RDS Cluster Instances have performance insights enabled.",
@@ -48,7 +48,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistr
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-instance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
@@ -71,7 +71,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-instance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",

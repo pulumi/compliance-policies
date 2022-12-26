@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that RDS Clusters backup retention policy is enabled.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-enable-backup-retention",
         description: "Checks that RDS Clusters backup retention policy is enabled.",
@@ -48,7 +48,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-configure-backup-retention",
         description: "Checks that RDS Cluster backup retention policy is configured.",
@@ -74,7 +74,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-storage-disallow-unencrypted-storage",
         description: "Checks that RDS Clusters storage is encrypted.",
@@ -97,7 +97,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-storage-encryption-with-customer-managed-key",
         description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
@@ -120,7 +120,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegis
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
  */
-export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-cluster-disallow-single-availability-zone",
         description: "Check that RDS Cluster doesn't use single availability zone.",

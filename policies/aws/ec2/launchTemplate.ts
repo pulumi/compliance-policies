@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations, valToBoolean } from "../../utils";
+import { policiesManagement, valToBoolean } from "../../utils";
 
 /**
  * Checks that any launch template do not have public IP addresses.
@@ -25,7 +25,7 @@ import { policyRegistrations, valToBoolean } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-template-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
@@ -53,7 +53,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policyRegistrations.re
  * @severity **High**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-template-disallow-unencrypted-volume",
         description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
@@ -81,7 +81,7 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyRe
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launch-template-configure-customer-managed-key",
         description: "Check that encrypted EBS volume uses a customer-managed KMS key.",

@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that all Lambda Functions have a description.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Low**
  * @link https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
  */
-export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-lambda-function-missing-description",
         description: "Checks that all Lambda Functions have a description.",
@@ -48,7 +48,7 @@ export const missingDescription: ResourceValidationPolicy = policyRegistrations.
  * @severity **Low**
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
-export const enableTracingConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableTracingConfig: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-lambda-function-enable-tracing-config",
         description: "Checks that Lambda functions have tracing enabled.",
@@ -71,7 +71,7 @@ export const enableTracingConfig: ResourceValidationPolicy = policyRegistrations
  * @severity **Low**
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
-export const configureTracingConfig: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureTracingConfig: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-lambda-function-configure-tracing-config",
         description: "Checks that Lambda functions have tracing configured.",

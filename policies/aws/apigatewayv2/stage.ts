@@ -18,7 +18,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that any ApiGatewayV2 Stages have access logging enabled.
@@ -26,7 +26,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-stage-enable-access-logging",
         description: "Checks that any ApiGatewayV2 Stages have access logging enabled.",
@@ -49,7 +49,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyRegistrations
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-stage-configure-access-logging",
         description: "Checks that any ApiGatewayV2 Stages have access logging configured.",

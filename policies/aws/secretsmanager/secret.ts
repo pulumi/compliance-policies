@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that Secrets Manager Secrets have a description.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Low**
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
-export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-secrets-manager-secret-missing-description",
         description: "Checks that Secrets Manager Secrets have a description.",
@@ -52,7 +52,7 @@ export const missingDescription: ResourceValidationPolicy = policyRegistrations.
  * @severity **Low**
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-secrets-manager-secret-configure-customer-managed-key",
         description: "Check that Secrets Manager Secrets use a customer-manager KMS key.",

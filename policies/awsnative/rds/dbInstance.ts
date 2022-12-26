@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that RDS DB Instances backup retention policy is enabled.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const enableBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-enable-backup-retention",
         description: "Checks that RDS DB Instances backup retention policy is enabled.",
@@ -48,7 +48,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyRegistratio
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const configureBackupRetention: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-configure-backup-retention",
         description: "Checks that RDS DB Instances backup retention policy is adequate.",
@@ -74,7 +74,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyRegistra
  * @severity **Low**
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-enable-performance-insights",
         description: "Checks that RDS DB Instances have performance insights enabled.",
@@ -97,7 +97,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyRegistr
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS DB Instances performance insights is encrypted.",
@@ -120,7 +120,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-disallow-public-access",
         description: "Checks that RDS DB Instances public access is not enabled.",
@@ -143,7 +143,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyRegistration
  * @severity **High**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage",
         description: "Checks that RDS DB Instance storage is encrypted.",
@@ -166,7 +166,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyRegist
  * @severity **Low**
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-configure-customer-managed-key",
         description: "Checks that RDS DB Instance storage uses a customer-manager KMS key.",

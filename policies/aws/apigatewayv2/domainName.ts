@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that any ApiGatewayV2 Domain Name Configuration is enabled.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **High**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
-export const enableDomainNameConfiguration: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableDomainNameConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-stage-enable-domain-name-configuration",
         description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
@@ -48,7 +48,7 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policyReg
  * @severity **High**
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
-export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-stage-configure-domain-name-security-policy",
         description: "Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.",

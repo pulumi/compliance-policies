@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policyRegistrations } from "../../utils";
+import { policiesManagement } from "../../utils";
 
 /**
  * Checks that KMS Keys have key rotation enabled.
@@ -25,7 +25,7 @@ import { policyRegistrations } from "../../utils";
  * @severity **Medium**
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
  */
-export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const enableKeyRotation: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
@@ -49,7 +49,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policyRegistrations.r
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html
  * https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html
  */
-export const missingDescription: ResourceValidationPolicy = policyRegistrations.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-kms-key-missing-description",
         description: "Checks that KMS Keys have a description.",

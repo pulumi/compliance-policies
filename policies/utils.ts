@@ -147,9 +147,10 @@ export class PoliciesManagement {
      * Note: Call `resetPolicyfilter()` to reset the filter and consider all policies again.
      *
      * @param args A bag of options containing the selection criterias.
+     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory` (default), `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */
-    public filterPolicies(args: FilterPolicyArgs): ResourceValidationPolicy[] {
+    public filterPolicies(args: FilterPolicyArgs, enforcementLevel?: string): ResourceValidationPolicy[] {
 
         const results: ResourceValidationPolicy[] = [];
         /*
@@ -278,7 +279,26 @@ export class PoliciesManagement {
         });
 
         matches.forEach((match) => {
-            results.push(match.resourceValidationPolicy);
+
+            /*
+             * We need to deep clone the entire policy to avoid changing
+             * the enforcement level set by the policy developer. However,
+             * It's not possible to use `structuredClone()` to clone because
+             * the policy code cannot be serialized. So instead, we manually
+             * assign each value and set the enforcementLevel last.
+             */
+            const policy: ResourceValidationPolicy = {
+                name: match.resourceValidationPolicy.name,
+                description: match.resourceValidationPolicy.description,
+                configSchema: match.resourceValidationPolicy.configSchema,
+                validateResource: match.resourceValidationPolicy.validateResource,
+            };
+            if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
+                policy.enforcementLevel = enforcementLevel;
+            } else {
+                policy.enforcementLevel = match.resourceValidationPolicy.enforcementLevel;
+            }
+            results.push(policy);
         });
 
         return results;

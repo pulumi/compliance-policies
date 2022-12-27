@@ -14,7 +14,7 @@
 
 import * as policy from "@pulumi/policy";
 import * as policies from "../index";
-import { PolicyInfo, PolicyMetadata } from "../utils";
+import { PolicyInfo, PolicyMetadata, policiesManagement, FilterPolicyArgs } from "../utils";
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as assert from "assert";
 
@@ -363,6 +363,50 @@ export function assertResourcePolicyRegistrationDetails(policy: policy.ResourceV
             }
         }
     }
+}
+
+export function assertHasRegisteredPolicies() {
+    if (policiesManagement.getStats().policyCount === 0) {
+        assert.fail(`Didn't find any registered policies.`);
+    }
+}
+
+export function assertHasRemainingPolicies() {
+    if (policiesManagement.getStats().remainingPolicyCount === 0) {
+        assert.fail(`Didn't find any remaining policies.`);
+    }
+}
+
+export function assertHasAllRemainingPolicies() {
+    if (policiesManagement.getStats().policyCount < 1) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policiesManagement.getStats().remainingPolicyCount} policies but ${policiesManagement.getStats().policyCount} are registered.`);
+    }
+
+    if (policiesManagement.getStats().remainingPolicyCount !== policiesManagement.getStats().policyCount) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policiesManagement.getStats().remainingPolicyCount} policies but ${policiesManagement.getStats().policyCount} are registered.`);
+    }
+}
+
+export function assertHasNoRemainingPolicies() {
+    if (policiesManagement.getStats().remainingPolicyCount !== 0) {
+        assert.fail(`Found remaining policies but expected none.`);
+    }
+}
+
+export function assertExpectedRemainingPolicyCount(expectedtedRemainingPolicyCount: number) {
+    if (policiesManagement.getStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
+        assert.fail(`Expected remaining policy counts don't match. Found ${policiesManagement.getStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
+    }
+}
+
+export function assertNoDoubleSelection(filterPolicy: FilterPolicyArgs) {
+    policies.policiesManagement.resetPolicyfilter();
+    const firstSelection = policies.policiesManagement.filterPolicies(filterPolicy);
+    const secondSelection = policies.policiesManagement.filterPolicies(filterPolicy);
+    if (secondSelection.length > 0) {
+        assert.fail(`Some policies haven't been returned after they'd been already selected.`)
+    }
+    policies.policiesManagement.resetPolicyfilter();
 }
 
 // Determine whether the given `input` is a string in lowercase

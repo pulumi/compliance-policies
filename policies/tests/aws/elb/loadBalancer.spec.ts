@@ -49,10 +49,10 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 }
 
 describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
-    const policy = policies.aws.elb.LoadBalancer.disallowInboundHttpTraffic;
+    const policy = policies.aws.elb.LoadBalancer.disallowUnencryptedTraffic;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-elb-load-balancer-disallow-inbound-http-traffic");
+        assertResourcePolicyName(policy, "aws-elb-load-balancer-disallow-unencrypted-traffic");
     });
 
     it("registration", async () => {
@@ -84,7 +84,7 @@ describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
     it("#2", async () => {
         const args = getResourceValidationArgs();
         args.props.listeners[0].lbProtocol = "http";
-        await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should now allow inbound HTTP traffic." });
+        await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should now allow unencrypted (HTTP) traffic." });
     });
 });
 

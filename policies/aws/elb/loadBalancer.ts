@@ -20,20 +20,20 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Check that ELB Load Balancers do not allow inbound HTTP traffic.
+ * Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
  * @severity **Critical**
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-https-load-balancers.html
  */
-export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-elb-load-balancer-disallow-inbound-http-traffic",
-        description: "Check that ELB Load Balancers do not allow inbound HTTP traffic.",
+        name: "aws-elb-load-balancer-disallow-unencrypted-traffic",
+        description: "Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
             loadBalancer.listeners.forEach((listener) => {
                 if (listener.lbProtocol.toLowerCase() === "http") {
-                    reportViolation("ELB Load Balancers should now allow inbound HTTP traffic.");
+                    reportViolation("ELB Load Balancers should now allow unencrypted (HTTP) traffic.");
                 }
             });
         }),

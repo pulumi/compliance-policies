@@ -35,7 +35,7 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
     const policy = policies.aws.apigatewayv2.DomainName.enableDomainNameConfiguration;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-apigatewayv2-stage-enable-domain-name-configuration");
+        assertResourcePolicyName(policy, "aws-apigatewayv2-domainname-enable-domain-name-configuration");
     });
 
     it("registration", async () => {
@@ -75,7 +75,7 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => 
     const policy = policies.aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-apigatewayv2-stage-configure-domain-name-security-policy");
+        assertResourcePolicyName(policy, "aws-apigatewayv2-domainname-configure-domain-name-security-policy");
     });
 
     it("registration", async () => {

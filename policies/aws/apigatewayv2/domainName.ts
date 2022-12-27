@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const enableDomainNameConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-apigatewayv2-stage-enable-domain-name-configuration",
+        name: "aws-apigatewayv2-domainname-enable-domain-name-configuration",
         description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policiesM
  */
 export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-apigatewayv2-stage-configure-domain-name-security-policy",
+        name: "aws-apigatewayv2-domainname-configure-domain-name-security-policy",
         description: "Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {

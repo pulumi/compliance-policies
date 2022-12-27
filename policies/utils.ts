@@ -42,6 +42,11 @@ export interface PolicyInfo {
     policyMetadata: PolicyMetadata;
 };
 
+export interface PoliciesManagementStats {
+    policyCount: number;
+    remainingPolicyCount: number;
+}
+
 export class PoliciesManagement {
 
     /**
@@ -88,8 +93,11 @@ export class PoliciesManagement {
      */
     private remainingPolicies: PolicyInfo[] = [];
 
-    public getStats(): [number, number] {
-        return [this.allPolicies.length, this.remainingPolicies.length];
+    public getStats(): PoliciesManagementStats {
+        return {
+            policyCount: this.allPolicies.length,
+            remainingPolicyCount: this.remainingPolicies.length,
+        };
     }
 
     /**

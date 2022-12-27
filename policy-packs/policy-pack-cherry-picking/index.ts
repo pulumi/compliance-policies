@@ -5,7 +5,7 @@ import * as policies from "@bobcatt/pulumi-policies";
  * You may quickly generate the list below using the following command
  *
  * ```
- * find ./aws ./kubernetes -name "*.ts" | grep -v index.ts | sort | while read F; do
+ * find ./aws ./kubernetes -name "*.ts" | grep -v index.ts | while read F; do
  *   N=$(echo "$F" | sed 's/\(.*\/\)\(\w\)\(.*\)\.ts/\1\U\2\E\3/g; s/^\./policies/g; s/\//./g;')
  *   grep "export const" $F | awk '{print $3}' | sed 's/:$/,/' | while read P; do
  *       echo "${N}.${P}"
@@ -13,7 +13,7 @@ import * as policies from "@bobcatt/pulumi-policies";
  * done
  * ```
  * ```
- * find ./aws ./kubernetes -name "*.ts" | grep -v index.ts | sort | while read F; do N=$(echo "$F" | sed 's/\(.*\/\)\(\w\)\(.*\)\.ts/\1\U\2\E\3/g; s/^\./policies/g; s/\//./g;'); grep "export const" $F | awk '{print $3}' | sed 's/:$/,/' | while read P; do echo "${N}.${P}";  done; done
+ * find ./aws ./kubernetes -name "*.ts" | grep -v index.ts | while read F; do N=$(echo "$F" | sed 's/\(.*\/\)\(\w\)\(.*\)\.ts/\1\U\2\E\3/g; s/^\./policies/g; s/\//./g;'); grep "export const" $F | awk '{print $3}' | sed 's/:$/,/' | while read P; do echo "${N}.${P}";  done; done
  * ```
  */
 

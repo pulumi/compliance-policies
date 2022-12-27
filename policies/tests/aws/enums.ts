@@ -23,6 +23,11 @@ export enum acm {
     certificateArn = "arn:aws:acm:us-west-2:123456789012:certificate/1234abcd-12ab-34cd-56ef-1234567890ab",
 }
 
+export enum alb {
+    loadBalancerArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/50dc6c495c0c9188",
+    targetGroupArn = "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067",
+}
+
 export enum apigatewayv2 {
     apiId = "a1b2c3d4",
     accessLogFormat = "$context.extendedRequestId $context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] $context.httpMethod $context.resourcePath $context.protocol $context.status $context.responseLength $context.requestId",

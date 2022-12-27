@@ -12,13 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as apigateway from "./apigateway";
-export * as cloudfront from "./cloudfront";
-export * as ec2 from "./ec2";
-export * as ecr from "./ecr";
-export * as efs from "./efs";
-export * as eks from "./eks";
-export * as kms from "./kms";
-export * as lambda from "./lambda";
-export * as rds from "./rds";
-export * as s3 from "./s3";
+export * as DomainName from "./domainName";

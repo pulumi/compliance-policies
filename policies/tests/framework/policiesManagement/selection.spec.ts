@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection } from "../../utils";
+import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "../../utils";
 
 import * as policies from "../../../index";
 
@@ -66,16 +66,25 @@ describe("policiesManagement.general", () => {
             vendors: ["aws"]
         });
     });
+
     it("#8", async () => {
         assertNoDoubleSelection({
             vendors: ["aws"],
             services: ["ec2"]
         });
     });
+
     it("#9", async () => {
         assertNoDoubleSelection({
             severities: ["low", "critical"]
         });
+    });
+
+    it("#10", async () => {
+        assertSelectionEnforcementLevel({
+            severities: ["low", "high"],
+        },
+        "mandatory");
     });
 
 });

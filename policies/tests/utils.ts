@@ -409,6 +409,19 @@ export function assertNoDoubleSelection(filterPolicy: FilterPolicyArgs) {
     policies.policiesManagement.resetPolicyfilter();
 }
 
+export function assertSelectionEnforcementLevel(filterPolicy: FilterPolicyArgs, enforcementLevel: string) {
+    policies.policiesManagement.resetPolicyfilter();
+
+    const policySelection = policies.policiesManagement.filterPolicies(filterPolicy, enforcementLevel);
+    policySelection.forEach((policy) => {
+        if (policy.enforcementLevel !== enforcementLevel) {
+            assert.fail(`Policy enforcementLevel not set on during policy selection.`);
+        }
+    });
+
+    policies.policiesManagement.resetPolicyfilter();
+}
+
 // Determine whether the given `input` is a string in lowercase
 function isLowerCase (input: string) {
     return input === String(input).toLowerCase()

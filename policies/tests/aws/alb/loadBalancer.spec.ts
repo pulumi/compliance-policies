@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, root, s3 } from "../enums";
+import { s3 } from "../enums";
 
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.alb.LoadBalancer, {

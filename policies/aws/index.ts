@@ -15,6 +15,7 @@
 export * as alb from "./alb";
 export * as apigateway from "./apigateway";
 export * as apigatewayv2 from "./apigatewayv2";
+export * as appflow from "./appflow";
 export * as cloudfront from "./cloudfront";
 export * as ebs from "./ebs";
 export * as ec2 from "./ec2";

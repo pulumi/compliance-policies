@@ -67,6 +67,10 @@ export enum s3 {
     bucketId = "example-bucket",
 }
 
+export enum secretsmanager {
+    secretArn = "arn:aws:secretsmanager:us-west-2:123456789012:secret:MyTestSecret-Ca8JGt",
+}
+
 export enum sns {
     arn = "arn:aws:sns:us-west-2:123456789012:MyTopic",
 }

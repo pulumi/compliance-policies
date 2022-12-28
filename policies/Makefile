@@ -16,7 +16,6 @@ build:: lint tests
 	cp ../README.md ../LICENSE bin/
 	node build/reversion.js bin/version.js ${VERSION}
 	node build/reversion.js bin/version.d.ts ${VERSION}
-	node bin/validate.js
 
 lint::
 	yarn run lint

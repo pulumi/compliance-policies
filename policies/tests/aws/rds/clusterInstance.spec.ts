@@ -34,7 +34,7 @@ describe("aws.rds.ClusterInstance.enablePerformanceInsights", () => {
     const policy = policies.aws.rds.ClusterInstance.enablePerformanceInsights;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-rds-cluster-instance-enable-performance-insights");
+        assertResourcePolicyName(policy, "aws-rds-clusterinstance-enable-performance-insights");
     });
 
     it("registration", async () => {
@@ -74,7 +74,7 @@ describe("aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () =>
     const policy = policies.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-rds-cluster-instance-disallow-unencrypted-performance-insights");
+        assertResourcePolicyName(policy, "aws-rds-clusterinstance-disallow-unencrypted-performance-insights");
     });
 
     it("registration", async () => {
@@ -114,7 +114,7 @@ describe("aws.rds.ClusterInstance.disallowPublicAccess", () => {
     const policy = policies.aws.rds.ClusterInstance.disallowPublicAccess;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-rds-cluster-instance-disallow-public-access");
+        assertResourcePolicyName(policy, "aws-rds-clusterinstance-disallow-public-access");
     });
 
     it("registration", async () => {

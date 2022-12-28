@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-configuration-disallow-public-ip",
+        name: "aws-ec2-launchconfiguration-disallow-public-ip",
         description: "Checks that EC2 Launch Configurations do not have a public IP address.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
  */
 export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-configuration-disallow-unencrypted-root-volume",
+        name: "aws-ec2-launchconfiguration-disallow-unencrypted-root-volume",
         description: "Checks that EC2 launch configuration do not have unencrypted root volumes.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
@@ -73,7 +73,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-configuration-disallow-unencrypted-volumes",
+        name: "aws-ec2-launchconfiguration-disallow-unencrypted-volumes",
         description: "Checks that EC2 Launch Configurations do not have unencrypted volumes.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {

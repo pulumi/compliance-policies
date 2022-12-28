@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-efs-file-system-disallow-unencrypted-file-system",
+        name: "awsnative-efs-filesystem-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesM
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-efs-file-system-configure-customer-managed-key",
+        name: "awsnative-efs-filesystem-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
@@ -73,7 +73,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-efs-file-system-disallow-single-availability-zone",
+        name: "awsnative-efs-filesystem-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {

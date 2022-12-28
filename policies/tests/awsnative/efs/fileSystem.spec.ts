@@ -31,7 +31,7 @@ describe("awsnative.efs.FileSystem.disallowUnencryptedFileSystem", () => {
     const policy = policies.awsnative.efs.FileSystem.disallowUnencryptedFileSystem;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "awsnative-efs-file-system-disallow-unencrypted-file-system");
+        assertResourcePolicyName(policy, "awsnative-efs-filesystem-disallow-unencrypted-file-system");
     });
 
     it("registration", async () => {
@@ -71,7 +71,7 @@ describe("awsnative.efs.FileSystem.configureCustomerManagedKey", () => {
     const policy = policies.awsnative.efs.FileSystem.configureCustomerManagedKey;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "awsnative-efs-file-system-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "awsnative-efs-filesystem-configure-customer-managed-key");
     });
 
     it("registration", async () => {
@@ -111,7 +111,7 @@ describe("awsnative.efs.FileSystem.disallowSingleAvailabilityZone", () => {
     const policy = policies.awsnative.efs.FileSystem.disallowSingleAvailabilityZone;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "awsnative-efs-file-system-disallow-single-availability-zone");
+        assertResourcePolicyName(policy, "awsnative-efs-filesystem-disallow-single-availability-zone");
     });
 
     it("registration", async () => {

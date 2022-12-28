@@ -45,7 +45,7 @@ describe("aws.ec2.SecurityGroup.missingDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingDescription;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-security-group-missing-description");
+        assertResourcePolicyName(policy, "aws-ec2-securitygroup-missing-description");
     });
 
     it("registration", async () => {
@@ -85,7 +85,7 @@ describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingIngressRuleDescription;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-security-group-missing-ingress-rule-description");
+        assertResourcePolicyName(policy, "aws-ec2-securitygroup-missing-ingress-rule-description");
     });
 
     it("registration", async () => {
@@ -125,7 +125,7 @@ describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", () => {
     const policy = policies.aws.ec2.SecurityGroup.missingEgressRuleDescription;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-security-group-missing-egress-rule-description");
+        assertResourcePolicyName(policy, "aws-ec2-securitygroup-missing-egress-rule-description");
     });
 
     it("registration", async () => {
@@ -165,7 +165,7 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", () => {
     const policy = policies.aws.ec2.SecurityGroup.disallowInboundHttpTraffic;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-security-group-disallow-inbound-http-traffic");
+        assertResourcePolicyName(policy, "aws-ec2-securitygroup-disallow-inbound-http-traffic");
     });
 
     it("registration", async () => {
@@ -213,7 +213,7 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", () => {
     const policy = policies.aws.ec2.SecurityGroup.disallowPublicInternetIngress;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-security-group-disallow-public-internet-ingress");
+        assertResourcePolicyName(policy, "aws-ec2-securitygroup-disallow-public-internet-ingress");
     });
 
     it("registration", async () => {

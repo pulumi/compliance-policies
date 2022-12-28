@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-elb-load-balancer-disallow-unencrypted-traffic",
+        name: "aws-elb-loadbalancer-disallow-unencrypted-traffic",
         description: "Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
@@ -52,7 +52,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  */
 export const configureMultiAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-elb-load-balancer-configure-multi-availability-zone",
+        name: "aws-elb-loadbalancer-configure-multi-availability-zone",
         description: "Check that ELB Load Balancers uses more than one availability zone.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
@@ -75,7 +75,7 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policies
  */
 export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-elb-load-balancer-configure-access-logging",
+        name: "aws-elb-loadbalancer-configure-access-logging",
         description: "Check that ELB Load Balancers uses access logging.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
@@ -98,7 +98,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
  */
 export const enableHealthCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-elb-load-balancer-enable-health-check",
+        name: "aws-elb-loadbalancer-enable-health-check",
         description: "Check that ELB Load Balancers have a health check enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {

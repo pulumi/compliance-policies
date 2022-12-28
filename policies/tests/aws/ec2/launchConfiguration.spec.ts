@@ -49,7 +49,7 @@ describe("aws.ec2.LaunchConfiguration.disallowPublicIP", () => {
     const policy = policies.aws.ec2.LaunchConfiguration.disallowPublicIP;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-configuration-disallow-public-ip");
+        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-public-ip");
     });
 
     it("registration", async () => {
@@ -89,7 +89,7 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", () =>
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-configuration-disallow-unencrypted-root-volume");
+        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-root-volume");
     });
 
     it("registration", async () => {
@@ -135,7 +135,7 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", () => {
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-configuration-disallow-unencrypted-volumes");
+        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-volumes");
     });
 
     it("registration", async () => {

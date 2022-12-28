@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-missing-description",
+        name: "aws-ec2-securitygroup-missing-description",
         description: "Checks that all security groups have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  */
 export const missingIngressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-missing-ingress-rule-description",
+        name: "aws-ec2-securitygroup-missing-ingress-rule-description",
         description: "Checks that all Ingress Security Groups rules have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
@@ -77,7 +77,7 @@ export const missingIngressRuleDescription: ResourceValidationPolicy = policiesM
  */
 export const missingEgressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-missing-egress-rule-description",
+        name: "aws-ec2-securitygroup-missing-egress-rule-description",
         description: "Checks that all Egress Security Groups rules have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
@@ -104,7 +104,7 @@ export const missingEgressRuleDescription: ResourceValidationPolicy = policiesMa
  */
 export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-disallow-inbound-http-traffic",
+        name: "aws-ec2-securitygroup-disallow-inbound-http-traffic",
         description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
@@ -134,7 +134,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesMana
  */
 export const disallowPublicInternetIngress: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-security-group-disallow-public-internet-ingress",
+        name: "aws-ec2-securitygroup-disallow-public-internet-ingress",
         description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, _, reportViolation) => {

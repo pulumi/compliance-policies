@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-rds-cluster-instance-enable-performance-insights",
+        name: "aws-rds-clusterinstance-enable-performance-insights",
         description: "Checks that RDS Cluster Instances have performance insights enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
@@ -50,7 +50,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
  */
 export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-rds-cluster-instance-disallow-unencrypted-performance-insights",
+        name: "aws-rds-clusterinstance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
@@ -73,7 +73,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-rds-cluster-instance-disallow-public-access",
+        name: "aws-rds-clusterinstance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {

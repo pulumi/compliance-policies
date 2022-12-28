@@ -27,7 +27,7 @@ import { policiesManagement, valToBoolean } from "../../utils";
  */
 export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-template-disallow-public-ip",
+        name: "aws-ec2-launchtemplate-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (launchTemplate, args, reportViolation) => {
@@ -55,7 +55,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-template-disallow-unencrypted-volume",
+        name: "aws-ec2-launchtemplate-disallow-unencrypted-volume",
         description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
@@ -83,7 +83,7 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policies
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launch-template-configure-customer-managed-key",
+        name: "aws-ec2-launchtemplate-configure-customer-managed-key",
         description: "Check that encrypted EBS volume uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {

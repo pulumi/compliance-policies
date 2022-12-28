@@ -52,7 +52,7 @@ describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
     const policy = policies.aws.elb.LoadBalancer.disallowUnencryptedTraffic;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-elb-load-balancer-disallow-unencrypted-traffic");
+        assertResourcePolicyName(policy, "aws-elb-loadbalancer-disallow-unencrypted-traffic");
     });
 
     it("registration", async () => {
@@ -92,7 +92,7 @@ describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", () => {
     const policy = policies.aws.elb.LoadBalancer.configureMultiAvailabilityZone;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-elb-load-balancer-configure-multi-availability-zone");
+        assertResourcePolicyName(policy, "aws-elb-loadbalancer-configure-multi-availability-zone");
     });
 
     it("registration", async () => {
@@ -132,7 +132,7 @@ describe("aws.elb.LoadBalancer.configureAccessLogging", () => {
     const policy = policies.aws.elb.LoadBalancer.configureAccessLogging;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-elb-load-balancer-configure-access-logging");
+        assertResourcePolicyName(policy, "aws-elb-loadbalancer-configure-access-logging");
     });
 
     it("registration", async () => {
@@ -184,7 +184,7 @@ describe("aws.elb.LoadBalancer.enableHealthCheck", () => {
     const policy = policies.aws.elb.LoadBalancer.enableHealthCheck;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-elb-load-balancer-enable-health-check");
+        assertResourcePolicyName(policy, "aws-elb-loadbalancer-enable-health-check");
     });
 
     it("registration", async () => {

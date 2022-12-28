@@ -43,7 +43,7 @@ describe("aws.ec2.LaunchTemplate.disallowPublicIP", () => {
     const policy = policies.aws.ec2.LaunchTemplate.disallowPublicIP;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-template-disallow-public-ip");
+        assertResourcePolicyName(policy, "aws-ec2-launchtemplate-disallow-public-ip");
     });
 
     it("registration", async () => {
@@ -83,7 +83,7 @@ describe("aws.ec2.LaunchTemplate.disallowUnencryptedBlockDevice", () => {
     const policy = policies.aws.ec2.LaunchTemplate.disallowUnencryptedBlockDevice;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-template-disallow-unencrypted-volume");
+        assertResourcePolicyName(policy, "aws-ec2-launchtemplate-disallow-unencrypted-volume");
     });
 
     it("registration", async () => {
@@ -130,7 +130,7 @@ describe("aws.ec2.LaunchTemplate.configureCustomerManagedKey", () => {
     const policy = policies.aws.ec2.LaunchTemplate.configureCustomerManagedKey;
 
     it("name", async () => {
-        assertResourcePolicyName(policy, "aws-ec2-launch-template-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "aws-ec2-launchtemplate-configure-customer-managed-key");
     });
 
     it("registration", async () => {

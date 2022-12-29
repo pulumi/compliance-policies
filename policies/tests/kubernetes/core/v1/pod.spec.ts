@@ -19,6 +19,11 @@ import * as kubernetes from "@pulumi/kubernetes";
 import * as policies from "../../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(kubernetes.core.v1.Pod, {
         spec: {
@@ -29,22 +34,22 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                     containerPort: 80,
                 }],
             }],
-        }
+        },
     });
 }
 
-describe("kubernetes.core.v1.Pod.disallowPod", () => {
+describe("kubernetes.core.v1.Pod.disallowPod", function() {
     const policy = policies.kubernetes.core.v1.Pod.disallowPod;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "kubernetes-core-v1-pod-disallow-pod");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
             services: ["core", "pod"],
@@ -53,15 +58,15 @@ describe("kubernetes.core.v1.Pod.disallowPod", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job." });

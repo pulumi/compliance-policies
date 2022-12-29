@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { root, kms } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.efs.FileSystem, {
         encrypted: true,
@@ -27,18 +32,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.efs.FileSystem.disallowUnencryptedFileSystem", () => {
+describe("awsnative.efs.FileSystem.disallowUnencryptedFileSystem", function() {
     const policy = policies.awsnative.efs.FileSystem.disallowUnencryptedFileSystem;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-efs-filesystem-disallow-unencrypted-file-system");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -47,38 +52,38 @@ describe("awsnative.efs.FileSystem.disallowUnencryptedFileSystem", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.encrypted = undefined;
         await assertHasResourceViolation(policy, args, { message: "EFS File systems should not have an unencypted file system." });
     });
 });
 
-describe("awsnative.efs.FileSystem.configureCustomerManagedKey", () => {
+describe("awsnative.efs.FileSystem.configureCustomerManagedKey", function() {
     const policy = policies.awsnative.efs.FileSystem.configureCustomerManagedKey;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-efs-filesystem-configure-customer-managed-key");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -87,38 +92,38 @@ describe("awsnative.efs.FileSystem.configureCustomerManagedKey", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "An EFS File System should be encrypted using a customer-managed KMS key." });
     });
 });
 
-describe("awsnative.efs.FileSystem.disallowSingleAvailabilityZone", () => {
+describe("awsnative.efs.FileSystem.disallowSingleAvailabilityZone", function() {
     const policy = policies.awsnative.efs.FileSystem.disallowSingleAvailabilityZone;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-efs-filesystem-disallow-single-availability-zone");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -127,38 +132,38 @@ describe("awsnative.efs.FileSystem.disallowSingleAvailabilityZone", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.availabilityZoneName = root.availabilityZone1;
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should use more than one availability zone." });
     });
 });
 
-describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", () => {
+describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", function() {
     const policy = policies.awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-kms-key-disallow-bypass-policy-lockout-safety-check");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["efs"],
@@ -167,20 +172,20 @@ describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", () =
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.bypassPolicyLockoutSafetyCheck = true;
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should not bypass the file system policy lockout safety check." });

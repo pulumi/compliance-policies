@@ -20,29 +20,34 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { acm } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigatewayv2.DomainName, {
         domainName: "api.example.com",
         domainNameConfiguration: {
             certificateArn: acm.certificateArn,
             endpointType: "REGIONAL",
-            securityPolicy: "TLS_1_2"
-        }
+            securityPolicy: "TLS_1_2",
+        },
     });
 }
 
-describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
+describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", function() {
     const policy = policies.aws.apigatewayv2.DomainName.enableDomainNameConfiguration;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-apigatewayv2-domainname-enable-domain-name-configuration");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -51,38 +56,38 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.domainNameConfiguration = undefined;
         await assertHasResourceViolation(policy, args, { message: "API GatewayV2 Domain Name Configuration should be enabled." });
     });
 });
 
-describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => {
+describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", function() {
     const policy = policies.aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-apigatewayv2-domainname-configure-domain-name-security-policy");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -91,20 +96,20 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", () => 
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.domainNameConfiguration.securityPolicy = "TLS_1_0";
         await assertHasResourceViolation(policy, args, { message: "API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption." });

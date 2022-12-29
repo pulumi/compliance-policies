@@ -19,6 +19,11 @@ import * as kubernetes from "@pulumi/kubernetes";
 import * as policies from "../../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(kubernetes.core.v1.Service, {
         metadata: {
@@ -29,7 +34,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 "app.kubernetes.io/component": "application",
                 "app.kubernetes.io/part-of": "finance-erp",
                 "app.kubernetes.io/managed-by": "pulumi",
-            }
+            },
         },
         spec: {
             ports: [{
@@ -37,22 +42,22 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 protocol: "TCP",
                 targetPort: 9376,
             }],
-        }
+        },
     });
 }
 
-describe("kubernetes.core.v1.Service.configureRecommendedLabel", () => {
+describe("kubernetes.core.v1.Service.configureRecommendedLabel", function() {
     const policy = policies.kubernetes.core.v1.Service.configureRecommendedLabel;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "kubernetes-core-v1-service-configure-recommended-label");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
             services: ["core", "service"],
@@ -61,21 +66,21 @@ describe("kubernetes.core.v1.Service.configureRecommendedLabel", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata = undefined;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should use the recommended labels." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata.labels = {"department": "finances"};
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should have the recommended labels." });

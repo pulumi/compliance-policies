@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { s3 } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.alb.LoadBalancer, {
         accessLogs: {
@@ -31,18 +36,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.alb.LoadBalancer.enableAccessLogging", () => {
+describe("aws.alb.LoadBalancer.enableAccessLogging", function() {
     const policy = policies.aws.alb.LoadBalancer.enableAccessLogging;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-alb-loadbalancer-enable-access-logging");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["alb"],
@@ -51,38 +56,38 @@ describe("aws.alb.LoadBalancer.enableAccessLogging", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs = undefined;
         await assertHasResourceViolation(policy, args, { message: "ALB LoadBalancers should have access logging enabled." });
     });
 });
 
-describe("aws.alb.LoadBalancer.configureAccessLogging", () => {
+describe("aws.alb.LoadBalancer.configureAccessLogging", function() {
     const policy = policies.aws.alb.LoadBalancer.configureAccessLogging;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-alb-loadbalancer-configure-access-logging");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["alb"],
@@ -91,26 +96,26 @@ describe("aws.alb.LoadBalancer.configureAccessLogging", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs.enabled = false;
         await assertHasResourceViolation(policy, args, { message: "ALB LoadBalancers should have access logging configured and enabled." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs.bucket = undefined;
         await assertHasResourceViolation(policy, args, { message: "ALB LoadBalancers should have access logging configured and enabled." });

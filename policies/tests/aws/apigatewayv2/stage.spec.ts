@@ -20,28 +20,33 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { apigatewayv2, cloudwatch } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigatewayv2.Stage, {
         apiId: apigatewayv2.apiId,
         accessLogSettings: {
             destinationArn: cloudwatch.logGroupArn,
             format: apigatewayv2.accessLogFormat,
-        }
+        },
     });
 }
 
-describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
+describe("aws.apigatewayv2.Stage.enableAccessLogging", function() {
     const policy = policies.aws.apigatewayv2.Stage.enableAccessLogging;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-enable-access-logging");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -50,38 +55,38 @@ describe("aws.apigatewayv2.Stage.enableAccessLogging", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
-    })
+    });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
-    })
+    });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings = undefined;
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging enabled." });
     });
 });
 
-describe("aws.apigatewayv2.Stage.configureAccessLogging", () => {
+describe("aws.apigatewayv2.Stage.configureAccessLogging", function() {
     const policy = policies.aws.apigatewayv2.Stage.configureAccessLogging;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-apigatewayv2-stage-configure-access-logging");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigatewayv2"],
@@ -90,26 +95,26 @@ describe("aws.apigatewayv2.Stage.configureAccessLogging", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings.destinationArn = "";
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging configured." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogSettings.format = "";
         await assertHasResourceViolation(policy, args, { message: "API Gateway V2 stages should have access logging configured." });

@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { ec2, iam, kms } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.eks.Cluster, {
         roleArn: iam.roleArn,
@@ -35,23 +40,23 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             provider: {
                 keyArn: kms.keyArn,
             },
-            resources: ["secrets"]
-        }]
+            resources: ["secrets"],
+        }],
     });
 }
 
-describe("awsnative.eks.Cluster.enableClusterEncryptionConfig", () => {
+describe("awsnative.eks.Cluster.enableClusterEncryptionConfig", function() {
     const policy = policies.awsnative.eks.Cluster.enableClusterEncryptionConfig;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-eks-cluster-enable-cluster-encryption-config");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["eks"],
@@ -60,38 +65,38 @@ describe("awsnative.eks.Cluster.enableClusterEncryptionConfig", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.encryptionConfig = undefined;
         await assertHasResourceViolation(policy, args, { message: "EKS Cluster Encryption Configuration should be enabled." });
     });
 });
 
-describe("awsnative.eks.Cluster.disallowAPIEndpointPublicAccess", () => {
+describe("awsnative.eks.Cluster.disallowAPIEndpointPublicAccess", function() {
     const policy = policies.awsnative.eks.Cluster.disallowAPIEndpointPublicAccess;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-eks-cluster-disallow-api-endpoint-public-access");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["eks"],
@@ -100,26 +105,26 @@ describe("awsnative.eks.Cluster.disallowAPIEndpointPublicAccess", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.resourcesVpcConfig.endpointPublicAccess = undefined;
         await assertHasResourceViolation(policy, args, { message: "EKS Cluster Encryption API endpoint should not be publicly accessible." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.resourcesVpcConfig.endpointPublicAccess = undefined;
         args.props.resourcesVpcConfig.publicAccessCidrs = [ "0.0.0.0/0" ];

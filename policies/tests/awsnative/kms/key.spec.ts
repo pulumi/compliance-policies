@@ -19,6 +19,11 @@ import * as awsnative from "@pulumi/aws-native";
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.kms.Key, {
         keyPolicy: undefined, // TODO: add a proper key policy
@@ -27,18 +32,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.kms.Key.enableKeyRotation", () => {
+describe("awsnative.kms.Key.enableKeyRotation", function() {
     const policy = policies.awsnative.kms.Key.enableKeyRotation;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-kms-key-enable-key-rotation");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
@@ -47,38 +52,38 @@ describe("awsnative.kms.Key.enableKeyRotation", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.enableKeyRotation = undefined;
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have key rotation enabled." });
     });
 });
 
-describe("awsnative.kms.Key.missingDescription", () => {
+describe("awsnative.kms.Key.missingDescription", function() {
     const policy = policies.awsnative.kms.Key.missingDescription;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-kms-key-missing-description");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["kms"],
@@ -87,26 +92,26 @@ describe("awsnative.kms.Key.missingDescription", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.description = undefined;
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have a description." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.description = "key";
         await assertHasResourceViolation(policy, args, { message: "KMS Keys should have a meaningful description." });

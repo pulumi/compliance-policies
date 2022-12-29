@@ -19,6 +19,11 @@ import * as kubernetes from "@pulumi/kubernetes";
 import * as policies from "../../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(kubernetes.apps.v1.ReplicaSet, {
         metadata: {
@@ -29,7 +34,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 "app.kubernetes.io/component": "application",
                 "app.kubernetes.io/part-of": "finance-erp",
                 "app.kubernetes.io/managed-by": "pulumi",
-            }
+            },
         },
         spec: {
             replicas: 3,
@@ -47,7 +52,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                         "app.kubernetes.io/component": "application",
                         "app.kubernetes.io/part-of": "finance-erp",
                         "app.kubernetes.io/managed-by": "pulumi",
-                    }
+                    },
                 },
                 spec: {
                     containers: [{
@@ -63,18 +68,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", () => {
+describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function() {
     const policy = policies.kubernetes.apps.v1.ReplicaSet.configureMinimumReplicaCount;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "kubernetes-apps-v1-replicaset-configure-minimum-replica-count");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
             services: ["apps", "replicaset"],
@@ -83,38 +88,38 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.spec.replicas = undefined;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes ReplicaSet should have at least three replicas." });
     });
 });
 
-describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", () => {
+describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() {
     const policy = policies.kubernetes.apps.v1.ReplicaSet.configureRecommendedLabels;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "kubernetes-apps-v1-replicaset-configure-recommended-labels");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
             services: ["apps", "replicaset"],
@@ -123,26 +128,26 @@ describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata = undefined;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes ReplicaSets should use the recommended labels." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata.labels = {"department": "finances"};
         await assertHasResourceViolation(policy, args, { message: "Kubernetes ReplicaSets should have the recommended labels." });

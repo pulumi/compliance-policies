@@ -17,15 +17,15 @@ import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRe
 
 import * as policies from "../../../index";
 
-describe("policiesManagement.general", () => {
+describe("policiesManagement.general", function() {
 
     const policiesStats = policies.policiesManagement.getStats();
 
-    it("#1", async () => {
+    it("#1", async function() {
         assertHasRegisteredPolicies();
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         assertHasRemainingPolicies();
     });
 
@@ -33,11 +33,11 @@ describe("policiesManagement.general", () => {
      * After all policies have been registered, the number of
      * policies should be equal to the number of remaining ones.
      */
-    it("#3", async () => {
+    it("#3", async function() {
         assertHasAllRemainingPolicies();
     });
 
-    it("#4", async () => {
+    it("#4", async function() {
         policies.policiesManagement.resetPolicyfilter();
         assertHasAllRemainingPolicies();
     });
@@ -47,40 +47,40 @@ describe("policiesManagement.general", () => {
      * still be present in the pool. This will likely fail when
      * policies are stored in their own npm packages though.
      */
-    it("#5", async () => {
-        let selection = policies.policiesManagement.filterPolicies({
-            vendors: ["aws"]
+    it("#5", async function() {
+        const selection = policies.policiesManagement.filterPolicies({
+            vendors: ["aws"],
         });
         assertHasRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount - selection.length);
     });
 
-    it("#6", async () => {
+    it("#6", async function() {
         policies.policiesManagement.resetPolicyfilter();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);
     });
 
-    it("#7", async () => {
-        assertNoDoubleSelection({
-            vendors: ["aws"]
-        });
-    });
-
-    it("#8", async () => {
+    it("#7", async function() {
         assertNoDoubleSelection({
             vendors: ["aws"],
-            services: ["ec2"]
         });
     });
 
-    it("#9", async () => {
+    it("#8", async function() {
         assertNoDoubleSelection({
-            severities: ["low", "critical"]
+            vendors: ["aws"],
+            services: ["ec2"],
         });
     });
 
-    it("#10", async () => {
+    it("#9", async function() {
+        assertNoDoubleSelection({
+            severities: ["low", "critical"],
+        });
+    });
+
+    it("#10", async function() {
         assertSelectionEnforcementLevel({
             severities: ["low", "high"],
         },

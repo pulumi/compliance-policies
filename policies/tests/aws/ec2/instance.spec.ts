@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { ec2, kms } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.Instance, {
         ami: ec2. imageId,
@@ -42,18 +47,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.ec2.Instance.disallowPublicIP", () => {
+describe("aws.ec2.Instance.disallowPublicIP", function() {
     const policy = policies.aws.ec2.Instance.disallowPublicIP;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-instance-disallow-public-ip");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -62,38 +67,38 @@ describe("aws.ec2.Instance.disallowPublicIP", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.associatePublicIpAddress = true;
         await assertHasResourceViolation(policy, args, { message: "EC2 Instances should not have a public IP address." });
     });
 });
 
-describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", () => {
+describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", function() {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedRootBlockDevice;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-root-volume");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -102,44 +107,44 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.rootBlockDevice.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 instances should not have an unencypted root block device." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.rootBlockDevice = undefined;
         await assertNoResourceViolations(policy, args);
     });
 });
 
-describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", () => {
+describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", function() {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedBlockDevice;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-volumes");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -148,26 +153,26 @@ describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.ebsBlockDevices[1].encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 instances should not have an unencypted block device." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.ebsBlockDevices = undefined;
         await assertNoResourceViolations(policy, args);

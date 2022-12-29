@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { kms, rds, root } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.rds.ClusterInstance, {
         clusterIdentifier: rds.dbClusterIdentifier,
@@ -30,18 +35,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.rds.ClusterInstance.enablePerformanceInsights", () => {
+describe("aws.rds.ClusterInstance.enablePerformanceInsights", function() {
     const policy = policies.aws.rds.ClusterInstance.enablePerformanceInsights;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-rds-clusterinstance-enable-performance-insights");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -50,38 +55,38 @@ describe("aws.rds.ClusterInstance.enablePerformanceInsights", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.performanceInsightsEnabled = undefined;
         await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances should have performance insights enabled." });
     });
 });
 
-describe("aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () => {
+describe("aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", function() {
     const policy = policies.aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-rds-clusterinstance-disallow-unencrypted-performance-insights");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -90,38 +95,38 @@ describe("aws.rds.ClusterInstance.disallowUnencryptedPerformanceInsights", () =>
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.performanceInsightsKmsKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances should have performance insights encrypted." });
     });
 });
 
-describe("aws.rds.ClusterInstance.disallowPublicAccess", () => {
+describe("aws.rds.ClusterInstance.disallowPublicAccess", function() {
     const policy = policies.aws.rds.ClusterInstance.disallowPublicAccess;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-rds-clusterinstance-disallow-public-access");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -130,20 +135,20 @@ describe("aws.rds.ClusterInstance.disallowPublicAccess", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.publiclyAccessible = true;
         await assertHasResourceViolation(policy, args, { message: "RDS Cluster Instances public access should not be enabled." });

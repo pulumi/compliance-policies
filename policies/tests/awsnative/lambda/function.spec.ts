@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { iam, kms, s3 } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.lambda.Function, {
         description: "This is a lambda function",
@@ -32,28 +37,28 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         },
         environment: {
             variables: {
-                "SOMEVAR": "some_value"
+                "SOMEVAR": "some_value",
             },
         },
         kmsKeyArn: kms.keyArn,
         tracingConfig: {
-            mode: awsnative.lambda.FunctionTracingConfigMode.Active
-        }
+            mode: awsnative.lambda.FunctionTracingConfigMode.Active,
+        },
     });
 }
 
-describe("awsnative.aws.lambda.Function.missingDescription", () => {
+describe("awsnative.aws.lambda.Function.missingDescription", function() {
     const policy = policies.awsnative.lambda.Function.missingDescription;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-lambda-function-missing-description");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["lambda"],
@@ -62,38 +67,38 @@ describe("awsnative.aws.lambda.Function.missingDescription", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.description = "";
         await assertHasResourceViolation(policy, args, { message: "Lambda functions should have a description." });
     });
 });
 
-describe("awsnative.lambda.Function.enableTracingConfig", () => {
+describe("awsnative.lambda.Function.enableTracingConfig", function() {
     const policy = policies.awsnative.lambda.Function.enableTracingConfig;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-lambda-function-enable-tracing-config");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["lambda"],
@@ -102,38 +107,38 @@ describe("awsnative.lambda.Function.enableTracingConfig", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.tracingConfig = undefined;
         await assertHasResourceViolation(policy, args, { message: "Lambda functions should have tracing enabled." });
     });
 });
 
-describe("awsnative.lambda.Function.configureTracingConfig", () => {
+describe("awsnative.lambda.Function.configureTracingConfig", function() {
     const policy = policies.awsnative.lambda.Function.configureTracingConfig;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-lambda-function-configure-tracing-config");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["lambda"],
@@ -142,20 +147,20 @@ describe("awsnative.lambda.Function.configureTracingConfig", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.tracingConfig.mode = awsnative.lambda.FunctionTracingConfigMode.PassThrough;
         await assertHasResourceViolation(policy, args, { message: "Lambda functions should have tracing configured." });

@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { ec2, kms, rds } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.rds.DBInstance, {
         dBInstanceClass: rds.dBInstanceClass,
@@ -33,18 +38,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.rds.DbInstance.enableBackupRetention", () => {
+describe("awsnative.rds.DbInstance.enableBackupRetention", function() {
     const policy = policies.awsnative.rds.DbInstance.enableBackupRetention;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-backup-retention");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -53,38 +58,38 @@ describe("awsnative.rds.DbInstance.enableBackupRetention", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.backupRetentionPeriod = undefined;
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances backup retention should be enabled." });
     });
 });
 
-describe("awsnative.rds.DbInstance.configureBackupRetention", () => {
+describe("awsnative.rds.DbInstance.configureBackupRetention", function() {
     const policy = policies.awsnative.rds.DbInstance.configureBackupRetention;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-backup-retention");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -93,38 +98,38 @@ describe("awsnative.rds.DbInstance.configureBackupRetention", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.backupRetentionPeriod = 2;
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances backup retention period should be greater than 3 days." });
     });
 });
 
-describe("awsnative.rds.DbInstance.enablePerformanceInsights", () => {
+describe("awsnative.rds.DbInstance.enablePerformanceInsights", function() {
     const policy = policies.awsnative.rds.DbInstance.enablePerformanceInsights;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-performance-insights");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -133,38 +138,38 @@ describe("awsnative.rds.DbInstance.enablePerformanceInsights", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.enablePerformanceInsights = undefined;
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights enabled." });
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", () => {
+describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", function() {
     const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -173,38 +178,38 @@ describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", () =
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.performanceInsightsKMSKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights encrypted." });
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowPublicAccess", () => {
+describe("awsnative.rds.DbInstance.disallowPublicAccess", function() {
     const policy = policies.awsnative.rds.DbInstance.disallowPublicAccess;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-public-access");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -213,38 +218,38 @@ describe("awsnative.rds.DbInstance.disallowPublicAccess", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.publiclyAccessible = true;
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances public access should not be enabled." });
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", () => {
+describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", function() {
     const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedStorage;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -253,38 +258,38 @@ describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.storageEncrypted = false;
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances storage should be encrypted." });
     });
 });
 
-describe("awsnative.rds.DbInstance.configureCustomerManagedKey", () => {
+describe("awsnative.rds.DbInstance.configureCustomerManagedKey", function() {
     const policy = policies.awsnative.rds.DbInstance.configureCustomerManagedKey;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-customer-managed-key");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
@@ -293,20 +298,20 @@ describe("awsnative.rds.DbInstance.configureCustomerManagedKey", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.kmsKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "RDS DB Instances storage should be encrypted using a customer-managed key." });

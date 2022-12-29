@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { kms, secretsmanager } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.appflow.ConnectorProfile, {
         connectionMode: awsnative.appflow.ConnectorProfileConnectionMode.Public,
@@ -28,32 +33,32 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 salesforce: {
                     accessToken: "sfdc-access-token",
                     clientCredentialsArn: secretsmanager.secretArn,
-                }
+                },
             },
             connectorProfileProperties: {
                 salesforce: {
                     instanceUrl: "https://api.salesforce.com.example.com/api/",
                     isSandboxEnvironment: false,
-                }
-            }
+                },
+            },
         },
         connectorType: awsnative.appflow.ConnectorProfileConnectorType.Salesforce,
         kMSArn: kms.keyArn,
     });
 }
 
-describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", () => {
+describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", function() {
     const policy = policies.awsnative.appflow.ConnectorProfile.configureCustomerManagedKey;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-appflow-connectorprofile-configure-customer-managed-key");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["appflow"],
@@ -62,20 +67,20 @@ describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", () =>
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.kMSArn = undefined;
         await assertHasResourceViolation(policy, args, { message: "AppFlow Connector Profiles should be encrypted using a customer-managed KMS key." });

@@ -20,29 +20,34 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { acm } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigateway.DomainName, {
         domainName: "api.example.com",
         endpointConfiguration: {
-            types: "REGIONAL"
+            types: "REGIONAL",
         },
         securityPolicy: "TLS_1_2",
         certificateArn: acm.certificateArn,
     });
 }
 
-describe("aws.apigateway.DomainName.configureSecurityPolicy", () => {
+describe("aws.apigateway.DomainName.configureSecurityPolicy", function() {
     const policy = policies.aws.apigateway.DomainName.configureSecurityPolicy;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-apigateway-domainname-configure-security-policy");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["apigateway"],
@@ -51,26 +56,26 @@ describe("aws.apigateway.DomainName.configureSecurityPolicy", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.securityPolicy = undefined;
         await assertHasResourceViolation(policy, args, { message: "API Gateway Domain Name Security Policy should use secure/modern TLS encryption." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.securityPolicy = "TLS_1_0";
         await assertHasResourceViolation(policy, args, { message: "API Gateway Domain Name Security Policy should use secure/modern TLS encryption." });

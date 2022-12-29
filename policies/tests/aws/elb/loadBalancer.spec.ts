@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { iam, root, s3 } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.elb.LoadBalancer, {
         availabilityZones: [
@@ -48,18 +53,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
+describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", function() {
     const policy = policies.aws.elb.LoadBalancer.disallowUnencryptedTraffic;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-elb-loadbalancer-disallow-unencrypted-traffic");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["elb"],
@@ -68,38 +73,38 @@ describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.listeners[0].lbProtocol = "http";
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should now allow unencrypted (HTTP) traffic." });
     });
 });
 
-describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", () => {
+describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", function() {
     const policy = policies.aws.elb.LoadBalancer.configureMultiAvailabilityZone;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-elb-loadbalancer-configure-multi-availability-zone");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["elb"],
@@ -108,38 +113,38 @@ describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.availabilityZones = [root.availabilityZone1];
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should use more than one availability zone." });
     });
 });
 
-describe("aws.elb.LoadBalancer.configureAccessLogging", () => {
+describe("aws.elb.LoadBalancer.configureAccessLogging", function() {
     const policy = policies.aws.elb.LoadBalancer.configureAccessLogging;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-elb-loadbalancer-configure-access-logging");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["elb"],
@@ -148,50 +153,50 @@ describe("aws.elb.LoadBalancer.configureAccessLogging", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs = undefined;
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should have access logging enabled." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs.enabled = false;
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should have access logging enabled." });
     });
 
-    it("#4", async () => {
+    it("#4", async function() {
         const args = getResourceValidationArgs();
         args.props.accessLogs.enabled = undefined; // When undefined, the default is `true`.
         await assertNoResourceViolations(policy, args);
     });
 });
 
-describe("aws.elb.LoadBalancer.enableHealthCheck", () => {
+describe("aws.elb.LoadBalancer.enableHealthCheck", function() {
     const policy = policies.aws.elb.LoadBalancer.enableHealthCheck;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-elb-loadbalancer-enable-health-check");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["elb"],
@@ -200,20 +205,20 @@ describe("aws.elb.LoadBalancer.enableHealthCheck", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.healthCheck = undefined;
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should have health checks enabled." });

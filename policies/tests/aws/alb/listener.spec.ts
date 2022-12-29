@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { alb } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.alb.Listener, {
         loadBalancerArn: alb.loadBalancerArn,
@@ -29,22 +34,22 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         defaultActions: [{
             type: "forward",
             targetGroupArn: alb.targetGroupArn,
-        }]
+        }],
     });
 }
 
-describe("aws.alb.Listener.disallowUnencryptedTraffic", () => {
+describe("aws.alb.Listener.disallowUnencryptedTraffic", function() {
     const policy = policies.aws.alb.Listener.disallowUnencryptedTraffic;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-alb-load-balancer-disallow-unencrypted-traffic");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["alb"],
@@ -53,44 +58,44 @@ describe("aws.alb.Listener.disallowUnencryptedTraffic", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.port = 80;
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should now allow unencrypted (HTTP) traffic." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.protocol = "HTTP";
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should now allow unencrypted (HTTP) traffic." });
     });
 });
 
-describe("aws.alb.Listener.configureSecureTLS", () => {
+describe("aws.alb.Listener.configureSecureTLS", function() {
     const policy = policies.aws.alb.Listener.configureSecureTLS;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-alb-listener-configure-secure-tls");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["alb"],
@@ -99,38 +104,38 @@ describe("aws.alb.Listener.configureSecureTLS", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.sslPolicy = undefined;
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should use secure/modern TLS encryption with forward secrecy." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.sslPolicy = "ELBSecurityPolicy-TLS-1-2-2017-01";
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should use secure/modern TLS encryption with forward secrecy." });
     });
 
-    it("#4", async () => {
+    it("#4", async function() {
         const args = getResourceValidationArgs();
         args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should use secure/modern TLS encryption with forward secrecy." });
     });
 
-    it("#5", async () => {
+    it("#5", async function() {
         const args = getResourceValidationArgs();
         args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
         await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should use secure/modern TLS encryption with forward secrecy." });

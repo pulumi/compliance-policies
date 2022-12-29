@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { ec2 } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.LaunchConfiguration, {
         imageId: ec2.imageId,
@@ -40,23 +45,23 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             volumeType: "standard",
             volumeSize: 16,
             encrypted: true,
-        }]
+        }],
 
     });
 }
 
-describe("aws.ec2.LaunchConfiguration.disallowPublicIP", () => {
+describe("aws.ec2.LaunchConfiguration.disallowPublicIP", function() {
     const policy = policies.aws.ec2.LaunchConfiguration.disallowPublicIP;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-public-ip");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -65,38 +70,38 @@ describe("aws.ec2.LaunchConfiguration.disallowPublicIP", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.associatePublicIpAddress = true;
         await assertHasResourceViolation(policy, args, { message: "EC2 Launch Configurations should not have a public IP address." });
     });
 });
 
-describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", () => {
+describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", function() {
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-root-volume");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -105,44 +110,44 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", () =>
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.rootBlockDevice.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 Launch Configurations should not have an unencypted root block device." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.rootBlockDevice = undefined;
         await assertNoResourceViolations(policy, args);
     });
 });
 
-describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", () => {
+describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", function() {
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-volumes");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["ec2"],
@@ -151,26 +156,26 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.ebsBlockDevices[1].encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "EC2 Launch Configurations should not have an unencypted block device." });
     });
 
-    it("#3", async () => {
+    it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.ebsBlockDevices = undefined;
         await assertNoResourceViolations(policy, args);

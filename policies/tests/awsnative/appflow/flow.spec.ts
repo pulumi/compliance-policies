@@ -20,6 +20,11 @@ import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { s3, kms } from "../enums";
 
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.appflow.Flow, {
         destinationFlowConfigList: [{
@@ -28,7 +33,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 s3: {
                     bucketName: s3.bucketId,
                     bucketPrefix: "sfdc-bucket-prefix",
-                }
+                },
             },
         }],
         sourceFlowConfig: {
@@ -37,8 +42,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 salesforce: {
                     object: "veeva-object",
                     includeDeletedRecords: true,
-                }
-            }
+                },
+            },
         },
         tasks: [{
             sourceFields: ["field_a", "field_b"],
@@ -52,18 +57,18 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.appflow.Flow.configureCustomerManagedKey", () => {
+describe("awsnative.appflow.Flow.configureCustomerManagedKey", function() {
     const policy = policies.awsnative.appflow.Flow.configureCustomerManagedKey;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-appflow-flow-configure-customer-managed-key");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["appflow"],
@@ -72,38 +77,38 @@ describe("awsnative.appflow.Flow.configureCustomerManagedKey", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.kMSArn = undefined;
         await assertHasResourceViolation(policy, args, { message: "AppFlow Flow should be encrypted using a customer-managed KMS key." });
     });
 });
 
-describe("awsnative.appflow.Flow.missingDescription", () => {
+describe("awsnative.appflow.Flow.missingDescription", function() {
     const policy = policies.awsnative.appflow.Flow.missingDescription;
 
-    it("name", async () => {
+    it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-appflow-flow-missing-description");
     });
 
-    it("registration", async () => {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async () => {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["appflow"],
@@ -112,20 +117,20 @@ describe("awsnative.appflow.Flow.missingDescription", () => {
         });
     });
 
-    it("enforcementLevel", async () => {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async () => {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#1", async () => {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2", async () => {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.description = "";
         await assertHasResourceViolation(policy, args, { message: "AppFlow Flow should have a description." });

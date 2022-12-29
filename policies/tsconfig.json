@@ -22,11 +22,11 @@
         "aws/**/*",
         "awsnative/**/*",
         "kubernetes/**/*",
+        "tests/**/*.ts",
     ],
     "exclude": [
         "node_modules",
         ".eslintrc.*",
-        "tests/**/*.ts",
         "*.tgz"
     ],
 }

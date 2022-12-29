@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-alb-load-balancer-disallow-unencrypted-traffic",
+        name: "aws-alb-listener-disallow-unencrypted-traffic",
         description: "Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.alb.Listener, (listener, args, reportViolation) => {

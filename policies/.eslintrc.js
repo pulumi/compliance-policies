@@ -18,7 +18,6 @@ module.exports = {
     ],
     "ignorePatterns": [
         "bin/**/*.ts",
-        "tests/**/*.ts",
         ".eslintrc.*"
     ],
     "extends": [
@@ -223,6 +222,8 @@ module.exports = {
         "spaced-comment": "off",
         "@typescript-eslint/no-redeclare": [
             "error"
-        ]
+        ],
+        "mocha/no-setup-in-describe": "off",
+        "mocha/max-top-level-suites": "off",
     }
 };

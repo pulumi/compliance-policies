@@ -49,7 +49,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
         description: "Checks that Kubernetes Deployments have the recommended labels.",

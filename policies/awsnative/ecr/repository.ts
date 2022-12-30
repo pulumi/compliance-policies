@@ -67,7 +67,7 @@ export const enableImageScan: ResourceValidationPolicy = policiesManagement.regi
 });
 
 /**
- * Checks that ECR repositories have immutable images enabled.
+ * Checks that ECR Repositories have immutable images enabled.
  *
  * @severity High
  * @link https://sysdig.com/blog/toctou-tag-mutability/

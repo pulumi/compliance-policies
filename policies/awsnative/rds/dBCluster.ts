@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Checks that RDS CDB lusters backup retention policy is enabled.
+ * Checks that RDS DB Clusters backup retention policy is enabled.
  *
  * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
@@ -69,7 +69,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
 });
 
 /**
- * Checks that RDS storage is encrypted.
+ * Checks that RDS DB Cluster storage is encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
@@ -77,7 +77,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbcluster-storage-disallow-unencrypted-storage",
-        description: "Checks that RDS Clusters storage is encrypted.",
+        description: "Checks that RDS DB Cluster storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             if (!cluster.storageEncrypted) {
@@ -92,7 +92,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 });
 
 /**
- * Checks that storage is encrypted with a customer managed key.
+ * Checks that RDS DB Cluster storage uses a customer-managed KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
@@ -100,7 +100,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbcluster-storage-encryption-with-customer-managed-key",
-        description: "Checks that RDS Clusters storage uses a customer-manager KMS key.",
+        description: "Checks that RDS DB Cluster storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
             if (cluster.storageEncrypted && !cluster.kmsKeyId) {

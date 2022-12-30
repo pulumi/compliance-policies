@@ -204,7 +204,7 @@ describe("awsnative.cloudfront.Distribution.configureAccessLogging", function() 
     });
 });
 
-describe("awsnative.cloudfront.Distribution.configureWaf", function() {
+describe("awsnative.cloudfront.Distribution.configureWafAcl", function() {
     const policy = policies.awsnative.cloudfront.Distribution.configureWafAcl;
 
     it("name", async function() {

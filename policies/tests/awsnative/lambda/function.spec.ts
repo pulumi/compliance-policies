@@ -47,7 +47,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.aws.lambda.Function.missingDescription", function() {
+describe("awsnative.lambda.Function.missingDescription", function() {
     const policy = policies.awsnative.lambda.Function.missingDescription;
 
     it("name", async function() {

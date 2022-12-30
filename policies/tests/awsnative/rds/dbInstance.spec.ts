@@ -38,8 +38,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("awsnative.rds.DbInstance.enableBackupRetention", function() {
-    const policy = policies.awsnative.rds.DbInstance.enableBackupRetention;
+describe("awsnative.rds.DBInstance.enableBackupRetention", function() {
+    const policy = policies.awsnative.rds.DBInstance.enableBackupRetention;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-backup-retention");
@@ -82,8 +82,8 @@ describe("awsnative.rds.DbInstance.enableBackupRetention", function() {
     });
 });
 
-describe("awsnative.rds.DbInstance.configureBackupRetention", function() {
-    const policy = policies.awsnative.rds.DbInstance.configureBackupRetention;
+describe("awsnative.rds.DBInstance.configureBackupRetention", function() {
+    const policy = policies.awsnative.rds.DBInstance.configureBackupRetention;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-backup-retention");
@@ -126,8 +126,8 @@ describe("awsnative.rds.DbInstance.configureBackupRetention", function() {
     });
 });
 
-describe("awsnative.rds.DbInstance.enablePerformanceInsights", function() {
-    const policy = policies.awsnative.rds.DbInstance.enablePerformanceInsights;
+describe("awsnative.rds.DBInstance.enablePerformanceInsights", function() {
+    const policy = policies.awsnative.rds.DBInstance.enablePerformanceInsights;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-performance-insights");
@@ -170,8 +170,8 @@ describe("awsnative.rds.DbInstance.enablePerformanceInsights", function() {
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", function() {
-    const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights;
+describe("awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights", function() {
+    const policy = policies.awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights");
@@ -214,8 +214,8 @@ describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", func
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowPublicAccess", function() {
-    const policy = policies.awsnative.rds.DbInstance.disallowPublicAccess;
+describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
+    const policy = policies.awsnative.rds.DBInstance.disallowPublicAccess;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-public-access");
@@ -258,8 +258,8 @@ describe("awsnative.rds.DbInstance.disallowPublicAccess", function() {
     });
 });
 
-describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", function() {
-    const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedStorage;
+describe("awsnative.rds.DBInstance.disallowUnencryptedStorage", function() {
+    const policy = policies.awsnative.rds.DBInstance.disallowUnencryptedStorage;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage");
@@ -302,8 +302,8 @@ describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", function() {
     });
 });
 
-describe("awsnative.rds.DbInstance.configureCustomerManagedKey", function() {
-    const policy = policies.awsnative.rds.DbInstance.configureCustomerManagedKey;
+describe("awsnative.rds.DBInstance.configureCustomerManagedKey", function() {
+    const policy = policies.awsnative.rds.DBInstance.configureCustomerManagedKey;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-customer-managed-key");

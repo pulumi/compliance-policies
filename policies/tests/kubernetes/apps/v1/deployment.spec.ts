@@ -112,8 +112,8 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     });
 });
 
-describe("kubernetes.apps.v1.Deployment.configureRecommendedLabel", function() {
-    const policy = policies.kubernetes.apps.v1.Deployment.configureRecommendedLabel;
+describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() {
+    const policy = policies.kubernetes.apps.v1.Deployment.configureRecommendedLabels;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "kubernetes-apps-v1-deployment-configure-recommended-labels");

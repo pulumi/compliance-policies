@@ -53,7 +53,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.elb.LoadBalancer.disallowInboundHttpTraffic", function() {
+describe("aws.elb.LoadBalancer.disallowUnencryptedTraffic", function() {
     const policy = policies.aws.elb.LoadBalancer.disallowUnencryptedTraffic;
 
     it("name", async function() {

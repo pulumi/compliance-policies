@@ -37,8 +37,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.rds.DBCluster.enableBackupRetention", function() {
-    const policy = policies.awsnative.rds.DbCluster.enableBackupRetention;
+describe("awsnative.rds.DBCluster.enableBackupRetention", function() {
+    const policy = policies.awsnative.rds.DBCluster.enableBackupRetention;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbcluster-enable-backup-retention");
@@ -81,8 +81,8 @@ describe("aws.rds.DBCluster.enableBackupRetention", function() {
     });
 });
 
-describe("awsnative.rds.Cluster.configureBackupRetention", function() {
-    const policy = policies.awsnative.rds.DbCluster.configureBackupRetention;
+describe("awsnative.rds.DBCluster.configureBackupRetention", function() {
+    const policy = policies.awsnative.rds.DBCluster.configureBackupRetention;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-backup-retention");
@@ -125,8 +125,8 @@ describe("awsnative.rds.Cluster.configureBackupRetention", function() {
     });
 });
 
-describe("awsnative.rds.Cluster.disallowUnencryptedStorage", function() {
-    const policy = policies.awsnative.rds.DbCluster.disallowUnencryptedStorage;
+describe("awsnative.rds.DBCluster.disallowUnencryptedStorage", function() {
+    const policy = policies.awsnative.rds.DBCluster.disallowUnencryptedStorage;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbcluster-storage-disallow-unencrypted-storage");
@@ -169,8 +169,8 @@ describe("awsnative.rds.Cluster.disallowUnencryptedStorage", function() {
     });
 });
 
-describe("awsnative.rds.Cluster.configureCustomerManagedKey", function() {
-    const policy = policies.awsnative.rds.DbCluster.configureCustomerManagedKey;
+describe("awsnative.rds.DBCluster.configureCustomerManagedKey", function() {
+    const policy = policies.awsnative.rds.DBCluster.configureCustomerManagedKey;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbcluster-storage-encryption-with-customer-managed-key");
@@ -213,8 +213,8 @@ describe("awsnative.rds.Cluster.configureCustomerManagedKey", function() {
     });
 });
 
-describe("awsnative.rds.Cluster.disallowSingleAvailabilityZone", function() {
-    const policy = policies.awsnative.rds.DbCluster.disallowSingleAvailabilityZone;
+describe("awsnative.rds.DBCluster.disallowSingleAvailabilityZone", function() {
+    const policy = policies.awsnative.rds.DBCluster.disallowSingleAvailabilityZone;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-single-availability-zone");

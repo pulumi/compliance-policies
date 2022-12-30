@@ -43,7 +43,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManag
 });
 
 /**
- * Check that encrypted EBS volume uses a customer-managed KMS key.
+ * Check that encrypted EBS volumes use a customer-manager KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html

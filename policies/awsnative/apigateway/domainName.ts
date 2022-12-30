@@ -28,7 +28,7 @@ import { policiesManagement } from "../../utils";
 export const configureSecurityPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-apigateway-domainname-configure-security-policy",
-        description: "Checks that any ApiGateway Domain Name Security Policy uses secure/modern TLS encryption.",
+        description: "Checks that ApiGateway Domain Name Security Policy uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.apigateway.DomainName, (domainName, args, reportViolation) => {
             if (!domainName.securityPolicy || domainName.securityPolicy !== "TLS_1_2") {

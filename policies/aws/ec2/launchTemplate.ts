@@ -20,7 +20,7 @@ import {
 import { policiesManagement, valToBoolean } from "../../utils";
 
 /**
- * Checks that any launch template do not have public IP addresses.
+ * Checks that EC2 Launch Templates do not have public IP addresses.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
@@ -48,7 +48,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
 });
 
 /**
- * Checks that any launch templates do not have unencrypted root volumes.
+ * Checks that EC2 Launch Templates do not have unencrypted volumes.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html

@@ -43,7 +43,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
 });
 
 /**
- * Checks that performance insights in RDS Cluster is encrypted.
+ * Checks that RDS Cluster Instances performance insights is encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html

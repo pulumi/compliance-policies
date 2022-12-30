@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Checks that all Lambda Functions have a description.
+ * Checks that Lambda Functions have a description.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
@@ -28,7 +28,7 @@ import { policiesManagement } from "../../utils";
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-lambda-function-missing-description",
-        description: "Checks that all Lambda Functions have a description.",
+        description: "Checks that Lambda Functions have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.lambda.Function, (f, args, reportViolation) => {
             if (!f.description) {

@@ -68,7 +68,7 @@ export const enableImageScan: ResourceValidationPolicy = policiesManagement.regi
 });
 
 /**
- * Checks that ECR repositories have immutable images enabled.
+ * Checks that ECR Repositories have immutable images enabled.
  *
  * @severity High
  * @link https://sysdig.com/blog/toctou-tag-mutability/
@@ -91,7 +91,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policiesManagement
 });
 
 /**
- * Checks that no ECR repositories is unencrypted.
+ * Checks that ECR Repositories are encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html

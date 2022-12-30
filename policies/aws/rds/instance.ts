@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Checks that backup retention policy is adequate.
+ * Checks that RDS Instances backup retention policy is enabled.
  *
  * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
@@ -69,7 +69,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
 });
 
 /**
- * Checks that no RDS classic resources are created.
+ * Checks that no RDS Instances classic resources are created.
  *
  * @severity Critical
  * @link https://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/
@@ -115,7 +115,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
 });
 
 /**
- * Checks that performance insights in RDS is encrypted.
+ * Checks that RDS Instance performance insights is encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.htm
@@ -138,7 +138,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
 });
 
 /**
- * Checks that public access is not enabled on RDS Instances.
+ * Checks that RDS Instance public access is not enabled.
  *
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
@@ -161,7 +161,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement
 });
 
 /**
- * Checks that RDS storage is encrypted.
+ * Checks that RDS instance storage is encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
@@ -184,7 +184,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 });
 
 /**
- * Checks that storage is encrypted with a customer managed key.
+ * Checks that RDS Instance storage uses a customer-managed KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
@@ -192,7 +192,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-instance-storage-encryption-with-customer-managed-key",
-        description: "Checks that RDS Instance storage uses a customer-manager KMS key.",
+        description: "Checks that RDS Instance storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
             if (instance.storageEncrypted && !instance.kmsKeyId) {

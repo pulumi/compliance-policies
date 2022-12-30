@@ -43,7 +43,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
 });
 
 /**
- * AppFlow Flow should have a description.
+ * Checks that AppFlow Flows have a description.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/create-flow-console.html

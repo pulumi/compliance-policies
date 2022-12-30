@@ -43,7 +43,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManag
 });
 
 /**
- * Check that encrypted EBS volume uses a customer-managed KMS key.
+ * Check that encrypted EBS volumes use a customer-managed KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
@@ -51,7 +51,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManag
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ec2-volume-configure-customer-managed-key",
-        description: "Check that encrypted EBS volumes use a customer-manager KMS key.",
+        description: "Check that encrypted EBS volumes use a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.ec2.Volume, (v, args, reportViolation) => {
             if (v.encrypted && !v.kmsKeyId) {

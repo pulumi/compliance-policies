@@ -43,7 +43,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
 });
 
 /**
- * Checks that Kubernetes Deployments have the recommended label.
+ * Checks that Kubernetes Deployments have the recommended labels.
  *
  * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
@@ -52,7 +52,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
 export const configureRecommendedLabel: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
-        description: "Checks that Kubernetes Deployments use the recommended labels.",
+        description: "Checks that Kubernetes Deployments have the recommended labels.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
             if (!deployment.metadata || !deployment.metadata.labels) {

@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../../utils";
 
 /**
- * Checks that Kubernetes Pods are not being used directly.
+ * Checks that Kubernetes Pods are not used directly.
  *
  * @severity Critical
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/

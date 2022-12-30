@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Checks that ALB loadbalancer have access logging enabled.
+ * Checks that ALB loadbalancers have access logging enabled.
  *
  * @severity medium
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html

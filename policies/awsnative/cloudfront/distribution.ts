@@ -66,7 +66,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
 });
 
 /**
- * Checks that any CloudFront distribution has a WAF ACL associated.
+ * Checks that CloudFront distributions have a WAF ACL associated.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
@@ -74,7 +74,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
 export const configureWafAcl: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-waf-acl",
-        description: "Checks that any CloudFront distribution has a WAF ACL associated.",
+        description: "Checks that CloudFront distributions have a WAF ACL associated.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
             if (!distribution.distributionConfig.webACLId) {

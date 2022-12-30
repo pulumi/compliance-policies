@@ -97,7 +97,7 @@ export const missingEgressRuleDescription: ResourceValidationPolicy = policiesMa
 });
 
 /**
- * Check that any security group doesn't allow inbound HTTP traffic.
+ * Check that EC2 Security Groups do not allow inbound HTTP traffic.
  *
  * @severity Critical
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
@@ -127,7 +127,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesMana
 });
 
 /**
- * Check that any security group doesn't allow inbound traffic from the Internet.
+ * Check that EC2 Security Groups do not allow ingress traffic from the Internet.
  *
  * @severity Critical
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html

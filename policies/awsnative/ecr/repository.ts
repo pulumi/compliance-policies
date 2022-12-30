@@ -90,7 +90,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policiesManagement
 });
 
 /**
- * Checks that no ECR repositories is unencrypted.
+ * Checks that ECR Repositories are encrypted.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html

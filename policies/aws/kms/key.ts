@@ -71,7 +71,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
 });
 
 /**
- * Checks that KMS Keys have key rotation enabled.
+ * Checks that KMS Keys do not bypass the key policy lockout safety check.
  *
  * @severity Critical
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-bypass-policy-lockout-safety-check

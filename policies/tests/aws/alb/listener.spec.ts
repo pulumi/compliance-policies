@@ -42,7 +42,7 @@ describe("aws.alb.Listener.disallowUnencryptedTraffic", function() {
     const policy = policies.aws.alb.Listener.disallowUnencryptedTraffic;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-alb-load-balancer-disallow-unencrypted-traffic");
+        assertResourcePolicyName(policy, "aws-alb-listener-disallow-unencrypted-traffic");
     });
 
     it("registration", async function() {

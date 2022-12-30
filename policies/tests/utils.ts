@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import * as fs from "fs";
+import * as path from "path";
+import * as parser from "@babel/parser";
+import * as parserTypes from "@babel/types";
 import {
     ResourceValidationArgs,
     StackValidationArgs,
@@ -489,6 +493,301 @@ export function assertSelectionEnforcementLevel(filterPolicy: FilterPolicyArgs, 
     policies.policiesManagement.resetPolicyfilter();
 }
 
+interface SourceFileDetails {
+    suiteName?: string;
+    sourceFile?: string;
+    policyVarName?: string;
+    parserResults?: parser.ParseResult<parserTypes.File>;
+    error?: string;
+}
+
+interface PolicyDetails {
+    name?: string;
+    description?: string;
+    severity?: string;
+    comment?: string;
+    error?: string;
+}
+
+/**
+ * This function assert the code quality of a policy source file.
+ *
+ * @param suiteName The MochaJS suite name.
+ */
+export function assertCodeQuality(suiteName?: string) {
+    const sourceFileDetails = parseSourceFile(suiteName);
+
+    // https://astexplorer.net/#/gist/8542f6a83839e9db21d7c27bc482e828/7a1341ec228bcd5d574324039ff7fab84244dd6f
+
+    if (sourceFileDetails.error) {
+        assert.fail(sourceFileDetails.error);
+    }
+    if (!sourceFileDetails.policyVarName) {
+        assert.fail("Unable to determine policy variable name.");
+    }
+    if (!sourceFileDetails.parserResults) {
+        assert.fail(`Failed to parse file ${sourceFileDetails.sourceFile}.`);
+    }
+
+    const parserResults: parser.ParseResult<parserTypes.File> = sourceFileDetails.parserResults;
+
+    let policyDetails: PolicyDetails = {};
+
+    for(let codeBlockIndex = 0; codeBlockIndex < parserResults.program.body.length; codeBlockIndex++) {
+        const node = parserResults.program.body[codeBlockIndex];
+
+        if (node.type === "ExportNamedDeclaration") {
+            policyDetails = getPolicyDetails(node, sourceFileDetails.policyVarName);
+
+            if (!policyDetails.error && !policyDetails.name) {
+                /*
+                 * No error is reported, so the processed "ExportNamedDeclaration" is not the one
+                 * for the current policy. Let's continue to the next one then.
+                 */
+                continue;
+            }
+            break;
+        }
+    }
+
+    if (!policyDetails.error && !policyDetails.name) {
+        assert.fail(`Unable to locate the policy code in ${sourceFileDetails.sourceFile}`);
+    }
+    if (policyDetails.error) {
+        assert.fail(policyDetails.error);
+    }
+
+    if (!policyDetails.comment?.includes(policyDetails.description!)) {
+        assert.fail("The jsDoc description isn't match the policy's description.");
+    }
+
+    if (!policyDetails.comment.toLowerCase().includes(`@severity ${policyDetails.severity}`)) {
+        assert.fail("The policy's severity isn't matching the one in the jsDoc comment.");
+    }
+}
+
+/**
+ * This function takes a suite name and returns parsed source file.
+ *
+ * @param suiteName The MochaJS suite name.
+ * @returns The parsed corresponding source file.
+ */
+function parseSourceFile(suiteName?: string): SourceFileDetails {
+    const sourceFileDetails: SourceFileDetails = {};
+    sourceFileDetails.suiteName = suiteName;
+
+    if (!sourceFileDetails.suiteName) {
+        sourceFileDetails.error = "The test suite name isn't present.";
+        return sourceFileDetails;
+    }
+
+    /*
+     * It may be useful to move this out of this function so the
+     * value (which is always the same) is not computed on each test.
+     */
+    const policiesBasePath = path.dirname(__dirname);
+    const splitResourceSuiteName = sourceFileDetails.suiteName.split(".");
+
+    sourceFileDetails.policyVarName = splitResourceSuiteName.pop();
+
+    if (!sourceFileDetails.policyVarName) {
+        sourceFileDetails.error = "Unable to determine the policy variable name. Is the suite name in the correct format?";
+        return sourceFileDetails;
+    }
+
+    splitResourceSuiteName[splitResourceSuiteName.length-1] = camelize(splitResourceSuiteName[splitResourceSuiteName.length-1]);
+    sourceFileDetails.sourceFile = `${policiesBasePath}/${splitResourceSuiteName.join("/")}.ts`;
+
+    sourceFileDetails.parserResults = parser.parse(fs.readFileSync(sourceFileDetails.sourceFile, "utf-8"), {
+        attachComment: true,
+        sourceType: "module",
+        sourceFilename: sourceFileDetails.sourceFile,
+        plugins: [
+            "typescript",
+        ],
+    });
+
+    return sourceFileDetails;
+}
+
+/**
+ * This functions the necessary details related to the current registered policy.
+ *
+ * @param objectExpression An object expression as it is provided to `policiesManagement.registerPolicy()`.
+ * @returns An array of information related to the current policy.
+ */
+function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarName: string): PolicyDetails {
+    const policyDetails: PolicyDetails = {};
+
+    if (!node.declaration || node.declaration.type !== "VariableDeclaration") {
+        return policyDetails;
+    }
+
+    if (node.declaration.declarations.length !== 1) {
+        return policyDetails;
+    }
+
+    if (node.declaration.declarations[0].id.type === "Identifier") {
+        if (node.declaration.declarations[0].id.name === policyVarName) {
+            /*
+             * We have a match with the exported variable so we're going to process it.
+             */
+            if (!node.leadingComments) {
+                policyDetails.error = "The policy is missing its jsDoc comment.";
+                return policyDetails;
+            }
+            const jsDocDetails = getPolicyComment(node);
+            if (jsDocDetails.error) {
+                assert.fail(jsDocDetails.error);
+            }
+            policyDetails.comment = jsDocDetails.comment;
+
+            /*
+             * This will most likely blow up in my face sooner or later because this
+             * feels way too brittle. I just don't know how to parse this in a more
+             * flexible way - for now.
+             */
+            if (node.declaration.declarations[0].init &&
+                node.declaration.declarations[0].init.type === "CallExpression" &&
+                node.declaration.declarations[0].init.callee.type === "MemberExpression" &&
+                node.declaration.declarations[0].init.callee.property.type === "Identifier" &&
+                node.declaration.declarations[0].init.callee.property.name === "registerPolicy" &&
+                node.declaration.declarations[0].init.arguments[0].type === "ObjectExpression") {
+                const objectExpression = node.declaration.declarations[0].init.arguments[0];
+                for(let oepIndex = 0; oepIndex < objectExpression.properties.length; oepIndex++) {
+                    if (objectExpression.properties[oepIndex].type !== "ObjectProperty") {
+                        continue;
+                    }
+                    const objectProperty = <parserTypes.ObjectProperty>objectExpression.properties[oepIndex];
+                    switch(objectProperty.value.type) {
+                    case "ObjectExpression": // the `resourceValidationPolicy`
+                        if (objectProperty.key.type === "Identifier" && objectProperty.key.name.includes("resourceValidationPolicy")) {
+                            const p = getPolicyCodeDetails(objectProperty.value.properties);
+                            policyDetails.name = p.name;
+                            policyDetails.description = p.description;
+                        }
+                        break;
+                    case "ArrayExpression": // Vendors[] || Services[] || Frameworks[] || Topics[]
+                        break;
+                    case "StringLiteral": // Policy Severity
+                        policyDetails.severity = objectProperty.value.value.toLowerCase(); // this needs to be lowercase as the value is made case insensitive
+                        break;
+                    default:
+                        continue;
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
+
+    return policyDetails;
+}
+
+/**
+ * This function get the policy code details (name and description).
+ *
+ * @param properties The properties array that's passed to `resourceValidationPolicy`.
+ * @returns An array of strings. [name, description].
+ */
+function getPolicyCodeDetails(properties: (parserTypes.ObjectProperty | parserTypes.ObjectMethod | parserTypes.SpreadElement)[]): PolicyDetails {
+    const policyDetails: PolicyDetails = {};
+
+    properties.forEach((property) => {
+        if (property.type !== "ObjectProperty" || property.key.type !== "Identifier") {
+            return;
+        }
+
+        switch(property.key.name) {
+        case "name":
+            if (property.value.type === "StringLiteral") {
+                policyDetails.name = property.value.value;
+            }
+            break;
+        case "description":
+            if (property.value.type === "StringLiteral") {
+                policyDetails.description = property.value.value;
+            }
+            break;
+        default:
+        }
+    });
+    return policyDetails;
+}
+
+/**
+ * Gets the jsDoc comment block for the current code block.
+ *
+ * @param comments An array of Comment containing the leading comments of the current code block.
+ * @returns Returns the single jsDoc comment block found otherwise will `assert.fail()`.
+ */
+function getPolicyComment(node: parserTypes.ExportNamedDeclaration): PolicyDetails {
+    const policyCommentDetails: PolicyDetails = {};
+
+    if (!node.leadingComments) {
+        policyCommentDetails.error = "The policy should have a jsDoc comment block to describe the policy.";
+        return policyCommentDetails;
+    }
+
+    let jsDocCommentBlockIndex: number = -1;
+    let jsDocCommentBlocksCount: number = 0;
+    let commentBlocksCount: number = 0;
+    let commentLinesCount: number = 0;
+
+    for (let commentIndex = 0; commentIndex < node.leadingComments.length; commentIndex++) {
+        const comment = node.leadingComments[commentIndex];
+        if (comment.type === "CommentBlock") {
+            if (comment.value.startsWith("*\n")) {
+                /*
+                 * This appears to be a proper jsDoc comment block because it starts
+                 * with '/**' (@babel/parser remove the initial '/*')
+                 */
+                jsDocCommentBlocksCount++;
+                jsDocCommentBlockIndex = commentIndex;
+            } else {
+                /*
+                 * this is a generic comment block and not jsDoc one.
+                 */
+                commentBlocksCount++;
+            }
+        } else {
+            commentLinesCount++;
+        }
+    }
+    if (commentLinesCount > 0) {
+        policyCommentDetails.error = "The policy should not use comment lines leading to the policy declaration.";
+        return policyCommentDetails;
+    }
+    if (commentBlocksCount > 0) {
+        policyCommentDetails.error = "The policy should not use comment blocks leading to the policy declaration.";
+        return policyCommentDetails;
+    }
+    if (jsDocCommentBlocksCount > 1) {
+        policyCommentDetails.error = "The policy should not use more than one jsDoc comment blocks leading to the policy declaration.";
+        return policyCommentDetails;
+    }
+
+    policyCommentDetails.comment = node.leadingComments[jsDocCommentBlockIndex].value;
+    return policyCommentDetails;
+}
+
+/**
+ * This function converts a string into a camelCase string.
+ *
+ * @param str The input string.
+ * @returns A camelCase string.
+ */
+function camelize(str: string) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (match, index) {
+        if (+match === 0){
+            return ""; // or if (/\s+/.test(match)) for white spaces
+        }
+        return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+}
 /**
  * Determine whether the given `input` is a string in lowercase.
  */

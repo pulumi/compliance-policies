@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that RDS Cluster Instances have performance insights enabled.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://aws.amazon.com/rds/performance-insights/
  */
 export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
 /**
  * Checks that performance insights in RDS Cluster is encrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -68,7 +68,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
 /**
  * Checks that RDS Cluster Instances public access is not enabled.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({

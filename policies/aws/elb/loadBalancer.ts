@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-https-load-balancers.html
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -47,7 +47,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
 /**
  * Check that ELB Load Balancers uses more than one availability zone.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-disable-az.html
  */
 export const configureMultiAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -70,7 +70,7 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policies
 /**
  * Check that ELB Load Balancers uses access logging.
  *
- * @severity **Medium**
+ * @severity Medium
  * @ link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/access-log-collection.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -93,7 +93,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
 /**
  * Check that ELB Load Balancers have a health check enabled.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
  */
 export const enableHealthCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({

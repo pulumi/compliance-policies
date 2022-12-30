@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that ApiGateway Domain Name Security Policy uses secure/modern TLS encryption.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
 export const configureSecurityPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({

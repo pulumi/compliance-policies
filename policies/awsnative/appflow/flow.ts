@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Check that AppFlow Flow uses a customer-managed KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html#encryption-transit
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
 /**
  * AppFlow Flow should have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/create-flow-console.html
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({

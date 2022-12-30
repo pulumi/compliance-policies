@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that any launch configuration do not have public IP addresses.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
 export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
 /**
  * Checks that EC2 launch configuration do not have unencrypted root volumes.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
 export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -68,7 +68,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
 /**
  * Checks that EC2 Launch Configurations do not have unencrypted volumes.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({

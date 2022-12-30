@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that all Lambda Functions have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
 /**
  * Checks that Lambda functions have tracing enabled.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
 export const enableTracingConfig: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -68,7 +68,7 @@ export const enableTracingConfig: ResourceValidationPolicy = policiesManagement.
 /**
  * Checks that Lambda functions have tracing configured.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
 export const configureTracingConfig: ResourceValidationPolicy = policiesManagement.registerPolicy({

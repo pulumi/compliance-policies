@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that Secrets Manager Secrets have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -49,7 +49,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
 /**
  * Check that Secrets Manager Secrets use a customer-manager KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({

@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that ALB loadbalancer have access logging enabled.
  *
- * @severity **medium**
+ * @severity medium
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
 export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.
 /**
  * Checks that ALB loadbalancers have access logging configured and enabled.
  *
- * @severity **medium**
+ * @severity medium
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({

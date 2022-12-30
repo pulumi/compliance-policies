@@ -23,7 +23,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Check that EKS Cluster Encryption Config is enabled.
  *
- * @severity **High**
+ * @severity High
  * @link https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-eks-cluster-encryptionconfig.html
  */
@@ -47,7 +47,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policiesM
 /**
  * Check that EKS Clusters API Endpoint are not publicly accessible.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
 export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({

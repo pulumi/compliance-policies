@@ -22,7 +22,7 @@ import { policiesManagement, valToBoolean } from "../../utils";
 /**
  * Checks that any launch template do not have public IP addresses.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
 export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -50,7 +50,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
 /**
  * Checks that any launch templates do not have unencrypted root volumes.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -78,7 +78,7 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policies
 /**
  * Check that encrypted EBS volume uses a customer-managed KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({

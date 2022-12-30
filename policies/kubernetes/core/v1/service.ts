@@ -22,7 +22,7 @@ import { policiesManagement } from "../../../utils";
 /**
  * Checks that Kubernetes Deployments have the recommended label.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */

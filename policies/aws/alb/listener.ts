@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
 /**
  * Checks that ALB Load Balancers uses secure/modern TLS encryption.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
  */
 export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.registerPolicy({

@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that RDS CDB lusters backup retention policy is enabled.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const enableBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policiesManagemen
 /**
  * Checks that RDS DB Cluster backup retention policy is configured.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const configureBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -71,7 +71,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
 /**
  * Checks that RDS storage is encrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -94,7 +94,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 /**
  * Checks that storage is encrypted with a customer managed key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -117,7 +117,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
 /**
  * Check that RDS DB Cluster doesn't use single availability zone.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({

@@ -23,7 +23,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that any ApiGatewayV2 Stages have access logging enabled.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
 export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -46,7 +46,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.
 /**
  * Checks that any ApiGatewayV2 Stages have access logging configured.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({

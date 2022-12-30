@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that EFS File Systems do not have an unencrypted file system.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html
  */
 export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesM
 /**
  * Check that encrypted EFS File system uses a customer-managed KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -68,7 +68,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
 /**
  * Check that EFS File system doesn't use single availability zone.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({

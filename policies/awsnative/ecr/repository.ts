@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that ECR repositories have 'scan-on-push' configured.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
 export const configureImageScan: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -46,7 +46,7 @@ export const configureImageScan: ResourceValidationPolicy = policiesManagement.r
 /**
  * Checks that ECR repositories have 'scan-on-push' enabled.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
 export const enableImageScan: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -69,7 +69,7 @@ export const enableImageScan: ResourceValidationPolicy = policiesManagement.regi
 /**
  * Checks that ECR repositories have immutable images enabled.
  *
- * @severity **High**
+ * @severity High
  * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
 export const disallowMutableImage: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -92,7 +92,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policiesManagement
 /**
  * Checks that no ECR repositories is unencrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
 export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -115,7 +115,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesM
 /**
  * Checks that ECR repositories use a customer-manager KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({

@@ -22,7 +22,7 @@ import { policiesManagement } from "../../../utils";
 /**
  * Checks that Kubernetes Pods are not being used directly.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
 export const disallowPod: ResourceValidationPolicy = policiesManagement.registerPolicy({

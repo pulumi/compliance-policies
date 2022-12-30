@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that KMS Keys have key rotation enabled.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
  */
 export const enableKeyRotation: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policiesManagement.re
 /**
  * Checks that KMS Keys have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html
  * https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html
  */
@@ -73,7 +73,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
 /**
  * Checks that KMS Keys have key rotation enabled.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-bypass-policy-lockout-safety-check
  */
 export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({

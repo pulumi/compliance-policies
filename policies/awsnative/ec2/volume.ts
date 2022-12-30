@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that EBS volumes are encrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManag
 /**
  * Check that encrypted EBS volume uses a customer-managed KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({

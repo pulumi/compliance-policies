@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that all security groups have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
 /**
  * Checks that all Ingress Security Groups rules have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
 export const missingIngressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -72,7 +72,7 @@ export const missingIngressRuleDescription: ResourceValidationPolicy = policiesM
 /**
  * Checks that all Egress Security Groups rules have a description.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
 export const missingEgressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -99,7 +99,7 @@ export const missingEgressRuleDescription: ResourceValidationPolicy = policiesMa
 /**
  * Check that any security group doesn't allow inbound HTTP traffic.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -129,7 +129,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesMana
 /**
  * Check that any security group doesn't allow inbound traffic from the Internet.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
 export const disallowPublicInternetIngress: ResourceValidationPolicy = policiesManagement.registerPolicy({

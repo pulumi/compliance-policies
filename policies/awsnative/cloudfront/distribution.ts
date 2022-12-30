@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that any CloudFront distributions have access logging enabled.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
 export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.
 /**
  * Checks that any CloudFront distributions have access logging configured.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -68,7 +68,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
 /**
  * Checks that any CloudFront distribution has a WAF ACL associated.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
 export const configureWafAcl: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -91,7 +91,7 @@ export const configureWafAcl: ResourceValidationPolicy = policiesManagement.regi
 /**
  * Checks that CloudFront distributions only allow encypted ingress traffic.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -119,7 +119,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
 /**
  * Checks that CloudFront distributions uses secure/modern TLS encryption.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
 export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -142,7 +142,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.r
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
 export const enableTLSToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -167,7 +167,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policiesManagement.re
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
 export const configureSecureTLSToOrgin: ResourceValidationPolicy = policiesManagement.registerPolicy({

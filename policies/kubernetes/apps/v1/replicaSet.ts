@@ -22,7 +22,7 @@ import { policiesManagement } from "../../../utils";
 /**
  * Checks that Kubernetes ReplicaSets have at least three replicas.
  *
- * @severity **High**
+ * @severity High
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
  */
 export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
 /**
  * Checks that Kubernetes Deployments have the recommended label.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */

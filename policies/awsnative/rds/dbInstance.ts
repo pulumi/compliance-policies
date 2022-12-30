@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that RDS DB Instances backup retention policy is enabled.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const enableBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policiesManagemen
 /**
  * Checks that RDS DB Instances backup retention policy is adequate.
  *
- * @severity **Medium**
+ * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
 export const configureBackupRetention: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -71,7 +71,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
 /**
  * Checks that RDS DB Instances have performance insights enabled.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://aws.amazon.com/rds/performance-insights/
  */
 export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -94,7 +94,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
 /**
  * Checks that RDS DB Instances performance insights is encrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -117,7 +117,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
 /**
  * Checks that RDS DB Instances public access is not enabled.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -140,7 +140,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement
 /**
  * Checks that RDS DB Instance storage is encrypted.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -163,7 +163,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 /**
  * Checks that RDS DB Instance storage uses a customer-manager KMS key.
  *
- * @severity **Low**
+ * @severity Low
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({

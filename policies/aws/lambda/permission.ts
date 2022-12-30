@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that lambda function permissions have a source arn specified.
  *
- * @severity **Critical**
+ * @severity Critical
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
 export const configureSourceArn: ResourceValidationPolicy = policiesManagement.registerPolicy({

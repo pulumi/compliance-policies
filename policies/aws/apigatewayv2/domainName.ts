@@ -22,7 +22,7 @@ import { policiesManagement } from "../../utils";
 /**
  * Checks that any ApiGatewayV2 Domain Name Configuration is enabled.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
 export const enableDomainNameConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
@@ -45,7 +45,7 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policiesM
 /**
  * Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.
  *
- * @severity **High**
+ * @severity High
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
 export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({

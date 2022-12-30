@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../utils";
 import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
@@ -77,6 +77,10 @@ describe("awsnative.s3.Bucket.disallowPublicRead", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -121,6 +125,10 @@ describe("awsnative.s3.Bucket.enableReplicationConfiguration", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -169,6 +177,10 @@ describe("awsnative.s3.Bucket.configureReplicationConfiguration", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -207,6 +219,10 @@ describe("awsnative.s3.Bucket.enableServerSideEncryption", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -249,6 +265,10 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionKMS", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -289,6 +309,10 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", 
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -327,6 +351,10 @@ describe("awsnative.s3.Bucket.enableServerSideEncryptionBucketKey", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {

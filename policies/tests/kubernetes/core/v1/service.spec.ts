@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../../utils";
 import * as kubernetes from "@pulumi/kubernetes";
 
 import * as policies from "../../../../index";
@@ -74,13 +74,17 @@ describe("kubernetes.core.v1.Service.configureRecommendedLabel", function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#2", async function() {
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata = undefined;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should use the recommended labels." });
     });
 
-    it("#3", async function() {
+    it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata.labels = {"department": "finances"};
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should have the recommended labels." });

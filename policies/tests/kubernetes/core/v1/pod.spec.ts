@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../../utils";
 import * as kubernetes from "@pulumi/kubernetes";
 
 import * as policies from "../../../../index";
@@ -66,7 +66,11 @@ describe("kubernetes.core.v1.Pod.disallowPod", function() {
         assertResourcePolicyDescription(policy);
     });
 
-    it("#2", async function() {
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
+    it("#1", async function() {
         const args = getResourceValidationArgs();
         args.props.encrypted = false;
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job." });

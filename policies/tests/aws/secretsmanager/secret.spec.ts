@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -60,6 +60,10 @@ describe("aws.secretsmanager.Secret.missingDescription", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -104,6 +108,10 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {

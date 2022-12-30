@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -66,6 +66,10 @@ describe("aws.rds.Instance.enableBackupRetention", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -104,6 +108,10 @@ describe("aws.rds.Instance.configureBackupRetention", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -146,6 +154,10 @@ describe("aws.rds.Instance.disallowClassicResource", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -184,6 +196,10 @@ describe("aws.rds.Instance.enablePerformanceInsights", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -226,6 +242,10 @@ describe("aws.rds.Instance.disallowUnencryptedPerformanceInsights", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -264,6 +284,10 @@ describe("aws.rds.Instance.disallowPublicAccess", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -306,6 +330,10 @@ describe("aws.rds.Instance.disallowUnencryptedStorage", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -344,6 +372,10 @@ describe("aws.rds.Instance.configureCustomerManagedKey", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {

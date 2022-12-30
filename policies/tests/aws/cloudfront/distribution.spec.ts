@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../utils";
 import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
@@ -142,6 +142,10 @@ describe("aws.cloudfront.Distribution.enableAccessLogging", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -180,6 +184,10 @@ describe("aws.cloudfront.Distribution.configureAccessLogging", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -222,6 +230,10 @@ describe("aws.cloudfront.Distribution.configureWaf", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -260,6 +272,10 @@ describe("aws.cloudfront.Distribution.disallowUnencryptedTraffic", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -309,6 +325,10 @@ describe("aws.cloudfront.Distribution.configureSecureTLS", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -349,6 +369,10 @@ describe("aws.cloudfront.Distribution.enableTLSToOrigin", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -387,6 +411,10 @@ describe("aws.cloudfront.Distribution.configureSecureTLSToOrgin", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {

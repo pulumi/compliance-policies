@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription } from "../../utils";
+import { assertHasResourceViolation, assertNoResourceViolations, assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, createResourceValidationArgs, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality } from "../../utils";
 import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
@@ -67,6 +67,10 @@ describe("awsnative.ecr.Repository.configureImageScan", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -105,6 +109,10 @@ describe("awsnative.ecr.Repository.enableImageScan", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {
@@ -147,6 +155,10 @@ describe("awsnative.ecr.Repository.disallowMutableImage", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -187,6 +199,10 @@ describe("awsnative.ecr.Repository.disallowUnencryptedRepository", function() {
         assertResourcePolicyDescription(policy);
     });
 
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -225,6 +241,10 @@ describe("awsnative.ecr.Repository.configureCustomerManagedKey", function() {
 
     it("description", async function() {
         assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title);
     });
 
     it("#1", async function() {

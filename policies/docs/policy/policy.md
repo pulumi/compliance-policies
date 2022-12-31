@@ -29,18 +29,18 @@ A new policy should be stored in the correct location. For example, if a policy 
 
 In short, this can be summarized as follows:
 
-* All folders are lower case. `aws`, `ec2`, or `kubernetes`, `apps`, `v1`
-* The policy is stored in a file named (**⚠️ camel case**) after the resource name
-  * `instance.ts` for `aws.ec2.Instance`
-  * `launchConfiguration.ts` for `aws.ec2.LaunchConfiguration`
-  * `replicaSet.ts` for `kubernetes.apps.v1.ReplicaSet`
+* All folders have the same letter case as their respective resource provider. `aws`, `ec2`, or `kubernetes`, `apps`, `v1`
+* The policy is also nameed according to the resource name.
+  * `Instance.ts` for `aws.ec2.Instance`
+  * `LaunchConfiguration.ts` for `aws.ec2.LaunchConfiguration`
+  * `ReplicaSet.ts` for `kubernetes.apps.v1.ReplicaSet`
 
 ## File header
 
 The file header should always include Pulumi's copyright and code license.
 
 ```ts
-// Copyright 2016-2022, Pulumi Corporation.
+// Copyright 2016-2023, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ Enable => Boolean
 
 * The exported variable is camel case and matching the policy `name` without the resource path (`aws-ec2-instance-disallow-public-ip` => `disallowPublicIP`)
 * The policy name must be unique, so
-  * We use the following scheme `vendor`-`path`-`to`-`resource`-`single`-`worded`-`polic-`-`name`
+  * We use the following scheme `vendor`-`path`-`to`-`resource`-`single`-`worded`-`policy`-`name`
   * All words are lower-case
 * The Policy name should be singular as the policy operates in a single resource at a time
 

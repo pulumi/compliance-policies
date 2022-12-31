@@ -1,8 +1,6 @@
 # Project structure
 
-The project is structured to follow the same way providers are organized. This structure is also found in the way how policies are grouped and organized throughout the entire policy code base. The goal is to easily find find policies as Pulumi users are already used to finding resources within their providers.
-
-Unless stated ortherwise, all folders should be `lower case`.
+The project is structured to follow the same way providers are organized. This structure is also found in the way how policies are grouped and organized throughout the entire policy code base. The goal is to easily find policies as Pulumi users are already used to finding resources within their providers.
 
 ```
 ├── bin                                         <- transpiled TypeScript files into JavaScript
@@ -11,11 +9,11 @@ Unless stated ortherwise, all folders should be `lower case`.
 │   ├── index.ts                                <- 📄 exported service policies
 │   ├── apigatewayv2
 │   │   ├── index.ts                            <- 📄 exported resource policies for the current service
-│   │   ├── domainName.ts                       <- 📄 exported policies for the 'DomainName' resource
+│   │   ├── DomainName.ts                       <- 📄 exported policies for the 'DomainName' resource
 │   │   └── ....ts
 │   ├── cloudfront                              <- 🌿 policies for the CloudFront service
 │   │   ├── index.ts                            <- 📄 exported resource policies
-│   │   └── distribution.ts                     <- 📄 exported policies for the 'Distribution' resource
+│   │   └── Distribution.ts                     <- 📄 exported policies for the 'Distribution' resource
 │   ├── ...
 │   ·   ├── index.ts
 │   ·   └── ....ts
@@ -25,7 +23,7 @@ Unless stated ortherwise, all folders should be `lower case`.
 │   ├── index.ts
 │   ├── cloudfront                              <- 🌿 policies for the CloudFront service
 │   │   ├── index.ts
-│   │   └── distribution.ts
+│   │   └── Distribution.ts
 │   ├── ...
 │   ·   ├── index.ts
 │   ·   └── ....ts
@@ -37,7 +35,7 @@ Unless stated ortherwise, all folders should be `lower case`.
 │   │   ├── index.ts                            <- 📄 exported api version policies
 │   │   └── v1
 │   │       ├── index.ts
-│   │       ├── deployment.ts
+│   │       ├── Deployment.ts
 │   │       └── ....ts
 │   ├── core
 │   │   ├── index.ts
@@ -51,10 +49,10 @@ Unless stated ortherwise, all folders should be `lower case`.
 │   ├── aws                                     <- 🧪 unit tests for the 📦 AWS Classic provider
 │   │   ├── enums.ts                            <- 🔨 helpful 'enums' so unit tests stay clean from hardcoded values
 │   │   ├── apigatewayv2
-│   │   │   ├── domainName.spec.ts              <- ✔️ unit tests for the 'DomainName' resource type
-│   │   │   └── stage.spec.ts                   <- ✔️ unit tests for the 'Stage' resource type
+│   │   │   ├── DomainName.spec.ts              <- ✔️ unit tests for the 'DomainName' resource type
+│   │   │   └── Stage.spec.ts                   <- ✔️ unit tests for the 'Stage' resource type
 │   │   ├── cloudfront                          <- 🧪 unit tests for the 🌿 CloudFront service
-│   │   │   └── distribution.spec.ts            <- ✔️ unit tests for the 'Distribution' resource type
+│   │   │   └── Distribution.spec.ts            <- ✔️ unit tests for the 'Distribution' resource type
 │   │   ├── ...
 │   │   ·   └── ....spec.ts
 │   │   ·
@@ -63,7 +61,7 @@ Unless stated ortherwise, all folders should be `lower case`.
 │   ├── awsnative                               <- 🧪 unit tests for the 📦 AWS Native provider
 │   │   ├── enums.ts                            <- 🔨 helpful 'enums' so unit tests stay clean from hardcoded values
 │   │   ├── cloudfront                          <- 🧪 unit tests for the 🌿 CloudFront service
-│   │   │   └── distribution.spec.ts            <- ✔️ unit tests for the 'Distribution' resource type
+│   │   │   └── Distribution.spec.ts            <- ✔️ unit tests for the 'Distribution' resource type
 │   │   ├── ...
 │   │   │   └── ....spec.ts
 ·   ·   ·

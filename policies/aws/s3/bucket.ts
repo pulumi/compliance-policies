@@ -129,7 +129,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
-export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureServerSideEncryptionKms: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-s3-bucket-configure-server-side-encryption-kms",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.",

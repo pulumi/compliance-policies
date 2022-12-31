@@ -25,7 +25,7 @@ import { policiesManagement, valToBoolean } from "../../utils";
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
@@ -48,15 +48,15 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
 });
 
 /**
- * Checks that EC2 Launch Templates do not have unencrypted volumes.
+ * Checks that EC2 Launch Templates do not have unencrypted block device.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-launchtemplate-disallow-unencrypted-volume",
-        description: "Checks that EC2 Launch Templates do not have unencrypted volumes.",
+        name: "aws-ec2-launchtemplate-disallow-unencrypted-block-device",
+        description: "Checks that EC2 Launch Templates do not have unencrypted block device.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
             if (lt.blockDeviceMappings) {

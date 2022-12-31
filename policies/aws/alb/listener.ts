@@ -48,7 +48,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
  */
-export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTls: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-alb-listener-configure-secure-tls",
         description: "Checks that ALB Load Balancers uses secure/modern TLS encryption.",

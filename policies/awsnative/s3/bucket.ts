@@ -125,7 +125,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
-export const configureServerSideEncryptionKMS: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureServerSideEncryptionKms: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-configure-server-side-encryption-kms",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.",
@@ -154,7 +154,7 @@ export const configureServerSideEncryptionKMS: ResourceValidationPolicy = polici
  */
 export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-s3-bucket-configure-server-configure-side-encryption-customer-managed-key",
+        name: "awsnative-s3-bucket-configure-server-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {

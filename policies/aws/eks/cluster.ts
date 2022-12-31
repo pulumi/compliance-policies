@@ -50,7 +50,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policiesM
  * @severity Critical
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
-export const disallowAPIEndpointPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",

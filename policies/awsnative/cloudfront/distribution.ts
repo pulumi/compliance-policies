@@ -122,7 +122,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
-export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTls: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
@@ -145,7 +145,7 @@ export const configureSecureTLS: ResourceValidationPolicy = policiesManagement.r
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const enableTLSToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableTlsToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
@@ -170,7 +170,7 @@ export const enableTLSToOrigin: ResourceValidationPolicy = policiesManagement.re
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const configureSecureTLSToOrgin: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTlsToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",

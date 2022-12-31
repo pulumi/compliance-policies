@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const configureSourceArn: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-lambda-permission-configure-source-arn-permission",
+        name: "aws-lambda-permission-configure-source-arn",
         description: "Checks that lambda function permissions have a source arn specified.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.lambda.Permission, (f, args, reportViolation) => {

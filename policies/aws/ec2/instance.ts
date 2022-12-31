@@ -24,7 +24,7 @@ import { policiesManagement } from "../../utils";
  *
  * @severity High
  */
-export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-public-ip",
         description: "Checks that EC2 instances do not have a public IP address.",
@@ -50,7 +50,7 @@ export const disallowPublicIP: ResourceValidationPolicy = policiesManagement.reg
  */
 export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-instance-disallow-unencrypted-root-volume",
+        name: "aws-ec2-instance-disallow-unencrypted-root-block-device",
         description: "Checks that EC2 instances does not have unencrypted root volumes.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
@@ -66,15 +66,15 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
 });
 
 /**
- * Checks that EC2 instances do not have unencrypted volumes.
+ * Checks that EC2 instances do not have unencrypted block devices.
  *
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ec2-instance-disallow-unencrypted-volumes",
-        description: "Checks that EC2 instances do not have unencrypted volumes.",
+        name: "aws-ec2-instance-disallow-unencrypted-block-device",
+        description: "Checks that EC2 instances do not have unencrypted block devices.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
             instance.ebsBlockDevices?.forEach((device) => {

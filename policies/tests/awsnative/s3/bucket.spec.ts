@@ -237,8 +237,8 @@ describe("awsnative.s3.Bucket.enableServerSideEncryption", function() {
     });
 });
 
-describe("awsnative.s3.Bucket.configureServerSideEncryptionKMS", function() {
-    const policy = policies.awsnative.s3.Bucket.configureServerSideEncryptionKMS;
+describe("awsnative.s3.Bucket.configureServerSideEncryptionKms", function() {
+    const policy = policies.awsnative.s3.Bucket.configureServerSideEncryptionKms;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-s3-bucket-configure-server-side-encryption-kms");
@@ -285,7 +285,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", 
     const policy = policies.awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-s3-bucket-configure-server-configure-side-encryption-customer-managed-key");
+        assertResourcePolicyName(policy, "awsnative-s3-bucket-configure-server-side-encryption-customer-managed-key");
     });
 
     it("registration", async function() {

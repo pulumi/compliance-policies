@@ -50,8 +50,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.ec2.LaunchConfiguration.disallowPublicIP", function() {
-    const policy = policies.aws.ec2.LaunchConfiguration.disallowPublicIP;
+describe("aws.ec2.LaunchConfiguration.disallowPublicIp", function() {
+    const policy = policies.aws.ec2.LaunchConfiguration.disallowPublicIp;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-public-ip");
@@ -98,7 +98,7 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", funct
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-root-volume");
+        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-root-block-device");
     });
 
     it("registration", async function() {
@@ -148,7 +148,7 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice", function(
     const policy = policies.aws.ec2.LaunchConfiguration.disallowUnencryptedBlockDevice;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-volumes");
+        assertResourcePolicyName(policy, "aws-ec2-launchconfiguration-disallow-unencrypted-block-device");
     });
 
     it("registration", async function() {

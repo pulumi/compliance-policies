@@ -89,8 +89,8 @@ describe("aws.eks.Cluster.enableClusterEncryptionConfig", function() {
     });
 });
 
-describe("aws.eks.Cluster.disallowAPIEndpointPublicAccess", function() {
-    const policy = policies.aws.eks.Cluster.disallowAPIEndpointPublicAccess;
+describe("aws.eks.Cluster.disallowApiEndpointPublicAccess", function() {
+    const policy = policies.aws.eks.Cluster.disallowApiEndpointPublicAccess;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-eks-cluster-disallow-api-endpoint-public-access");

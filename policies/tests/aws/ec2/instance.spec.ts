@@ -47,8 +47,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.ec2.Instance.disallowPublicIP", function() {
-    const policy = policies.aws.ec2.Instance.disallowPublicIP;
+describe("aws.ec2.Instance.disallowPublicIp", function() {
+    const policy = policies.aws.ec2.Instance.disallowPublicIp;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-instance-disallow-public-ip");
@@ -95,7 +95,7 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", function() {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedRootBlockDevice;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-root-volume");
+        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-root-block-device");
     });
 
     it("registration", async function() {
@@ -145,7 +145,7 @@ describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", function() {
     const policy = policies.aws.ec2.Instance.disallowUnencryptedBlockDevice;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-volumes");
+        assertResourcePolicyName(policy, "aws-ec2-instance-disallow-unencrypted-block-device");
     });
 
     it("registration", async function() {

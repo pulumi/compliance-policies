@@ -44,8 +44,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.ec2.LaunchTemplate.disallowPublicIP", function() {
-    const policy = policies.aws.ec2.LaunchTemplate.disallowPublicIP;
+describe("aws.ec2.LaunchTemplate.disallowPublicIp", function() {
+    const policy = policies.aws.ec2.LaunchTemplate.disallowPublicIp;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-ec2-launchtemplate-disallow-public-ip");
@@ -92,7 +92,7 @@ describe("aws.ec2.LaunchTemplate.disallowUnencryptedBlockDevice", function() {
     const policy = policies.aws.ec2.LaunchTemplate.disallowUnencryptedBlockDevice;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-launchtemplate-disallow-unencrypted-volume");
+        assertResourcePolicyName(policy, "aws-ec2-launchtemplate-disallow-unencrypted-block-device");
     });
 
     it("registration", async function() {

@@ -38,7 +38,7 @@ describe("aws.lambda.Permission.configureSourceArn", function() {
     const policy = policies.aws.lambda.Permission.configureSourceArn;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-lambda-permission-configure-source-arn-permission");
+        assertResourcePolicyName(policy, "aws-lambda-permission-configure-source-arn");
     });
 
     it("registration", async function() {

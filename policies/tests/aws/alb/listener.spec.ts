@@ -88,8 +88,8 @@ describe("aws.alb.Listener.disallowUnencryptedTraffic", function() {
     });
 });
 
-describe("aws.alb.Listener.configureSecureTLS", function() {
-    const policy = policies.aws.alb.Listener.configureSecureTLS;
+describe("aws.alb.Listener.configureSecureTls", function() {
+    const policy = policies.aws.alb.Listener.configureSecureTls;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-alb-listener-configure-secure-tls");

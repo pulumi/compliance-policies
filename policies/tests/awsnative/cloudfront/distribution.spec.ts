@@ -299,8 +299,8 @@ describe("awsnative.cloudfront.Distribution.disallowUnencryptedTraffic", functio
 
 });
 
-describe("awsnative.cloudfront.Distribution.configureSecureTLS", function() {
-    const policy = policies.awsnative.cloudfront.Distribution.configureSecureTLS;
+describe("awsnative.cloudfront.Distribution.configureSecureTls", function() {
+    const policy = policies.awsnative.cloudfront.Distribution.configureSecureTls;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-cloudfront-distribution-configure-secure-tls");
@@ -343,8 +343,8 @@ describe("awsnative.cloudfront.Distribution.configureSecureTLS", function() {
     });
 });
 
-describe("awsnative.cloudfront.Distribution.enableTLSToOrigin", function() {
-    const policy = policies.awsnative.cloudfront.Distribution.enableTLSToOrigin;
+describe("awsnative.cloudfront.Distribution.enableTlsToOrigin", function() {
+    const policy = policies.awsnative.cloudfront.Distribution.enableTlsToOrigin;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-cloudfront-distribution-enable-tls-to-origin");
@@ -387,8 +387,8 @@ describe("awsnative.cloudfront.Distribution.enableTLSToOrigin", function() {
     });
 });
 
-describe("awsnative.cloudfront.Distribution.configureSecureTLSToOrgin", function() {
-    const policy = policies.awsnative.cloudfront.Distribution.configureSecureTLSToOrgin;
+describe("awsnative.cloudfront.Distribution.configureSecureTlsToOrigin", function() {
+    const policy = policies.awsnative.cloudfront.Distribution.configureSecureTlsToOrigin;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "awsnative-cloudfront-distribution-configure-secure-tls-to-origin");

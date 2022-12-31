@@ -237,8 +237,8 @@ describe("aws.s3.Bucket.enableServerSideEncryption", function() {
     });
 });
 
-describe("aws.s3.Bucket.configureServerSideEncryptionKMS", function() {
-    const policy = policies.aws.s3.Bucket.configureServerSideEncryptionKMS;
+describe("aws.s3.Bucket.configureServerSideEncryptionKms", function() {
+    const policy = policies.aws.s3.Bucket.configureServerSideEncryptionKms;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-s3-bucket-configure-server-side-encryption-kms");

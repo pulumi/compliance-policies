@@ -717,10 +717,24 @@ function checkPolicyVerbDetails(policyDetails: PolicyDetails): PolicyDetails {
     const policyName = policyDetails.name.replace(`${basePolicyName}-`, "");
     const splitPolicyName = policyName.split("-");
 
-    // console.log(splitPolicyName);
-
     if (!allowedPolicyVerbs.includes(splitPolicyName[0])) {
         policyDetails.error = `The policy verb '${splitPolicyName[0]}' is not allowed.`;
+        return policyDetails;
+    }
+
+    /*
+     * intentionally skip the policy verb as it's lower case in the policy
+     * variable name.
+     */
+    const splitPolicyWords = [...splitPolicyName];
+    for (let wordIndex = 1; wordIndex < splitPolicyWords.length; wordIndex++) {
+        splitPolicyWords[wordIndex] = capitalize(splitPolicyWords[wordIndex]);
+    }
+
+    const computedPolicyVarName = splitPolicyWords.join("");
+
+    if (computedPolicyVarName !== policyDetails.sourceFileDetails.policyVarName) {
+        policyDetails.error = `The policy variable name ${policyDetails.sourceFileDetails.policyVarName} doesn't match with the expected variable name ${computedPolicyVarName}.`;
         return policyDetails;
     }
 
@@ -812,6 +826,21 @@ function getPolicyComment(node: parserTypes.ExportNamedDeclaration): PolicyDetai
 
     policyCommentDetails.comment = node.leadingComments[jsDocCommentBlockIndex].value;
     return policyCommentDetails;
+}
+
+/**
+ * This function converts the 1st character to a upper case character.
+ *
+ * @param str The input string.
+ * @returns A capitalized string.
+ */
+function capitalize(str: string) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (match, index) {
+        if (+match === 0){
+            return ""; // or if (/\s+/.test(match)) for white spaces
+        }
+        return index === 0 ? match.toUpperCase() : match.toLowerCase();
+    });
 }
 
 /**

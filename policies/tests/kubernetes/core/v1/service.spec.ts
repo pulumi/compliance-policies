@@ -46,11 +46,11 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("kubernetes.core.v1.Service.configureRecommendedLabel", function() {
-    const policy = policies.kubernetes.core.v1.Service.configureRecommendedLabel;
+describe("kubernetes.core.v1.Service.configureRecommendedLabels", function() {
+    const policy = policies.kubernetes.core.v1.Service.configureRecommendedLabels;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "kubernetes-core-v1-service-configure-recommended-label");
+        assertResourcePolicyName(policy, "kubernetes-core-v1-service-configure-recommended-labels");
     });
 
     it("registration", async function() {

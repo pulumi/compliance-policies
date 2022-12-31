@@ -26,7 +26,7 @@ import { policiesManagement } from "../../../utils";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabel: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-configure-recommended-label",
         description: "Checks that Kubernetes Services use the recommended labels.",

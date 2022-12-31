@@ -57,6 +57,10 @@ export enum kms {
     keyArn = "arn:aws:kms:us-west-2:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab",
 }
 
+export enum lambda {
+    functionArn = "arn:aws:lambda:us-west-2:123456789012:function:my-lambda-function",
+}
+
 export enum rds {
     dbClusterIdentifier = "mydbcluster",
     dBInstanceClass = "db.m4.large",

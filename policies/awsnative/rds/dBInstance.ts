@@ -161,7 +161,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 });
 
 /**
- * Checks that RDS DB Instance storage uses a customer-manager KMS key.
+ * Checks that RDS DB Instance storage uses a customer-managed KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
@@ -169,7 +169,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-configure-customer-managed-key",
-        description: "Checks that RDS DB Instance storage uses a customer-manager KMS key.",
+        description: "Checks that RDS DB Instance storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
             if (instance.storageEncrypted && !instance.kmsKeyId) {

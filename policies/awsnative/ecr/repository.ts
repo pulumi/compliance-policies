@@ -113,7 +113,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesM
 });
 
 /**
- * Checks that ECR repositories use a customer-manager KMS key.
+ * Checks that ECR repositories use a customer-managed KMS key.
  *
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
@@ -121,7 +121,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesM
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-configure-customer-managed-key",
-        description: "Checks that ECR repositories use a customer-manager KMS key.",
+        description: "Checks that ECR repositories use a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfiguration) {

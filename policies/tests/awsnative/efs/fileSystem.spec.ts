@@ -168,7 +168,7 @@ describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", func
     const policy = policies.awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-kms-key-disallow-bypass-policy-lockout-safety-check");
+        assertResourcePolicyName(policy, "awsnative-efs-filesystem-disallow-bypass-policy-lockout-safety-check");
     });
 
     it("registration", async function() {

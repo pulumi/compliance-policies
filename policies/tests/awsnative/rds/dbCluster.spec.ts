@@ -129,7 +129,7 @@ describe("awsnative.rds.DBCluster.disallowUnencryptedStorage", function() {
     const policy = policies.awsnative.rds.DBCluster.disallowUnencryptedStorage;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-storage-disallow-unencrypted-storage");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-unencrypted-storage");
     });
 
     it("registration", async function() {
@@ -173,7 +173,7 @@ describe("awsnative.rds.DBCluster.configureCustomerManagedKey", function() {
     const policy = policies.awsnative.rds.DBCluster.configureCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-storage-encryption-with-customer-managed-key");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-customer-managed-key");
     });
 
     it("registration", async function() {

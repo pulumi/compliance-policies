@@ -129,7 +129,7 @@ describe("aws.rds.Cluster.disallowUnencryptedStorage", function() {
     const policy = policies.aws.rds.Cluster.disallowUnencryptedStorage;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-rds-cluster-storage-disallow-unencrypted-storage");
+        assertResourcePolicyName(policy, "aws-rds-cluster-disallow-unencrypted-storage");
     });
 
     it("registration", async function() {
@@ -173,7 +173,7 @@ describe("aws.rds.Cluster.configureCustomerManagedKey", function() {
     const policy = policies.aws.rds.Cluster.configureCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-rds-cluster-storage-encryption-with-customer-managed-key");
+        assertResourcePolicyName(policy, "aws-rds-cluster-configure-customer-managed-key");
     });
 
     it("registration", async function() {

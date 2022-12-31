@@ -36,7 +36,7 @@ describe("aws.secretsmanager.Secret.missingDescription", function() {
     const policy = policies.aws.secretsmanager.Secret.missingDescription;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-secrets-manager-secret-missing-description");
+        assertResourcePolicyName(policy, "aws-secretsmanager-secret-missing-description");
     });
 
     it("registration", async function() {
@@ -86,7 +86,7 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", function() {
     const policy = policies.aws.secretsmanager.Secret.configureCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-secrets-manager-secret-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "aws-secretsmanager-secret-configure-customer-managed-key");
     });
 
     it("registration", async function() {

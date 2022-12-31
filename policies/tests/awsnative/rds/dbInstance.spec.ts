@@ -262,7 +262,7 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedStorage", function() {
     const policy = policies.awsnative.rds.DBInstance.disallowUnencryptedStorage;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-storage");
     });
 
     it("registration", async function() {

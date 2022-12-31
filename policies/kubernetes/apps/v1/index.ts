@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as Deployment from "./deployment";
-export * as ReplicaSet from "./replicaSet";
+export * as Deployment from "./Deployment";
+export * as ReplicaSet from "./ReplicaSet";

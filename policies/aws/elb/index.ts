@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as LoadBalancer from "./loadBalancer";
+export * as LoadBalancer from "./LoadBalancer";

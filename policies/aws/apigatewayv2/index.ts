@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as DomainName from "./domainName";
-export * as Stage from "./stage";
+export * as DomainName from "./DomainName";
+export * as Stage from "./Stage";

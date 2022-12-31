@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as ConnectorProfile from "./connectorProfile";
-export * as Flow from "./flow";
+export * as ConnectorProfile from "./ConnectorProfile";
+export * as Flow from "./Flow";

@@ -76,7 +76,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policiesManage
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-storage-disallow-unencrypted-storage",
+        name: "awsnative-rds-dbcluster-disallow-unencrypted-storage",
         description: "Checks that RDS DB Cluster storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
@@ -99,7 +99,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesMana
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-storage-encryption-with-customer-managed-key",
+        name: "awsnative-rds-dbcluster-configure-customer-managed-key",
         description: "Checks that RDS DB Cluster storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {

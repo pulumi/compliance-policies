@@ -27,7 +27,7 @@ import { policiesManagement } from "../../utils";
  */
 export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-secrets-manager-secret-missing-description",
+        name: "aws-secretsmanager-secret-missing-description",
         description: "Checks that Secrets Manager Secrets have a description.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.secretsmanager.Secret, (secret, args, reportViolation) => {
@@ -54,7 +54,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-secrets-manager-secret-configure-customer-managed-key",
+        name: "aws-secretsmanager-secret-configure-customer-managed-key",
         description: "Check that Secrets Manager Secrets use a customer-manager KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.secretsmanager.Secret, (secret, args, reportViolation) => {

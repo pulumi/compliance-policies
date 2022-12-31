@@ -145,7 +145,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement
  */
 export const disallowUnencryptedStorage: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-storage-disallow-unencrypted-storage",
+        name: "awsnative-rds-dbinstance-disallow-unencrypted-storage",
         description: "Checks that RDS DB Instance storage is encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {

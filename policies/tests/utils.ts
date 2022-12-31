@@ -502,12 +502,20 @@ interface SourceFileDetails {
 }
 
 interface PolicyDetails {
+    sourceFileDetails?: SourceFileDetails;
     name?: string;
     description?: string;
     severity?: string;
     comment?: string;
     error?: string;
 }
+
+const allowedPolicyVerbs = [
+    "missing",
+    "disallow",
+    "enable",
+    "configure",
+];
 
 /**
  * This function assert the code quality of a policy source file.
@@ -546,6 +554,7 @@ export function assertCodeQuality(suiteName?: string) {
                  */
                 continue;
             }
+            policyDetails.sourceFileDetails = sourceFileDetails;
             break;
         }
     }
@@ -563,6 +572,10 @@ export function assertCodeQuality(suiteName?: string) {
 
     if (!policyDetails.comment.toLowerCase().includes(`@severity ${policyDetails.severity}`)) {
         assert.fail("The policy's severity isn't matching the one in the jsDoc comment.");
+    }
+    checkPolicyVerbDetails(policyDetails);
+    if (policyDetails.error) {
+        assert.fail(policyDetails.error);
     }
 }
 
@@ -681,8 +694,35 @@ function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarNam
 
     }
 
+    return policyDetails;
+}
 
+/**
+ * This function checks for the policy verb (missing, disallow...) and the consistency of the policy variable name.
+ *
+ * @param policyDetails The `policyDetails` to process. The `policyDetails` should have `.sourceFileDetails` set.
+ * @returns An updated `policyDetails`.
+ */
+function checkPolicyVerbDetails(policyDetails: PolicyDetails): PolicyDetails {
 
+    if (!policyDetails.sourceFileDetails || !policyDetails.sourceFileDetails.suiteName || !policyDetails.name) {
+        policyDetails.error = "Missing or incomplete policy details. Unable to process.";
+        return policyDetails;
+    }
+
+    const splitResourceSuiteName = policyDetails.sourceFileDetails.suiteName.split(".");
+    splitResourceSuiteName.pop();
+
+    const basePolicyName = splitResourceSuiteName.join("-").toLowerCase();
+    const policyName = policyDetails.name.replace(`${basePolicyName}-`, "");
+    const splitPolicyName = policyName.split("-");
+
+    // console.log(splitPolicyName);
+
+    if (!allowedPolicyVerbs.includes(splitPolicyName[0])) {
+        policyDetails.error = `The policy verb '${splitPolicyName[0]}' is not allowed.`;
+        return policyDetails;
+    }
 
     return policyDetails;
 }

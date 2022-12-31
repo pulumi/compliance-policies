@@ -608,7 +608,6 @@ function parseSourceFile(suiteName?: string): SourceFileDetails {
         return sourceFileDetails;
     }
 
-    splitResourceSuiteName[splitResourceSuiteName.length-1] = camelize(splitResourceSuiteName[splitResourceSuiteName.length-1]);
     sourceFileDetails.sourceFile = `${policiesBasePath}/${splitResourceSuiteName.join("/")}.ts`;
 
     sourceFileDetails.parserResults = parser.parse(fs.readFileSync(sourceFileDetails.sourceFile, "utf-8"), {
@@ -843,20 +842,6 @@ function capitalize(str: string) {
     });
 }
 
-/**
- * This function converts a string into a camelCase string.
- *
- * @param str The input string.
- * @returns A camelCase string.
- */
-function camelize(str: string) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (match, index) {
-        if (+match === 0){
-            return ""; // or if (/\s+/.test(match)) for white spaces
-        }
-        return index === 0 ? match.toLowerCase() : match.toUpperCase();
-    });
-}
 /**
  * Determine whether the given `input` is a string in lowercase.
  */

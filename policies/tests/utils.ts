@@ -515,6 +515,7 @@ const allowedPolicyVerbs = [
     "disallow",
     "enable",
     "configure",
+    "enforce",
 ];
 
 /**

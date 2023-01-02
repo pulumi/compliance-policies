@@ -294,10 +294,10 @@
     shell-quote "^1.6.1"
     tmp "^0.0.33"
 
-"@pulumi/aws@^5.0.0":
-  version "5.21.1"
-  resolved "https://registry.npmjs.org/@pulumi/aws/-/aws-5.21.1.tgz"
-  integrity sha512-A4ygarp9zaEjPEAhQF0R+vgay254D3Jxh1u01+KEQc5nphaPASSwUUdl721CrimHYFVuMc5BRrntGctIpDpltA==
+"@pulumi/aws@5":
+  version "5.25.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/aws/-/aws-5.25.0.tgz#8637deafb09e0b3accb2f01660b71ba49594d099"
+  integrity sha512-I219gKTWjUAEBVcGG8v2OTYTV3kKFIZmVTh6huX4Px4zQ9Nipujj98lXw9eQWJ1wEqpYJXasyz18/bufn2Y5Iw==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
     aws-sdk "^2.0.0"

@@ -65,7 +65,7 @@ describe("aws.alb.LoadBalancer.enableAccessLogging", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -109,7 +109,7 @@ describe("aws.alb.LoadBalancer.configureAccessLogging", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

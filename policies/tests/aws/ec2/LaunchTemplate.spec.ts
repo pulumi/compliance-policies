@@ -73,7 +73,7 @@ describe("aws.ec2.LaunchTemplate.disallowPublicIp", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -117,7 +117,7 @@ describe("aws.ec2.LaunchTemplate.disallowUnencryptedBlockDevice", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -168,7 +168,7 @@ describe("aws.ec2.LaunchTemplate.configureCustomerManagedKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

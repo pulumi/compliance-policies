@@ -75,7 +75,7 @@ describe("aws.ec2.SecurityGroup.missingDescription", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -119,7 +119,7 @@ describe("aws.ec2.SecurityGroup.missingIngressRuleDescription", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -163,7 +163,7 @@ describe("aws.ec2.SecurityGroup.missingEgressRuleDescription", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -207,7 +207,7 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -259,7 +259,7 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

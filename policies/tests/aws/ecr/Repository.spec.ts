@@ -68,7 +68,7 @@ describe("aws.ecr.Repository.configureImageScan", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -113,7 +113,7 @@ describe("aws.ecr.Repository.enableImageScan", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -157,7 +157,7 @@ describe("aws.ecr.Repository.disallowMutableImage", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -201,7 +201,7 @@ describe("aws.ecr.Repository.disallowUnencryptedRepository", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -245,7 +245,7 @@ describe("aws.ecr.Repository.configureCustomerManagedKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

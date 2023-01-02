@@ -34,7 +34,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("aws.athena.Database.missingDescription", function() {
+describe("aws.athena.NamedQuery.missingDescription", function() {
     const policy = policies.aws.athena.NamedQuery.missingDescription;
 
     it("name", async function() {
@@ -63,7 +63,7 @@ describe("aws.athena.Database.missingDescription", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

@@ -63,7 +63,7 @@ describe("awsnative.ec2.Volume.disallowUnencryptedVolume", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -107,7 +107,7 @@ describe("awsnative.ec2.Volume.configureCustomerManagedKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

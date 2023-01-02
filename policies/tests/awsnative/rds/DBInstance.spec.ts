@@ -67,7 +67,7 @@ describe("awsnative.rds.DBInstance.enableBackupRetention", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -111,7 +111,7 @@ describe("awsnative.rds.DBInstance.configureBackupRetention", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -155,7 +155,7 @@ describe("awsnative.rds.DBInstance.enablePerformanceInsights", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -199,7 +199,7 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights", func
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -243,7 +243,7 @@ describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -287,7 +287,7 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedStorage", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -331,7 +331,7 @@ describe("awsnative.rds.DBInstance.configureCustomerManagedKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

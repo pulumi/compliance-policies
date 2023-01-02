@@ -76,7 +76,7 @@ describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", funct
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

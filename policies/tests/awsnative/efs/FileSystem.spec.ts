@@ -61,7 +61,7 @@ describe("awsnative.efs.FileSystem.disallowUnencryptedFileSystem", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -105,7 +105,7 @@ describe("awsnative.efs.FileSystem.configureCustomerManagedKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -149,7 +149,7 @@ describe("awsnative.efs.FileSystem.disallowSingleAvailabilityZone", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -193,7 +193,7 @@ describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", func
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

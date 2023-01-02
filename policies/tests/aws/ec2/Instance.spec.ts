@@ -76,7 +76,7 @@ describe("aws.ec2.Instance.disallowPublicIp", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -120,7 +120,7 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -170,7 +170,7 @@ describe("aws.ec2.Instance.disallowUnencryptedBlockDevice", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

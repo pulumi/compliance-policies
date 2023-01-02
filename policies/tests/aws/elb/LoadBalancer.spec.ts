@@ -82,7 +82,7 @@ describe("aws.elb.LoadBalancer.disallowUnencryptedTraffic", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -126,7 +126,7 @@ describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -170,7 +170,7 @@ describe("aws.elb.LoadBalancer.configureAccessLogging", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -226,7 +226,7 @@ describe("aws.elb.LoadBalancer.enableHealthCheck", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

@@ -78,7 +78,7 @@ describe("awsnative.s3.Bucket.disallowPublicRead", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -128,7 +128,7 @@ describe("awsnative.s3.Bucket.enableReplicationConfiguration", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -178,7 +178,7 @@ describe("awsnative.s3.Bucket.configureReplicationConfiguration", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -222,7 +222,7 @@ describe("awsnative.s3.Bucket.enableServerSideEncryption", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -266,7 +266,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionKms", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -310,7 +310,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", 
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -354,7 +354,7 @@ describe("awsnative.s3.Bucket.enableServerSideEncryptionBucketKey", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

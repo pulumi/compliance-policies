@@ -43,7 +43,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
 });
 
 /**
- * Checks that Kubernetes Deployments have the recommended label.
+ * Checks that Kubernetes ReplicaSets use the recommended labels.
  *
  * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/

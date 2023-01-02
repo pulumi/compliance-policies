@@ -65,7 +65,7 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", function()
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -109,7 +109,7 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", functi
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

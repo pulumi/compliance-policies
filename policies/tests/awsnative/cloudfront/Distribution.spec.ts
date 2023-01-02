@@ -145,7 +145,7 @@ describe("awsnative.cloudfront.Distribution.enableAccessLogging", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -189,7 +189,7 @@ describe("awsnative.cloudfront.Distribution.configureAccessLogging", function() 
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -233,7 +233,7 @@ describe("awsnative.cloudfront.Distribution.configureWafAcl", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -277,7 +277,7 @@ describe("awsnative.cloudfront.Distribution.disallowUnencryptedTraffic", functio
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -328,7 +328,7 @@ describe("awsnative.cloudfront.Distribution.configureSecureTls", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -372,7 +372,7 @@ describe("awsnative.cloudfront.Distribution.enableTlsToOrigin", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -416,7 +416,7 @@ describe("awsnative.cloudfront.Distribution.configureSecureTlsToOrigin", functio
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

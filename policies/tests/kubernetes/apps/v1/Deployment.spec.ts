@@ -97,7 +97,7 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -141,7 +141,7 @@ describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() 
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

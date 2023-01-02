@@ -74,7 +74,7 @@ describe("aws.eks.Cluster.enableClusterEncryptionConfig", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -118,7 +118,7 @@ describe("aws.eks.Cluster.disallowApiEndpointPublicAccess", function() {
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

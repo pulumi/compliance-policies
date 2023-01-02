@@ -68,7 +68,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function() {
+describe("kubernetes.apps.v1.ReplicaSet.configureMinimumReplicaCount", function() {
     const policy = policies.kubernetes.apps.v1.ReplicaSet.configureMinimumReplicaCount;
 
     it("name", async function() {
@@ -97,7 +97,7 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {
@@ -112,7 +112,7 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     });
 });
 
-describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() {
+describe("kubernetes.apps.v1.ReplicaSet.configureRecommendedLabels", function() {
     const policy = policies.kubernetes.apps.v1.ReplicaSet.configureRecommendedLabels;
 
     it("name", async function() {
@@ -141,7 +141,7 @@ describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() 
     });
 
     it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title);
+        assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
     it("#1", async function() {

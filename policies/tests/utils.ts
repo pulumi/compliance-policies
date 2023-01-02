@@ -494,10 +494,29 @@ export function assertSelectionEnforcementLevel(filterPolicy: FilterPolicyArgs, 
 }
 
 interface SourceFileDetails {
+    /**
+     * Name of the current MochaJS suite.
+     */
     suiteName?: string;
+    /**
+     * Full path of the source file containing the MochaJS suite.
+     */
+    suiteFile?: string;
+    /**
+     * The computed source file path that contains the Pulumi policy code.
+     */
     sourceFile?: string;
+    /**
+     * The Pulumi policy variable name.
+     */
     policyVarName?: string;
+    /**
+     * The results of @babel/parse.
+     */
     parserResults?: parser.ParseResult<parserTypes.File>;
+    /**
+     * If set, an error message describe what went wrong.
+     */
     error?: string;
 }
 
@@ -522,9 +541,10 @@ const allowedPolicyVerbs = [
  * This function assert the code quality of a policy source file.
  *
  * @param suiteName The MochaJS suite name.
+ * @param suiteFile The MochaJS source file for the current suite. Using `__filename` is usually sufficient.
  */
-export function assertCodeQuality(suiteName?: string) {
-    const sourceFileDetails = parseSourceFile(suiteName);
+export function assertCodeQuality(suiteName?: string, suiteFile?: string) {
+    const sourceFileDetails = parseSourceFile(suiteName, suiteFile);
 
     // https://astexplorer.net/#/gist/8542f6a83839e9db21d7c27bc482e828/7a1341ec228bcd5d574324039ff7fab84244dd6f
 
@@ -586,12 +606,18 @@ export function assertCodeQuality(suiteName?: string) {
  * @param suiteName The MochaJS suite name.
  * @returns The parsed corresponding source file.
  */
-function parseSourceFile(suiteName?: string): SourceFileDetails {
+function parseSourceFile(suiteName?: string, suiteFile?: string): SourceFileDetails {
     const sourceFileDetails: SourceFileDetails = {};
     sourceFileDetails.suiteName = suiteName;
+    sourceFileDetails.suiteFile = suiteFile;
 
-    if (!sourceFileDetails.suiteName) {
+    if (!suiteName) {
         sourceFileDetails.error = "The test suite name isn't present.";
+        return sourceFileDetails;
+    }
+
+    if (!suiteFile) {
+        sourceFileDetails.error = "The test suite filename isn't present.";
         return sourceFileDetails;
     }
 
@@ -600,9 +626,15 @@ function parseSourceFile(suiteName?: string): SourceFileDetails {
      * value (which is always the same) is not computed on each test.
      */
     const policiesBasePath = path.dirname(__dirname);
-    const splitResourceSuiteName = sourceFileDetails.suiteName.split(".");
-
+    const testsBasePath = `${policiesBasePath}/tests`;
+    const splitSuite = suiteFile.replace(`${testsBasePath}/`, "").replace(".spec.ts", "").split("/");
+    const splitResourceSuiteName = suiteName.split(".");
     sourceFileDetails.policyVarName = splitResourceSuiteName.pop();
+
+    if (!compareArray(splitSuite, splitResourceSuiteName)) {
+        sourceFileDetails.error = `The test suite name '${suiteName.replace(`.${sourceFileDetails.policyVarName}`, `(.${sourceFileDetails.policyVarName})`)}' and its spec file '${suiteFile.replace(`${testsBasePath}/`, "").replace(".spec.ts", "(.spec.ts)")}' aren't consistent with each other.`;
+        return sourceFileDetails;
+    }
 
     if (!sourceFileDetails.policyVarName) {
         sourceFileDetails.error = "Unable to determine the policy variable name. Is the suite name in the correct format?";

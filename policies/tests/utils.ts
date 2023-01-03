@@ -533,6 +533,7 @@ const allowedPolicyVerbs = [
     "missing",
     "disallow",
     "enable",
+    "disable",
     "configure",
     "enforce",
 ];

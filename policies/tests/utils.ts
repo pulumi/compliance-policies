@@ -588,7 +588,7 @@ export function assertCodeQuality(suiteName?: string, suiteFile?: string) {
     }
 
     if (!policyDetails.comment?.includes(policyDetails.description!)) {
-        assert.fail("The jsDoc description isn't match the policy's description.");
+        assert.fail("The jsDoc description isn't matching the policy's description.");
     }
 
     if (!policyDetails.comment.toLowerCase().includes(`@severity ${policyDetails.severity}`)) {

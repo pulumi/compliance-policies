@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,7 +28,7 @@ import { ec2 } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.SecurityGroup, {
         description: "This is a description for aws.ec2.SecurityGroup.",
-        vpcId: ec2.vpcId,
+        vpcId: enums.ec2.vpcId,
         ingress: [{
             description: "Ingress rule #1",
             fromPort: 443,
@@ -39,8 +39,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             fromPort: 0,
             toPort: 0,
             protocol: "-1",
-            cidrBlocks: [ec2.cidrBlock],
-            ipv6CidrBlocks: [ec2.ipv6CidrBlock],
+            cidrBlocks: [enums.ec2.cidrBlock],
+            ipv6CidrBlocks: [enums.ec2.ipv6CidrBlock],
             description: "Egress rule #1",
         }],
     });
@@ -269,13 +269,13 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.ingress[0].cidrBlocks = [ec2.cidrBlock, "0.0.0.0/0"];
+        args.props.ingress[0].cidrBlocks = [enums.ec2.cidrBlock, "0.0.0.0/0"];
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0)." });
     });
 
     it("#3", async function() {
         const args = getResourceValidationArgs();
-        args.props.ingress[0].ipv6CidrBlocks = [ec2.ipv6CidrBlock, "::/0"];
+        args.props.ingress[0].ipv6CidrBlocks = [enums.ec2.ipv6CidrBlock, "::/0"];
         await assertHasResourceViolation(policy, args, { message: "EC2 Security Groups should not permit ingress traffic from the public internet (::/0)." });
     });
 });

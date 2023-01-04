@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,8 +27,8 @@ import { ec2 } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.LaunchConfiguration, {
-        imageId: ec2.imageId,
-        instanceType: ec2.instanceType,
+        imageId: enums.ec2.imageId,
+        instanceType: enums.ec2.instanceType,
         associatePublicIpAddress: false,
         rootBlockDevice: {
             volumeType: "gp3",

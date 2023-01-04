@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { s3 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,7 +28,7 @@ import { s3 } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.alb.LoadBalancer, {
         accessLogs: {
-            bucket: s3.bucketId,
+            bucket: enums.s3.bucketId,
             prefix: "bucket-prefix",
             enabled: true,
         },

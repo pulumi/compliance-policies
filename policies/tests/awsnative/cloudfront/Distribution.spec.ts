@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { acm, cloudfront, s3, waf } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -30,13 +30,13 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         distributionConfig: {
             enabled: true,
             logging: {
-                bucket: s3.bucketRegionalDomainName,
+                bucket: enums.s3.bucketRegionalDomainName,
                 includeCookies: false,
                 prefix: "/",
             },
             origins: [{
-                domainName: s3.bucketRegionalDomainName,
-                id: cloudfront.originId,
+                domainName: enums.s3.bucketRegionalDomainName,
+                id: enums.cloudfront.originId,
             },{
                 domainName: "www.example.com",
                 id: "test-ddlwJDFEJeweDdwki-example",
@@ -48,7 +48,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 },
             }],
             defaultCacheBehavior: {
-                targetOriginId: cloudfront.originId,
+                targetOriginId: enums.cloudfront.originId,
                 viewerProtocolPolicy: "redirect-to-https",
                 allowedMethods: [
                     "GET",
@@ -80,7 +80,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                     "GET",
                     "HEAD",
                 ],
-                targetOriginId: cloudfront.originId,
+                targetOriginId: enums.cloudfront.originId,
                 forwardedValues: {
                     queryString: false,
                     headers: ["Origin"],
@@ -107,11 +107,11 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 },
             },
             viewerCertificate: {
-                acmCertificateArn: acm.certificateArn,
+                acmCertificateArn: enums.acm.certificateArn,
                 minimumProtocolVersion: "TLSv1.2_2021",
                 sslSupportMethod: "sni-only",
             },
-            webACLId: waf.webAclArn,
+            webACLId: enums.waf.webAclArn,
         },
     });
 }

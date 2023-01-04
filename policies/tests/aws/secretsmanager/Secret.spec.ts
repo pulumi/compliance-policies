@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,7 +28,7 @@ import { kms } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.secretsmanager.Secret, {
         description: "This is a description for this Secrets Manager secret.",
-        kmsKeyId: kms.keyId,
+        kmsKeyId: enums.kms.keyId,
     });
 }
 

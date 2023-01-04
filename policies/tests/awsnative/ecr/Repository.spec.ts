@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -33,7 +33,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         imageTagMutability: awsnative.ecr.RepositoryImageTagMutability.Immutable,
         encryptionConfiguration: {
             encryptionType: awsnative.ecr.RepositoryEncryptionType.Kms,
-            kmsKey: kms.keyArn,
+            kmsKey: enums.kms.keyArn,
         },
     });
 }

@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { acm } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -29,7 +29,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigatewayv2.DomainName, {
         domainName: "api.example.com",
         domainNameConfiguration: {
-            certificateArn: acm.certificateArn,
+            certificateArn: enums.acm.certificateArn,
             endpointType: "REGIONAL",
             securityPolicy: "TLS_1_2",
         },

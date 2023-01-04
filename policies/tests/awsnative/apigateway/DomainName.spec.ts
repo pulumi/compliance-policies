@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { acm } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -32,7 +32,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             types: ["REGIONAL"],
         },
         securityPolicy: "TLS_1_2",
-        certificateArn: acm.certificateArn,
+        certificateArn: enums.acm.certificateArn,
     });
 }
 

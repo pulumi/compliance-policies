@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { sns } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -30,7 +30,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         action: "lambda:InvokeFunction",
         "function": "lambda-function",
         principal: "sns.amazonaws.com",
-        sourceArn: sns.arn,
+        sourceArn: enums.sns.arn,
     });
 }
 

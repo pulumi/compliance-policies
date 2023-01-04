@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { acm, cloudfront, s3, waf } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -30,12 +30,12 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         enabled: true,
         loggingConfig: {
             includeCookies: false,
-            bucket: s3.bucketRegionalDomainName,
+            bucket: enums.s3.bucketRegionalDomainName,
             prefix: "/",
         },
         origins: [{
-            domainName: s3.bucketRegionalDomainName,
-            originId: cloudfront.originId,
+            domainName: enums.s3.bucketRegionalDomainName,
+            originId: enums.cloudfront.originId,
         },{
             domainName: "www.example.com",
             originId: "test-ddlwJDFEJeweDdwki-example",
@@ -47,7 +47,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             },
         }],
         defaultCacheBehavior: {
-            targetOriginId: cloudfront.originId,
+            targetOriginId: enums.cloudfront.originId,
             viewerProtocolPolicy: "redirect-to-https",
             allowedMethods: [
                 "GET",
@@ -79,7 +79,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 "GET",
                 "HEAD",
             ],
-            targetOriginId: cloudfront.originId,
+            targetOriginId: enums.cloudfront.originId,
             forwardedValues: {
                 queryString: false,
                 headers: ["Origin"],
@@ -106,11 +106,11 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         viewerCertificate: {
-            acmCertificateArn: acm.certificateArn,
+            acmCertificateArn: enums.acm.certificateArn,
             minimumProtocolVersion: "TLSv1.2_2021",
             sslSupportMethod: "sni-only",
         },
-        webAclId: waf.webAclArn,
+        webAclId: enums.waf.webAclArn,
     });
 }
 

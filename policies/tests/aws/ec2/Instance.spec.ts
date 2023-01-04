@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2, kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,21 +27,21 @@ import { ec2, kms } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.Instance, {
-        ami: ec2. imageId,
-        instanceType: ec2.instanceType,
+        ami: enums.ec2. imageId,
+        instanceType: enums.ec2.instanceType,
         rootBlockDevice: {
             deviceName: "/dev/sda1",
             encrypted: true,
-            kmsKeyId: kms.keyArn,
+            kmsKeyId: enums.kms.keyArn,
         },
         ebsBlockDevices: [{
             deviceName: "/dev/sdb",
             encrypted: true,
-            kmsKeyId: kms.keyArn,
+            kmsKeyId: enums.kms.keyArn,
         },{
             deviceName: "/dev/sdc",
             encrypted: true,
-            kmsKeyId: kms.keyArn,
+            kmsKeyId: enums.kms.keyArn,
         }],
         associatePublicIpAddress: false,
     });

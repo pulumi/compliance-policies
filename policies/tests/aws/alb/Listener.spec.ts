@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { alb } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,13 +27,13 @@ import { alb } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.alb.Listener, {
-        loadBalancerArn: alb.loadBalancerArn,
+        loadBalancerArn: enums.alb.loadBalancerArn,
         port: 443,
         protocol: "HTTPS",
         sslPolicy: "ELBSecurityPolicy-FS-1-2-2019-08", // TLSv1.2 and FS (Forward secrecy)
         defaultActions: [{
             type: "forward",
-            targetGroupArn: alb.targetGroupArn,
+            targetGroupArn: enums.alb.targetGroupArn,
         }],
     });
 }

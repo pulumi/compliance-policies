@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, root, s3 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,11 +28,11 @@ import { iam, root, s3 } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.elb.LoadBalancer, {
         availabilityZones: [
-            root.availabilityZone1,
-            root.availabilityZone2,
+            enums.root.availabilityZone1,
+            enums.root.availabilityZone2,
         ],
         accessLogs: {
-            bucket: s3.bucketId,
+            bucket: enums.s3.bucketId,
             bucketPrefix: "bucket-prefix",
             interval: 60,
         },
@@ -41,7 +41,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             instanceProtocol: "http",
             lbPort: 443,
             lbProtocol: "https",
-            sslCertificateId: iam.sslCertificateArn,
+            sslCertificateId: enums.iam.sslCertificateArn,
         }],
         healthCheck: {
             healthyThreshold: 2,
@@ -136,7 +136,7 @@ describe("aws.elb.LoadBalancer.configureMultiAvailabilityZone", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.availabilityZones = [root.availabilityZone1];
+        args.props.availabilityZones = [enums.root.availabilityZone1];
         await assertHasResourceViolation(policy, args, { message: "ELB Load Balancers should use more than one availability zone." });
     });
 });

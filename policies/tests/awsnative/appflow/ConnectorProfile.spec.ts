@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kms, secretsmanager } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -32,7 +32,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             connectorProfileCredentials: {
                 salesforce: {
                     accessToken: "sfdc-access-token",
-                    clientCredentialsArn: secretsmanager.secretArn,
+                    clientCredentialsArn: enums.secretsmanager.secretArn,
                 },
             },
             connectorProfileProperties: {
@@ -43,7 +43,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         connectorType: awsnative.appflow.ConnectorProfileConnectorType.Salesforce,
-        kMSArn: kms.keyArn,
+        kMSArn: enums.kms.keyArn,
     });
 }
 

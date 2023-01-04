@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, kms, s3 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -29,10 +29,10 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.s3.Bucket, {
         accessControl: awsnative.s3.BucketAccessControl.Private,
         replicationConfiguration: {
-            role: iam.roleArn,
+            role: enums.iam.roleArn,
             rules: [{
                 destination: {
-                    bucket: s3.bucketId,
+                    bucket: enums.s3.bucketId,
                 },
                 status: awsnative.s3.BucketReplicationRuleStatus.Enabled,
             }],
@@ -42,7 +42,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 bucketKeyEnabled: true,
                 serverSideEncryptionByDefault: {
                     sSEAlgorithm: awsnative.s3.BucketServerSideEncryptionByDefaultSSEAlgorithm.Awskms,
-                    kMSMasterKeyID: kms.keyArn,
+                    kMSMasterKeyID: enums.kms.keyArn,
                 },
             }],
         },

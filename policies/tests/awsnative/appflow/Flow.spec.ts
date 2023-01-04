@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { s3, kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -31,7 +31,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             connectorType: "S3",
             destinationConnectorProperties: {
                 s3: {
-                    bucketName: s3.bucketId,
+                    bucketName: enums.s3.bucketId,
                     bucketPrefix: "sfdc-bucket-prefix",
                 },
             },
@@ -53,7 +53,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             triggerType: "Event",
         },
         description: "Salesforce to S3 AppFlow flow.",
-        kMSArn: kms.keyArn,
+        kMSArn: enums.kms.keyArn,
     });
 }
 

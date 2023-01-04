@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2, iam, kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,18 +27,18 @@ import { ec2, iam, kms } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.eks.Cluster, {
-        roleArn: iam.roleArn,
+        roleArn: enums.iam.roleArn,
         resourcesVpcConfig: {
             subnetIds: [
-                ec2.subnetId1,
-                ec2.subnetId2,
+                enums.ec2.subnetId1,
+                enums.ec2.subnetId2,
             ],
             endpointPublicAccess: false,
             endpointPrivateAccess: true,
         },
         encryptionConfig: [{
             provider: {
-                keyArn: kms.keyArn,
+                keyArn: enums.kms.keyArn,
             },
             resources: ["secrets"],
         }],

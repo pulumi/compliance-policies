@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { root, kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,7 +28,7 @@ import { root, kms } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.efs.FileSystem, {
         encrypted: true,
-        kmsKeyId: kms.keyArn,
+        kmsKeyId: enums.kms.keyArn,
     });
 }
 
@@ -159,7 +159,7 @@ describe("aws.efs.FileSystem.disallowSingleAvailabilityZone", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.availabilityZoneName = root.availabilityZone1;
+        args.props.availabilityZoneName = enums.root.availabilityZone1;
         await assertHasResourceViolation(policy, args, { message: "EFS File Systems should use more than one availability zone." });
     });
 });

@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kms, rds, root } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,10 +27,10 @@ import { kms, rds, root } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.rds.ClusterInstance, {
-        clusterIdentifier: rds.dbClusterIdentifier,
+        clusterIdentifier: enums.rds.dbClusterIdentifier,
         instanceClass: aws.rds.InstanceType.M1_Large,
         performanceInsightsEnabled: true,
-        performanceInsightsKmsKeyId: kms.keyArn,
+        performanceInsightsKmsKeyId: enums.kms.keyArn,
         publiclyAccessible: false,
     });
 }

@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, kms, s3 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -29,10 +29,10 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.s3.Bucket, {
         acl: "private",
         replicationConfiguration: {
-            role: iam.roleArn,
+            role: enums.iam.roleArn,
             rules: [{
                 destination: {
-                    bucket: s3.bucketId,
+                    bucket: enums.s3.bucketId,
                 },
                 status: "Enabled",
             }],
@@ -41,7 +41,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             rule: {
                 applyServerSideEncryptionByDefault: {
                     sseAlgorithm: "aws:kms",
-                    kmsMasterKeyId: kms.keyArn,
+                    kmsMasterKeyId: enums.kms.keyArn,
                 },
                 bucketKeyEnabled: true,
             },

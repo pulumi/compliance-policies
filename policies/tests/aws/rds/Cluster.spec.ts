@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { kms, root } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,12 +28,12 @@ import { kms, root } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.rds.Cluster, {
         availabilityZones: [
-            root.availabilityZone1,
-            root.availabilityZone2,
+            enums.root.availabilityZone1,
+            enums.root.availabilityZone2,
         ],
         backupRetentionPeriod: 5,
         storageEncrypted: true,
-        kmsKeyId: kms.keyArn,
+        kmsKeyId: enums.kms.keyArn,
     });
 }
 
@@ -252,7 +252,7 @@ describe("aws.rds.Cluster.disallowSingleAvailabilityZone", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.availabilityZones = [root.availabilityZone1];
+        args.props.availabilityZones = [enums.root.availabilityZone1];
         await assertHasResourceViolation(policy, args, { message: "RDS Clusters should use more than one availability zone." });
     });
 });

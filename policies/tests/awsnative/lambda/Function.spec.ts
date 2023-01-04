@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { iam, kms, s3 } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,11 +28,11 @@ import { iam, kms, s3 } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.lambda.Function, {
         description: "This is a lambda function",
-        role: iam.roleArn,
+        role: enums.iam.roleArn,
         handler: "index.js",
         runtime: "nodejs18.x",
         code: {
-            s3Bucket: s3.bucketId,
+            s3Bucket: enums.s3.bucketId,
             s3Key: "/function.zip",
         },
         environment: {
@@ -40,7 +40,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 "SOMEVAR": "some_value",
             },
         },
-        kmsKeyArn: kms.keyArn,
+        kmsKeyArn: enums.kms.keyArn,
         tracingConfig: {
             mode: awsnative.lambda.FunctionTracingConfigMode.Active,
         },

@@ -18,7 +18,7 @@ import * as aws from "@pulumi/aws";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { apigatewayv2, cloudwatch } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,10 +27,10 @@ import { apigatewayv2, cloudwatch } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigatewayv2.Stage, {
-        apiId: apigatewayv2.apiId,
+        apiId: enums.apigatewayv2.apiId,
         accessLogSettings: {
-            destinationArn: cloudwatch.logGroupArn,
-            format: apigatewayv2.accessLogFormat,
+            destinationArn: enums.cloudwatch.logGroupArn,
+            format: enums.apigatewayv2.accessLogFormat,
         },
     });
 }

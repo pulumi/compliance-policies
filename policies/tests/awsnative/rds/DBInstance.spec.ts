@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { ec2, kms, rds } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,14 +27,14 @@ import { ec2, kms, rds } from "../enums";
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.rds.DBInstance, {
-        dBInstanceClass: rds.dBInstanceClass,
+        dBInstanceClass: enums.rds.dBInstanceClass,
         backupRetentionPeriod: 5,
-        vPCSecurityGroups: [ ec2.vpcSecurityGroupId ],
+        vPCSecurityGroups: [ enums.ec2.vpcSecurityGroupId ],
         enablePerformanceInsights: true,
-        performanceInsightsKMSKeyId: kms.keyArn,
+        performanceInsightsKMSKeyId: enums.kms.keyArn,
         publiclyAccessible: false,
         storageEncrypted: true,
-        kmsKeyId: kms.keyArn,
+        kmsKeyId: enums.kms.keyArn,
     });
 }
 

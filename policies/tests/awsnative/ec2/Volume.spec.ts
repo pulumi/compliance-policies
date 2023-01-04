@@ -18,7 +18,7 @@ import * as awsnative from "@pulumi/aws-native";
 
 import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { root, kms } from "../enums";
+import * as enums from "../enums";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -28,8 +28,8 @@ import { root, kms } from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.ec2.Volume, {
         encrypted: true,
-        kmsKeyId: kms.keyArn,
-        availabilityZone: root.availabilityZone1,
+        kmsKeyId: enums.kms.keyArn,
+        availabilityZone: enums.root.availabilityZone1,
         size: 16,
     });
 }

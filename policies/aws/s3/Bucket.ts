@@ -20,7 +20,7 @@ import {
 import { policiesManagement } from "../../utils";
 
 /**
- * Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write'.
+ * Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.
  *
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
@@ -28,7 +28,7 @@ import { policiesManagement } from "../../utils";
 export const disallowPublicRead: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-s3-bucket-disallow-public-read",
-        description: "Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write'.",
+        description: "Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.acl) {

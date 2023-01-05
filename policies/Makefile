@@ -1,5 +1,5 @@
 PROJECT_NAME := pulumi-policies
-NODE_MODULE_NAME := @bobcatt/pulumi-policies
+NODE_MODULE_NAME := @aureq/pulumi-policies
 include build/common.mk
 
 VERSION := $(shell /bin/bash ./build/get-version.sh)

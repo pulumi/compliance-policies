@@ -1,5 +1,5 @@
 {
-    "name": "@bobcatt/pulumi-policies",
+    "name": "@aureq/pulumi-policies",
     "version": "${VERSION}",
     "license": "Apache-2.0",
     "homepage": "https://www.pulumi.com",

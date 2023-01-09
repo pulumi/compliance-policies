@@ -1,4 +1,4 @@
-// Copyright 2016-2022, Pulumi Corporation.
+// Copyright 2016-2023, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export { policiesManagement } from "./utils";
-export * from "./version";
-
-export * as aws from "./aws";
-export * as awsnative from "./awsnative";
-export * as kubernetes from "./kubernetes";
-export * as azurenative from "./azurenative";
+export enum resourcegroup {
+    ResourceGroupName = "ressourceGroupName",
+}

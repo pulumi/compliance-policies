@@ -35,3 +35,8 @@ jobs:
         with:
           cmd: test
           dir: policies
+      - name: Markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: |
+            README.md

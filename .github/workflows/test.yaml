@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 18.x
           cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
       - name: Run install
         uses: borales/actions-yarn@v4
         with:

@@ -24,11 +24,11 @@ jobs:
         run: yarn install --cwd policies --frozen-lockfile
       - name: Lint
         run: yarn --cwd policies run lint
-        env: |
+        env:
           NODE_OPTIONS="--max_old_space_size=8192"
       - name: Test
         run: yarn --cwd policies run test
-        env: |
+        env:
           NODE_OPTIONS="--max_old_space_size=8192"
       - name: Markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v9

@@ -21,22 +21,13 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'
       - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
-          dir: policies
+        run: yarn install --cwd policies --frozen-lockfile
       - name: Lint
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: lint
-          dir: policies
+        run: yarn --cwd policies run lint
         env: |
           NODE_OPTIONS="--max_old_space_size=8192"
       - name: Test
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test
-          dir: policies
+        run: yarn --cwd policies run test
         env: |
           NODE_OPTIONS="--max_old_space_size=8192"
       - name: Markdownlint

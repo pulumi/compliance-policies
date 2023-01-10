@@ -1,6 +1,7 @@
 # Pulumi Policies
 
-This repository contains a growing set of Pulumi policies to validate your infrastructure using Policy-as-Code.
+This repository contains a growing set of Pulumi policies to validate your
+infrastructure using Policy-as-Code.
 
 ## Current project state
 

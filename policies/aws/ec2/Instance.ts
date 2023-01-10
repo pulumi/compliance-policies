@@ -35,7 +35,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.reg
             }
         }),
     },
-    vendors: ["aws"],
+    vendors: ["aws"]
     services: ["ec2"],
     severity: "high",
     topics: ["network"],

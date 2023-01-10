@@ -2,7 +2,7 @@ PROJECT_NAME := pulumi-management
 NODE_MODULE_NAME := @pulumi-premium-policies/policy-management
 include ../build/common.mk
 
-VERSION := $(shell /bin/bash ../build/get-version.sh)
+VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix policy-management)
 
 .PHONY: build lint publish
 

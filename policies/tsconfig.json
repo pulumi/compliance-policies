@@ -20,6 +20,7 @@
         "index.ts",
         "aws/**/*",
         "awsnative/**/*",
+        "azurenative/**/*",
         "kubernetes/**/*",
         "tests/**/*.ts",
     ],

@@ -1,5 +1,5 @@
 # Pulumi Policies
-
+<!-- markdownlint-disable MD013 -->
 This repository contains a growing set of Pulumi policies to validate your infrastructure using Policy-as-Code.
 
 ## Current project state
@@ -22,7 +22,6 @@ A Policy Pack can contain one or more policies to enforce. Packs provide a way t
 
 For more information, see our [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy-pack).
 
-
 ## Testing
 
 ### Precondition
@@ -37,7 +36,7 @@ export NODE_OPTIONS="--max-old-space-size=8192"
 
 Run the tests with follwing command:
 
-```
+```bash
 cd policies
 make tests
 ```

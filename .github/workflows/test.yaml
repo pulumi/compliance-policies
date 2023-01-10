@@ -25,11 +25,11 @@ jobs:
       - name: Lint
         run: yarn --cwd policies run lint
         env:
-          NODE_OPTIONS="--max_old_space_size=8192"
+          NODE_OPTIONS: "--max_old_space_size=8192"
       - name: Test
         run: yarn --cwd policies run test
         env:
-          NODE_OPTIONS="--max_old_space_size=8192"
+          NODE_OPTIONS: "--max_old_space_size=8192"
       - name: Markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v9
         with:

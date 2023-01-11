@@ -305,23 +305,23 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi-premium-policies/policy-management@^0.0.19":
-  version "0.0.19"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-management/-/policy-management-0.0.19.tgz#805169bececcd724f1b912b25daf3fa978afdb1f"
-  integrity sha512-TntC8jBrLakNqGI1CGfsmM0l4Yb/28egfbK2O8GUyzJgbDnLg4idFubj4O9BU6H/byYjydcKo+MP6xIvOK+2ng==
+"@pulumi-premium-policies/policy-management@^0.0.20":
+  version "0.0.20"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-management/-/policy-management-0.0.20.tgz#df7adaa07c3f3b60e5271423c148f636ddb4caf4"
+  integrity sha512-GnaVkle15/HDIzMHoNwA6cjjvX9uQ1zjDrm/5rNuL4licErU+HOSZyxjVKCgMMgRTL+vQfnnaAPJwhSyB0Y8ww==
   dependencies:
     "@pulumi/policy" "^1.5.0"
     ts-node "^10.9.1"
     typescript "^4.9.0"
 
-"@pulumi-premium-policies/unit-test-helpers@^0.0.3":
-  version "0.0.3"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.3.tgz#277599749a11444752df16485384963d58fbed6b"
-  integrity sha512-JWIdiFvWSiNfEhlCE0lMyeGHBuLrFtatU1vSys24nOvV0mGwwDLL2VOWIhq3wUcPsW6OvjW1IGhbRpMzb/I4uA==
+"@pulumi-premium-policies/unit-test-helpers@^0.0.4":
+  version "0.0.4"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.4.tgz#ee2d314ddc1b2cb7edc1b87d49bd616ade846de3"
+  integrity sha512-nmHoGWPzq6nKJvOjth8chFUhDKN449aDixZSKgx3yh7KsUiY3HiClXGHOEx13z4hHIxaGnevS7g1DabXm9CU1A==
   dependencies:
     "@babel/parser" "^7.20.7"
     "@babel/types" "^7.20.7"
-    "@pulumi-premium-policies/policy-management" "^0.0.19"
+    "@pulumi-premium-policies/policy-management" "^0.0.20"
     "@pulumi/policy" "^1.5.0"
     "@pulumi/pulumi" "^3.0.0"
     "@types/mocha" "^10.0.1"

@@ -16,7 +16,7 @@ import "mocha";
 import { assertPolicyManagementVersion } from "@pulumi-premium-policies/unit-test-helpers";
 import * as policymanagement from "@pulumi-premium-policies/policy-management";
 
-describe("policiesManagement.general", function() {
+describe("version", function() {
 
     it("#1", async function() {
         assertPolicyManagementVersion(policymanagement.version);

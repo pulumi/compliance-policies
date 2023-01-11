@@ -20,7 +20,7 @@
         "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.1",
+        "@pulumi-premium-policies/unit-test-helpers": "^0.0.3",
         "@types/node": "16",
         "@typescript-eslint/eslint-plugin": "^5.47.1",
         "@typescript-eslint/parser": "^5.44.0",

@@ -1,5 +1,5 @@
 PROJECT_NAME := policy-management
-NODE_MODULE_NAME := @pulumi-premium-policies/policy-management
+NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))

@@ -24,7 +24,7 @@ import {
     assertResourcePolicyDescription,
     assertCodeQuality
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as azure from "@pulumi/azure-native";
+import * as azure from "@pulumi/azure";
 
 import * as policies from "../../../index";
 import {ResourceValidationArgs} from "@pulumi/policy";
@@ -51,17 +51,19 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             version: "latest",
         },
         adminUsername: "ubuntu",
-        networkInterfaceIds: "nic1",
+        networkInterfaceIds: [
+            "nic1",
+        ],
         computerName: "test",
-        disablePasswordAuthentication: true
+        disablePasswordAuthentication: true,
     });
 }
 
-describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", function () {
-    const policy = policies.azurenative.compute.VirtualMachine.disallowPasswordAuthentication;
+describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", function () {
+    const policy = policies.azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azurenative-compute-virtualmachine-disallow-password-authentication");
+        assertResourcePolicyName(policy, "azure-compute-linuxvirtualmachine-disallow-password-authentication");
     });
 
     it("registration", async function () {
@@ -70,10 +72,10 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
 
     it("metadata", async function () {
         assertResourcePolicyRegistrationDetails(policy, {
-            vendors: ["azurenative"],
+            vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["security"],
+            topics: ["security", "authentication"],
         });
     });
 
@@ -96,11 +98,9 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
 
     it("#2", async function () {
         const args = getResourceValidationArgs();
-        args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
+        args.props.disablePasswordAuthentication = false;
         await assertHasResourceViolation(policy, args, {
-            message: "Access to virtual machines should be " +
-                "authenticated using SSH keys. Removing the option of password authentication enforces more secure " +
-                "methods while removing the risks inherent with passwords.",
+            message: "Authentication to Linux machines should require SSH keys.",
         });
     });
 });

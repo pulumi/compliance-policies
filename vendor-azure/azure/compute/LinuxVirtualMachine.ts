@@ -27,7 +27,7 @@ import {policiesManagement} from "@pulumi-premium-policies/policy-management";
  */
 export const disallowPasswordAuthentication: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "azure-compute-virtualmachine-disallow-password-authentication",
+        name: "azure-compute-linuxvirtualmachine-disallow-password-authentication",
         description: "Authentication to Linux machines should require SSH keys.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(azure.compute.LinuxVirtualMachine, (virtualmachine, args, reportViolation) => {

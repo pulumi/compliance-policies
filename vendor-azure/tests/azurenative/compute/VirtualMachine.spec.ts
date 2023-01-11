@@ -82,10 +82,10 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
 
     it("metadata", async function () {
         assertResourcePolicyRegistrationDetails(policy, {
-            vendors: ["azurenative"],
+            vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["security"],
+            topics: ["security", "authentication"],
         });
     });
 
@@ -110,9 +110,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
         const args = getResourceValidationArgs();
         args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
         await assertHasResourceViolation(policy, args, {
-            message: "Access to virtual machines should be " +
-                "authenticated using SSH keys. Removing the option of password authentication enforces more secure " +
-                "methods while removing the risks inherent with passwords.",
+            message: "Authentication to Linux machines should require SSH keys.",
         });
     });
 });

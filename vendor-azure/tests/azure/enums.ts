@@ -12,4 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as LinuxVirtualMachine from "./LinuxVirtualMachine";
+export enum resourcegroup {
+    ResourceGroupName = "ressourceGroupName",
+    Location = "westeurope",
+}

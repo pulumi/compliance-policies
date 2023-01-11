@@ -21,7 +21,6 @@ import * as parserTypes from "@babel/types";
 import * as policymanagement from "@pulumi-premium-policies/policy-management";
 import { ResourceValidationArgs, StackValidationArgs, StackValidationPolicy, PolicyResource, ResourceValidationPolicy } from "@pulumi/policy";
 import { Resource, Unwrap } from "@pulumi/pulumi";
-// import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 import * as assert from "assert";
 
 const empytOptions = {
@@ -856,6 +855,18 @@ function getPolicyComment(node: parserTypes.ExportNamedDeclaration): PolicyDetai
 
     policyCommentDetails.comment = node.leadingComments[jsDocCommentBlockIndex].value;
     return policyCommentDetails;
+}
+
+/**
+ * This function asserts the supplied Policy Management package version is identical
+ * to the one included in this package.
+ *
+ * @param version The Policy Management package version.
+ */
+export function assertPolicyManagementVersion(version: string) {
+    if (version !== policymanagement.version) {
+        assert.fail("The 'unit-test-helpers' and your package should depend on the same version of 'policy-management'");
+    }
 }
 
 /**

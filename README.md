@@ -1,6 +1,7 @@
 # Pulumi Policies
 
-This repository contains a growing set of Pulumi policies to validate your infrastructure using Policy-as-Code.
+This repository contains a growing set of Pulumi policies to validate your
+infrastructure using Policy-as-Code.
 
 ## Current project state
 
@@ -22,22 +23,3 @@ A Policy Pack can contain one or more policies to enforce. Packs provide a way t
 
 For more information, see our [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy-pack).
 
-
-## Testing
-
-### Precondition
-
-Due to the large size of the `azure-native` provider, you need to set following environment variable to run the tests:
-
-```bash
-export NODE_OPTIONS="--max-old-space-size=8192"
-```
-
-### Unit tests
-
-Run the tests with follwing command:
-
-```
-cd policies
-make tests
-```

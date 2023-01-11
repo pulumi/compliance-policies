@@ -12,6 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export enum resourcegroup {
-    ResourceGroupName = "ressourceGroupName",
-}
+// The version that the @pulumi/pulumi-policies package was built as.
+export const version = "${VERSION}";

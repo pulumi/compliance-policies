@@ -96,3 +96,20 @@ Then, each violation report should be triggered and tested accordingly.
         await assertHasResourceViolation(policy, args, { message: "An EBS volume should be encrypted using a customer-managed KMS key." });
     });
 ```
+
+### Increase NodeJS memory
+
+When running unit tests, NodeJS may run out of memory due to `azure-native`. To increase the memory, use the following command:
+
+```bash
+export NODE_OPTIONS="--max-old-space-size=8192"
+```
+
+### Unit tests
+
+Run the tests with follwing command:
+
+```bash
+cd policies
+make tests
+```

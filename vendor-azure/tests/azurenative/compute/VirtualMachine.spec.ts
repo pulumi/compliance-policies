@@ -22,8 +22,8 @@ import {
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
-    assertCodeQuality,
-} from "../../utils";
+    assertCodeQuality
+} from "@pulumi-premium-policies/unit-test-helpers";
 import * as azure from "@pulumi/azure-native";
 
 import * as policies from "../../../index";
@@ -38,10 +38,33 @@ import * as enums from "../enums";
 function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azure.compute.VirtualMachine, {
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        osProfile: {
-            linuxConfiguration: {
-                disablePasswordAuthentication: true,
+        location: enums.resourcegroup.Location,
+        hardwareProfile: {
+            vmSize: "Standard_D2s_v4"
+        },
+        storageProfile: {
+            osDisk: {
+                createOption: "fromImage",
             },
+            imageReference: {
+                publisher: "canonical",
+                offer: "0001-com-ubuntu-server-jammy",
+                sku: "22_04-lts-gen2",
+                version: "latest"
+            }
+        },
+        networkProfile: {
+            networkInterfaces: [{
+                id: "nic1",
+                deleteOption: "Detach",
+            }]
+        },
+        osProfile: {
+            computerName: "test",
+            adminUsername: "ubuntu",
+            linuxConfiguration: {
+                disablePasswordAuthentication: true
+            }
         },
     });
 }

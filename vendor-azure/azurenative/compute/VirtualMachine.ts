@@ -17,32 +17,31 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "../../utils";
+import {policiesManagement} from "@pulumi-premium-policies/policy-management";
 
 /**
- * Password authentication should be disabled on Azure virtual machines.
+ * Authentication to Linux machines should require SSH keys.
  *
  * @severity High
+ * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
  */
 export const disallowPasswordAuthentication: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
         name: "azurenative-compute-virtualmachine-disallow-password-authentication",
-        description: "Password authentication should be disabled on Azure virtual machines.",
+        description: "Authentication to Linux machines should require SSH keys.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(azure.compute.VirtualMachine, (virtualmachine, args, reportViolation) => {
             if (virtualmachine.osProfile) {
                 if (virtualmachine.osProfile.linuxConfiguration) {
                     if (!virtualmachine.osProfile.linuxConfiguration.disablePasswordAuthentication) {
-                        reportViolation("Access to virtual machines should be authenticated using SSH keys. " +
-                            "Removing the option of password authentication enforces more secure methods while " +
-                            "removing the risks inherent with passwords.");
+                        reportViolation("Authentication to Linux machines should require SSH keys.");
                     }
                 }
             }
         }),
     },
-    vendors: ["azurenative"],
+    vendors: ["azure"],
     services: ["compute"],
     severity: "high",
-    topics: ["security"],
+    topics: ["security", "authentication"],
 });

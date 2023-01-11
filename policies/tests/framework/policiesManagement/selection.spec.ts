@@ -13,13 +13,14 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "../../utils";
+import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "@pulumi-premium-policies/unit-test-helpers";
+import {policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 import * as policies from "../../../index";
 
 describe("policiesManagement.general", function() {
 
-    const policiesStats = policies.policiesManagement.getStats();
+    const policiesStats = policiesManagement.getStats();
 
     it("#1", async function() {
         assertHasRegisteredPolicies();
@@ -38,7 +39,7 @@ describe("policiesManagement.general", function() {
     });
 
     it("#4", async function() {
-        policies.policiesManagement.resetPolicyfilter();
+        policiesManagement.resetPolicyfilter();
         assertHasAllRemainingPolicies();
     });
 
@@ -48,7 +49,7 @@ describe("policiesManagement.general", function() {
      * policies are stored in their own npm packages though.
      */
     it("#5", async function() {
-        const selection = policies.policiesManagement.filterPolicies({
+        const selection = policiesManagement.filterPolicies({
             vendors: ["aws"],
         });
         assertHasRemainingPolicies();
@@ -56,7 +57,7 @@ describe("policiesManagement.general", function() {
     });
 
     it("#6", async function() {
-        policies.policiesManagement.resetPolicyfilter();
+        policiesManagement.resetPolicyfilter();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);
     });

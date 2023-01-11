@@ -16,7 +16,7 @@
     "dependencies": {
         "@babel/parser": "^7.20.7",
         "@babel/types": "^7.20.7",
-        "@pulumi-premium-policies/policy-management": "^0.0.19",
+        "@pulumi-premium-policies/policy-management": "^0.0.20",
         "@pulumi/policy": "^1.5.0",
         "@pulumi/pulumi": "^3.0.0",
         "@types/mocha": "^10.0.1",

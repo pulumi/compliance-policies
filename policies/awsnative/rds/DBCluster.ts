@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "../../utils";
+import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 /**
  * Checks that RDS DB Clusters backup retention policy is enabled.

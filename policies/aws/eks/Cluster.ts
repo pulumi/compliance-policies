@@ -18,7 +18,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 
-import { policiesManagement } from "../../utils";
+import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 /**
  * Check that EKS Cluster Encryption Config is enabled.

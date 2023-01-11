@@ -17,7 +17,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "../../../utils";
+import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 /**
  * Checks that Kubernetes Services use the recommended labels.

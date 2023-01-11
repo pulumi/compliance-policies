@@ -14,13 +14,9 @@
 
 import "mocha";
 import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "@pulumi-premium-policies/unit-test-helpers";
-import {policiesManagement } from "@pulumi-premium-policies/policy-management";
-
-import * as policies from "../../../index";
+import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 describe("policiesManagement.general", function() {
-
-    const policiesStats = policiesManagement.getStats();
 
     it("#1", async function() {
         assertHasRegisteredPolicies();
@@ -44,19 +40,21 @@ describe("policiesManagement.general", function() {
     });
 
     /*
-     * After selecting the AWS policies, other polices Should
+     * After selecting the `core` policies, other polices Should
      * still be present in the pool. This will likely fail when
      * policies are stored in their own npm packages though.
      */
     it("#5", async function() {
+        const policiesStats = policiesManagement.getStats();
         const selection = policiesManagement.filterPolicies({
-            vendors: ["aws"],
+            services: ["core"],
         });
         assertHasRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount - selection.length);
     });
 
     it("#6", async function() {
+        const policiesStats = policiesManagement.getStats();
         policiesManagement.resetPolicyfilter();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);
@@ -64,14 +62,14 @@ describe("policiesManagement.general", function() {
 
     it("#7", async function() {
         assertNoDoubleSelection({
-            vendors: ["aws"],
+            vendors: ["kubernetes"],
         });
     });
 
     it("#8", async function() {
         assertNoDoubleSelection({
-            vendors: ["aws"],
-            services: ["ec2"],
+            vendors: ["kubernetes"],
+            services: ["core"],
         });
     });
 

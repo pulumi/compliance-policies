@@ -7,9 +7,6 @@ on:
   pull_request:
     branches:
       - main
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   policy_test:
@@ -24,17 +21,17 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'
       - name: Run install
-        run: yarn install --cwd policies --frozen-lockfile
-      - name: Lint
-        run: yarn --cwd policies run lint
-        env:
-          NODE_OPTIONS: "--max_old_space_size=8192"
-      - name: Test
-        run: yarn --cwd policies run test
-        env:
-          NODE_OPTIONS: "--max_old_space_size=8192"
-      - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v9
+        uses: borales/actions-yarn@v4
         with:
-          globs: |
-            README.md
+          cmd: install # will run `yarn install` command
+          dir: policies
+      - name: Lint
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: lint
+          dir: policies
+      - name: Test
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test
+          dir: policies

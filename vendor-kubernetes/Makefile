@@ -1,4 +1,4 @@
-PROJECT_NAME := aws-policies
+PROJECT_NAME := kubernetes-policies
 NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
 include ../build/common.mk
 

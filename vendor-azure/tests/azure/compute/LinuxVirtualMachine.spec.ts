@@ -28,7 +28,7 @@ import {
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
-    assertCodeQuality
+    assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
 import * as azure from "@pulumi/azure";
 

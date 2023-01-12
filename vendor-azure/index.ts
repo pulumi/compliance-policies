@@ -20,5 +20,5 @@
 
 export * from "./version";
 
-export * as azure from "./azure"
+export * as azure from "./azure";
 export * as azurenative from "./azurenative";

@@ -19,3 +19,4 @@
 // SOFTWARE.
 
 export * as LinuxVirtualMachine from "./LinuxVirtualMachine";
+export * as ManagedDisk from "./ManagedDisk";

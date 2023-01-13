@@ -110,7 +110,7 @@ describe("azurenative.compute.Disk.disallowUnencryptedDisk", function () {
         const args = getResourceValidationArgs();
         args.props.encryptionSettingsCollection.enabled = false;
         await assertHasResourceViolation(policy, args, {
-            message: "Enable disk encryption on disk.",
+            message: "A Disk is currently not encrypted.",
         });
     });
 });

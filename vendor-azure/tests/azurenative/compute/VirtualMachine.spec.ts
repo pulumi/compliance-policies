@@ -116,7 +116,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
         const args = getResourceValidationArgs();
         args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
         await assertHasResourceViolation(policy, args, {
-            message: "A Disk is currently not encrypted.",
+            message: "Authentication to Linux machines should require SSH keys.",
         });
     });
 });

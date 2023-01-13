@@ -18,9 +18,8 @@
     },
     "include": [
         "index.ts",
-        "aws/**/*",
-        "awsnative/**/*",
-        "kubernetes/**/*",
+        "azure/**/*",
+        "azurenative/**/*",
         "tests/**/*.ts",
     ],
     "exclude": [],

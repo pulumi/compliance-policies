@@ -85,7 +85,7 @@ describe("azurenative.compute.Disk.disallowUnencryptedDisk", function () {
             vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["security", "encryption"],
+            topics: ["storage", "encryption"],
         });
     });
 

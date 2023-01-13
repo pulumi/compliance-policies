@@ -91,7 +91,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
             vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["storage", "authentication"],
+            topics: ["security", "authentication"],
         });
     });
 

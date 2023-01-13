@@ -91,7 +91,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
             vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["security", "authentication"],
+            topics: ["storage", "authentication"],
         });
     });
 
@@ -116,7 +116,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
         const args = getResourceValidationArgs();
         args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
         await assertHasResourceViolation(policy, args, {
-            message: "Authentication to Linux machines should require SSH keys.",
+            message: "A Disk is currently not encrypted.",
         });
     });
 });

@@ -26,24 +26,24 @@ import {
 import {policiesManagement} from "@pulumi-premium-policies/policy-management";
 
 /**
- * Enable disk encryption on managed disk.
+ * Checks that Disks are encrypted.
  *
  * @severity High
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
  */
-export const enableDiskEncryption: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedManagedDisk: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "azure-compute-manageddisk-enable-disk-encryption",
-        description: "Enable disk encryption on managed disk.",
+        name: "azure-compute-manageddisk-disallow-unencrypted-managed-disk",
+        description: "Checks that Disks are encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(azure.compute.ManagedDisk, (disk, args, reportViolation) => {
             if (disk.encryptionSettings === undefined) {
-                reportViolation("Enable disk encryption on managed disk.");
+                reportViolation("A Disk is currently not encrypted.");
             }
         }),
     },
     vendors: ["azure"],
     services: ["compute"],
     severity: "high",
-    topics: ["security", "encryption"],
+    topics: ["storage", "encryption"],
 });

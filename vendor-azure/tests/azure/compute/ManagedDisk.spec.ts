@@ -51,22 +51,22 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         diskSizeGb: 10,
         encryptionSettings: {
             diskEncryptionKey: {
-                secretUrl: "https://test.vault.azure.net/secrets/test/1234567890",
-                sourceVaultId: "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/test-rg/providers/Microsoft.KeyVault/vaults/test",
+                secretUrl: enums.keyvault.SecretUrl,
+                sourceVaultId: enums.keyvault.SourceVaultId,
             },
             keyEncryptionKey: {
-                keyUrl: "https://test.vault.azure.net/keys/test/1234567890",
-                sourceVaultId: "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/test-rg/providers/Microsoft.KeyVault/vaults/test",
+                keyUrl: enums.keyvault.KeyUrl,
+                sourceVaultId: enums.keyvault.SourceVaultId,
             },
         },
     });
 }
 
-describe("azure.compute.ManagedDisk.enableDiskEncryption", function () {
-    const policy = policies.azure.compute.ManagedDisk.enableDiskEncryption;
+describe("azure.compute.ManagedDisk.disallowUnencryptedManagedDisk", function () {
+    const policy = policies.azure.compute.ManagedDisk.disallowUnencryptedManagedDisk;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azure-compute-manageddisk-enable-disk-encryption");
+        assertResourcePolicyName(policy, "azure-compute-manageddisk-disallow-unencrypted-managed-disk");
     });
 
     it("registration", async function () {
@@ -78,7 +78,7 @@ describe("azure.compute.ManagedDisk.enableDiskEncryption", function () {
             vendors: ["azure"],
             services: ["compute"],
             severity: "high",
-            topics: ["security", "encryption"],
+            topics: ["storage", "encryption"],
         });
     });
 
@@ -103,7 +103,7 @@ describe("azure.compute.ManagedDisk.enableDiskEncryption", function () {
         const args = getResourceValidationArgs();
         delete args.props.encryptionSettings;
         await assertHasResourceViolation(policy, args, {
-            message: "Enable disk encryption on managed disk.",
+            message: "A Disk is currently not encrypted.",
         });
     });
 });

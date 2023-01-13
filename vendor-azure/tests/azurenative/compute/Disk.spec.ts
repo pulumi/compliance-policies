@@ -58,9 +58,9 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             encryptionSettings: [
                 {
                     diskEncryptionKey: {
-                        secretUrl: "https://test.vault.azure.net/secrets/test/1234567890",
+                        secretUrl: enums.keyvault.SecretUrl,
                         sourceVault: {
-                            id: "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/test-rg/providers/Microsoft.KeyVault/vaults/test",
+                            id: enums.keyvault.SourceVaultId,
                         },
                     },
                 },
@@ -69,11 +69,11 @@ function getResourceValidationArgs(): ResourceValidationArgs {
     });
 }
 
-describe("azurenative.compute.Disk.enableDiskEncryption", function () {
-    const policy = policies.azurenative.compute.Disk.enableDiskEncryption;
+describe("azurenative.compute.Disk.disallowUnencryptedDisk", function () {
+    const policy = policies.azurenative.compute.Disk.disallowUnencryptedDisk;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azurenative-compute-disk-enable-disk-encryption");
+        assertResourcePolicyName(policy, "azurenative-compute-disk-disallow-unencrypted-disk");
     });
 
     it("registration", async function () {

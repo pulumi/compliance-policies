@@ -22,3 +22,8 @@ export enum resourcegroup {
     ResourceGroupName = "ressourceGroupName",
     Location = "westeurope",
 }
+
+export enum keyvault {
+    SourceVaultId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ressourceGroupName/providers/Microsoft.KeyVault/vaults/ressourceGroupName",
+    SecretUrl = "https://ressourceGroupName.vault.azure.net/secrets/ressourceGroupName/00000000000000000000000000000000",
+}

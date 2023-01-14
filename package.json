@@ -1,0 +1,13 @@
+{
+    "devDependencies": {
+        "markdownlint": "^0.27.0",
+        "markdownlint-cli2": "^0.6.0"
+    },
+    "files": [
+        "*.md",
+        "docs/**/*"
+    ],
+    "scripts": {
+        "lint": "markdownlint-cli2 README.md docs/"
+    }
+}

@@ -1,23 +1,19 @@
 # Pulumi Policies
 
-This repository contains a growing set of Pulumi policies to validate your infrastructure using Policy-as-Code.
+This repository contains a growing set of premium policies to validate your infrastructure using Policy-as-Code.
 
 ## Current project state
 
-The project is currently in a `alpha` state and is subject to potentially breaking changes. However, feedback and suggestions are most welcome to help shape how this product will look like.
+The project is currently in an `alpha` state and is subject to breaking changes. However, feedback and suggestions are welcome to help shape how this product will look like.
 
 ## Policies
 
-The [`policies/docs/`](policies/docs/) folder contains all individual policies for each supported provider and the corresponding unit tests.
+Folders named `vendor-*` contain individual policies for each supported vendor. Each vendor may contain one or more Pulumi provider.
 
-A Policy contains specific logic you would like to enforce. For example, you may want to prevent the creation of public, world-readable storage objects. (e.g. on AWS S3, Azure BlobStore, etc.) or prevent the creation of a virtual machine without the proper security groups in-place.
-
-For more information, see our [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy).
+Read more about adding new policies in [`docs/policies/`](docs/policies/) and in the official [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy).
 
 ## Policy packs
 
-The [`policy-packs/`](policy-packs/) folder contains the policies assembled into Policy packs.
+The [`policy-packs/`](policy-packs/) folder contains groups of policies assembled into Policy Packs.
 
-A Policy Pack can contain one or more policies to enforce. Packs provide a way to group together similar policies. For example, you may decide to have one pack with AWS policies and another with Kubernetes-specific policies. That being said, there are no restrictions on which policies you combine within a pack, and you should pack them however makes sense for your organization.
-
-For more information, see our [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy-pack).
+Read more about creating new Policy Packs in [`docs/policy-packs/`](docs/policy-packs/) and in the official [documentation](https://www.pulumi.com/docs/guides/crossguard/core-concepts/#policy-pack).

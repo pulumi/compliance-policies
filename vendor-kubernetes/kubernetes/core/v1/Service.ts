@@ -63,3 +63,30 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
     severity: "low",
     topics: ["usability"],
 });
+
+/**
+ * Checks that Kubernetes Services do not use a LoadBalancer as service type.
+ *
+ * This rule ensures that the kubernetes applications are not exposed using service type LoadBalancer as an additional load balancer is created each time when any new application is exposed through this service type. Instead it is recommended to the clusterIP or Ingress to expose the same set of services without undergoing a cost overhead.
+ *
+ * @severity Low
+ * @link https://github.com/datreeio/datree/blob/main/examples/Cost_Reduction/README.md
+ */
+export const disallowLoadBalancer: ResourceValidationPolicy = policiesManagement.registerPolicy({
+    resourceValidationPolicy: {
+        name: "kubernetes-core-v1-service-disallow-load-balancer",
+        description: "Checks that Kubernetes Services do not use a LoadBalancer as service type.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(k8s.core.v1.Service, (service, args, reportViolation) => {
+            if (service.spec) {
+                if (service.spec.type && service.spec.type === "LoadBalancer") {
+                    reportViolation("Kubernetes Services should not use a 'LoadBalancer' as a service type.");
+                }
+            }
+        }),
+    },
+    vendors: ["kubernetes"],
+    services: ["core", "service"],
+    severity: "low",
+    topics: ["cost", "network"],
+});

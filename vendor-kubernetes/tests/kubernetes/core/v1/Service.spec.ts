@@ -48,6 +48,7 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                 protocol: "TCP",
                 targetPort: 9376,
             }],
+            type: "ClusterIP",
         },
     });
 }
@@ -86,13 +87,69 @@ describe("kubernetes.core.v1.Service.configureRecommendedLabels", function() {
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        args.props.metadata = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should use the recommended labels." });
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
+        args.props.metadata = undefined;
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should use the recommended labels." });
+    });
+
+    it("#3", async function() {
+        const args = getResourceValidationArgs();
         args.props.metadata.labels = {"department": "finances"};
         await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should have the recommended labels." });
     });
+});
+
+describe("kubernetes.core.v1.Service.disallowLoadBalancer", function() {
+    const policy = policies.kubernetes.core.v1.Service.disallowLoadBalancer;
+
+    it("name", async function() {
+        assertResourcePolicyName(policy, "kubernetes-core-v1-service-disallow-load-balancer");
+    });
+
+    it("registration", async function() {
+        assertResourcePolicyIsRegistered(policy);
+    });
+
+    it("metadata", async function() {
+        assertResourcePolicyRegistrationDetails(policy, {
+            vendors: ["kubernetes"],
+            services: ["core", "service"],
+            severity: "low",
+            topics: ["cost", "network"],
+        });
+    });
+
+    it("enforcementLevel", async function() {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async function() {
+        assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title, __filename);
+    });
+
+    it("#1", async function() {
+        const args = getResourceValidationArgs();
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#2", async function() {
+        const args = getResourceValidationArgs();
+        args.props.spec.type = "LoadBalancer";
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes Services should not use a 'LoadBalancer' as a service type." });
+    });
+
+    it("#3", async function() {
+        const args = getResourceValidationArgs();
+        args.props.spec.type = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
+
 });

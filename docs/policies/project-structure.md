@@ -1,6 +1,9 @@
 # Project structure
 
-The project is structured to follow the same way providers are organized. This structure is also found in the way how policies are grouped and organized throughout the entire policy code base. The goal is to easily find policies as Pulumi users are already used to finding resources within their providers.
+The project is structured to follow the same way providers are organized. This structure is also
+found in the way how policies are grouped and organized throughout the entire policy code base.
+The goal is to easily find policies as Pulumi users are already used to finding resources within
+their providers.
 
 ```
 ├── bin                                         <- transpiled TypeScript files into JavaScript

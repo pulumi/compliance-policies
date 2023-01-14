@@ -1,12 +1,15 @@
-# Unit tests
+# Unit test suites
 
-Unit tests are performed using [Mocha](https://mochajs.org/). All unit tests are stored in `tests/`. See the [project structure](../project-structure.md) above to understand how unit tests are organized.
+Unit tests are performed using [Mocha](https://mochajs.org/). All unit tests are stored in `tests/`.
+See the [project structure](../project-structure.md) above to understand how unit tests are organized.
 
-When a new policy is added it should always be accompanied by the relevant unit tests as described below. Additionally, all `reportViolation` should be tested.
+When a new policy is added it should always be accompanied by the relevant unit tests as described
+below. Additionally, all `reportViolation` should be tested.
 
 ## Building a compliant resource
 
-Where possible, a single compliant resource (ie, a resource that passes all the unit tests) should be created per unit test file. This is the recommended approach to reduce complexity and ease maintenance.
+Where possible, a single compliant resource (ie, a resource that passes all the unit tests) should
+be created per unit test file. This is the recommended approach to reduce complexity and ease maintenance.
 
 Here is an example for an EBS Volume
 
@@ -23,7 +26,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
 
 ## Using Enums
 
-In each provider unit test folder, there's a file named `enums.ts`. This file contains `enum` organized per service as a way to avoid hardcoding values in the unit tests.
+In each provider unit test folder, there's a file named `enums.ts`. This file contains `enum`
+organized per service as a way to avoid hardcoding values in the unit tests.
 
 Developers are encouraged to use these predefined values and add more of them over time.
 
@@ -49,7 +53,8 @@ export enum iam {
 
 ## Unit tests
 
-Unit tests are built following the same model. A `describe()` function contains all the tests for a **single policy**. If the resource has multiple policies, then `describe()` is used multiple times.
+Unit tests are built following the same model. A `describe()` function contains all the tests for a
+**single policy**. If the resource has multiple policies, then `describe()` is used multiple times.
 
 The suite name passed to `describe()` is the actual policy code path as the policy is loaded in the suite.
 
@@ -78,7 +83,8 @@ Each policy should be tested against a few common unit tests.
 
 In addition to common unit tests, 2 or more custom tests should be written.
 
-First, the [compliant resource](#building-a-compliant-resource) should be tested to ensure no violation report is returned.
+First, the [compliant resource](#building-a-compliant-resource) should be tested to ensure no
+violation report is returned.
 
 ```ts
     it("#1", async () => {
@@ -99,17 +105,18 @@ Then, each violation report should be triggered and tested accordingly.
 
 ### Increase NodeJS memory
 
-When running unit tests, NodeJS may run out of memory due to `azure-native`. To increase the memory, use the following command:
+When running unit tests, NodeJS may run out of memory due to `azure-native`. To increase the memory,
+use the following command:
 
 ```bash
 export NODE_OPTIONS="--max-old-space-size=8192"
 ```
 
-### Unit tests
+### Running unit tests
 
 Run the tests with follwing command:
 
 ```bash
-cd policies
+cd vendor-?
 make tests
 ```

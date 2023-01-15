@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as apps from "./apps";
-export * as core from "./core";
-export * as policy from "./policy";
+export * as v1 from "./v1";

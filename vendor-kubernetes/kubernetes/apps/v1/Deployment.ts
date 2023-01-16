@@ -29,7 +29,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * Checks that Kubernetes Deployments have at least three replicas.
  *
  * @severity High
- * @link https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+ * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
 export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {

@@ -26,30 +26,7 @@ import {
 import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 /**
- * Checks that Kubernetes Deployments have at least three replicas.
- *
- * @severity High
- * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
- */
-export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
-    resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
-        description: "Checks that Kubernetes Deployments have at least three replicas.",
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (!deployment.spec || !deployment.spec.replicas || deployment.spec.replicas < 3) {
-                reportViolation("Kubernetes Deployments should have at least three replicas.");
-            }
-        }),
-    },
-    vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
-    severity: "high",
-    topics: ["availability"],
-});
-
-/**
- * Checks that Kubernetes Deployments have the recommended labels.
+ * Checks that Kubernetes DaemonSets have the recommended labels.
  *
  * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
@@ -57,14 +34,14 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
  */
 export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
-        description: "Checks that Kubernetes Deployments have the recommended labels.",
+        name: "kubernetes-apps-v1-daemonset-configure-recommended-labels",
+        description: "Checks that Kubernetes DaemonSets have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (!deployment.metadata || !deployment.metadata.labels) {
-                reportViolation("Kubernetes Deployments should use the recommended labels.");
+        validateResource: validateResourceOfType(k8s.apps.v1.DaemonSet, (daemonSet, args, reportViolation) => {
+            if (!daemonSet.metadata || !daemonSet.metadata.labels) {
+                reportViolation("Kubernetes DaemonSets should use the recommended labels.");
             } else {
-                for (const key of Object.keys(deployment.metadata?.labels)) {
+                for (const key of Object.keys(daemonSet.metadata?.labels)) {
                     const recommendedLabels = [
                         "app.kubernetes.io/name",
                         "app.kubernetes.io/instance",
@@ -75,20 +52,20 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
                     ];
 
                     if (recommendedLabels.indexOf(key) === -1) {
-                        reportViolation("Kubernetes Deployments should have the recommended labels.");
+                        reportViolation("Kubernetes DaemonSets should have the recommended labels.");
                     }
                 }
             }
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["apps", "daemonset"],
     severity: "low",
     topics: ["usability"],
 });
 
 /**
- * Checks that Kubernetes Deployments run pods with a read-only filesystem.
+ * Checks that Kubernetes DaemonSets run pods with a read-only filesystem.
  *
  * An immutable root filesystem prevents applications from writing to their local disk. This is
  * desirable in the event of an intrusion as the attacker will not be able to tamper with the
@@ -99,14 +76,14 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
  */
 export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-enable-read-only-root-filesystem",
-        description: "Checks that Kubernetes Deployments run pods with a read-only filesystem.",
+        name: "kubernetes-apps-v1-daemonset-enable-read-only-root-filesystem",
+        description: "Checks that Kubernetes DaemonSets run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (deployment.spec && deployment.spec.template.spec && deployment.spec.template.spec.containers.length > 0) {
-                deployment.spec.template.spec.containers.forEach(container => {
+        validateResource: validateResourceOfType(k8s.apps.v1.DaemonSet, (daemonSet, args, reportViolation) => {
+            if (daemonSet.spec && daemonSet.spec.template.spec && daemonSet.spec.template.spec.containers.length > 0) {
+                daemonSet.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
-                        reportViolation("Kubernetes Deployments should run their pods using a read-only filesystem.");
+                        reportViolation("Kubernetes DaemonSets should run their pods using a read-only filesystem.");
                     }
                 });
             }
@@ -114,7 +91,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesMa
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["apps", "daemonset"],
     severity: "high",
     topics: ["runtime", "security"],
 });

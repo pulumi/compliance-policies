@@ -18,7 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DaemonSet from "./DaemonSet";
-export * as Deployment from "./Deployment";
-export * as ReplicaSet from "./ReplicaSet";
-export * as StatefulSet from "./StatefulSet";
+export * as v1 from "./v1";

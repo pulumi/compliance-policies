@@ -31,7 +31,7 @@ import { ResourceValidationArgs } from "@pulumi/policy";
  * @returns A `ResourceValidationArgs`.
  */
 function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(kubernetes.apps.v1.Deployment, {
+    return createResourceValidationArgs(kubernetes.batch.v1.CronJob, {
         metadata: {
             labels: {
                 "app.kubernetes.io/name": "MyApp",
@@ -43,13 +43,8 @@ function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         spec: {
-            replicas: 3,
-            selector: {
-                matchLabels: {
-                    app: "nginx",
-                },
-            },
-            template: {
+            schedule: "@hourly",
+            jobTemplate: {
                 metadata: {
                     labels: {
                         "app.kubernetes.io/name": "MyApp",
@@ -61,27 +56,31 @@ function getResourceValidationArgs(): ResourceValidationArgs {
                     },
                 },
                 spec: {
-                    containers: [{
-                        image: "nginx:1.14.2",
-                        name: "nginx",
-                        ports: [{
-                            containerPort: 80,
-                        }],
-                        securityContext: {
-                            readOnlyRootFilesystem: true,
+                    template: {
+                        spec: {
+                            containers: [{
+                                image: "nginx:1.14.2",
+                                name: "nginx",
+                                ports: [{
+                                    containerPort: 80,
+                                }],
+                                securityContext: {
+                                    readOnlyRootFilesystem: true,
+                                },
+                            }],
                         },
-                    }],
+                    },
                 },
             },
         },
     });
 }
 
-describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function() {
-    const policy = policies.kubernetes.apps.v1.Deployment.configureMinimumReplicaCount;
+describe("kubernetes.batch.v1.CronJob.configureRecommendedLabels", function() {
+    const policy = policies.kubernetes.batch.v1.CronJob.configureRecommendedLabels;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "kubernetes-apps-v1-deployment-configure-minimum-replica-count");
+        assertResourcePolicyName(policy, "kubernetes-batch-v1-cronjob-configure-recommended-labels");
     });
 
     it("registration", async function() {
@@ -91,51 +90,7 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "deployment"],
-            severity: "high",
-            topics: ["availability"],
-        });
-    });
-
-    it("enforcementLevel", async function() {
-        assertResourcePolicyEnforcementLevel(policy);
-    });
-
-    it("description", async function() {
-        assertResourcePolicyDescription(policy);
-    });
-
-    it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title, __filename);
-    });
-
-    it("#1", async function() {
-        const args = getResourceValidationArgs();
-        await assertNoResourceViolations(policy, args);
-    });
-
-    it("#2", async function() {
-        const args = getResourceValidationArgs();
-        args.props.spec.replicas = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Kubernetes Deployments should have at least three replicas." });
-    });
-});
-
-describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() {
-    const policy = policies.kubernetes.apps.v1.Deployment.configureRecommendedLabels;
-
-    it("name", async function() {
-        assertResourcePolicyName(policy, "kubernetes-apps-v1-deployment-configure-recommended-labels");
-    });
-
-    it("registration", async function() {
-        assertResourcePolicyIsRegistered(policy);
-    });
-
-    it("metadata", async function() {
-        assertResourcePolicyRegistrationDetails(policy, {
-            vendors: ["kubernetes"],
-            services: ["apps", "deployment"],
+            services: ["batch", "cronjob"],
             severity: "low",
             topics: ["usability"],
         });
@@ -161,21 +116,21 @@ describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() 
     it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Kubernetes Deployments should use the recommended labels." });
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes CronJobs should use the recommended labels." });
     });
 
     it("#3", async function() {
         const args = getResourceValidationArgs();
         args.props.metadata.labels = {"department": "finances"};
-        await assertHasResourceViolation(policy, args, { message: "Kubernetes Deployments should have the recommended labels." });
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes CronJobs should have the recommended labels." });
     });
 });
 
-describe("kubernetes.apps.v1.Deployment.enableReadOnlyRootFilesystem", function() {
-    const policy = policies.kubernetes.apps.v1.Deployment.enableReadOnlyRootFilesystem;
+describe("kubernetes.batch.v1.CronJob.enableReadOnlyRootFilesystem", function() {
+    const policy = policies.kubernetes.batch.v1.CronJob.enableReadOnlyRootFilesystem;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "kubernetes-apps-v1-deployment-enable-read-only-root-filesystem");
+        assertResourcePolicyName(policy, "kubernetes-batch-v1-cronjob-enable-read-only-root-filesystem");
     });
 
     it("registration", async function() {
@@ -185,7 +140,7 @@ describe("kubernetes.apps.v1.Deployment.enableReadOnlyRootFilesystem", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "deployment"],
+            services: ["batch", "cronjob"],
             severity: "high",
             topics: ["runtime", "security"],
         });
@@ -210,8 +165,7 @@ describe("kubernetes.apps.v1.Deployment.enableReadOnlyRootFilesystem", function(
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Kubernetes Deployments should run their pods using a read-only filesystem." });
+        args.props.spec.jobTemplate.spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem = undefined;
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes CronJobs should run their pods using a read-only filesystem." });
     });
-
 });

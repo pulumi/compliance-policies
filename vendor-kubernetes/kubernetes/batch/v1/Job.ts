@@ -26,30 +26,7 @@ import {
 import { policiesManagement } from "@pulumi-premium-policies/policy-management";
 
 /**
- * Checks that Kubernetes Deployments have at least three replicas.
- *
- * @severity High
- * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
- */
-export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
-    resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
-        description: "Checks that Kubernetes Deployments have at least three replicas.",
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (!deployment.spec || !deployment.spec.replicas || deployment.spec.replicas < 3) {
-                reportViolation("Kubernetes Deployments should have at least three replicas.");
-            }
-        }),
-    },
-    vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
-    severity: "high",
-    topics: ["availability"],
-});
-
-/**
- * Checks that Kubernetes Deployments have the recommended labels.
+ * Checks that Kubernetes Jobs have the recommended labels.
  *
  * @severity Low
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
@@ -57,14 +34,14 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
  */
 export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
-        description: "Checks that Kubernetes Deployments have the recommended labels.",
+        name: "kubernetes-batch-v1-job-configure-recommended-labels",
+        description: "Checks that Kubernetes Jobs have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (!deployment.metadata || !deployment.metadata.labels) {
-                reportViolation("Kubernetes Deployments should use the recommended labels.");
+        validateResource: validateResourceOfType(k8s.batch.v1.Job, (job, args, reportViolation) => {
+            if (!job.metadata || !job.metadata.labels) {
+                reportViolation("Kubernetes Jobs should use the recommended labels.");
             } else {
-                for (const key of Object.keys(deployment.metadata?.labels)) {
+                for (const key of Object.keys(job.metadata?.labels)) {
                     const recommendedLabels = [
                         "app.kubernetes.io/name",
                         "app.kubernetes.io/instance",
@@ -75,20 +52,20 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
                     ];
 
                     if (recommendedLabels.indexOf(key) === -1) {
-                        reportViolation("Kubernetes Deployments should have the recommended labels.");
+                        reportViolation("Kubernetes Jobs should have the recommended labels.");
                     }
                 }
             }
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["batch", "job"],
     severity: "low",
     topics: ["usability"],
 });
 
 /**
- * Checks that Kubernetes Deployments run pods with a read-only filesystem.
+ * Checks that Kubernetes Jobs run pods with a read-only filesystem.
  *
  * An immutable root filesystem prevents applications from writing to their local disk. This is
  * desirable in the event of an intrusion as the attacker will not be able to tamper with the
@@ -99,22 +76,21 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
  */
 export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {
-        name: "kubernetes-apps-v1-deployment-enable-read-only-root-filesystem",
-        description: "Checks that Kubernetes Deployments run pods with a read-only filesystem.",
+        name: "kubernetes-batch-v1-job-enable-read-only-root-filesystem",
+        description: "Checks that Kubernetes Jobs run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
-            if (deployment.spec && deployment.spec.template.spec && deployment.spec.template.spec.containers.length > 0) {
-                deployment.spec.template.spec.containers.forEach(container => {
+        validateResource: validateResourceOfType(k8s.batch.v1.Job, (job, args, reportViolation) => {
+            if (job.spec && job.spec.template && job.spec.template.spec && job.spec.template.spec.containers.length > 0) {
+                job.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
-                        reportViolation("Kubernetes Deployments should run their pods using a read-only filesystem.");
+                        reportViolation("Kubernetes Jobs should run their pods using a read-only filesystem.");
                     }
                 });
             }
-
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["batch", "job"],
     severity: "high",
     topics: ["runtime", "security"],
 });

@@ -19,5 +19,6 @@
 // SOFTWARE.
 
 export * as apps from "./apps";
+export * as batch from "./batch";
 export * as core from "./core";
 export * as policy from "./policy";

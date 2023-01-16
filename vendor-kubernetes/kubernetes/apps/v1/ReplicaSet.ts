@@ -86,3 +86,34 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
     severity: "low",
     topics: ["usability"],
 });
+
+/**
+ * Checks that Kubernetes ReplicaSets run pods with a read-only filesystem.
+ *
+ * An immutable root filesystem prevents applications from writing to their local disk. This is
+ * desirable in the event of an intrusion as the attacker will not be able to tamper with the
+ * filesystem or write foreign executables to disk.
+ *
+ * @severity High
+ * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+ */
+export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
+    resourceValidationPolicy: {
+        name: "kubernetes-apps-v1-replicaset-enable-read-only-root-filesystem",
+        description: "Checks that Kubernetes ReplicaSets run pods with a read-only filesystem.",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaset, args, reportViolation) => {
+            if (replicaset.spec && replicaset.spec.template && replicaset.spec.template.spec && replicaset.spec.template.spec.containers.length > 0) {
+                replicaset.spec.template.spec.containers.forEach(container => {
+                    if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
+                        reportViolation("Kubernetes ReplicaSets should run their pods using a read-only filesystem.");
+                    }
+                });
+            }
+        }),
+    },
+    vendors: ["kubernetes"],
+    services: ["apps", "replicaset"],
+    severity: "high",
+    topics: ["runtime", "security"],
+});

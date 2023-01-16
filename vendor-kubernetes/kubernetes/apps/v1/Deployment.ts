@@ -43,7 +43,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "replicaset"],
+    services: ["apps", "deployment"],
     severity: "high",
     topics: ["availability"],
 });

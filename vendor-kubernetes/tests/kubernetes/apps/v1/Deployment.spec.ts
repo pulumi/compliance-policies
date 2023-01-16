@@ -88,7 +88,7 @@ describe("kubernetes.apps.v1.Deployment.configureMinimumReplicaCount", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "replicaset"],
+            services: ["apps", "deployment"],
             severity: "high",
             topics: ["availability"],
         });

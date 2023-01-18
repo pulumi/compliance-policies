@@ -19,3 +19,4 @@
 // SOFTWARE.
 
 export * as compute from "./compute";
+export * as containerservice from "./containerservice";

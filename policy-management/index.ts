@@ -21,6 +21,9 @@
 export * from "./version";
 
 import * as policy from "@pulumi/policy";
+import { loadPlugins } from "./plugin";
+
+export { loadPlugins } from "./plugin";
 
 export interface FilterPolicyArgs {
     vendors?: string[];
@@ -439,3 +442,14 @@ export function valToBoolean(val: boolean | string | undefined): boolean | undef
         return undefined;
     }
 }
+
+(() => {
+    // This anonymous function is used to dynamically load official
+    // policies that match the pattern shown below. During the loading
+    // process, this policy-manager version is compared to the one
+    // included in the policy package. An exception is thrown if the
+    // values don't match.
+    // This is done to ensure that only a single policy-manager exists
+    // and all policies are registered in that unique instance.
+    loadPlugins(["@pulumi-premium-policies/*-policies"]);
+})();

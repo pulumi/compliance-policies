@@ -18,6 +18,7 @@
     },
     "include": [
         "index.ts",
+        "plugin.ts",
         "version.ts"
     ],
     "exclude": [],

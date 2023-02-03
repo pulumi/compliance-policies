@@ -18,7 +18,7 @@
         "kubernetes"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-management": "^0.0.20",
+        "@pulumi-premium-policies/policy-management": "^0.0.21",
         "@pulumi/aws": "5",
         "@pulumi/aws-native": "^0.44.0",
         "@pulumi/policy": "^1.5.0",

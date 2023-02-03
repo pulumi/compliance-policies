@@ -18,6 +18,8 @@
     },
     "include": [
         "index.ts",
+        "register.ts",
+        "version.ts",
         "aws/**/*",
         "tests/**/*.ts",
     ],

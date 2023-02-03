@@ -42,7 +42,7 @@ export function loadPlugins(globPatterns: Array<string>) {
 
     const nodeModulePath: string = `${path.dirname(packageJsonPath)}/node_modules`;
 
-    console.error(`${packageJsonPath} -- ${module.filename}`);
+    // console.error(`${packageJsonPath} -- ${module.filename}`);
 
     const packageJsonContent = fs.readFileSync(packageJsonPath, "utf-8");
     if (packageJsonContent === "") {

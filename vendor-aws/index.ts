@@ -19,6 +19,7 @@
 // SOFTWARE.
 
 export * from "./version";
+export { version as policyManagerVersion } from "@pulumi-premium-policies/policy-management";
 
 export * as aws from "./aws";
 export * as awsnative from "./awsnative";

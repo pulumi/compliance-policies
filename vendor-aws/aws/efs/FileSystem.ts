@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EFS File Systems do not have an unencrypted file system.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html
  */
-export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-efs-filesystem-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
@@ -54,7 +54,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policiesM
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-efs-filesystem-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
@@ -77,7 +77,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
  * @severity High
  * @link https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
  */
-export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-efs-filesystem-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",

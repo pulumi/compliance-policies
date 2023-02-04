@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ECR repositories have 'scan-on-push' configured.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
-export const configureImageScan: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureImageScan: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-configure-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' configured.",
@@ -55,7 +55,7 @@ export const configureImageScan: ResourceValidationPolicy = policiesManagement.r
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
-export const enableImageScan: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableImageScan: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-enable-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' enabled.",
@@ -78,7 +78,7 @@ export const enableImageScan: ResourceValidationPolicy = policiesManagement.regi
  * @severity High
  * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
-export const disallowMutableImage: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowMutableImage: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-disallow-mutable-image",
         description: "Checks that ECR Repositories have immutable images enabled.",
@@ -101,7 +101,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policiesManagement
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
-export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedRepository: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-disallow-unencrypted-repository",
         description: "Checks that ECR Repositories are encrypted.",
@@ -124,7 +124,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policiesM
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-configure-customer-managed-key",
         description: "Checks that ECR repositories use a customer-managed KMS key.",

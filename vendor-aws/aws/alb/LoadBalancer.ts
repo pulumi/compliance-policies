@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ALB loadbalancers have access logging enabled.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity medium
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-alb-loadbalancer-enable-access-logging",
         description: "Checks that ALB loadbalancers have access logging enabled.",
@@ -54,7 +54,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.
  * @severity medium
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-alb-loadbalancer-configure-access-logging",
         description: "Checks that ALB loadbalancers have access logging configured and enabled.",

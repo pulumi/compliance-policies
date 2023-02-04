@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement, valToBoolean } from "@pulumi-premium-policies/policy-management";
+import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EC2 Launch Templates do not have public IP addresses.
@@ -31,7 +31,7 @@ import { policiesManagement, valToBoolean } from "@pulumi-premium-policies/polic
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicIp: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
@@ -59,7 +59,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.reg
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-disallow-unencrypted-block-device",
         description: "Checks that EC2 Launch Templates do not have unencrypted block device.",
@@ -87,7 +87,7 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policies
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-configure-customer-managed-key",
         description: "Check that encrypted EBS volume uses a customer-managed KMS key.",

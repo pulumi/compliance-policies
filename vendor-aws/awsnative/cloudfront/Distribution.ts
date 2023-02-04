@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that any CloudFront distributions have access logging enabled.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-enable-access-logging",
         description: "Checks that any CloudFront distributions have access logging enabled.",
@@ -54,7 +54,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policiesManagement.
  * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-access-logging",
         description: "Checks that any CloudFront distributions have access logging configured.",
@@ -77,7 +77,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
  * @severity High
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
-export const configureWafAcl: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureWafAcl: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-waf-acl",
         description: "Checks that CloudFront distributions have a WAF ACL associated.",
@@ -100,7 +100,7 @@ export const configureWafAcl: ResourceValidationPolicy = policiesManagement.regi
  * @severity Critical
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
-export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-disallow-unencrypted-traffic",
         description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
@@ -128,7 +128,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
-export const configureSecureTls: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTls: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
@@ -151,7 +151,7 @@ export const configureSecureTls: ResourceValidationPolicy = policiesManagement.r
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const enableTlsToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableTlsToOrigin: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
@@ -176,7 +176,7 @@ export const enableTlsToOrigin: ResourceValidationPolicy = policiesManagement.re
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
-export const configureSecureTlsToOrigin: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTlsToOrigin: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",

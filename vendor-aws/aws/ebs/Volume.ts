@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EBS volumes are encrypted.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedVolume: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ebs-volume-disallow-unencrypted-volume",
         description: "Checks that EBS volumes are encrypted.",
@@ -54,7 +54,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policiesManag
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ebs-volume-configure-customer-managed-key",
         description: "Check that encrypted EBS volumes use a customer-managed KMS key.",

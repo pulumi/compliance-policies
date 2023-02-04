@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena NamedQueries have a description.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://docs.aws.amazon.com/athena/latest/ug/saved-queries.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-athena-namedquery-missing-description",
         description: "Checks that Athena NamedQueries have a description.",

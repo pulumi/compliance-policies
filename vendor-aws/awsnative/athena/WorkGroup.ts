@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena WorkGroups have a description.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-missing-description",
         description: "Checks that Athena WorkGroups have a description.",
@@ -54,7 +54,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  * @severity High
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
-export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-disallow-unencrypted-workgroup",
         description: "Checks that Athena Workgroups are encrypted.",
@@ -84,7 +84,7 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policiesMa
  * @severity Low
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-configure-customer-managed-key",
         description: "Checks that Athena Workgroups use a customer-managed-key.",
@@ -114,7 +114,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
  * @severity High
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
-export const enforceConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enforceConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-enforce-configuration",
         description: "Checks that Athena Workgroups enforce their configuration to their clients.",

@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that S3 Bucket ACLs don't allow 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
-export const disallowPublicRead: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicRead: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-disallow-public-read",
         description: "Checks that S3 Bucket ACLs don't allow 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.",
@@ -58,7 +58,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policiesManagement.r
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
-export const enableReplicationConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableReplicationConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-enable-replication-configuration",
         description: "Checks that S3 Bucket have cross-region replication enabled.",
@@ -81,7 +81,7 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policies
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
-export const configureReplicationConfiguration: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureReplicationConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-configure-replication-configuration",
         description: "Checks that S3 Bucket have cross-region replication configured.",
@@ -108,7 +108,7 @@ export const configureReplicationConfiguration: ResourceValidationPolicy = polic
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html
  */
-export const enableServerSideEncryption: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableServerSideEncryption: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-enable-server-side-encryption",
         description: "Check that S3 Bucket Server-Side Encryption (SSE) is enabled.",
@@ -131,7 +131,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
-export const configureServerSideEncryptionKms: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureServerSideEncryptionKms: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-configure-server-side-encryption-kms",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.",
@@ -158,7 +158,7 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = polici
  * @severity Low
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html
  */
-export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-configure-server-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
@@ -187,7 +187,7 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
  * @severity Medium
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html
  */
-export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-enable-server-side-encryption-bucket-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a Bucket key.",

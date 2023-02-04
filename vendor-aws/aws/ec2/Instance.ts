@@ -23,14 +23,14 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EC2 instances do not have a public IP address.
  *
  * @severity High
  */
-export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicIp: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-public-ip",
         description: "Checks that EC2 instances do not have a public IP address.",
@@ -54,7 +54,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.reg
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-unencrypted-root-block-device",
         description: "Checks that EC2 instances does not have unencrypted root volumes.",
@@ -77,7 +77,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-unencrypted-block-device",
         description: "Checks that EC2 instances do not have unencrypted block devices.",

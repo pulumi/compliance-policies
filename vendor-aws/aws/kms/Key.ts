@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that KMS Keys have key rotation enabled.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Medium
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
  */
-export const enableKeyRotation: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableKeyRotation: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
@@ -55,7 +55,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policiesManagement.re
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html
  * https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-kms-key-missing-description",
         description: "Checks that KMS Keys have a description.",
@@ -82,7 +82,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  * @severity Critical
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-bypass-policy-lockout-safety-check
  */
-export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that KMS Keys do not bypass the key policy lockout safety check.",

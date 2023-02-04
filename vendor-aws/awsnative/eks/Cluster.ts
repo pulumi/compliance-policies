@@ -24,7 +24,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EKS Cluster Encryption Config is enabled.
@@ -33,7 +33,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @link https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/
  * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws_native-properties-eks-cluster-encryptionconfig.html
  */
-export const enableClusterEncryptionConfig: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-eks-cluster-enable-cluster-encryption-config",
         description: "Check that EKS Cluster Encryption Config is enabled.",
@@ -56,7 +56,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policiesM
  * @severity Critical
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
-export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "awsnative-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",

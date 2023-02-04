@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that all security groups have a description.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-missing-description",
         description: "Checks that all security groups have a description.",
@@ -54,7 +54,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
-export const missingIngressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingIngressRuleDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-missing-ingress-rule-description",
         description: "Checks that all Ingress Security Groups rules have a description.",
@@ -81,7 +81,7 @@ export const missingIngressRuleDescription: ResourceValidationPolicy = policiesM
  * @severity Low
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
-export const missingEgressRuleDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingEgressRuleDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-missing-egress-rule-description",
         description: "Checks that all Egress Security Groups rules have a description.",
@@ -108,7 +108,7 @@ export const missingEgressRuleDescription: ResourceValidationPolicy = policiesMa
  * @severity Critical
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
-export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-disallow-inbound-http-traffic",
         description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
@@ -138,7 +138,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policiesMana
  * @severity Critical
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
-export const disallowPublicInternetIngress: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicInternetIngress: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-disallow-public-internet-ingress",
         description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",

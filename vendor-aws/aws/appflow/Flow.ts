@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that AppFlow Flow uses a customer-managed KMS key.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html#encryption-transit
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-appflow-flow-configure-customer-managed-key",
         description: "Check that AppFlow Flow uses a customer-managed KMS key.",
@@ -54,7 +54,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policiesMan
  * @severity Low
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/create-flow-console.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-appflow-flow-missing-description",
         description: "Checks that AppFlow Flows have a description.",

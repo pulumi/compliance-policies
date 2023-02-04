@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EC2 Launch Configurations do not have a public IP address.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
-export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicIp: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchconfiguration-disallow-public-ip",
         description: "Checks that EC2 Launch Configurations do not have a public IP address.",
@@ -54,7 +54,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policiesManagement.reg
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html
  */
-export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchconfiguration-disallow-unencrypted-root-block-device",
         description: "Checks that EC2 launch configuration do not have unencrypted root block device.",
@@ -77,7 +77,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
  * @severity High
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
-export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-ec2-launchconfiguration-disallow-unencrypted-block-device",
         description: "Checks that EC2 Launch Configurations do not have unencrypted block devices.",

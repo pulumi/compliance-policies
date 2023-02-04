@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Databases have a description.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://docs.aws.amazon.com/athena/latest/ug/creating-databases.html
  */
-export const missingDescription: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-athena-database-missing-description",
         description: "Checks that Athena Databases have a description.",
@@ -54,7 +54,7 @@ export const missingDescription: ResourceValidationPolicy = policiesManagement.r
  * @severity High
  * @link https://docs.aws.amazon.com/athena/latest/ug/encryption.html
  */
-export const disallowUnencryptedDatabase: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedDatabase: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-athena-database-disallow-unencrypted-database",
         description: "Checks that Athena Databases storage is encrypted.",
@@ -77,7 +77,7 @@ export const disallowUnencryptedDatabase: ResourceValidationPolicy = policiesMan
  * @severity Low
  * @link https://docs.aws.amazon.com/athena/latest/ug/encryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-athena-database-configure-customer-managed-key",
         description: "Checks that Athena Databases storage uses a customer-managed-key.",

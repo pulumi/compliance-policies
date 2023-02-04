@@ -20,9 +20,9 @@
 
 import "mocha";
 import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "@pulumi-premium-policies/unit-test-helpers";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
-describe("policiesManagement.general", function() {
+describe("policyManager.general", function() {
 
     it("#1", async function() {
         assertHasRegisteredPolicies();
@@ -41,7 +41,7 @@ describe("policiesManagement.general", function() {
     });
 
     it("#4", async function() {
-        policiesManagement.resetPolicyfilter();
+        policyManager.resetPolicySelector();
         assertHasAllRemainingPolicies();
     });
 
@@ -51,8 +51,8 @@ describe("policiesManagement.general", function() {
      * policies are stored in their own npm packages though.
      */
     it("#5", async function() {
-        const policiesStats = policiesManagement.getStats();
-        const selection = policiesManagement.filterPolicies({
+        const policiesStats = policyManager.getStats();
+        const selection = policyManager.selectPolicies({
             services: ["ec2"],
         });
         assertHasRemainingPolicies();
@@ -60,8 +60,8 @@ describe("policiesManagement.general", function() {
     });
 
     it("#6", async function() {
-        const policiesStats = policiesManagement.getStats();
-        policiesManagement.resetPolicyfilter();
+        const policiesStats = policyManager.getStats();
+        policyManager.resetPolicySelector();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);
     });

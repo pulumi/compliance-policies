@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that RDS Cluster Instances have performance insights enabled.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Low
  * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const enablePerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enablePerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-clusterinstance-enable-performance-insights",
         description: "Checks that RDS Cluster Instances have performance insights enabled.",
@@ -54,7 +54,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policiesManag
  * @severity High
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-clusterinstance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
@@ -77,7 +77,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
  * @severity Critical
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-rds-clusterinstance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",

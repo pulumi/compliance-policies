@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Critical
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html
  */
-export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-alb-listener-disallow-unencrypted-traffic",
         description: "Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.",
@@ -54,7 +54,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
  */
-export const configureSecureTls: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureSecureTls: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-alb-listener-configure-secure-tls",
         description: "Checks that ALB Load Balancers uses secure/modern TLS encryption.",

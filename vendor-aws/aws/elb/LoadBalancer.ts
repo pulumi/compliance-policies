@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity Critical
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-https-load-balancers.html
  */
-export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-disallow-unencrypted-traffic",
         description: "Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.",
@@ -56,7 +56,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-disable-az.html
  */
-export const configureMultiAvailabilityZone: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureMultiAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-configure-multi-availability-zone",
         description: "Check that ELB Load Balancers uses more than one availability zone.",
@@ -79,7 +79,7 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policies
  * @severity Medium
  * @ link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/access-log-collection.html
  */
-export const configureAccessLogging: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-configure-access-logging",
         description: "Check that ELB Load Balancers uses access logging.",
@@ -102,7 +102,7 @@ export const configureAccessLogging: ResourceValidationPolicy = policiesManageme
  * @severity High
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
  */
-export const enableHealthCheck: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableHealthCheck: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-enable-health-check",
         description: "Check that ELB Load Balancers have a health check enabled.",

@@ -25,8 +25,6 @@ import { version } from "./version";
 const findup = require("findup-sync");
 const micromatch = require("micromatch");
 
-import { policiesManagement } from "./index";
-
 /**
  * This function dynamically loads modules that are present in the `package.json` which names are matching the `globPatterns`.
  *

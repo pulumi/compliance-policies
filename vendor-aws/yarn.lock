@@ -13,9 +13,9 @@
   integrity sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==
 
 "@babel/parser@^7.20.7":
-  version "7.20.7"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.7.tgz#66fe23b3c8569220817d5feb8b9dcdc95bb4f71b"
-  integrity sha512-T3Z9oHybU+0vZlY9CiDSJQTD5ZapcW18ZctFMi0MOAl/4BjFF4ul7NVSARLdbGO5vDqy9eQiGTV0LtKfvCYvcg==
+  version "7.20.15"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.15.tgz#eec9f36d8eaf0948bb88c87a46784b5ee9fd0c89"
+  integrity sha512-DI4a1oZuf8wC+oAJA9RW6ga3Zbe8RZFt7kD9i4qAspz3I/yHet1VvC3DiSy/fsUvv5pvJuNPh0LPOdCcqinDPg==
 
 "@babel/types@^7.20.7":
   version "7.20.7"
@@ -305,10 +305,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi-premium-policies/policy-management@^0.0.22":
-  version "0.0.22"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-management/-/policy-management-0.0.22.tgz#ac2c7e0a28ee7d709f216bbe22fdac953fadb600"
-  integrity sha512-3Y7Wbo3Ns0OyaI6/MQ8ta7WherPvRPygmY35bAm5Y9ahu2cVKk6n/y568ePCatvbsuzLlao/OpNNmBGX6HSY9A==
+"@pulumi-premium-policies/policy-manager@^0.0.1":
+  version "0.0.1"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-manager/-/policy-manager-0.0.1.tgz#ab1c4267f7895807288abf04889b27b79bf0a412"
+  integrity sha512-rJOg0NW3FQraCAi+ZZFS8Xdx+yLYQgUqsychL8ZWVOb++AxuHghg65i/LZwjfJvyRSVvcB/WOHqbQQReaLhLrg==
   dependencies:
     "@pulumi/policy" "^1.5.0"
     findup-sync "^5.0.0"
@@ -316,14 +316,14 @@
     ts-node "^10.9.1"
     typescript "^4.9.0"
 
-"@pulumi-premium-policies/unit-test-helpers@^0.0.5":
-  version "0.0.5"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.5.tgz#31770e8be2f64adc2cc798648034ea4caa7c60a6"
-  integrity sha512-H0LwdeA/T29m4FgTcL5LZy3Uadh7wGDEFYQe0UYXo7qT3bkRBAWEfNqQzf8CcvbWaQHNyIDd9WC1Iez8D05AtA==
+"@pulumi-premium-policies/unit-test-helpers@^0.0.7":
+  version "0.0.7"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.7.tgz#59fa021e8818a83fbc10099550a96fa92d0b5d89"
+  integrity sha512-LDEy4A63Ew/P8Knojuw1SsvRKUWXkz5NJHqHJFBy5TJsjglBnrL5dmDIikKj2WALZ/NDY7Y154Jkgm9mxRDCcw==
   dependencies:
     "@babel/parser" "^7.20.7"
     "@babel/types" "^7.20.7"
-    "@pulumi-premium-policies/policy-management" "^0.0.22"
+    "@pulumi-premium-policies/policy-manager" "^0.0.1"
     "@pulumi/policy" "^1.5.0"
     "@pulumi/pulumi" "^3.0.0"
     "@types/mocha" "^10.0.1"

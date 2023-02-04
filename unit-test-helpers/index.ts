@@ -24,7 +24,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as parser from "@babel/parser";
 import * as parserTypes from "@babel/types";
-import * as policymanagement from "@pulumi-premium-policies/policy-management";
+import * as policymanager from "@pulumi-premium-policies/policy-manager";
 import { ResourceValidationArgs, StackValidationArgs, StackValidationPolicy, PolicyResource, ResourceValidationPolicy } from "@pulumi/policy";
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as assert from "assert";
@@ -234,7 +234,7 @@ export async function assertHasStackViolation(
  * The function asserts the policy has been registered.
  */
 export function assertResourcePolicyIsRegistered(policy: ResourceValidationPolicy) {
-    if (!policymanagement.policiesManagement.getPolicyByName(policy.name)) {
+    if (!policymanager.policyManager.getPolicyByName(policy.name)) {
         assert.fail(`Policy ${policy.name} is not registered.`);
     }
 }
@@ -309,8 +309,8 @@ export function assertResourcePolicyDescription(policy: ResourceValidationPolicy
 /**
  * The function asserts the policy has the expeced policy metadata.
  */
-export function assertResourcePolicyRegistrationDetails(policy: ResourceValidationPolicy, metadata: policymanagement.PolicyMetadata) {
-    const registeredPolicy: policymanagement.PolicyInfo | undefined = policymanagement.policiesManagement.getPolicyByName(policy.name);
+export function assertResourcePolicyRegistrationDetails(policy: ResourceValidationPolicy, metadata: policymanager.PolicyMetadata) {
+    const registeredPolicy: policymanager.PolicyInfo | undefined = policymanager.policyManager.getPolicyByName(policy.name);
     if (!registeredPolicy) {
         assert.fail(`Policy ${policy.name} is not registered.`);
     }
@@ -420,7 +420,7 @@ export function assertResourcePolicyRegistrationDetails(policy: ResourceValidati
  * The function asserts some policies have been registered.
  */
 export function assertHasRegisteredPolicies() {
-    if (policymanagement.policiesManagement.getStats().policyCount === 0) {
+    if (policymanager.policyManager.getStats().policyCount === 0) {
         assert.fail(`Didn't find any registered policies.`);
     }
 }
@@ -429,7 +429,7 @@ export function assertHasRegisteredPolicies() {
  * The function asserts 1 or more policies are up for selection.
  */
 export function assertHasRemainingPolicies() {
-    if (policymanagement.policiesManagement.getStats().remainingPolicyCount === 0) {
+    if (policymanager.policyManager.getStats().remainingPolicyCount === 0) {
         assert.fail(`Didn't find any remaining policies.`);
     }
 }
@@ -438,12 +438,12 @@ export function assertHasRemainingPolicies() {
  * The function asserts the number of selectable policies is the same as the total of all registered policies.
  */
 export function assertHasAllRemainingPolicies() {
-    if (policymanagement.policiesManagement.getStats().policyCount < 1) {
-        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanagement.policiesManagement.getStats().remainingPolicyCount} policies but ${policymanagement.policiesManagement.getStats().policyCount} are registered.`);
+    if (policymanager.policyManager.getStats().policyCount < 1) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getStats().remainingPolicyCount} policies but ${policymanager.policyManager.getStats().policyCount} are registered.`);
     }
 
-    if (policymanagement.policiesManagement.getStats().remainingPolicyCount !== policymanagement.policiesManagement.getStats().policyCount) {
-        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanagement.policiesManagement.getStats().remainingPolicyCount} policies but ${policymanagement.policiesManagement.getStats().policyCount} are registered.`);
+    if (policymanager.policyManager.getStats().remainingPolicyCount !== policymanager.policyManager.getStats().policyCount) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getStats().remainingPolicyCount} policies but ${policymanager.policyManager.getStats().policyCount} are registered.`);
     }
 }
 
@@ -451,7 +451,7 @@ export function assertHasAllRemainingPolicies() {
  * The function asserts no more policies are selectable.
  */
 export function assertHasNoRemainingPolicies() {
-    if (policymanagement.policiesManagement.getStats().remainingPolicyCount !== 0) {
+    if (policymanager.policyManager.getStats().remainingPolicyCount !== 0) {
         assert.fail(`Found remaining policies but expected none.`);
     }
 }
@@ -460,38 +460,38 @@ export function assertHasNoRemainingPolicies() {
  * The function asserts an expected number of policies is selectable.
  */
 export function assertExpectedRemainingPolicyCount(expectedtedRemainingPolicyCount: number) {
-    if (policymanagement.policiesManagement.getStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
-        assert.fail(`Expected remaining policy counts don't match. Found ${policymanagement.policiesManagement.getStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
+    if (policymanager.policyManager.getStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
+        assert.fail(`Expected remaining policy counts don't match. Found ${policymanager.policyManager.getStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
     }
 }
 
 /**
  * The function asserts no policies are selected twice.
  */
-export function assertNoDoubleSelection(filterPolicy: policymanagement.FilterPolicyArgs) {
-    policymanagement.policiesManagement.resetPolicyfilter();
-    const firstSelection = policymanagement.policiesManagement.filterPolicies(filterPolicy);
-    const secondSelection = policymanagement.policiesManagement.filterPolicies(filterPolicy);
+export function assertNoDoubleSelection(filterPolicy: policymanager.FilterPolicyArgs) {
+    policymanager.policyManager.resetPolicySelector();
+    const firstSelection = policymanager.policyManager.selectPolicies(filterPolicy);
+    const secondSelection = policymanager.policyManager.selectPolicies(filterPolicy);
     if (secondSelection.length > 0) {
         assert.fail(`Some policies haven't been returned after they'd been already selected.`);
     }
-    policymanagement.policiesManagement.resetPolicyfilter();
+    policymanager.policyManager.resetPolicySelector();
 }
 
 /**
  * The function asserts the enforcementLevel is applied when selecting policies.
  */
-export function assertSelectionEnforcementLevel(filterPolicy: policymanagement.FilterPolicyArgs, enforcementLevel: string) {
-    policymanagement.policiesManagement.resetPolicyfilter();
+export function assertSelectionEnforcementLevel(filterPolicy: policymanager.FilterPolicyArgs, enforcementLevel: string) {
+    policymanager.policyManager.resetPolicySelector();
 
-    const policySelection = policymanagement.policiesManagement.filterPolicies(filterPolicy, enforcementLevel);
+    const policySelection = policymanager.policyManager.selectPolicies(filterPolicy, enforcementLevel);
     policySelection.forEach((policy) => {
         if (policy.enforcementLevel !== enforcementLevel) {
             assert.fail(`Policy enforcementLevel not set on during policy selection.`);
         }
     });
 
-    policymanagement.policiesManagement.resetPolicyfilter();
+    policymanager.policyManager.resetPolicySelector();
 }
 
 interface SourceFileDetails {
@@ -661,7 +661,7 @@ function parseSourceFile(suiteName?: string, suiteFile?: string): SourceFileDeta
 /**
  * This functions the necessary details related to the current registered policy.
  *
- * @param objectExpression An object expression as it is provided to `policymanagement.policiesManagement.registerPolicy()`.
+ * @param objectExpression An object expression as it is provided to `policymanager.policyManager.registerPolicy()`.
  * @returns An array of information related to the current policy.
  */
 function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarName: string): PolicyDetails {
@@ -870,8 +870,8 @@ function getPolicyComment(node: parserTypes.ExportNamedDeclaration): PolicyDetai
  * @param version The Policy Management package version.
  */
 export function assertPolicyManagementVersion(version: string) {
-    if (version !== policymanagement.version) {
-        assert.fail(`The 'unit-test-helpers' (${policymanagement.version}) and your package (${version}) should depend on the same version of 'policy-management'`);
+    if (version !== policymanager.version) {
+        assert.fail(`The 'unit-test-helpers' (${policymanager.version}) and your package (${version}) should depend on the same version of 'policy-management'`);
     }
 }
 

@@ -19,6 +19,7 @@
 // SOFTWARE.
 
 export * from "./version";
+export { version as policyManagerVersion } from "@pulumi-premium-policies/policy-manager";
 
 export * as azure from "./azure";
 export * as azurenative from "./azurenative";

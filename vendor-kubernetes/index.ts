@@ -19,5 +19,6 @@
 // SOFTWARE.
 
 export * from "./version";
+export { version as policyManagerVersion } from "@pulumi-premium-policies/policy-manager";
 
 export * as kubernetes from "./kubernetes";

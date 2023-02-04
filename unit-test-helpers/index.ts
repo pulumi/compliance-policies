@@ -869,7 +869,7 @@ function getPolicyComment(node: parserTypes.ExportNamedDeclaration): PolicyDetai
  *
  * @param version The Policy Management package version.
  */
-export function assertPolicyManagementVersion(version: string) {
+export function assertPolicyManagerVersion(version: string) {
     if (version !== policymanager.version) {
         assert.fail(`The 'unit-test-helpers' (${policymanager.version}) and your package (${version}) should depend on the same version of 'policy-management'`);
     }

@@ -18,5 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as compute from "./compute";
-export * as containerservice from "./containerservice";
+export * as ManagedCluster from "./ManagedCluster";

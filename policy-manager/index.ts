@@ -51,12 +51,12 @@ export interface PolicyInfo {
     policyMetadata: PolicyMetadata;
 };
 
-export interface PoliciesManagementStats {
+export interface PolicyManagerStats {
     policyCount: number;
     remainingPolicyCount: number;
 }
 
-export class PoliciesManagement {
+export class PolicyManager {
 
     /**
      * An array containing all registered policies.
@@ -102,20 +102,14 @@ export class PoliciesManagement {
      */
     private remainingPolicies: PolicyInfo[] = [];
 
-    // /**
-    //  * The static method that controls the access to the singleton instance.
-    //  *
-    //  * @returns An instance of this class.
-    //  */
-    // public static getInstance(): PoliciesManagement {
-    //     if (!PoliciesManagement.instance) {
-    //         PoliciesManagement.instance = new PoliciesManagement();
-    //     }
-
-    //     return PoliciesManagement.instance;
-    // }
-
-    public getStats(): PoliciesManagementStats {
+    /**
+     * The function `getStats()` returns statistics about the total number of registered policies
+     * and the number of policies that haven't been selected yet. This function is mostly here to
+     * assist with debugging.
+     *
+     * @returns Returns a populated `PolicyManagerStats`.
+     */
+    public getStats(): PolicyManagerStats {
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
@@ -123,12 +117,12 @@ export class PoliciesManagement {
     }
 
     /**
-     * When running the policy filter, it's important that the function returns a given
+     * When running the policy selector, it's important that the function returns a given
      * policy only once so the Pulumi service doesn't complain about duplicated policies.
      * This function, allows to reset the policy filter and start _fresh_ again so
      * invoking `filterPolicies()` will consider all registered policies again.
      */
-    public resetPolicyfilter(): void {
+    public resetPolicySelector(): void {
         this.remainingPolicies = [...this.allPolicies];
     }
 
@@ -160,10 +154,9 @@ export class PoliciesManagement {
     }
 
     /**
-     * Filter policies based on selection criterias provided as arguments.
-     * The filter only returns policies that match selection criterias.
-     * Effectively, this function performs an `or` operation within each selection
-     * criteria, and an `and` operation between selection criterias.
+     * Select policies based on criterias provided as arguments. The filter only returns policies
+     * that match selection criterias. Effectively, this function performs an `or` operation
+     * within each selection criteria, and an `and` operation between selection criterias.
      *
      * Note: Criterias are all case-insensitive.
      * Note: Call `resetPolicyfilter()` to reset the filter and consider all policies again.
@@ -172,7 +165,7 @@ export class PoliciesManagement {
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory` (default), `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */
-    public filterPolicies(args: FilterPolicyArgs, enforcementLevel?: string): policy.ResourceValidationPolicy[] {
+    public selectPolicies(args: FilterPolicyArgs, enforcementLevel?: string): policy.ResourceValidationPolicy[] {
 
         const results: policy.ResourceValidationPolicy[] = [];
         /*
@@ -409,7 +402,7 @@ export class PoliciesManagement {
     }
 };
 
-export const policiesManagement: PoliciesManagement = new PoliciesManagement();
+export const policyManager: PolicyManager = new PolicyManager();
 
 /**
  * The function `valToBoolean()` is a helper because some boolean properties

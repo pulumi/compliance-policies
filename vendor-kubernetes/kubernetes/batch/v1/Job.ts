@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Jobs have the recommended labels.
@@ -32,7 +32,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-batch-v1-job-configure-recommended-labels",
         description: "Checks that Kubernetes Jobs have the recommended labels.",
@@ -74,7 +74,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
  */
-export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-batch-v1-job-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes Jobs run pods with a read-only filesystem.",

@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Services use the recommended labels.
@@ -32,7 +32,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-configure-recommended-labels",
         description: "Checks that Kubernetes Services use the recommended labels.",
@@ -72,7 +72,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
  * @severity Low
  * @link https://github.com/datreeio/datree/blob/main/examples/Cost_Reduction/README.md
  */
-export const disallowLoadBalancer: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowLoadBalancer: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-disallow-load-balancer",
         description: "Checks that Kubernetes Services do not use a LoadBalancer as service type.",

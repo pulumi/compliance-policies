@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Deployments have at least three replicas.
@@ -31,7 +31,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
-export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureMinimumReplicaCount: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
         description: "Checks that Kubernetes Deployments have at least three replicas.",
@@ -55,7 +55,7 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policiesMa
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
-export const configureRecommendedLabels: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureRecommendedLabels: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
         description: "Checks that Kubernetes Deployments have the recommended labels.",
@@ -97,7 +97,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policiesMana
  * @severity High
  * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
  */
-export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes Deployments run pods with a read-only filesystem.",

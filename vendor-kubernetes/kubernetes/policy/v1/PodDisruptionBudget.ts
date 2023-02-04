@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes PodDisruptionBudgets have a voluntary disruption.
@@ -40,7 +40,7 @@ import { policiesManagement } from "@pulumi-premium-policies/policy-management";
  * @link https://kubernetes.io/docs/tasks/run-application/configure-pdb/
  * https://github.com/datreeio/datree/blob/main/examples/Governance/README.md
  */
-export const disallowZeroVoluntaryDisruption: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowZeroVoluntaryDisruption: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "kubernetes-policy-v1-poddisruptionbudget-disallow-zero-voluntary-disruption",
         description: "Checks that Kubernetes PodDisruptionBudgets have a voluntary disruption.",

@@ -19,13 +19,13 @@
 // SOFTWARE.
 
 import "mocha";
-import { assertPolicyManagementVersion } from "@pulumi-premium-policies/unit-test-helpers";
-import * as policymanagement from "@pulumi-premium-policies/policy-management";
+import { assertPolicyManagerVersion } from "@pulumi-premium-policies/unit-test-helpers";
+import * as policymanagement from "@pulumi-premium-policies/policy-manager";
 
 describe("version", function() {
 
     it("#1", async function() {
-        assertPolicyManagementVersion(policymanagement.version);
+        assertPolicyManagerVersion(policymanagement.version);
     });
 
 });

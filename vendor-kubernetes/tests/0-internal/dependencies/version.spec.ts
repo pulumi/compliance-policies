@@ -20,12 +20,12 @@
 
 import "mocha";
 import { assertPolicyManagerVersion } from "@pulumi-premium-policies/unit-test-helpers";
-import * as policymanagement from "@pulumi-premium-policies/policy-manager";
+import { policyManagerVersion } from "../../..";
 
 describe("version", function() {
 
     it("#1", async function() {
-        assertPolicyManagerVersion(policymanagement.version);
+        assertPolicyManagerVersion(policyManagerVersion);
     });
 
 });

@@ -1,4 +1,4 @@
-PROJECT_NAME := policy-management
+PROJECT_NAME := policy-manager
 NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
 include ../build/common.mk
 

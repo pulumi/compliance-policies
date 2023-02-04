@@ -29,7 +29,7 @@ import {policiesManagement} from "@pulumi-premium-policies/policy-management";
  * Checks AKS cluster has Network Policy configured.
  *
  * @severity High
- * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
+ * @link https://kubernetes.io/docs/concepts/services-networking/network-policies/
  */
 export const configureNetworkPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({
     resourceValidationPolicy: {

@@ -33,7 +33,7 @@ import {
 import * as azure from "@pulumi/azure-native";
 
 import * as policies from "../../../index";
-import {ResourceValidationArgs} from "@pulumi/policy";
+import { ResourceValidationArgs } from "@pulumi/policy";
 import * as enums from "../enums";
 
 /**

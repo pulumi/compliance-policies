@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import {policiesManagement} from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks AKS cluster has Network Policy configured.
@@ -31,7 +31,7 @@ import {policiesManagement} from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://kubernetes.io/docs/concepts/services-networking/network-policies
  */
-export const configureNetworkPolicy: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const configureNetworkPolicy: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "azurenative-containerservice-managedcluster-configure-network-policy",
         description: "Checks AKS cluster has Network Policy configured.",

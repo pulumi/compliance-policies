@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import {policiesManagement} from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Authentication to Linux machines should require SSH keys.
@@ -31,7 +31,7 @@ import {policiesManagement} from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
  */
-export const disallowPasswordAuthentication: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowPasswordAuthentication: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "azure-compute-linuxvirtualmachine-disallow-password-authentication",
         description: "Authentication to Linux machines should require SSH keys.",

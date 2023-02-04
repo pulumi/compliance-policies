@@ -23,7 +23,7 @@ import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
-import {policiesManagement} from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Disks are encrypted.
@@ -31,7 +31,7 @@ import {policiesManagement} from "@pulumi-premium-policies/policy-management";
  * @severity High
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
  */
-export const disallowUnencryptedDisk: ResourceValidationPolicy = policiesManagement.registerPolicy({
+export const disallowUnencryptedDisk: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "azurenative-compute-disk-disallow-unencrypted-disk",
         description: "Checks that Disks are encrypted.",

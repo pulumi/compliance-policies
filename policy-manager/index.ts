@@ -62,9 +62,9 @@ export interface PolicyManagerStats {
      */
     remainingPolicyCount: number;
     /**
-     * The value of `selectedPolicies` represents the number of policies that have already been provider by `selectedPolicies()`.
+     * The value of `selectedPoliciesCount` represents the number of policies that have already been provider by `selectPolicies()`.
      */
-    selectedPolicies: number;
+    selectedPoliciesCount: number;
 }
 
 export class PolicyManager {
@@ -124,7 +124,7 @@ export class PolicyManager {
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
-            selectedPolicies: this.allPolicies.length - this.remainingPolicies.length,
+            selectedPoliciesCount: this.allPolicies.length - this.remainingPolicies.length,
         };
     }
 

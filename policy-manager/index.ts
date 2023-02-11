@@ -152,9 +152,13 @@ export class PolicyManager {
     }
 
     /**
-     * This function allows to retrieve an individual policy infor by providing its
+     * This function returns an individual policy info by providing its
      * name as an argument. If the policy is found, then it is returned. If the
      * requested policy doesn't exists, then `undefined` is returned instead.
+     *
+     * **Note**: The returned policy is not removed from the pool of available.
+     * if you want to select an individual policy, then you should be using
+     * `selectPolicyByName()` instead.
      *
      * @param name The policy name to search for and return.
      * @returns The PolicyInfo if found, otherwise `undefined`.
@@ -179,6 +183,54 @@ export class PolicyManager {
     }
 
     /**
+     * This function searches for a policy based on the provided `name`. If the
+     * policy is found, then it is removed from the pool of available policies
+     * and is returned. If not found, the `undefined` is returned.
+     *
+     * @param name The policy name to search for and return.
+     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
+     * @returns A `ResourceValidationPolicy` policy that matched the supplied `name` or `undefined` if the policy wasn't found in the pool of `remainingPolicies`.
+     */
+    public selectPolicyByName(name: string, enforcementLevel?: string): policy.ResourceValidationPolicy | undefined {
+        if(!name) {
+            return undefined;
+        }
+
+        const policyIndex: number = this.remainingPolicies.findIndex((candidate) => {
+            if (candidate.policyName === name) {
+                return true;
+            }
+            return false;
+        });
+
+        if (policyIndex >= 0) {
+            /*
+             * We need to deep clone the entire policy to avoid changing
+             * the enforcement level set by the policy developer. However,
+             * It's not possible to use `structuredClone()` to clone because
+             * the policy code cannot be serialized. So instead, we manually
+             * assign each value and set the enforcementLevel last.
+             */
+            const pol: policy.ResourceValidationPolicy = {
+                name: this.remainingPolicies[policyIndex].resourceValidationPolicy.name,
+                description: this.remainingPolicies[policyIndex].resourceValidationPolicy.description,
+                configSchema: this.remainingPolicies[policyIndex].resourceValidationPolicy.configSchema,
+                validateResource: this.remainingPolicies[policyIndex].resourceValidationPolicy.validateResource,
+                enforcementLevel: this.remainingPolicies[policyIndex].resourceValidationPolicy.enforcementLevel,
+            };
+            if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
+                pol.enforcementLevel = enforcementLevel;
+            }
+            /*
+             * We remove the selected policy from the pool of available policies.
+             */
+            this.remainingPolicies.splice(policyIndex, 1);
+            return pol;
+        }
+        return undefined;
+    }
+
+    /**
      * Select policies based on criterias provided as arguments. The filter only returns policies
      * that match selection criterias. Effectively, this function performs an `or` operation
      * within each selection criteria, and an `and` operation between selection criterias.
@@ -187,7 +239,7 @@ export class PolicyManager {
      * Note: Call `resetPolicyfilter()` to reset the filter and consider all policies again.
      *
      * @param args A bag of options containing the selection criterias.
-     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory` (default), `mandatory` and `disabled`.
+     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */
     public selectPolicies(args: FilterPolicyArgs, enforcementLevel?: string): policy.ResourceValidationPolicy[] {
@@ -334,11 +386,10 @@ export class PolicyManager {
                 description: match.resourceValidationPolicy.description,
                 configSchema: match.resourceValidationPolicy.configSchema,
                 validateResource: match.resourceValidationPolicy.validateResource,
+                enforcementLevel: match.resourceValidationPolicy.enforcementLevel,
             };
             if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
                 pol.enforcementLevel = enforcementLevel;
-            } else {
-                pol.enforcementLevel = match.resourceValidationPolicy.enforcementLevel;
             }
             results.push(pol);
 

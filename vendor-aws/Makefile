@@ -20,7 +20,7 @@ build:: lint test
 lint::
 	@yarn run lint
 
-test:: lint
+test::
 	@yarn run test
 
 watchtest::

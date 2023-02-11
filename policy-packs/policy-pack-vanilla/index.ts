@@ -20,16 +20,15 @@ new PolicyPack("policy-pack-acme-corp-finops",  {
                     reportViolation("EC2 Instances should not have a public IP address.");
                 }
             }),
-        },
-        {
+        },{
             name: "s3-no-public-read",
             description: "Prohibits setting the publicRead or publicReadWrite permission on AWS S3 buckets.",
             enforcementLevel: "advisory",
             validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
                 if (bucket.acl === "public-read" || bucket.acl === "public-read-write") {
                     reportViolation(
-                        "You cannot set public-read or public-read-write on an S3 bucket. " +
-                        "Read more about ACLs here: https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html");
+                        "Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.\n" +
+                        "S3 Buckets ACLs should not be set to 'public-read', 'public-read-write' or 'authenticated-read'.");
                 }
             }),
         }

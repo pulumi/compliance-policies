@@ -125,13 +125,13 @@ export class PolicyManager {
     private selectedPolicyNames: string[] = [];
 
     /**
-     * The function `getStats()` returns statistics about the total number of registered policies
-     * and the number of policies that haven't been selected yet. This function is mostly here to
-     * assist with debugging.
+     * The function `getSelectionStats()` returns statistics about the number of registered
+     * policies as well as the names and count of already selected policies and the number
+     * of policies that haven't been selected yet.
      *
      * @returns Returns a populated `PolicyManagerStats`.
      */
-    public getStats(): PolicyManagerStats {
+    public getSelectionStats(): PolicyManagerStats {
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,

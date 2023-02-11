@@ -420,7 +420,7 @@ export function assertResourcePolicyRegistrationDetails(policy: ResourceValidati
  * The function asserts some policies have been registered.
  */
 export function assertHasRegisteredPolicies() {
-    if (policymanager.policyManager.getStats().policyCount === 0) {
+    if (policymanager.policyManager.getSelectionStats().policyCount === 0) {
         assert.fail(`Didn't find any registered policies.`);
     }
 }
@@ -429,7 +429,7 @@ export function assertHasRegisteredPolicies() {
  * The function asserts 1 or more policies are up for selection.
  */
 export function assertHasRemainingPolicies() {
-    if (policymanager.policyManager.getStats().remainingPolicyCount === 0) {
+    if (policymanager.policyManager.getSelectionStats().remainingPolicyCount === 0) {
         assert.fail(`Didn't find any remaining policies.`);
     }
 }
@@ -438,12 +438,12 @@ export function assertHasRemainingPolicies() {
  * The function asserts the number of selectable policies is the same as the total of all registered policies.
  */
 export function assertHasAllRemainingPolicies() {
-    if (policymanager.policyManager.getStats().policyCount < 1) {
-        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getStats().remainingPolicyCount} policies but ${policymanager.policyManager.getStats().policyCount} are registered.`);
+    if (policymanager.policyManager.getSelectionStats().policyCount < 1) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getSelectionStats().remainingPolicyCount} policies but ${policymanager.policyManager.getSelectionStats().policyCount} are registered.`);
     }
 
-    if (policymanager.policyManager.getStats().remainingPolicyCount !== policymanager.policyManager.getStats().policyCount) {
-        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getStats().remainingPolicyCount} policies but ${policymanager.policyManager.getStats().policyCount} are registered.`);
+    if (policymanager.policyManager.getSelectionStats().remainingPolicyCount !== policymanager.policyManager.getSelectionStats().policyCount) {
+        assert.fail(`Registered policies count and remaining policies count don't match. ${policymanager.policyManager.getSelectionStats().remainingPolicyCount} policies but ${policymanager.policyManager.getSelectionStats().policyCount} are registered.`);
     }
 }
 
@@ -451,7 +451,7 @@ export function assertHasAllRemainingPolicies() {
  * The function asserts no more policies are selectable.
  */
 export function assertHasNoRemainingPolicies() {
-    if (policymanager.policyManager.getStats().remainingPolicyCount !== 0) {
+    if (policymanager.policyManager.getSelectionStats().remainingPolicyCount !== 0) {
         assert.fail(`Found remaining policies but expected none.`);
     }
 }
@@ -460,8 +460,8 @@ export function assertHasNoRemainingPolicies() {
  * The function asserts an expected number of policies is selectable.
  */
 export function assertExpectedRemainingPolicyCount(expectedtedRemainingPolicyCount: number) {
-    if (policymanager.policyManager.getStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
-        assert.fail(`Expected remaining policy counts don't match. Found ${policymanager.policyManager.getStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
+    if (policymanager.policyManager.getSelectionStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
+        assert.fail(`Expected remaining policy counts don't match. Found ${policymanager.policyManager.getSelectionStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
     }
 }
 

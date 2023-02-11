@@ -50,6 +50,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
     services: ["s3"],
     severity: "critical",
     topics: ["storage", "security"],
+    frameworks: ["cis", "pcidss"],
 });
 
 /**

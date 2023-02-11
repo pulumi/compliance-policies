@@ -52,8 +52,19 @@ export interface PolicyInfo {
 };
 
 export interface PolicyManagerStats {
+    /**
+     * The value of `policyCount` represents the total number of registered policies.
+     */
     policyCount: number;
+    /**
+     * The value of `remainingPolicyCount` represents the number of policies available for selection.
+     * You may call `resetPolicyfilter()` to reset the selection filter, however, be aware that you may get duplicated policies.
+     */
     remainingPolicyCount: number;
+    /**
+     * The value of `selectedPolicies` represents the number of policies that have already been provider by `selectedPolicies()`.
+     */
+    selectedPolicies: number;
 }
 
 export class PolicyManager {
@@ -113,6 +124,7 @@ export class PolicyManager {
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
+            selectedPolicies: this.allPolicies.length - this.remainingPolicies.length,
         };
     }
 

@@ -1,15 +1,15 @@
 import { PolicyPack } from "@pulumi/policy";
-import { policiesManagement } from "@pulumi-premium-policies/policy-management";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 new PolicyPack("policy-pack-acme-corp-finops", {
     policies: [
-        ...policiesManagement.filterPolicies({
-            vendors:["aws"],
-            frameworks: ["pcidss"],
+        ...policyManager.selectPolicies({
+            vendors:["aws", "azure"],
+            frameworks: ["pcidss", "csi", "iso27001"],
         }),
-        ...policiesManagement.filterPolicies({
+        ...policyManager.selectPolicies({
             vendors:["kubernetes"],
-            severities: ["critical"],
+            severities: ["critical", "high"],
         }),
     ],
 });

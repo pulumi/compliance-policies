@@ -51,6 +51,11 @@ export interface PolicyInfo {
     policyMetadata: PolicyMetadata;
 };
 
+export interface ModuleInfo {
+    name: string;
+    version: string;
+};
+
 export interface PolicyManagerStats {
     /**
      * The value of `policyCount` represents the total number of registered policies.
@@ -123,6 +128,8 @@ export class PolicyManager {
      * of policies that have been selected.
      */
     private selectedPolicyNames: string[] = [];
+
+    private registeredModules: ModuleInfo[] = [];
 
     /**
      * The function `getSelectionStats()` returns statistics about the number of registered
@@ -484,6 +491,23 @@ export class PolicyManager {
         }
 
         return args.resourceValidationPolicy;
+    }
+
+    /**
+     * This function is used by policy module to register information about themselves.
+     * This can be later used to display statistics about included packages as part of
+     * a policy-pack.
+     *
+     * @param name Name of the policy module as stored in `package.json`
+     * @param version The module version as stored in `package.json`
+     * @returns returns the package version as a string
+     */
+    public registerPolicyModule(name: string, version: string): string {
+        this.registeredModules.push({
+            name: name,
+            version: version,
+        });
+        return version;
     }
 };
 

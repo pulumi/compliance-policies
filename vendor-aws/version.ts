@@ -18,5 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// The version that the @pulumi/pulumi-policies package was built as.
-export const version = "${VERSION}";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
+const packageJson = require("./package.json");
+
+export const version = policyManager.registerPolicyModule(packageJson.name, packageJson.version);

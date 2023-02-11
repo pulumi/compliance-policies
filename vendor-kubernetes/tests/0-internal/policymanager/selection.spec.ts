@@ -46,21 +46,21 @@ describe("policyManager.general", function() {
     });
 
     /*
-     * After selecting the `core` policies, other polices Should
+     * After selecting the EC2 policies, other polices Should
      * still be present in the pool. This will likely fail when
      * policies are stored in their own npm packages though.
      */
     it("#5", async function() {
-        const policiesStats = policyManager.getStats();
+        const policiesStats = policyManager.getSelectionStats();
         const selection = policyManager.selectPolicies({
-            services: ["core"],
+            services: ["ec2"],
         });
         assertHasRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount - selection.length);
     });
 
     it("#6", async function() {
-        const policiesStats = policyManager.getStats();
+        const policiesStats = policyManager.getSelectionStats();
         policyManager.resetPolicySelector();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);
@@ -68,14 +68,14 @@ describe("policyManager.general", function() {
 
     it("#7", async function() {
         assertNoDoubleSelection({
-            vendors: ["kubernetes"],
+            vendors: ["aws"],
         });
     });
 
     it("#8", async function() {
         assertNoDoubleSelection({
-            vendors: ["kubernetes"],
-            services: ["core"],
+            vendors: ["aws"],
+            services: ["ec2"],
         });
     });
 

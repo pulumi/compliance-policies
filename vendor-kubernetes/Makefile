@@ -14,8 +14,6 @@ build:: lint test
 	@yarn build
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
-	@node ../build/reversion.js bin/version.js $(VERSION)
-	@node ../build/reversion.js bin/version.d.ts $(VERSION)
 
 lint::
 	@yarn run lint

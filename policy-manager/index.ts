@@ -33,6 +33,21 @@ export interface FilterPolicyArgs {
     topics?: string[];
 };
 
+export interface DisplaySelectionStatsArgs {
+    /**
+     * If set to `true`, displays general statistics about the number of registered policies, how many have been selected and how many remain in the pool.
+     */
+    displayGeneralStats: boolean;
+    /**
+     * If `true` then shows information about included policy modules and their version.
+     */
+    displayModuleInformation?: boolean;
+    /**
+     * If `true` then shows the name of the policies that have been included in the policy pack at runtime and the associated enforcement level.
+     */
+    displaySelectedPolicyNames?: boolean;
+}
+
 export interface PolicyMetadata {
     vendors?: string[];
     services?: string[];
@@ -71,9 +86,14 @@ export interface PolicyManagerStats {
      */
     selectedPoliciesCount: number;
     /**
-     * `selectedPolicyNames` contains all the polcy names that have been already selected. Calling `resetPolicySelector()` will empty this list.
+     * `selectedPolicies` contains all the polcy that have been selected. Calling `resetPolicySelector()` will empty this list.
      */
-    selectedPolicyNames: string[];
+    selectedPolicies: policy.ResourceValidationPolicy[];
+
+    /**
+     * `registeredModules` contains information about policy modules that have registered themselves.
+     */
+    registeredModules: ModuleInfo[];
 }
 
 export class PolicyManager {
@@ -127,7 +147,7 @@ export class PolicyManager {
      * This is used to return by `getStats()` so it's possible to know the list
      * of policies that have been selected.
      */
-    private selectedPolicyNames: string[] = [];
+    private selectedPolicies: policy.ResourceValidationPolicy[] = [];
 
     private registeredModules: ModuleInfo[] = [];
 
@@ -139,12 +159,56 @@ export class PolicyManager {
      * @returns Returns a populated `PolicyManagerStats`.
      */
     public getSelectionStats(): PolicyManagerStats {
+        const selectedPolicyNames: string[] = [];
+
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
-            selectedPoliciesCount: this.selectedPolicyNames.length,
-            selectedPolicyNames: [...this.selectedPolicyNames],
+            selectedPoliciesCount: this.selectedPolicies.length,
+            selectedPolicies: [...this.selectedPolicies],
+            registeredModules: [...this.registeredModules],
         };
+    }
+
+    /**
+     * This function `displaySelectionStats()` displays general statistics about policies
+     * that have been returned by `selectPolicies()` and how many remain in the pool.
+     * Additional information about registered policy modules are displayed too.
+     * @returns No value is returned.
+     */
+    public displaySelectionStats(args: DisplaySelectionStatsArgs): void {
+        const stats = this.getSelectionStats();
+
+        let message: string = "";
+
+        if (args.displayGeneralStats) {
+            message += `Total registered policies: ${stats.policyCount}\n`;
+            message += `Selected policies: ${stats.selectedPoliciesCount}\n`;
+            message += `Remaining (unselected) policies: ${stats.remainingPolicyCount}\n`;
+        }
+        if (args.displayModuleInformation) {
+            if (args.displayGeneralStats) {
+                message += "---\n";
+            }
+            message += "Included policy packages:\n";
+            for(let x = 0; x < stats.registeredModules.length; x++) {
+                message += `  ${stats.registeredModules[x].name}: ${stats.registeredModules[x].version}\n`;
+            }
+        }
+
+        if (args.displaySelectedPolicyNames) {
+            if (args.displayGeneralStats || args.displayModuleInformation) {
+                message += "---\n";
+            }
+            message += "Selected policies:\n";
+            for (let x = 0; x < stats.selectedPolicies.length; x++) {
+                message += `  ${stats.selectedPolicies[x].name}: enforcementLevel: ${stats.selectedPolicies[x].enforcementLevel}\n`;
+            }
+        }
+
+        console.error(message);
+
+        return;
     }
 
     /**
@@ -155,7 +219,7 @@ export class PolicyManager {
      */
     public resetPolicySelector(): void {
         this.remainingPolicies = [...this.allPolicies];
-        this.selectedPolicyNames = [];
+        this.selectedPolicies = [];
     }
 
     /**
@@ -228,6 +292,14 @@ export class PolicyManager {
             if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
                 pol.enforcementLevel = enforcementLevel;
             }
+
+            /*
+             * We also take the opportunity to capture the policy name and
+             * store it if the user wants to know which policies have been
+             * used to create their policy pack.
+             */
+            this.selectedPolicies.push(pol);
+
             /*
              * We remove the selected policy from the pool of available policies.
              */
@@ -405,7 +477,7 @@ export class PolicyManager {
              * store it if the user wants to know which policies have been
              * used to create their policy pack.
              */
-            this.selectedPolicyNames.push(pol.name);
+            this.selectedPolicies.push(pol);
         });
 
         return results;

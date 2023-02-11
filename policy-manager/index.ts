@@ -65,6 +65,10 @@ export interface PolicyManagerStats {
      * The value of `selectedPoliciesCount` represents the number of policies that have already been provider by `selectPolicies()`.
      */
     selectedPoliciesCount: number;
+    /**
+     * `selectedPolicyNames` contains all the polcy names that have been already selected. Calling `resetPolicySelector()` will empty this list.
+     */
+    selectedPolicyNames: string[];
 }
 
 export class PolicyManager {
@@ -107,11 +111,18 @@ export class PolicyManager {
     private readonly severities: Record<string, PolicyInfo[]> = {};
 
     /**
-     * An array of registered policies that haven't been returned yet via `filterPolicies()`.
+     * An array of registered policies that haven't been returned yet via `selectPolicies()`.
      * This is needed to ensure users get policies only once so the Pulumi service doesn't
      * complain about duplicated policies.
      */
     private remainingPolicies: PolicyInfo[] = [];
+
+    /**
+     * An array of policy names that have been returned via `selectPolicies()`.
+     * This is used to return by `getStats()` so it's possible to know the list
+     * of policies that have been selected.
+     */
+    private selectedPolicyNames: string[] = [];
 
     /**
      * The function `getStats()` returns statistics about the total number of registered policies
@@ -124,7 +135,8 @@ export class PolicyManager {
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
-            selectedPoliciesCount: this.allPolicies.length - this.remainingPolicies.length,
+            selectedPoliciesCount: this.selectedPolicyNames.length,
+            selectedPolicyNames: [...this.selectedPolicyNames],
         };
     }
 
@@ -136,6 +148,7 @@ export class PolicyManager {
      */
     public resetPolicySelector(): void {
         this.remainingPolicies = [...this.allPolicies];
+        this.selectedPolicyNames = [];
     }
 
     /**
@@ -305,8 +318,10 @@ export class PolicyManager {
             }
         });
 
+        /*
+         * Now `matches` only contains policies that haven't been selected before.
+         */
         matches.forEach((match) => {
-
             /*
              * We need to deep clone the entire policy to avoid changing
              * the enforcement level set by the policy developer. However,
@@ -326,6 +341,13 @@ export class PolicyManager {
                 pol.enforcementLevel = match.resourceValidationPolicy.enforcementLevel;
             }
             results.push(pol);
+
+            /*
+             * We also take the opportunity to capture the policy name and
+             * store it if the user wants to know which policies have been
+             * used to create their policy pack.
+             */
+            this.selectedPolicyNames.push(pol.name);
         });
 
         return results;

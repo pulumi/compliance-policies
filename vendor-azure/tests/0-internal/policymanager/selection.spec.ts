@@ -51,7 +51,7 @@ describe("policyManager.general", function() {
      * policies are stored in their own npm packages though.
      */
     it("#5", async function() {
-        const policiesStats = policyManager.getStats();
+        const policiesStats = policyManager.getSelectionStats();
         const selection = policyManager.selectPolicies({
             services: ["ec2"],
         });
@@ -60,7 +60,7 @@ describe("policyManager.general", function() {
     });
 
     it("#6", async function() {
-        const policiesStats = policyManager.getStats();
+        const policiesStats = policyManager.getSelectionStats();
         policyManager.resetPolicySelector();
         assertHasAllRemainingPolicies();
         assertExpectedRemainingPolicyCount(policiesStats.policyCount);

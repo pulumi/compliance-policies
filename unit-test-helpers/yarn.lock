@@ -305,10 +305,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@pulumi-premium-policies/policy-manager@^0.0.2":
-  version "0.0.2"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-manager/-/policy-manager-0.0.2.tgz#58b3544d5b904782c88f0c7cd5bd92eb45794aca"
-  integrity sha512-ZwDMigu1WkTXTaXBj18gKleZ/ZCP2K9Aeky9FaZNTXrAvoyj7RAv22LUiWJDa49W9jCBW17OppGZzWQC374Dyg==
+"@pulumi-premium-policies/policy-manager@^0.0.3":
+  version "0.0.3"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-manager/-/policy-manager-0.0.3.tgz#631f3a6c7f5d33bd0d935098d1b74ba292d0ac8d"
+  integrity sha512-sYrnllNnsG5UMjNObrzWbocloBfHPIGoK1HbWmchApvk5YCp7kLyAJxYN1IAS9ZoOJiB5l4WHcEmGqJ+seYbag==
   dependencies:
     "@pulumi/policy" "^1.5.0"
     findup-sync "^5.0.0"

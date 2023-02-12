@@ -149,6 +149,9 @@ export class PolicyManager {
      */
     private selectedPolicies: policy.ResourceValidationPolicy[] = [];
 
+    /**
+     * An array containing the list of registered modules.
+     */
     private registeredModules: ModuleInfo[] = [];
 
     /**

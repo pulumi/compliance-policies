@@ -487,6 +487,37 @@ export class PolicyManager {
     }
 
     /**
+     * This function `setPolicyEnforcementLevel` sets a policy `enforcementLevel` for the provided `ResourceValidationPolicy` policy and returns it.
+     * This function is typically used when cherry-picking individual policies as part of creating a policy-pack.
+     *
+     * @param pol A `ResourceValidationPolicy` policy for which you want to change its `enforcementLevel`.
+     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
+     * @returns A ResourceValidationPolicy policy with the desired `enforcementLevel` set.
+     */
+    public setPolicyEnforcementLevel(pol: policy.ResourceValidationPolicy, enforcementLevel: string): policy.ResourceValidationPolicy {
+        /*
+         * We need to deep clone the entire policy to avoid changing
+         * the enforcement level set by the policy developer. However,
+         * It's not possible to use `structuredClone()` to clone because
+         * the policy code cannot be serialized. So instead, we manually
+         * assign each value and set the enforcementLevel last.
+         */
+        const p: policy.ResourceValidationPolicy = {
+            name: pol.name,
+            description: pol.description,
+            configSchema: pol.configSchema,
+            validateResource: pol.validateResource,
+            enforcementLevel: pol.enforcementLevel,
+        };
+
+        if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
+            pol.enforcementLevel = enforcementLevel;
+        }
+
+        return p;
+    }
+
+    /**
      * Register a new policy so the policy can be aggregated into group of policies.
      *
      * @param args An object containing the policy to register as well as its additional attributes.

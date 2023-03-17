@@ -29,11 +29,13 @@ official [documentation](https://www.pulumi.com/docs/guides/crossguard/core-conc
 To connect to the CodeArtifact repository (for package publishing purpose), run the command below
 
 In bash/zsh
+
 ```bash
 export CODEARTIFACT_AUTH_TOKEN="$(aws --region ap-southeast-2 codeartifact get-authorization-token --domain pulumi-policy-as-code --query authorizationToken --output text)"
 ```
 
 In fish
+
 ```fish
 set -gx CODEARTIFACT_AUTH_TOKEN (aws --region ap-southeast-2 codeartifact get-authorization-token --domain pulumi-policy-as-code --query authorizationToken --output text)
 ```

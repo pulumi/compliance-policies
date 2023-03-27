@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Instance from "./Instance/";
-export * as LaunchConfiguration from "./LaunchConfiguration/";
-export * as LaunchTemplate from "./LaunchTemplate/";
-export * as SecurityGroup from "./SecurityGroup/";
+export * as Instance from "./Instance";
+export * as LaunchConfiguration from "./LaunchConfiguration";
+export * as LaunchTemplate from "./LaunchTemplate";
+export * as SecurityGroup from "./SecurityGroup";

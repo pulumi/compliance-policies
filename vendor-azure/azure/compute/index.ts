@@ -18,5 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as LinuxVirtualMachine from "./LinuxVirtualMachine/";
-export * as ManagedDisk from "./ManagedDisk/";
+export * as LinuxVirtualMachine from "./LinuxVirtualMachine";
+export * as ManagedDisk from "./ManagedDisk";

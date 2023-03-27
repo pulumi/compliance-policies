@@ -18,6 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Cluster from "./Cluster/";
-export * as ClusterInstance from "./ClusterInstance/";
-export * as Instance from "./Instance/";
+export * as Cluster from "./Cluster";
+export * as ClusterInstance from "./ClusterInstance";
+export * as Instance from "./Instance";

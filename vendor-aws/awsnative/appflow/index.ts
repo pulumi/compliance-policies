@@ -18,5 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as ConnectorProfile from "./ConnectorProfile/";
-export * as Flow from "./Flow/";
+export * as ConnectorProfile from "./ConnectorProfile";
+export * as Flow from "./Flow";

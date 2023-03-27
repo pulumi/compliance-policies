@@ -18,5 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Listener from "./Listener";
-export * as LoadBalancer from "./LoadBalancer";
+export * as Listener from "./Listener/";
+export * as LoadBalancer from "./LoadBalancer/";

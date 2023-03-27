@@ -18,6 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DataCatalog from "./DataCatalog";
-export * as NamedQuery from "./NamedQuery";
-export * as WorkGroup from "./WorkGroup";
+export * as DataCatalog from "./DataCatalog/";
+export * as NamedQuery from "./NamedQuery/";
+export * as WorkGroup from "./WorkGroup/";

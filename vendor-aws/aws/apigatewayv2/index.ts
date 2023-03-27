@@ -18,5 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DomainName from "./DomainName";
-export * as Stage from "./Stage";
+export * as DomainName from "./DomainName/";
+export * as Stage from "./Stage/";

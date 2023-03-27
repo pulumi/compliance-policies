@@ -624,12 +624,12 @@ function parseSourceFile(suiteName?: string, suiteFile?: string): SourceFileDeta
     }
 
     const splitResourceSuiteName = suiteName.split("."); // [ 'aws', 'alb', 'Listener', 'disallowUnencryptedTraffic' ]
-    sourceFileDetails.policyVarName = splitResourceSuiteName.pop(); // 'disallowUnencryptedTraffic' = [ 'aws', 'alb', 'Listener' ]
+    sourceFileDetails.policyVarName = splitResourceSuiteName[splitResourceSuiteName.length-1]; // 'disallowUnencryptedTraffic' = [ 'aws', 'alb', 'Listener', 'disallowUnencryptedTraffic' ]
 
-    const relativeSpecFile = splitResourceSuiteName.join("/") + ".spec.ts"; // "aws/alb/Listener.spec.ts"
+    const relativeSpecFile = splitResourceSuiteName.join("/") + ".spec.ts"; // "aws/alb/Listener/disallowUnencryptedTraffic.spec.ts"
     const testsBasePath = suiteFile.replace(`/${relativeSpecFile}`, ""); // "/home/aureq/work/github.com/pulumi/policy-packs/policies/tests"
     const policiesBasePath = path.dirname(testsBasePath); // "/home/aureq/work/github.com/pulumi/policy-packs/policies"
-    const splitSuite = suiteFile.replace(`${testsBasePath}/`, "").replace(".spec.ts", "").split("/"); // [ 'aws', 'alb', 'Listener' ]
+    const splitSuite = suiteFile.replace(`${testsBasePath}/`, "").replace(".spec.ts", "").split("/"); // [ 'aws', 'alb', 'Listener', 'disallowUnencryptedTraffic' ]
 
     /**
      * Ensure the suite is located in the correct file.

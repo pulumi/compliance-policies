@@ -18,4 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as ManagedCluster from "./ManagedCluster";
+export * as ManagedCluster from "./ManagedCluster/";

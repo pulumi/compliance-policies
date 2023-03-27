@@ -24,48 +24,20 @@ import {
     assertNoResourceViolations,
     assertResourcePolicyIsRegistered,
     assertResourcePolicyRegistrationDetails,
-    createResourceValidationArgs,
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as azure from "@pulumi/azure";
+import * as policies from "../../../../index";
+import * as enums from "../../enums";
+import { getResourceValidationArgs } from "./resource";
 
-import * as policies from "../../../index";
-import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../enums";
-
-/**
- * Create a `ResourceValidationArgs` to be process by the unit test.
- *
- * @returns A `ResourceValidationArgs`.
- */
-function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azure.containerservice.KubernetesCluster, {
-        resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        location: enums.resourcegroup.Location,
-        dnsPrefix: "exampleaks1",
-        networkProfile: {
-            networkPlugin: "azure",
-            networkPolicy: "calico",
-        },
-        defaultNodePool: {
-            name: "default",
-            nodeCount: 1,
-            vmSize: "Standard_D2_v2",
-        },
-        identity: {
-            type: "SystemAssigned",
-        },
-    });
-}
-
-describe("azure.containerservice.KubernetesCluster.configureNetworkPolicy", function () {
-    const policy = policies.azure.containerservice.KubernetesCluster.configureNetworkPolicy;
+describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", function () {
+    const policy = policies.azurenative.containerservice.ManagedCluster.configureNetworkPolicy;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azure-containerservice-kubernetescluster-configure-network-policy");
+        assertResourcePolicyName(policy, "azurenative-containerservice-managedcluster-configure-network-policy");
     });
 
     it("registration", async function () {
@@ -100,7 +72,7 @@ describe("azure.containerservice.KubernetesCluster.configureNetworkPolicy", func
 
     it("#2", async function () {
         const args = getResourceValidationArgs();
-        delete args.props.networkProfile!.networkPolicy;
+        delete args.props.networkProfile.networkPolicy;
         await assertHasResourceViolation(policy, args, {
             message: "Ensure AKS cluster has Network Policy configured.",
         });

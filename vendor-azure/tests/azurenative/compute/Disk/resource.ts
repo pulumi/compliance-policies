@@ -18,30 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import "mocha";
-import {
-    assertHasResourceViolation,
-    assertNoResourceViolations,
-    assertResourcePolicyIsRegistered,
-    assertResourcePolicyRegistrationDetails,
-    createResourceValidationArgs,
-    assertResourcePolicyName,
-    assertResourcePolicyEnforcementLevel,
-    assertResourcePolicyDescription,
-    assertCodeQuality,
-} from "@pulumi-premium-policies/unit-test-helpers";
 import * as azure from "@pulumi/azure-native";
-
-import * as policies from "../../../index";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../enums";
+import * as enums from "../../enums";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
  *
  * @returns A `ResourceValidationArgs`.
  */
-function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azure.compute.Disk, {
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
         location: enums.resourcegroup.Location,
@@ -68,49 +55,3 @@ function getResourceValidationArgs(): ResourceValidationArgs {
         },
     });
 }
-
-describe("azurenative.compute.Disk.disallowUnencryptedDisk", function () {
-    const policy = policies.azurenative.compute.Disk.disallowUnencryptedDisk;
-
-    it("name", async function () {
-        assertResourcePolicyName(policy, "azurenative-compute-disk-disallow-unencrypted-disk");
-    });
-
-    it("registration", async function () {
-        assertResourcePolicyIsRegistered(policy);
-    });
-
-    it("metadata", async function () {
-        assertResourcePolicyRegistrationDetails(policy, {
-            vendors: ["azure"],
-            services: ["compute"],
-            severity: "high",
-            topics: ["storage", "encryption"],
-        });
-    });
-
-    it("enforcementLevel", async function () {
-        assertResourcePolicyEnforcementLevel(policy);
-    });
-
-    it("description", async function () {
-        assertResourcePolicyDescription(policy);
-    });
-
-    it("code", async function () {
-        assertCodeQuality(this.test?.parent?.title, __filename);
-    });
-
-    it("#1", async function () {
-        const args = getResourceValidationArgs();
-        await assertNoResourceViolations(policy, args);
-    });
-
-    it("#2", async function () {
-        const args = getResourceValidationArgs();
-        args.props.encryptionSettingsCollection.enabled = false;
-        await assertHasResourceViolation(policy, args, {
-            message: "A Disk is currently not encrypted.",
-        });
-    });
-});

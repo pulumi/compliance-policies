@@ -24,73 +24,20 @@ import {
     assertNoResourceViolations,
     assertResourcePolicyIsRegistered,
     assertResourcePolicyRegistrationDetails,
-    createResourceValidationArgs,
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as azure from "@pulumi/azure-native";
+import * as policies from "../../../../index";
+import * as enums from "../../enums";
+import { getResourceValidationArgs } from "./resource";
 
-import * as policies from "../../../index";
-import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../enums";
-
-/**
- * Create a `ResourceValidationArgs` to be process by the unit test.
- *
- * @returns A `ResourceValidationArgs`.
- */
-function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azure.containerservice.ManagedCluster, {
-        resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        location: enums.resourcegroup.Location,
-        addonProfiles: {},
-        agentPoolProfiles: [{
-            availabilityZones: [
-                "1",
-                "2",
-                "3",
-            ],
-            count: 3,
-            enableNodePublicIP: true,
-            mode: "System",
-            name: "nodepool1",
-            osType: "Linux",
-            type: "VirtualMachineScaleSets",
-            vmSize: "Standard_DS1_v2",
-        }],
-        dnsPrefix: "dnsprefix1",
-        identity: {
-            type: "SystemAssigned",
-        },
-        networkProfile: {
-            networkPolicy: "calico",
-            loadBalancerProfile: {
-                managedOutboundIPs: {
-                    count: 2,
-                },
-            },
-            loadBalancerSku: "standard",
-            outboundType: "loadBalancer",
-        },
-        resourceName: "clustername1",
-        servicePrincipalProfile: {
-            clientId: "clientid",
-            secret: "secret",
-        },
-        sku: {
-            name: "Basic",
-            tier: "Free",
-        },
-    });
-}
-
-describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", function () {
-    const policy = policies.azurenative.containerservice.ManagedCluster.configureNetworkPolicy;
+describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", function () {
+    const policy = policies.azurenative.compute.VirtualMachine.disallowPasswordAuthentication;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azurenative-containerservice-managedcluster-configure-network-policy");
+        assertResourcePolicyName(policy, "azurenative-compute-virtualmachine-disallow-password-authentication");
     });
 
     it("registration", async function () {
@@ -100,9 +47,9 @@ describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", f
     it("metadata", async function () {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["azure"],
-            services: ["containerservice"],
+            services: ["compute"],
             severity: "high",
-            topics: ["network", "kubernetes"],
+            topics: ["security", "authentication"],
         });
     });
 
@@ -125,9 +72,9 @@ describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", f
 
     it("#2", async function () {
         const args = getResourceValidationArgs();
-        delete args.props.networkProfile.networkPolicy;
+        args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
         await assertHasResourceViolation(policy, args, {
-            message: "Ensure AKS cluster has Network Policy configured.",
+            message: "Authentication to Linux machines should require SSH keys.",
         });
     });
 });

@@ -24,52 +24,20 @@ import {
     assertNoResourceViolations,
     assertResourcePolicyIsRegistered,
     assertResourcePolicyRegistrationDetails,
-    createResourceValidationArgs,
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as azure from "@pulumi/azure";
+import * as policies from "../../../../index";
+import * as enums from "../../enums";
+import { getResourceValidationArgs } from "./resource";
 
-import * as policies from "../../../index";
-import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../enums";
-
-/**
- * Create a `ResourceValidationArgs` to be process by the unit test.
- *
- * @returns A `ResourceValidationArgs`.
- */
-function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azure.compute.LinuxVirtualMachine, {
-        resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        location: enums.resourcegroup.Location,
-        size: "Standard_D2s_v4",
-        osDisk: {
-            caching: "ReadWrite",
-            storageAccountType: "Standard_LRS",
-        },
-        sourceImageReference: {
-            publisher: "Canonical",
-            offer: "UbuntuServer",
-            sku: "16.04-LTS",
-            version: "latest",
-        },
-        adminUsername: "ubuntu",
-        networkInterfaceIds: [
-            "nic1",
-        ],
-        computerName: "test",
-        disablePasswordAuthentication: true,
-    });
-}
-
-describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", function () {
-    const policy = policies.azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication;
+describe("azure.containerservice.KubernetesCluster.configureNetworkPolicy", function () {
+    const policy = policies.azure.containerservice.KubernetesCluster.configureNetworkPolicy;
 
     it("name", async function () {
-        assertResourcePolicyName(policy, "azure-compute-linuxvirtualmachine-disallow-password-authentication");
+        assertResourcePolicyName(policy, "azure-containerservice-kubernetescluster-configure-network-policy");
     });
 
     it("registration", async function () {
@@ -79,9 +47,9 @@ describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", fun
     it("metadata", async function () {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["azure"],
-            services: ["compute"],
+            services: ["containerservice"],
             severity: "high",
-            topics: ["security", "authentication"],
+            topics: ["network", "kubernetes"],
         });
     });
 
@@ -104,9 +72,9 @@ describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", fun
 
     it("#2", async function () {
         const args = getResourceValidationArgs();
-        args.props.disablePasswordAuthentication = false;
+        delete args.props.networkProfile!.networkPolicy;
         await assertHasResourceViolation(policy, args, {
-            message: "Authentication to Linux machines should require SSH keys.",
+            message: "Ensure AKS cluster has Network Policy configured.",
         });
     });
 });

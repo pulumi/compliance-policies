@@ -24,43 +24,14 @@ import {
     assertNoResourceViolations,
     assertResourcePolicyIsRegistered,
     assertResourcePolicyRegistrationDetails,
-    createResourceValidationArgs,
     assertResourcePolicyName,
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as azure from "@pulumi/azure";
-
-import * as policies from "../../../index";
-import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../enums";
-
-/**
- * Create a `ResourceValidationArgs` to be process by the unit test.
- *
- * @returns A `ResourceValidationArgs`.
- */
-function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azure.compute.ManagedDisk, {
-        name: "test-disk",
-        resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        location: enums.resourcegroup.Location,
-        storageAccountType: "Standard_LRS",
-        createOption: "Empty",
-        diskSizeGb: 10,
-        encryptionSettings: {
-            diskEncryptionKey: {
-                secretUrl: enums.keyvault.SecretUrl,
-                sourceVaultId: enums.keyvault.SourceVaultId,
-            },
-            keyEncryptionKey: {
-                keyUrl: enums.keyvault.KeyUrl,
-                sourceVaultId: enums.keyvault.SourceVaultId,
-            },
-        },
-    });
-}
+import * as policies from "../../../../index";
+import * as enums from "../../enums";
+import { getResourceValidationArgs } from "./resource";
 
 describe("azure.compute.ManagedDisk.disallowUnencryptedManagedDisk", function () {
     const policy = policies.azure.compute.ManagedDisk.disallowUnencryptedManagedDisk;

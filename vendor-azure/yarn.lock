@@ -438,10 +438,10 @@
     ts-node "^10.9.1"
     typescript "^4.9.0"
 
-"@pulumi-premium-policies/unit-test-helpers@^0.0.9":
-  version "0.0.9"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.9.tgz#6d340c7a8d0337ae68b811749cfb868ade2ea4dc"
-  integrity sha512-kBeBWEuhCnIg3flWQbiw6+PLghkYU+HVzf8iTJXCtKWvWBpTj1M5w96pHZ2lLfH4Bv3PeuwkspGj6w37/QdzGg==
+"@pulumi-premium-policies/unit-test-helpers@^0.0.10":
+  version "0.0.10"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/unit-test-helpers/-/unit-test-helpers-0.0.10.tgz#2ce00ad62cdd704830c717cbc40ea028f0bc1114"
+  integrity sha512-q9+juHPwlKnljm6B4k1qhi+FSlyI+t1pWIJM8w1CnPZa3h2G1qUnOV0IENHaQQqW3u6cLzm28TXN/B8QyZE3hA==
   dependencies:
     "@babel/parser" "^7.20.7"
     "@babel/types" "^7.20.7"

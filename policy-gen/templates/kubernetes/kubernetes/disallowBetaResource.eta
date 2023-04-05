@@ -1,0 +1,21 @@
+<%~ includeFile("policy.eta") %>
+/**
+ * Disallow the use of non-stable (Beta) Kubernetes resouces (<%~ it.resourceType %>).
+ *
+ * @severity medium
+ * @link https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups-and-versioning
+ */
+export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
+    resourceValidationPolicy: {
+        name: "<%= it.policyName %>",
+        description: "Disallow the use of non-stable (Beta) Kubernetes resouces (<%~ it.resourceType %>).",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(k8s.<%= it.resourceType %>, (_, args, reportViolation) => {
+            reportViolation("Kubernetes <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).");
+        }),
+    },
+    vendors: ["kubernetes"],
+    services: <%~ it.metadataServices %>,
+    severity: "medium",
+    topics: ["api", "unstable", "beta"],
+});

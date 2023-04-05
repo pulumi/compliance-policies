@@ -45,6 +45,7 @@ export class KubernetesProvider extends Provider {
 
     public generatePolicies() {
         this.disallowAlphaAPIs();
+        this.disallowBetaAPIs();
     }
 
     /**
@@ -100,10 +101,65 @@ export class KubernetesProvider extends Provider {
             const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
             const resourceFile: string = this.getPolicyResourceFile(schemaResourceName);
 
-            // console.log(`sourceFile: ${sourceFile}`);
-            // console.log(`specFile: ${specFile}`);
+            const policySourceCode = eta.render(policyTemplateFunction, policyTemplateArgs);
+            const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
+            const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
-            // this.createPolicyDirectories(kubernetesModule, this.getShortResourceType(resourceType), policyVariableName);
+            this.saveSourceFile(sourceFile, policySourceCode, policyVariableName);
+            this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
+        }
+    }
+    /**
+     * Generate polcies to prevent the use of `*beta*` Kubernetes APIs.
+     */
+    private disallowBetaAPIs()  {
+
+        const policyVariableName: string = "disallowBetaResource";
+        const policyNameSuffix: string = "disallow-beta-resource";
+        const policyFilename = `${this.templateBasePath}/${policyVariableName}.eta`;
+        const policyTemplateFunction = eta.loadFile(policyFilename, {
+            filename: policyFilename,
+        });
+
+        const specFilename: string = `${this.templateBasePath}/${policyVariableName}.spec.eta`;
+        const specTemplateFunction = eta.loadFile(specFilename, {
+            filename: specFilename,
+        });
+
+        const resourceFilename: string = `${this.templateBasePath}/resource.eta`;
+        const resourceTemplateFunction = eta.loadFile(resourceFilename, {
+            filename: resourceFilename,
+        });
+
+        for (const [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
+            if (schemaResourceName.toLowerCase().indexOf("beta") < 0) {
+                continue;
+            }
+
+            const policyTemplateArgs = {
+                resourceType: this.getResourceType(schemaResourceName),
+                shortResourceType: this.getShortResourceType(schemaResourceName),
+                policyVariableName: policyVariableName,
+                policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
+                metadataServices: this.getTemplatePolicyServices(schemaResourceName),
+            };
+
+            const specTemplateArgs = {
+                resourceType: this.getResourceType(schemaResourceName),
+                shortResourceType: this.getShortResourceType(schemaResourceName),
+                policyFullVariableName: this.getPolicyFullVariableName(schemaResourceName, policyVariableName),
+                policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
+                metadataServices: this.getTemplatePolicyServices(schemaResourceName),
+                policiesImportPath: this.getPoliciesRelativeImportPath(schemaResourceName),
+            };
+
+            const resourceTemplateArgs = {
+                resourceType: this.getResourceType(schemaResourceName),
+            };
+
+            const sourceFile: string = this.getPolicySourceFile(schemaResourceName, policyVariableName);
+            const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
+            const resourceFile: string = this.getPolicyResourceFile(schemaResourceName);
 
             const policySourceCode = eta.render(policyTemplateFunction, policyTemplateArgs);
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);

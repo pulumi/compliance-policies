@@ -17,6 +17,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import * as kubernetes from "@pulumi/kubernetes";
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(kubernetes.rbac.v1alpha1.Role, {});
+}

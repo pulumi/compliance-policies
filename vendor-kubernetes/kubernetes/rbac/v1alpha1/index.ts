@@ -18,5 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+export * as ClusterRole from "./ClusterRole";
+export * as ClusterRoleBinding from "./ClusterRoleBinding";
+export * as ClusterRoleBindingList from "./ClusterRoleBindingList";
+export * as ClusterRoleBindingPatch from "./ClusterRoleBindingPatch";
+export * as ClusterRoleList from "./ClusterRoleList";
+export * as ClusterRolePatch from "./ClusterRolePatch";
+export * as Role from "./Role";
+export * as RoleBinding from "./RoleBinding";
+export * as RoleBindingList from "./RoleBindingList";
+export * as RoleBindingPatch from "./RoleBindingPatch";
+export * as RoleList from "./RoleList";
+export * as RolePatch from "./RolePatch";

@@ -18,5 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+export * as PodScheduling from "./PodScheduling";
+export * as PodSchedulingList from "./PodSchedulingList";
+export * as PodSchedulingPatch from "./PodSchedulingPatch";
+export * as ResourceClaim from "./ResourceClaim";
+export * as ResourceClaimList from "./ResourceClaimList";
+export * as ResourceClaimPatch from "./ResourceClaimPatch";
+export * as ResourceClaimTemplate from "./ResourceClaimTemplate";
+export * as ResourceClaimTemplateList from "./ResourceClaimTemplateList";
+export * as ResourceClaimTemplatePatch from "./ResourceClaimTemplatePatch";
+export * as ResourceClass from "./ResourceClass";
+export * as ResourceClassList from "./ResourceClassList";
+export * as ResourceClassPatch from "./ResourceClassPatch";

@@ -18,5 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+export * as FlowSchema from "./FlowSchema";
+export * as FlowSchemaList from "./FlowSchemaList";
+export * as FlowSchemaPatch from "./FlowSchemaPatch";
+export * as PriorityLevelConfiguration from "./PriorityLevelConfiguration";
+export * as PriorityLevelConfigurationList from "./PriorityLevelConfigurationList";
+export * as PriorityLevelConfigurationPatch from "./PriorityLevelConfigurationPatch";

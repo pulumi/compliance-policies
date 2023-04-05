@@ -18,5 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+export * as ClusterCIDR from "./ClusterCIDR";
+export * as ClusterCIDRList from "./ClusterCIDRList";
+export * as ClusterCIDRPatch from "./ClusterCIDRPatch";

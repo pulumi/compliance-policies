@@ -18,5 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1 from "./v1";
-export * as v2alpha1 from "./v2alpha1";
+export * as VolumeAttachment from "./VolumeAttachment";
+export * as VolumeAttachmentList from "./VolumeAttachmentList";
+export * as VolumeAttachmentPatch from "./VolumeAttachmentPatch";

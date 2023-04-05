@@ -50,4 +50,5 @@ export const disallowPasswordAuthentication: ResourceValidationPolicy = policyMa
     services: ["compute"],
     severity: "high",
     topics: ["security", "authentication"],
+    frameworks: ["pcidss"],
 });

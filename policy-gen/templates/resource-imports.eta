@@ -1,0 +1,3 @@
+<%~ includeFile("../../headers.eta") %>
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";

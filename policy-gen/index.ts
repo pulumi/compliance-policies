@@ -18,9 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as fs from "fs";
 import * as commander from "commander";
-import * as jsSerial from "./tools/json-safe-stringify";
 
 import { KubernetesProvider } from "./providers/kubernetes";
 

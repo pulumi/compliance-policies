@@ -20,3 +20,6 @@ lint::
 
 run:: lint
 	@yarn run run
+
+dryrun:: lint
+	@yarn run dryrun

@@ -30,11 +30,29 @@ import * as eta from "eta";
 // type SchemaMap = Map<string, Map<string, Map<string, string>>>;
 
 export interface ProviderArgs {
+    /**
+     * Name of the provider.
+     */
     name: string;
+    /**
+     * Version of the provider.
+     */
     version: string;
+    /**
+     * Vendor's directory to use to save the generated policies and unit tests.
+     */
     directory: string;
-    overwrite: boolean;
+    /**
+     * Generate policies and unit tests but do not save any files locally.
+     */
+    dryrun: boolean;
+    /**
+     * Vendor's name.
+     */
     vendorName: string;
+    /**
+     * The template filename used to generate new `index.ts` as part of the `export` statement.
+     */
     exportsTemplateFile: string;
 }
 
@@ -130,7 +148,7 @@ export class Provider {
      */
     private createEmtpyExport(exportsFile: string) {
 
-        if (fs.existsSync(exportsFile) && this.args.overwrite !== true) {
+        if (fs.existsSync(exportsFile) || this.args.dryrun === true) {
             return;
         }
 
@@ -312,17 +330,18 @@ export class Provider {
 
     protected saveSpecFile(specFile: string, specSourceCode: string, resourceFile?: string, resourceSourceCode?: string) {
 
+        if (this.args.dryrun === true) {
+            return;
+        }
+
         this.mkdirpSync(path.dirname(`${this.directory}/${specFile}`));
 
-        if (!fs.existsSync(`${this.directory}/${specFile}`) || this.args.overwrite === true) {
+        if (!fs.existsSync(`${this.directory}/${specFile}`)) {
             const specFileHandle = fs.openSync(`${this.directory}/${specFile}`, "w", 0o640);
             fs.appendFileSync(specFileHandle, specSourceCode);
             fs.closeSync(specFileHandle);
         }
 
-        /*
-         * We don't overwrite `resource.ts` since the file is not generated.
-         */
         this.mkdirpSync(path.dirname(`${this.directory}/${resourceFile}`));
         if (resourceFile && !fs.existsSync(`${this.directory}/${resourceFile}`) && resourceSourceCode && resourceSourceCode.length > 0) {
             const specFileHandle = fs.openSync(`${this.directory}/${resourceFile}`, "w", 0o640);
@@ -339,6 +358,10 @@ export class Provider {
      * @param policyVariableName The policy variable name that holds the policy code.
      */
     protected saveSourceFile(sourceFile: string, policySourceCode: string, policyVariableName: string) {
+
+        if (this.args.dryrun === true) {
+            return;
+        }
 
         let currentDirectory: string = this.directory;
         const directoryParts: string[] = path.dirname(sourceFile).split("/");
@@ -372,7 +395,7 @@ export class Provider {
             }
         }
 
-        if (!fs.existsSync(`${this.directory}/${sourceFile}`) || this.args.overwrite === true) {
+        if (!fs.existsSync(`${this.directory}/${sourceFile}`)) {
             const sourceFileHandle = fs.openSync(`${this.directory}/${sourceFile}`, "w", 0o640);
             fs.appendFileSync(sourceFileHandle, policySourceCode);
             fs.closeSync(sourceFileHandle);

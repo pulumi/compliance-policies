@@ -44,6 +44,7 @@
     "scripts": {
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
         "build": "tsc",
-        "run": "ts-node index.ts run --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/"
+        "run": "ts-node index.ts run --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
+        "dryrun": "ts-node index.ts run --dryrun --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/"
     }
 }

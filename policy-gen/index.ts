@@ -20,21 +20,39 @@
 
 import * as commander from "commander";
 
-import { KubernetesProvider } from "./providers/kubernetes";
+import { KubernetesProvider, KubernetesProviderArgs } from "./providers/kubernetes";
+
+interface RunArgs {
+    /**
+     * Name of the provider.
+     */
+    name: string;
+    /**
+     * Version of the provider.
+     */
+    version: string;
+    /**
+     * Vendor's directory to use to save the generated policies and unit tests.
+     */
+    directory: string;
+    /**
+     * Generate policies and unit tests but do not save any files locally.
+     */
+    dryrun: boolean;
+}
 
 /**
  * An entrypoint.
  *
  * @param provider The name of a pulumi provider.
  */
-function cmd_run(name: string, version: string, directory: string) {
+function cmd_run(args: RunArgs) {
 
-    const provider = new KubernetesProvider({
-        name: name,
-        version: version,
-        directory: directory,
-        overwrite: false,
-    });
+    const providerArgs: KubernetesProviderArgs = {
+        ...args,
+    };
+
+    const provider = new KubernetesProvider(providerArgs);
     provider.generatePolicies();
 
     // const serializer = new jsSerial.JsonSerializer();
@@ -57,15 +75,22 @@ function cmd_version() {
 commander.program
     .command("run")
     .description("Run the program")
-    .requiredOption("-p, --provider <providers>", "The desired Pulumi provider to generate policies for.")
-    .requiredOption("-v, --version <version>", "The provider version to process.")
-    .requiredOption("-d, --directory <vendor-directory>", "Path to the vendor's directory to save the generated polcies.")
+    .requiredOption("--provider <providers>", "The desired Pulumi provider to generate policies for.")
+    .requiredOption("--version <version>", "The provider version to process.")
+    .requiredOption("--directory <vendor-directory>", "Path to the vendor's directory to save the generated polcies.")
+    .option("--dryrun", "Generate all the policies and unit tests but doesn't save anything locally.")
     .action((options) => {
         const name: string = (options.provider as string);
         const version: string = (options.version as string);
         const directory: string = (options.directory as string);
+        const dryrun: boolean = options.dryrun ? true : false;
 
-        cmd_run(name, version, directory);
+        cmd_run({
+            name: name,
+            version: version,
+            directory: directory,
+            dryrun: dryrun,
+        });
     });
 
 commander.program

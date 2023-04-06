@@ -22,10 +22,22 @@ import { Provider, ProviderArgs } from "../../base/provider";
 import * as eta from "eta";
 
 export interface KubernetesProviderArgs {
+    /**
+     * Name of the provider.
+     */
     name: string;
+    /**
+     * Version of the provider.
+     */
     version: string;
+    /**
+     * Vendor's directory to use to save the generated policies and unit tests.
+     */
     directory: string;
-    overwrite: boolean;
+    /**
+     * Generate policies and unit tests but do not save any files locally.
+     */
+    dryrun: boolean;
 }
 
 export class KubernetesProvider extends Provider {

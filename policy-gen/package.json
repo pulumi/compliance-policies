@@ -44,7 +44,9 @@
     "scripts": {
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
         "build": "tsc",
-        "run": "ts-node index.ts run --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
-        "dryrun": "ts-node index.ts run --dryrun --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/"
+        "runkubernetes": "ts-node index.ts run --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
+        "dryrunkubernetes": "ts-node index.ts run --dryrun --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
+        "runazurenative": "ts-node index.ts run --provider azurenative --version 1.99.1 --directory ../vendor-azure/",
+        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azurenative --version 1.99.1 --directory ../vendor-azure/"
     }
 }

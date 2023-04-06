@@ -18,8 +18,14 @@ build:: lint
 lint::
 	@yarn run lint
 
-run:: lint
-	@yarn run run
+runkubernetes:: lint
+	@yarn run runkubernetes
 
-dryrun:: lint
-	@yarn run dryrun
+dryrunkubernetes:: lint
+	@yarn run dryrunkubernetes
+
+runazurenative:: lint
+	@yarn run runazurenative
+
+dryrunazurenative:: lint
+	@yarn run dryrunazurenative

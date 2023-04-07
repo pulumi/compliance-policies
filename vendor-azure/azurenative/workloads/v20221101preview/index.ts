@@ -24,4 +24,4 @@ export * as SAPCentralInstance from "./SAPCentralInstance";
 export * as SAPDatabaseInstance from "./SAPDatabaseInstance";
 export * as SAPVirtualInstance from "./SAPVirtualInstance";
 export * as SapLandscapeMonitor from "./SapLandscapeMonitor";
-export * as monitor from "./monitor";
+export * as Monitor from "./Monitor";

@@ -17,12 +17,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import * as azurenative from "@pulumi/azure-native";
 
-export * as PhpWorkload from "./PhpWorkload";
-export * as ProviderInstance from "./ProviderInstance";
-export * as SAPApplicationServerInstance from "./SAPApplicationServerInstance";
-export * as SAPCentralInstance from "./SAPCentralInstance";
-export * as SAPDatabaseInstance from "./SAPDatabaseInstance";
-export * as SAPVirtualInstance from "./SAPVirtualInstance";
-export * as WordpressInstance from "./WordpressInstance";
-export * as Monitor from "./Monitor";
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(azurenative.storage.v20200801preview.FileShare, {
+        accountName: "",
+        resourceGroupName: ""
+    });
+}

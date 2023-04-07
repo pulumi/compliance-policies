@@ -18,11 +18,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as PhpWorkload from "./PhpWorkload";
-export * as ProviderInstance from "./ProviderInstance";
-export * as SAPApplicationServerInstance from "./SAPApplicationServerInstance";
-export * as SAPCentralInstance from "./SAPCentralInstance";
-export * as SAPDatabaseInstance from "./SAPDatabaseInstance";
-export * as SAPVirtualInstance from "./SAPVirtualInstance";
-export * as WordpressInstance from "./WordpressInstance";
-export * as Monitor from "./Monitor";
+export * as BlobContainer from "./BlobContainer";
+export * as BlobContainerImmutabilityPolicy from "./BlobContainerImmutabilityPolicy";
+export * as BlobInventoryPolicy from "./BlobInventoryPolicy";
+export * as BlobServiceProperties from "./BlobServiceProperties";
+export * as EncryptionScope from "./EncryptionScope";
+export * as FileServiceProperties from "./FileServiceProperties";
+export * as FileShare from "./FileShare";
+export * as ManagementPolicy from "./ManagementPolicy";
+export * as ObjectReplicationPolicy from "./ObjectReplicationPolicy";
+export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
+export * as Queue from "./Queue";
+export * as QueueServiceProperties from "./QueueServiceProperties";
+export * as StorageAccount from "./StorageAccount";
+export * as Table from "./Table";
+export * as TableServiceProperties from "./TableServiceProperties";

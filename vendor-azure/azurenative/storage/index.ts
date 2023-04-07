@@ -18,11 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as PhpWorkload from "./PhpWorkload";
-export * as ProviderInstance from "./ProviderInstance";
-export * as SAPApplicationServerInstance from "./SAPApplicationServerInstance";
-export * as SAPCentralInstance from "./SAPCentralInstance";
-export * as SAPDatabaseInstance from "./SAPDatabaseInstance";
-export * as SAPVirtualInstance from "./SAPVirtualInstance";
-export * as WordpressInstance from "./WordpressInstance";
-export * as Monitor from "./Monitor";
+export * as v20150501preview from "./v20150501preview";
+export * as v20180301preview from "./v20180301preview";
+export * as v20200801preview from "./v20200801preview";

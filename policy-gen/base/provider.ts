@@ -99,15 +99,17 @@ export class Provider {
             throw new Error(`this provider's schema (${this.args.name}@${this.version}) doesn't contain a version.`);
         }
 
-        this.schemaName = <string>this.schemaObject["name"];
-        this.schemaVersion = <string>this.schemaObject["version"];
-        if (this.args.name !== this.schemaName) {
-            throw new Error(`this provider ${this.args.name}@${this.version} returned a different schema name '${this.schemaName}'`);
+        if (this.args.name !== this.schemaObject["name"]) {
+            throw new Error(`this provider ${this.args.name}@${this.version} returned a different schema name '${this.schemaObject["name"]}'`);
         }
 
-        if (this.version !== this.schemaVersion) {
-            throw new Error(`this provider ${this.args.name}@${this.version} returned a different schema version '${this.schemaVersion}'`);
+        const _schemaName: string = <string>this.schemaObject["name"];
+        this.schemaName = _schemaName.replace(/-/g, "");
+
+        if (this.version !== this.schemaObject["version"]) {
+            throw new Error(`this provider ${this.args.name}@${this.version} returned a different schema version '${this.schemaObject["version"]}'`);
         }
+        this.schemaVersion = <string>this.schemaObject["version"];
 
         this.templateBasePath = this.createTemplateDirectory(this.args.vendorName);
         eta.configure({
@@ -124,7 +126,11 @@ export class Provider {
 
     private downloadSchema() {
 
-        const bufferSize: number = 100*1024*1024;
+        /*
+         * The Azure Native provider takes ~225MB (2023/04/07).
+         * So let's make sure we don't need to increase the buffer too often.
+         */
+        const bufferSize: number = 512*1024*1024;
         const s = spawnSync("pulumi", [
             "package",
             "get-schema",

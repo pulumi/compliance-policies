@@ -27,5 +27,7 @@ import * as azurenative from "@pulumi/azure-native";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azurenative.windowsiot.v20180216preview.Service, {});
+    return createResourceValidationArgs(azurenative.windowsiot.v20180216preview.Service, {
+        resourceGroupName: ""
+    });
 }

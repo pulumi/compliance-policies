@@ -461,10 +461,10 @@
     ts-node "^8.4.1"
     typescript "^3.4.6"
 
-"@pulumi/azure-native@^1.91.0":
-  version "1.91.0"
-  resolved "https://registry.npmjs.org/@pulumi/azure-native/-/azure-native-1.91.0.tgz"
-  integrity sha512-ym8tIA503aacZFGMo/h5NfvEIuAl1Ye1NkpxeiZTX/LtDHXOIB+83RMTUfGSdT7ejQds4Me2Vx5wFd5kChqkPA==
+"@pulumi/azure-native@^1.99.1":
+  version "1.99.1"
+  resolved "https://registry.yarnpkg.com/@pulumi/azure-native/-/azure-native-1.99.1.tgz#f398cb133915209424b38374a623c792d31ec6fe"
+  integrity sha512-GH3eDZh4evKgc6/0D4s8EekkWhJCUJTwrLiv+A8uYNMqhEu32GFC+3pgkdvdEvTh8Eddu2815Wk0Usyw20g/uA==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 

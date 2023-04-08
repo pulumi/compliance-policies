@@ -18,6 +18,9 @@ build:: lint test
 lint::
 	@yarn run lint
 
+lintfix::
+	@yarn run lintfix
+
 test:: lint
 	@yarn run test
 

@@ -2086,7 +2086,7 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mocha@^10.1.0:
+mocha@^10.1.0, mocha@^10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-10.2.0.tgz#1fd4a7c32ba5ac372e03a17eef435bd00e5c68b8"
   integrity sha512-IDY7fl/BecMwFHzoqF2sg/SHHANeBoMMXFlS9r0OXKDssYE1M5O43wUY/9BVPeIvfH2zmEbBfseqN9gBQZzXkg==

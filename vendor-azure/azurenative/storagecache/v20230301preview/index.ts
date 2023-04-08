@@ -20,4 +20,4 @@
 
 export * as Cache from "./Cache";
 export * as StorageTarget from "./StorageTarget";
-export * as amlFilesystem from "./amlFilesystem";
+export * as AmlFilesystem from "./AmlFilesystem";

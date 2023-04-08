@@ -43,4 +43,4 @@ export * as Workspace from "./Workspace";
 export * as WorkspaceAadAdmin from "./WorkspaceAadAdmin";
 export * as WorkspaceManagedSqlServerVulnerabilityAssessment from "./WorkspaceManagedSqlServerVulnerabilityAssessment";
 export * as WorkspaceSqlAadAdmin from "./WorkspaceSqlAadAdmin";
-export * as kustoPool from "./kustoPool";
+export * as KustoPool from "./KustoPool";

@@ -37,10 +37,10 @@ import * as azurenative from "@pulumi/azure-native";
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210401preview-kustopool-disallow-preview-resource",
-        description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210401preview.kustoPool).",
+        description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210401preview.KustoPool).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(azurenative.synapse.v20210401preview.kustoPool, (_, args, reportViolation) => {
-            reportViolation("Azure kustoPool shouldn't use an unstable API (synapse.v20210401preview.kustoPool).");
+        validateResource: validateResourceOfType(azurenative.synapse.v20210401preview.KustoPool, (_, args, reportViolation) => {
+            reportViolation("Azure kustoPool shouldn't use an unstable API (synapse.v20210401preview.KustoPool).");
         }),
     },
     vendors: ["azure"],

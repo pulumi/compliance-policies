@@ -54,6 +54,10 @@ export interface ProviderArgs {
      * The template filename used to generate new `index.ts` as part of the `export` statement.
      */
     exportsTemplateFile: string;
+    /**
+     * The maximum number of policies to generate in a single run. Existing policies are skipped and not counted.
+     */
+    maxPolicyCount: number;
 }
 
 
@@ -75,6 +79,8 @@ export class Provider {
 
     protected readonly basePath: string;
     protected templateBasePath: string;
+
+    private policyCount: number = 0;
 
     constructor(args: ProviderArgs) {
 
@@ -334,6 +340,14 @@ export class Provider {
      ******** Protected methods. ******
      **********************************/
 
+    /**
+     * Saves the provided policy source code into the desired source file.
+     *
+     * @param specFile The relative path in which the `specSourceCode` should be saved into.
+     * @param specSourceCode The policy spec source code to save.
+     * @param resourceFile The relative path in which the `resourceSourceCode` should be saved into.
+     * @param resourceSourceCode The resource.ts source code to save.
+     */
     protected saveSpecFile(specFile: string, specSourceCode: string, resourceFile?: string, resourceSourceCode?: string) {
 
         if (this.args.dryrun === true) {
@@ -362,16 +376,34 @@ export class Provider {
      * @param sourceFile The relative path in which the `policySourceCode` should be saved into.
      * @param policySourceCode The policy source code to save.
      * @param policyVariableName The policy variable name that holds the policy code.
+     * @returns `false` to indicate the maximum number of generated polcies has been reached.
+     * When to count?
+     * - If sourceFile doesn't exist.
      */
-    protected saveSourceFile(sourceFile: string, policySourceCode: string, policyVariableName: string) {
+    protected saveSourceFile(sourceFile: string, policySourceCode: string, policyVariableName: string): boolean {
 
-        if (this.args.dryrun === true) {
-            return;
+        if (this.policyCount >= this.args.maxPolicyCount) {
+            return false;
         }
 
         let currentDirectory: string = this.directory;
         const directoryParts: string[] = path.dirname(sourceFile).split("/");
 
+        if (this.args.dryrun === true) {
+            if (!fs.existsSync(`${this.directory}/${sourceFile}`)) {
+                this.policyCount++;
+            }
+            console.log(`dry: count: ${this.policyCount} sourceFile: ${sourceFile}`);
+            return true;
+        } else {
+            console.log(`count: ${this.policyCount} sourceFile: ${sourceFile}`);
+        }
+
+
+        /**
+         * Break the directory into parts and ensure all directories
+         * have been created before we attempt to save the `sourceFile`.
+         */
         for(let index = 0; index < directoryParts.length; index++) {
             const part: string = directoryParts[index];
             currentDirectory = `${currentDirectory}/${part}`;
@@ -384,6 +416,11 @@ export class Provider {
             }
         }
 
+        /**
+         * For each directory parts, we look into the relevant `index.ts`
+         * to ensure we add any missing `export` statements in order to
+         * correctly expose the policy we're about to save.
+         */
         currentDirectory = this.directory;
         for(let index = 0; index < directoryParts.length; index++) {
 
@@ -394,10 +431,8 @@ export class Provider {
 
             if (index !== (directoryParts.length - 1)) {
                 this.updateNamespaceExport(exportsFile);
-
             } else {
                 this.updatePolicyExport(exportsFile, policyVariableName);
-
             }
         }
 
@@ -405,9 +440,10 @@ export class Provider {
             const sourceFileHandle = fs.openSync(`${this.directory}/${sourceFile}`, "w", 0o640);
             fs.appendFileSync(sourceFileHandle, policySourceCode);
             fs.closeSync(sourceFileHandle);
+            this.policyCount++;
         }
 
-        return;
+        return true;
     }
 
 
@@ -461,5 +497,4 @@ export class Provider {
     public getSchema(): any {
         return this.schemaObject;
     }
-
 };

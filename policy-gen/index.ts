@@ -20,7 +20,8 @@
 
 import * as commander from "commander";
 
-import { KubernetesProvider, KubernetesProviderArgs } from "./providers/kubernetes";
+import { KubernetesProvider } from "./providers/kubernetes";
+import { AzureNativeProvider } from "./providers/azurenative";
 
 interface RunArgs {
     /**
@@ -39,6 +40,10 @@ interface RunArgs {
      * Generate policies and unit tests but do not save any files locally.
      */
     dryrun: boolean;
+    /**
+     * The maximum number of policies to generate in a single run. Existing policies are skipped and not counted.
+     */
+    maxPolicyCount: number;
 }
 
 /**
@@ -48,12 +53,23 @@ interface RunArgs {
  */
 function cmd_run(args: RunArgs) {
 
-    const providerArgs: KubernetesProviderArgs = {
-        ...args,
-    };
+    switch(args.name) {
+    case "kubernetes":
+        new KubernetesProvider({
+            ...args,
+        }).generatePolicies();
+        break;
 
-    const provider = new KubernetesProvider(providerArgs);
-    provider.generatePolicies();
+    case "azure-native":
+        new AzureNativeProvider({
+            ...args,
+        }).generatePolicies();
+        break;
+
+    default:
+        console.log(`The '${args.name}' provider isn't supported.`);
+        break;
+    }
 
     // const serializer = new jsSerial.JsonSerializer();
     // const text = serializer.stringify(pulumiProvider);
@@ -79,17 +95,20 @@ commander.program
     .requiredOption("--version <version>", "The provider version to process.")
     .requiredOption("--directory <vendor-directory>", "Path to the vendor's directory to save the generated polcies.")
     .option("--dryrun", "Generate all the policies and unit tests but doesn't save anything locally.")
+    .option("--max <number>", "The maximum number of policies to generate.", "25")
     .action((options) => {
         const name: string = (options.provider as string);
         const version: string = (options.version as string);
         const directory: string = (options.directory as string);
         const dryrun: boolean = options.dryrun ? true : false;
+        const maxPolicies: number = parseInt(options.max, 10);
 
         cmd_run({
             name: name,
             version: version,
             directory: directory,
             dryrun: dryrun,
+            maxPolicyCount: maxPolicies,
         });
     });
 

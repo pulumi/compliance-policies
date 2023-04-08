@@ -38,6 +38,10 @@ export interface KubernetesProviderArgs {
      * Generate policies and unit tests but do not save any files locally.
      */
     dryrun: boolean;
+    /**
+     * The maximum number of policies to generate in a single run. Existing policies are skipped and not counted.
+     */
+    maxPolicyCount: number;
 }
 
 export class KubernetesProvider extends Provider {
@@ -117,7 +121,9 @@ export class KubernetesProvider extends Provider {
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
-            this.saveSourceFile(sourceFile, policySourceCode, policyVariableName);
+            if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
+                return;
+            }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
         }
     }

@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storage.v20180301preview.ManagementPolicy, {
         accountName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

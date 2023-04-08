@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.webpubsub.v20210901preview.WebPubSubPrivateEndpointConnection, {
         resourceGroupName: "",
-        resourceName: ""
+        resourceName: "",
     });
 }

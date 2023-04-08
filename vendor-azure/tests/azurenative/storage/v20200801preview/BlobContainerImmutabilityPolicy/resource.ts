@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storage.v20200801preview.BlobContainerImmutabilityPolicy, {
         accountName: "",
         containerName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

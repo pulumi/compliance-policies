@@ -31,8 +31,8 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         sku: {
             name: "",
-            tier: ""
+            tier: "",
         },
-        workspaceName: ""
+        workspaceName: "",
     });
 }

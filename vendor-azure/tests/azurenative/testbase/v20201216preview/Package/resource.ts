@@ -35,6 +35,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         targetOSList: [],
         testBaseAccountName: "",
         tests: [],
-        version: ""
+        version: "",
     });
 }

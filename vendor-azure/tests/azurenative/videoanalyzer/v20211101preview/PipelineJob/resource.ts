@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.videoanalyzer.v20211101preview.PipelineJob, {
         accountName: "",
         resourceGroupName: "",
-        topologyName: ""
+        topologyName: "",
     });
 }

@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "ReadWrite",
         kustoPoolName: "",
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

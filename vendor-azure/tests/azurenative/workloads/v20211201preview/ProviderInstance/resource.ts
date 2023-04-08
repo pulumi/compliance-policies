@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.workloads.v20211201preview.ProviderInstance, {
         monitorName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

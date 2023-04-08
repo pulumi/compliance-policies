@@ -29,9 +29,6 @@ import * as enums from "../../../enums";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.workloads.v20221101preview.SAPVirtualInstance, {
-        /**
-         * https://learn.microsoft.com/en-us/rest/api/workloads/2022-11-01-preview/sap-virtual-instances/create?tabs=JavaScript
-         */
         configuration: {
             appLocation: "eastus",
             configurationType: "DeploymentWithOSConfig",

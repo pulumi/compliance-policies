@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         groupId: "",
         privateLinkResourceId: "",
         resourceGroupName: "",
-        resourceName: ""
+        resourceName: "",
     });
 }

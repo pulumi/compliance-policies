@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagesync.v20170605preview.SyncGroup, {
         resourceGroupName: "",
-        storageSyncServiceName: ""
+        storageSyncServiceName: "",
     });
 }

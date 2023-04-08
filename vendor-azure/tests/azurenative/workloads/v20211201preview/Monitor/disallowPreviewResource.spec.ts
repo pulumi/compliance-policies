@@ -36,7 +36,7 @@ import * as policies from "../../../../../index";
 import { getResourceValidationArgs } from "./resource";
 
 describe("azurenative.workloads.v20211201preview.monitor.disallowPreviewResource", function() {
-    const policy = policies.azurenative.workloads.v20211201preview.monitor.disallowPreviewResource;
+    const policy = policies.azurenative.workloads.v20211201preview.Monitor.disallowPreviewResource;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "azurenative-workloads-v20211201preview-monitor-disallow-preview-resource");

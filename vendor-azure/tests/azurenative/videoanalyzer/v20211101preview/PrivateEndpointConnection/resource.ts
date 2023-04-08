@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.videoanalyzer.v20211101preview.PrivateEndpointConnection, {
         accountName: "",
         privateLinkServiceConnectionState: {},
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

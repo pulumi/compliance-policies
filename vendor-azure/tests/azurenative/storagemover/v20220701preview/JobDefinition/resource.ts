@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         sourceName: "",
         storageMoverName: "",
-        targetName: ""
+        targetName: "",
     });
 }

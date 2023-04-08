@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagecache.v20230301preview.StorageTarget, {
         cacheName: "",
         resourceGroupName: "",
-        targetType: ""
+        targetType: "",
     });
 }

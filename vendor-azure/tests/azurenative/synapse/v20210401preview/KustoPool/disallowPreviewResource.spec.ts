@@ -36,7 +36,7 @@ import * as policies from "../../../../../index";
 import { getResourceValidationArgs } from "./resource";
 
 describe("azurenative.synapse.v20210401preview.kustoPool.disallowPreviewResource", function() {
-    const policy = policies.azurenative.synapse.v20210401preview.kustoPool.disallowPreviewResource;
+    const policy = policies.azurenative.synapse.v20210401preview.KustoPool.disallowPreviewResource;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "azurenative-synapse-v20210401preview-kustopool-disallow-preview-resource");

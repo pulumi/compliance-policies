@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         actualProcessName: "",
         packageName: "",
         resourceGroupName: "",
-        testBaseAccountName: ""
+        testBaseAccountName: "",
     });
 }

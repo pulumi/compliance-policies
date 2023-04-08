@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         accountName: "",
         containerName: "",
         immutabilityPeriodSinceCreationInDays: 0,
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

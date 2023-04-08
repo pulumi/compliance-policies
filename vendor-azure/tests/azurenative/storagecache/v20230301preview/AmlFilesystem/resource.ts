@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         filesystemSubnet: "",
         maintenanceWindow: {},
         resourceGroupName: "",
-        storageCapacityTiB: 0
+        storageCapacityTiB: 0,
     });
 }

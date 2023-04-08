@@ -39,10 +39,10 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 definition: {
                     filters: {
                         blobTypes: ["blockBlob", "appendBlob", "pageBlob"],
-                    }
-                }
-            }]
+                    },
+                },
+            }],
         },
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

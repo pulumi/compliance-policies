@@ -34,10 +34,10 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 type: "",
                 name: "",
                 definition: {
-                    actions: {}
+                    actions: {},
                 },
             }],
         },
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

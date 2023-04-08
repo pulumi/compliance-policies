@@ -35,6 +35,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         keyName: "",
         kind: "Microsoft.IoTHub",
         resourceGroupName: "",
-        sharedAccessKey: ""
+        sharedAccessKey: "",
     });
 }

@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kustoPoolName: "",
         kustoPoolResourceId: "",
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

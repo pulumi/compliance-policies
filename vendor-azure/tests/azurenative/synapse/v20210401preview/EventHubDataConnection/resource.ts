@@ -34,6 +34,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "EventHub",
         kustoPoolName: "",
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

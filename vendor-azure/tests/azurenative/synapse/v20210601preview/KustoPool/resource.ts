@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             name: "",
             size: "1",
         },
-        workspaceName: ""
+        workspaceName: "",
     });
 }

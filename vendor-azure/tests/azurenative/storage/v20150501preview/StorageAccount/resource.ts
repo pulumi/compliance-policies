@@ -28,6 +28,6 @@ import * as azurenative from "@pulumi/azure-native";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storage.v20150501preview.StorageAccount, {
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

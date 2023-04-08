@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagesync.v20170605preview.ServerEndpoint, {
         resourceGroupName: "",
         storageSyncServiceName: "",
-        syncGroupName: ""
+        syncGroupName: "",
     });
 }

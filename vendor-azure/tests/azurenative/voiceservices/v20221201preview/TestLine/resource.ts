@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         communicationsGatewayName: "",
         phoneNumber: "",
         purpose: "Manual",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

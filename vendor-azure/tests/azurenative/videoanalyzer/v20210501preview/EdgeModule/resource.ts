@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.videoanalyzer.v20210501preview.EdgeModule, {
         accountName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

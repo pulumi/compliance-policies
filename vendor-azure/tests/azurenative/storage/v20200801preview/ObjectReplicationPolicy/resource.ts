@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         accountName: "",
         destinationAccount: "",
         resourceGroupName: "",
-        sourceAccount: ""
+        sourceAccount: "",
     });
 }

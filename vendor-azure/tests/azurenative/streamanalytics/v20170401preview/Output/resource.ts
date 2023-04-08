@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.streamanalytics.v20170401preview.Output, {
         jobName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

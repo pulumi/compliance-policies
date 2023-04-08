@@ -34,6 +34,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             host: "",
         },
         resourceGroupName: "",
-        storageMoverName: ""
+        storageMoverName: "",
     });
 }

@@ -34,6 +34,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         principalType: "",
         resourceGroupName: "",
         role: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.synapse.v20210601preview.SqlPoolTransparentDataEncryption, {
         resourceGroupName: "",
         sqlPoolName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

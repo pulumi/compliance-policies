@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.workloads.v20211201preview.WordpressInstance, {
         phpWorkloadName: "",
         resourceGroupName: "",
-        version: ""
+        version: "",
     });
 }

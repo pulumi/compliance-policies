@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagemover.v20220701preview.Project, {
         resourceGroupName: "",
-        storageMoverName: ""
+        storageMoverName: "",
     });
 }

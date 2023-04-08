@@ -28,6 +28,6 @@ import * as azurenative from "@pulumi/azure-native";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.windowsiot.v20180216preview.Service, {
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

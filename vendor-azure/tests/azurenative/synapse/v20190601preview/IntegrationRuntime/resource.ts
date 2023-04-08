@@ -32,6 +32,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             type: "Managed",
         },
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

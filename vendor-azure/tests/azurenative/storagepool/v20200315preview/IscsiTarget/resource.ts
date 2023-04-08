@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagepool.v20200315preview.IscsiTarget, {
         diskPoolName: "",
         resourceGroupName: "",
-        tpgs: []
+        tpgs: [],
     });
 }

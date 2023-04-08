@@ -28,6 +28,6 @@ import * as azurenative from "@pulumi/azure-native";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.windowsesu.v20190916preview.MultipleActivationKey, {
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

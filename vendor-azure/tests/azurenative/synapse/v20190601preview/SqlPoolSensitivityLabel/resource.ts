@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         schemaName: "",
         sqlPoolName: "",
         tableName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

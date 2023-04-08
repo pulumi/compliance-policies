@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.visualstudio.v20171101preview.Extension, {
         accountResourceName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "ReadOnlyFollowing",
         kustoPoolName: "",
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

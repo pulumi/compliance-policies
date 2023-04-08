@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         arcResourceId: "",
         arcVmUuid: "",
         resourceGroupName: "",
-        storageMoverName: ""
+        storageMoverName: "",
     });
 }

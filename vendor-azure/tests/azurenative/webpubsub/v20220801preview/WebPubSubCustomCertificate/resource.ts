@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         keyVaultBaseUri: "",
         keyVaultSecretName: "",
         resourceGroupName: "",
-        resourceName: ""
+        resourceName: "",
     });
 }

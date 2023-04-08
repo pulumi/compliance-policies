@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.streamanalytics.v20200301preview.PrivateEndpoint, {
         clusterName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

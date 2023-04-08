@@ -28,6 +28,6 @@ import * as azurenative from "@pulumi/azure-native";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.synapse.v20210401preview.Workspace, {
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

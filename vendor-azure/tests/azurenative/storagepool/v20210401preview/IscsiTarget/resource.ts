@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storagepool.v20210401preview.IscsiTarget, {
         aclMode: "",
         diskPoolName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

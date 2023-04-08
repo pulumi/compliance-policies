@@ -27,7 +27,7 @@ import * as azurenative from "@pulumi/azure-native";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azurenative.workloads.v20221101preview.Monitor, {
-        resourceGroupName: ""
+    return createResourceValidationArgs(azurenative.workloads.v20211201preview.Monitor, {
+        resourceGroupName: "",
     });
 }

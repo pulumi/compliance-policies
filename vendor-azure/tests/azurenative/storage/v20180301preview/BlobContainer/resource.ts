@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.storage.v20180301preview.BlobContainer, {
         accountName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

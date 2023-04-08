@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.synapse.v20210601preview.BigDataPool, {
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

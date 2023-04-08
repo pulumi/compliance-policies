@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         source: {
             type: "ManagedImage",
             imageId: "",
-        }
+        },
     });
 }

@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         eventName: "",
         receivers: [],
         resourceGroupName: "",
-        testBaseAccountName: ""
+        testBaseAccountName: "",
     });
 }

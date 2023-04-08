@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         minResourcePercentPerRequest: 0,
         resourceGroupName: "",
         sqlPoolName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

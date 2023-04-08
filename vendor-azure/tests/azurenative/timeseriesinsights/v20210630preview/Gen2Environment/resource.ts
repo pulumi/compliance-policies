@@ -38,6 +38,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             accountName: "",
             managementKey: "",
         },
-        timeSeriesIdProperties: []
+        timeSeriesIdProperties: [],
     });
 }

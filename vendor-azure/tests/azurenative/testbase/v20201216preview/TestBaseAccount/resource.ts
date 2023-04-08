@@ -32,6 +32,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         sku: {
             tier: "",
             name: "",
-        }
+        },
     });
 }

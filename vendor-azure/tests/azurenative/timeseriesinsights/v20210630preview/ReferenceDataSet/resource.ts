@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.timeseriesinsights.v20210630preview.ReferenceDataSet, {
         environmentName: "",
         keyProperties: [],
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

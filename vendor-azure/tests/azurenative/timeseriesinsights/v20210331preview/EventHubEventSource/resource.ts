@@ -36,6 +36,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "Microsoft.EventHub",
         resourceGroupName: "",
         serviceBusNamespace: "",
-        sharedAccessKey: ""
+        sharedAccessKey: "",
     });
 }

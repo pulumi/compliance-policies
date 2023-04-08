@@ -38,12 +38,12 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             osDisk: {
                 storageType: "Premium_LRS",
             },
-            osImage: {}
+            osImage: {},
         },
         databaseProfile: {
             sku: "",
             tier: "GeneralPurpose",
-            type: ""
+            type: "",
         },
         kind: "",
         resourceGroupName: "",
@@ -53,6 +53,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 storageType: "Premium_LRS",
             },
             osImage: {},
-        }
+        },
     });
 }

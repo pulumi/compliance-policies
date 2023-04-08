@@ -29,9 +29,9 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.videoanalyzer.v20210501preview.VideoAnalyzer, {
         encryption: {
-            type: ""
+            type: "",
         },
         resourceGroupName: "",
-        storageAccounts: []
+        storageAccounts: [],
     });
 }

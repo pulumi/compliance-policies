@@ -32,6 +32,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         sku: {
             name: "",
-        }
+        },
     });
 }

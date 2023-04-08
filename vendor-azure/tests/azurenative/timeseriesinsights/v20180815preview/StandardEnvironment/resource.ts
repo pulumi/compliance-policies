@@ -34,6 +34,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         sku: {
             name: "",
             capacity: 1,
-        }
+        },
     });
 }

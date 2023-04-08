@@ -29,6 +29,6 @@ import * as azurenative from "@pulumi/azure-native";
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.timeseriesinsights.v20180815preview.AccessPolicy, {
         environmentName: "",
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

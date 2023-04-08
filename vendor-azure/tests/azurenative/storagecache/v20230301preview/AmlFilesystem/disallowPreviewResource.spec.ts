@@ -36,7 +36,7 @@ import * as policies from "../../../../../index";
 import { getResourceValidationArgs } from "./resource";
 
 describe("azurenative.storagecache.v20230301preview.amlFilesystem.disallowPreviewResource", function() {
-    const policy = policies.azurenative.storagecache.v20230301preview.amlFilesystem.disallowPreviewResource;
+    const policy = policies.azurenative.storagecache.v20230301preview.AmlFilesystem.disallowPreviewResource;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "azurenative-storagecache-v20230301preview-amlfilesystem-disallow-preview-resource");

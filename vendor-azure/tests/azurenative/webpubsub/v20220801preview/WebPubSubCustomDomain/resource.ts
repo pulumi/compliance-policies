@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         customCertificate: {},
         domainName: "",
         resourceGroupName: "",
-        resourceName: ""
+        resourceName: "",
     });
 }

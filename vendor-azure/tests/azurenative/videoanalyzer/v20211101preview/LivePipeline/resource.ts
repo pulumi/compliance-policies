@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         accountName: "",
         bitrateKbps: 0,
         resourceGroupName: "",
-        topologyName: ""
+        topologyName: "",
     });
 }

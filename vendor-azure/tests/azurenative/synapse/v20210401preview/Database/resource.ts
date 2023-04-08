@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "",
         kustoPoolName: "",
         resourceGroupName: "",
-        workspaceName: ""
+        workspaceName: "",
     });
 }

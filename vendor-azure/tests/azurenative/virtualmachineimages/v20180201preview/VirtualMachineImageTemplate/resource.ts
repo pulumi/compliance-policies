@@ -34,6 +34,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             type: "ISO",
             sha256Checksum: "",
             sourceURI: "",
-        }
+        },
     });
 }

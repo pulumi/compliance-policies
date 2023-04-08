@@ -30,6 +30,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(azurenative.timeseriesinsights.v20210331preview.PrivateEndpointConnection, {
         environmentName: "",
         privateLinkServiceConnectionState: {},
-        resourceGroupName: ""
+        resourceGroupName: "",
     });
 }

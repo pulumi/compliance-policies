@@ -33,6 +33,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         e911Type: "",
         platforms: [],
         resourceGroupName: "",
-        serviceLocations: []
+        serviceLocations: [],
     });
 }

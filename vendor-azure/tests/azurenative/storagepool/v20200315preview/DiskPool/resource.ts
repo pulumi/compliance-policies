@@ -31,6 +31,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         availabilityZones: [],
         resourceGroupName: "",
         subnetId: "",
-        tier: ""
+        tier: "",
     });
 }

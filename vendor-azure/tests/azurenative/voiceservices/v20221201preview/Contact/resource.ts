@@ -32,6 +32,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         email: "",
         phoneNumber: "",
         resourceGroupName: "",
-        role: ""
+        role: "",
     });
 }

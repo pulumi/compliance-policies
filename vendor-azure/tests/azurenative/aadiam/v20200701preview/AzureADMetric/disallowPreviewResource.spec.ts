@@ -69,6 +69,6 @@ describe("azurenative.aadiam.v20200701preview.AzureADMetric.disallowPreviewResou
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure AzureADMetric shouldn't use an unstable API (aadiam.v20200701preview.AzureADMetric)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure AzureADMetric shouldn't use an unstable API (aadiam.v20200701preview.AzureADMetric). A compatible replacement can be found at 'aadiam.AzureADMetric'." });
     });
 });

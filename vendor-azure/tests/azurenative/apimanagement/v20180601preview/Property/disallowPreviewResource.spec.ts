@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Property.disallowPreviewRes
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Property shouldn't use an unstable API (apimanagement.v20180601preview.Property)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Property shouldn't use an unstable API (apimanagement.v20180601preview.Property). A compatible replacement can be found at 'apimanagement.Property'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Backend.disallowPreviewReso
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Backend shouldn't use an unstable API (apimanagement.v20180601preview.Backend)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Backend shouldn't use an unstable API (apimanagement.v20180601preview.Backend). A compatible replacement can be found at 'apimanagement.Backend'." });
     });
 });

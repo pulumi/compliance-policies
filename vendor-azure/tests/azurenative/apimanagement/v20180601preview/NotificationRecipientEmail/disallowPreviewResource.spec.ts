@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.NotificationRecipientEmail.
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure NotificationRecipientEmail shouldn't use an unstable API (apimanagement.v20180601preview.NotificationRecipientEmail)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure NotificationRecipientEmail shouldn't use an unstable API (apimanagement.v20180601preview.NotificationRecipientEmail). A compatible replacement can be found at 'apimanagement.NotificationRecipientEmail'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Subscription.disallowPrevie
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Subscription shouldn't use an unstable API (apimanagement.v20180601preview.Subscription)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Subscription shouldn't use an unstable API (apimanagement.v20180601preview.Subscription). A compatible replacement can be found at 'apimanagement.Subscription'." });
     });
 });

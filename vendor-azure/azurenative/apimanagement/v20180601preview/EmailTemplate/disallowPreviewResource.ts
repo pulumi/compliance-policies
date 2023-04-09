@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.EmailTemplate).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EmailTemplate, (_, args, reportViolation) => {
-            reportViolation("Azure EmailTemplate shouldn't use an unstable API (apimanagement.v20180601preview.EmailTemplate).");
+            reportViolation("Azure EmailTemplate shouldn't use an unstable API (apimanagement.v20180601preview.EmailTemplate). A compatible replacement can be found at 'apimanagement.EmailTemplate'.");
         }),
     },
     vendors: ["azure"],

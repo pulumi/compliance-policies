@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20170401preview.DiagnosticSetting).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DiagnosticSetting, (_, args, reportViolation) => {
-            reportViolation("Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting).");
+            reportViolation("Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting). A compatible replacement can be found at 'aadiam.DiagnosticSetting'.");
         }),
     },
     vendors: ["azure"],

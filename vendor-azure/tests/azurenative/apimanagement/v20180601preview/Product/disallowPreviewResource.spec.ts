@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Product.disallowPreviewReso
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Product shouldn't use an unstable API (apimanagement.v20180601preview.Product)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Product shouldn't use an unstable API (apimanagement.v20180601preview.Product). A compatible replacement can be found at 'apimanagement.Product'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.TagByProduct.disallowPrevie
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure TagByProduct shouldn't use an unstable API (apimanagement.v20180601preview.TagByProduct)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure TagByProduct shouldn't use an unstable API (apimanagement.v20180601preview.TagByProduct). A compatible replacement can be found at 'apimanagement.TagByProduct'." });
     });
 });

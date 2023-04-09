@@ -69,6 +69,6 @@ describe("azurenative.alertsmanagement.v20210808preview.AlertProcessingRuleByNam
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20210808preview.AlertProcessingRuleByName)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20210808preview.AlertProcessingRuleByName). A compatible replacement can be found at 'alertsmanagement.AlertProcessingRuleByName'." });
     });
 });

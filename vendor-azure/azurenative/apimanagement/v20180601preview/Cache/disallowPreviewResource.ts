@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.Cache).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cache, (_, args, reportViolation) => {
-            reportViolation("Azure Cache shouldn't use an unstable API (apimanagement.v20180601preview.Cache).");
+            reportViolation("Azure Cache shouldn't use an unstable API (apimanagement.v20180601preview.Cache). A compatible replacement can be found at 'apimanagement.Cache'.");
         }),
     },
     vendors: ["azure"],

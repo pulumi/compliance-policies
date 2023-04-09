@@ -69,6 +69,6 @@ describe("azurenative.agfoodplatform.v20210901preview.Extension.disallowPreviewR
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Extension shouldn't use an unstable API (agfoodplatform.v20210901preview.Extension)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Extension shouldn't use an unstable API (agfoodplatform.v20210901preview.Extension). A compatible replacement can be found at 'agfoodplatform.Extension'." });
     });
 });

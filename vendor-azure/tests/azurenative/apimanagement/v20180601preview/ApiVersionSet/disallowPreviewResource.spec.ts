@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiVersionSet.disallowPrevi
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiVersionSet shouldn't use an unstable API (apimanagement.v20180601preview.ApiVersionSet)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiVersionSet shouldn't use an unstable API (apimanagement.v20180601preview.ApiVersionSet). A compatible replacement can be found at 'apimanagement.ApiVersionSet'." });
     });
 });

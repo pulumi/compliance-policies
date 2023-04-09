@@ -69,6 +69,6 @@ describe("azurenative.aadiam.v20200301preview.PrivateLinkForAzureAd.disallowPrev
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd). A compatible replacement can be found at 'aadiam.PrivateLinkForAzureAd'." });
     });
 });

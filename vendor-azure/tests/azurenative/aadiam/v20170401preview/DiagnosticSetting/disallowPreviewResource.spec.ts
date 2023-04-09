@@ -69,6 +69,6 @@ describe("azurenative.aadiam.v20170401preview.DiagnosticSetting.disallowPreviewR
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting). A compatible replacement can be found at 'aadiam.DiagnosticSetting'." });
     });
 });

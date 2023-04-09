@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.IdentityProvider).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IdentityProvider, (_, args, reportViolation) => {
-            reportViolation("Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20180601preview.IdentityProvider).");
+            reportViolation("Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20180601preview.IdentityProvider). A compatible replacement can be found at 'apimanagement.IdentityProvider'.");
         }),
     },
     vendors: ["azure"],

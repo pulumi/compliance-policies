@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200701preview.AzureADMetric).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AzureADMetric, (_, args, reportViolation) => {
-            reportViolation("Azure AzureADMetric shouldn't use an unstable API (aadiam.v20200701preview.AzureADMetric).");
+            reportViolation("Azure AzureADMetric shouldn't use an unstable API (aadiam.v20200701preview.AzureADMetric). A compatible replacement can be found at 'aadiam.AzureADMetric'.");
         }),
     },
     vendors: ["azure"],

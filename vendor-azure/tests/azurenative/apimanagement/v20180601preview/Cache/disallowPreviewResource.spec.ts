@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Cache.disallowPreviewResour
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Cache shouldn't use an unstable API (apimanagement.v20180601preview.Cache)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Cache shouldn't use an unstable API (apimanagement.v20180601preview.Cache). A compatible replacement can be found at 'apimanagement.Cache'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.GroupUser.disallowPreviewRe
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure GroupUser shouldn't use an unstable API (apimanagement.v20180601preview.GroupUser)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure GroupUser shouldn't use an unstable API (apimanagement.v20180601preview.GroupUser). A compatible replacement can be found at 'apimanagement.GroupUser'." });
     });
 });

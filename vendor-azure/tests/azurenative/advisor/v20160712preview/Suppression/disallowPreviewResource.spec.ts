@@ -69,6 +69,6 @@ describe("azurenative.advisor.v20160712preview.Suppression.disallowPreviewResour
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Suppression shouldn't use an unstable API (advisor.v20160712preview.Suppression)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Suppression shouldn't use an unstable API (advisor.v20160712preview.Suppression). A compatible replacement can be found at 'advisor.Suppression'." });
     });
 });

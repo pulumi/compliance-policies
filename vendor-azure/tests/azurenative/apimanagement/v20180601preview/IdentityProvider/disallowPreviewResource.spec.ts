@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.IdentityProvider.disallowPr
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20180601preview.IdentityProvider)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20180601preview.IdentityProvider). A compatible replacement can be found at 'apimanagement.IdentityProvider'." });
     });
 });

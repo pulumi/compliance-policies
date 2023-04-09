@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiIssueAttachment.disallow
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiIssueAttachment shouldn't use an unstable API (apimanagement.v20180601preview.ApiIssueAttachment)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiIssueAttachment shouldn't use an unstable API (apimanagement.v20180601preview.ApiIssueAttachment). A compatible replacement can be found at 'apimanagement.ApiIssueAttachment'." });
     });
 });

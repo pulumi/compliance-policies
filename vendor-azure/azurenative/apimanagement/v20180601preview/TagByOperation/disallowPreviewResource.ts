@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.TagByOperation).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TagByOperation, (_, args, reportViolation) => {
-            reportViolation("Azure TagByOperation shouldn't use an unstable API (apimanagement.v20180601preview.TagByOperation).");
+            reportViolation("Azure TagByOperation shouldn't use an unstable API (apimanagement.v20180601preview.TagByOperation). A compatible replacement can be found at 'apimanagement.TagByOperation'.");
         }),
     },
     vendors: ["azure"],

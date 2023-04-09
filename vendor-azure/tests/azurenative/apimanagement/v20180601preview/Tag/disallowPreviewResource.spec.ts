@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Tag.disallowPreviewResource
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Tag shouldn't use an unstable API (apimanagement.v20180601preview.Tag)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Tag shouldn't use an unstable API (apimanagement.v20180601preview.Tag). A compatible replacement can be found at 'apimanagement.Tag'." });
     });
 });

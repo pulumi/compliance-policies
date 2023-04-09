@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.TagByOperation.disallowPrev
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure TagByOperation shouldn't use an unstable API (apimanagement.v20180601preview.TagByOperation)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure TagByOperation shouldn't use an unstable API (apimanagement.v20180601preview.TagByOperation). A compatible replacement can be found at 'apimanagement.TagByOperation'." });
     });
 });

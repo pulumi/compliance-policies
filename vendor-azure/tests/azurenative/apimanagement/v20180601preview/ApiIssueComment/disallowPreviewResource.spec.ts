@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiIssueComment.disallowPre
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiIssueComment shouldn't use an unstable API (apimanagement.v20180601preview.ApiIssueComment)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiIssueComment shouldn't use an unstable API (apimanagement.v20180601preview.ApiIssueComment). A compatible replacement can be found at 'apimanagement.ApiIssueComment'." });
     });
 });

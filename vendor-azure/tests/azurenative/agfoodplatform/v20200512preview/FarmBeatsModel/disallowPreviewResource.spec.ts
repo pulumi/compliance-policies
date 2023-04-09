@@ -69,6 +69,6 @@ describe("azurenative.agfoodplatform.v20200512preview.FarmBeatsModel.disallowPre
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20200512preview.FarmBeatsModel)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20200512preview.FarmBeatsModel). A compatible replacement can be found at 'agfoodplatform.FarmBeatsModel'." });
     });
 });

@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.Group).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Group, (_, args, reportViolation) => {
-            reportViolation("Azure Group shouldn't use an unstable API (apimanagement.v20180601preview.Group).");
+            reportViolation("Azure Group shouldn't use an unstable API (apimanagement.v20180601preview.Group). A compatible replacement can be found at 'apimanagement.Group'.");
         }),
     },
     vendors: ["azure"],

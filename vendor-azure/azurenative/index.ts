@@ -21,3 +21,7 @@
 export * as compute from "./compute";
 export * as containerservice from "./containerservice";
 export * as aadiam from "./aadiam";
+export * as advisor from "./advisor";
+export * as agfoodplatform from "./agfoodplatform";
+export * as alertsmanagement from "./alertsmanagement";
+export * as apimanagement from "./apimanagement";

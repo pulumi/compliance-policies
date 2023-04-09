@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Diagnostic.disallowPreviewR
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Diagnostic shouldn't use an unstable API (apimanagement.v20180601preview.Diagnostic)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Diagnostic shouldn't use an unstable API (apimanagement.v20180601preview.Diagnostic). A compatible replacement can be found at 'apimanagement.Diagnostic'." });
     });
 });

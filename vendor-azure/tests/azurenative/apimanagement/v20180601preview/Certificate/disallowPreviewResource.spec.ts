@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.Certificate.disallowPreview
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (apimanagement.v20180601preview.Certificate)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (apimanagement.v20180601preview.Certificate). A compatible replacement can be found at 'apimanagement.Certificate'." });
     });
 });

@@ -40,7 +40,7 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (agfoodplatform.v20210901preview.Extension).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Extension, (_, args, reportViolation) => {
-            reportViolation("Azure Extension shouldn't use an unstable API (agfoodplatform.v20210901preview.Extension).");
+            reportViolation("Azure Extension shouldn't use an unstable API (agfoodplatform.v20210901preview.Extension). A compatible replacement can be found at 'agfoodplatform.Extension'.");
         }),
     },
     vendors: ["azure"],

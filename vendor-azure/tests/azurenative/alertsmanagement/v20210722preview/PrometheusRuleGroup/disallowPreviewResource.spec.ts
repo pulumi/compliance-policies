@@ -69,6 +69,6 @@ describe("azurenative.alertsmanagement.v20210722preview.PrometheusRuleGroup.disa
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure PrometheusRuleGroup shouldn't use an unstable API (alertsmanagement.v20210722preview.PrometheusRuleGroup)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrometheusRuleGroup shouldn't use an unstable API (alertsmanagement.v20210722preview.PrometheusRuleGroup). A compatible replacement can be found at 'alertsmanagement.v20230301.PrometheusRuleGroup'." });
     });
 });

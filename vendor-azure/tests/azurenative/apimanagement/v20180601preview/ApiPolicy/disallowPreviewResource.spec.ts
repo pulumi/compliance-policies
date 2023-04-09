@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiPolicy.disallowPreviewRe
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiPolicy shouldn't use an unstable API (apimanagement.v20180601preview.ApiPolicy)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiPolicy shouldn't use an unstable API (apimanagement.v20180601preview.ApiPolicy). A compatible replacement can be found at 'apimanagement.ApiPolicy'." });
     });
 });

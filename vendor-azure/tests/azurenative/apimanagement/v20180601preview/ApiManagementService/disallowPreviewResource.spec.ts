@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiManagementService.disall
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiManagementService shouldn't use an unstable API (apimanagement.v20180601preview.ApiManagementService)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiManagementService shouldn't use an unstable API (apimanagement.v20180601preview.ApiManagementService). A compatible replacement can be found at 'apimanagement.ApiManagementService'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.User.disallowPreviewResourc
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure User shouldn't use an unstable API (apimanagement.v20180601preview.User)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure User shouldn't use an unstable API (apimanagement.v20180601preview.User). A compatible replacement can be found at 'apimanagement.User'." });
     });
 });

@@ -69,6 +69,6 @@ describe("azurenative.alertsmanagement.v20181102privatepreview.ActionRuleByName.
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ActionRuleByName shouldn't use an unstable API (alertsmanagement.v20181102privatepreview.ActionRuleByName)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ActionRuleByName shouldn't use an unstable API (alertsmanagement.v20181102privatepreview.ActionRuleByName). A compatible replacement can be found at 'alertsmanagement.ActionRuleByName'." });
     });
 });

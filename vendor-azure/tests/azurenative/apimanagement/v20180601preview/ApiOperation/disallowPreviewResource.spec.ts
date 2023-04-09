@@ -69,6 +69,6 @@ describe("azurenative.apimanagement.v20180601preview.ApiOperation.disallowPrevie
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure ApiOperation shouldn't use an unstable API (apimanagement.v20180601preview.ApiOperation)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure ApiOperation shouldn't use an unstable API (apimanagement.v20180601preview.ApiOperation). A compatible replacement can be found at 'apimanagement.ApiOperation'." });
     });
 });

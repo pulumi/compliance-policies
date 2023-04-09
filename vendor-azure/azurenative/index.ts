@@ -25,3 +25,7 @@ export * as advisor from "./advisor";
 export * as agfoodplatform from "./agfoodplatform";
 export * as alertsmanagement from "./alertsmanagement";
 export * as apimanagement from "./apimanagement";
+export * as app from "./app";
+export * as appcomplianceautomation from "./appcomplianceautomation";
+export * as appconfiguration from "./appconfiguration";
+export * as appplatform from "./appplatform";

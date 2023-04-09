@@ -35,6 +35,6 @@ describe("<%= it.policyFullVariableName %>", function() {
 
     it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, { message: "Azure <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>)." });
+        await assertHasResourceViolation(policy, args, { message: "Azure <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).<% if (it.resourceTypeAlias !== "") { %> A compatible replacement can be found at '<%~ it.resourceTypeAlias %>'.<% } %>" });
     });
 });

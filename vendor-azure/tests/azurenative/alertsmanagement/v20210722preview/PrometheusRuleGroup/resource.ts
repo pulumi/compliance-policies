@@ -18,6 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v20170401preview from "./v20170401preview";
-export * as v20200301preview from "./v20200301preview";
-export * as v20200701preview from "./v20200701preview";
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { PrometheusRuleGroup } from "@pulumi/azure-native/alertsmanagement/v20210722preview";
+
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(PrometheusRuleGroup, {
+        resourceGroupName: "",
+        rules: [],
+        scopes: [],
+    });
+}

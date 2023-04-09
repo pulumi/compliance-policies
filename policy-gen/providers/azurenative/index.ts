@@ -212,7 +212,11 @@ export class AzureNativeProvider extends Provider {
         if (versionedResources.length > 1) {
             return this.getSchemaResourceName(versionedResources.sort().pop()!);
         }
-        return this.getSchemaResourceName(versionedResources.pop()!);
+
+        if (versionedResources.length === 1) {
+            return this.getSchemaResourceName(versionedResources.pop()!);
+        }
+        return undefined;
     }
 
     /**

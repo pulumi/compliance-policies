@@ -393,12 +393,8 @@ export class Provider {
             if (!fs.existsSync(`${this.directory}/${sourceFile}`)) {
                 this.policyCount++;
             }
-            console.log(`dry: count: ${this.policyCount} sourceFile: ${sourceFile}`);
             return true;
-        } else {
-            console.log(`count: ${this.policyCount} sourceFile: ${sourceFile}`);
         }
-
 
         /**
          * Break the directory into parts and ensure all directories

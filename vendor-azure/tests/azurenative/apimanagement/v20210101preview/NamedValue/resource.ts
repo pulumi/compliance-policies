@@ -18,8 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v20180601preview from "./v20180601preview";
-export * as v20191201preview from "./v20191201preview";
-export * as v20200601preview from "./v20200601preview";
-export * as v20210101preview from "./v20210101preview";
-export * as v20210401preview from "./v20210401preview";
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { NamedValue } from "@pulumi/azure-native/apimanagement/v20210101preview";
+
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(NamedValue, {
+        resourceGroupName: "",
+        displayName: "",
+        serviceName: "",
+    });
+}

@@ -1,16 +1,18 @@
 <%~ includeFile("policy.eta") %>
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
+
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (<%~ it.resourceType %>).
  *
  * @severity medium
  * @link https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups-and-versioning
  */
-export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
+export const <%~ it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "<%= it.policyName %>",
+        name: "<%~ it.policyName %>",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (<%~ it.resourceType %>).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.<%= it.resourceType %>, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {
             reportViolation("Kubernetes <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).");
         }),
     },

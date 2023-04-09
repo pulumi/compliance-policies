@@ -1,2 +1,1 @@
 <%~ includeFile("../../policy-imports.eta") %>
-import * as k8s from "@pulumi/kubernetes";

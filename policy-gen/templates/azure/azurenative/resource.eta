@@ -1,5 +1,5 @@
 <%~ includeFile("../../resource-imports.eta") %>
-import { <%~ it.shortResourceType %> } from "<%= it.scopedImport %>";
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.

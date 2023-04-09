@@ -1,5 +1,5 @@
 <%~ includeFile("policy.eta") %>
-import { <%~ it.shortResourceType %> } from "<%= it.scopedImport %>";
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
 
 /**
  * Disallow the use of non-stable (Preview) Azure resouces (<%~ it.resourceType %>).
@@ -7,9 +7,9 @@ import { <%~ it.shortResourceType %> } from "<%= it.scopedImport %>";
  * @severity medium
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
-export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
+export const <%~ it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "<%= it.policyName %>",
+        name: "<%~ it.policyName %>",
         description: "Disallow the use of non-stable (Preview) Azure resouces (<%~ it.resourceType %>).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {

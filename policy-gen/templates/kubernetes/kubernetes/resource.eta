@@ -1,5 +1,5 @@
 <%~ includeFile("../../resource-imports.eta") %>
-import * as kubernetes from "@pulumi/kubernetes";
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -7,9 +7,5 @@ import * as kubernetes from "@pulumi/kubernetes";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(kubernetes.<%= it.resourceType %>, {
-    /*
-     * FIXME: Create a valid and compliant resource.
-     */
-    });
+    return createResourceValidationArgs(<%~ it.shortResourceType %>, {});
 }

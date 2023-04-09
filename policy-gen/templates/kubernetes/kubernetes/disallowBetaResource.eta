@@ -1,4 +1,6 @@
 <%~ includeFile("policy.eta") %>
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
+
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (<%~ it.resourceType %>).
  *
@@ -10,7 +12,7 @@ export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyMana
         name: "<%= it.policyName %>",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (<%~ it.resourceType %>).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.<%= it.resourceType %>, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {
             reportViolation("Kubernetes <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).");
         }),
     },

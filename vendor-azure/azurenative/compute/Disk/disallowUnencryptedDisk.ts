@@ -18,12 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as azure from "@pulumi/azure-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { Disk } from "@pulumi/azure-native/compute/disk";
 
 /**
  * Checks that Disks are encrypted.
@@ -36,7 +36,7 @@ export const disallowUnencryptedDisk: ResourceValidationPolicy = policyManager.r
         name: "azurenative-compute-disk-disallow-unencrypted-disk",
         description: "Checks that Disks are encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(azure.compute.Disk, (disk, args, reportViolation) => {
+        validateResource: validateResourceOfType(Disk, (disk, args, reportViolation) => {
             if (disk.encryptionSettingsCollection) {
                 if (!disk.encryptionSettingsCollection.enabled) {
                     reportViolation("A Disk is currently not encrypted.");

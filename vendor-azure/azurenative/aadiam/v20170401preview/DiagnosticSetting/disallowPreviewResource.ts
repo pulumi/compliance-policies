@@ -18,32 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/**
+ * Default imports for a policy.
+ */
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import { LinuxVirtualMachine } from "@pulumi/azure/compute";
+import { DiagnosticSetting } from "@pulumi/azure-native/aadiam/v20170401preview";
 
 /**
- * Authentication to Linux machines should require SSH keys.
+ * Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20170401preview.DiagnosticSetting).
  *
- * @severity High
- * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
+ * @severity medium
+ * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
-export const disallowPasswordAuthentication: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "azure-compute-linuxvirtualmachine-disallow-password-authentication",
-        description: "Authentication to Linux machines should require SSH keys.",
+        name: "azurenative-aadiam-v20170401preview-diagnosticsetting-disallow-preview-resource",
+        description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20170401preview.DiagnosticSetting).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(LinuxVirtualMachine, (virtualmachine, args, reportViolation) => {
-            if (!virtualmachine.disablePasswordAuthentication) {
-                reportViolation("Authentication to Linux machines should require SSH keys.");
-            }
+        validateResource: validateResourceOfType(DiagnosticSetting, (_, args, reportViolation) => {
+            reportViolation("Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting).");
         }),
     },
     vendors: ["azure"],
-    services: ["compute"],
-    severity: "high",
-    topics: ["security", "authentication"],
+    services: ["aadiam"],
+    severity: "medium",
+    topics: ["api", "unstable", "preview"],
 });

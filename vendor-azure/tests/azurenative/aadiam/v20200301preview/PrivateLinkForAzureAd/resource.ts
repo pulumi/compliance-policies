@@ -19,9 +19,8 @@
 // SOFTWARE.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
-import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
-import { KubernetesCluster } from "@pulumi/azure/containerservice";
+import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301preview";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -29,21 +28,7 @@ import { KubernetesCluster } from "@pulumi/azure/containerservice";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(KubernetesCluster, {
-        resourceGroupName: enums.resourcegroup.ResourceGroupName,
-        location: enums.resourcegroup.Location,
-        dnsPrefix: "exampleaks1",
-        networkProfile: {
-            networkPlugin: "azure",
-            networkPolicy: "calico",
-        },
-        defaultNodePool: {
-            name: "default",
-            nodeCount: 1,
-            vmSize: "Standard_D2_v2",
-        },
-        identity: {
-            type: "SystemAssigned",
-        },
+    return createResourceValidationArgs(PrivateLinkForAzureAd, {
+        resourceGroupName: "",
     });
 }

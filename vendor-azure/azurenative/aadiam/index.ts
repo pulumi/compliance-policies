@@ -18,6 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as compute from "./compute";
-export * as containerservice from "./containerservice";
-export * as aadiam from "./aadiam";
+export * as v20170401preview from "./v20170401preview";
+export * as v20200301preview from "./v20200301preview";

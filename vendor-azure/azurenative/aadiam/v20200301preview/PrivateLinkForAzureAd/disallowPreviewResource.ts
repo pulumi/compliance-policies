@@ -18,32 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/**
+ * Default imports for a policy.
+ */
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import { LinuxVirtualMachine } from "@pulumi/azure/compute";
+import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301preview";
 
 /**
- * Authentication to Linux machines should require SSH keys.
+ * Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200301preview.PrivateLinkForAzureAd).
  *
- * @severity High
- * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
+ * @severity medium
+ * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
-export const disallowPasswordAuthentication: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "azure-compute-linuxvirtualmachine-disallow-password-authentication",
-        description: "Authentication to Linux machines should require SSH keys.",
+        name: "azurenative-aadiam-v20200301preview-privatelinkforazuread-disallow-preview-resource",
+        description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200301preview.PrivateLinkForAzureAd).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(LinuxVirtualMachine, (virtualmachine, args, reportViolation) => {
-            if (!virtualmachine.disablePasswordAuthentication) {
-                reportViolation("Authentication to Linux machines should require SSH keys.");
-            }
+        validateResource: validateResourceOfType(PrivateLinkForAzureAd, (_, args, reportViolation) => {
+            reportViolation("Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd).");
         }),
     },
     vendors: ["azure"],
-    services: ["compute"],
-    severity: "high",
-    topics: ["security", "authentication"],
+    services: ["aadiam"],
+    severity: "medium",
+    topics: ["api", "unstable", "preview"],
 });

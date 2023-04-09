@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as azure from "@pulumi/azure";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { LinuxVirtualMachine } from "@pulumi/azure/compute";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -29,7 +29,7 @@ import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(azure.compute.LinuxVirtualMachine, {
+    return createResourceValidationArgs(LinuxVirtualMachine, {
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
         location: enums.resourcegroup.Location,
         size: "Standard_D2s_v4",

@@ -18,12 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as azure from "@pulumi/azure-native";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { VirtualMachine } from "@pulumi/azure-native/compute/virtualMachine";
 
 /**
  * Authentication to Linux machines should require SSH keys.
@@ -36,7 +36,7 @@ export const disallowPasswordAuthentication: ResourceValidationPolicy = policyMa
         name: "azurenative-compute-virtualmachine-disallow-password-authentication",
         description: "Authentication to Linux machines should require SSH keys.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(azure.compute.VirtualMachine, (virtualmachine, args, reportViolation) => {
+        validateResource: validateResourceOfType(VirtualMachine, (virtualmachine, args, reportViolation) => {
             if (virtualmachine.osProfile) {
                 if (virtualmachine.osProfile.linuxConfiguration) {
                     if (!virtualmachine.osProfile.linuxConfiguration.disablePasswordAuthentication) {

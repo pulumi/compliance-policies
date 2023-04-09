@@ -18,6 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/**
+ * Default imports for a policy unit test.
+ */
 import "mocha";
 import {
     assertHasResourceViolation,
@@ -29,36 +32,34 @@ import {
     assertResourcePolicyDescription,
     assertCodeQuality,
 } from "@pulumi-premium-policies/unit-test-helpers";
-import * as policies from "../../../../index";
-import * as enums from "../../enums";
+import * as policies from "../../../../../index";
 import { getResourceValidationArgs } from "./resource";
 
-describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", function () {
-    const policy = policies.azurenative.compute.VirtualMachine.disallowPasswordAuthentication;
+describe("azurenative.aadiam.v20170401preview.DiagnosticSetting.disallowPreviewResource", function() {
+    const policy = policies.azurenative.aadiam.v20170401preview.DiagnosticSetting.disallowPreviewResource;
 
-    it("name", async function () {
-        assertResourcePolicyName(policy, "azurenative-compute-virtualmachine-disallow-password-authentication");
+    it("name", async function() {
+        assertResourcePolicyName(policy, "azurenative-aadiam-v20170401preview-diagnosticsetting-disallow-preview-resource");
     });
 
-    it("registration", async function () {
+    it("registration", async function() {
         assertResourcePolicyIsRegistered(policy);
     });
 
-    it("metadata", async function () {
+    it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["azure"],
-            services: ["compute"],
-            severity: "high",
-            topics: ["security", "authentication"],
-            frameworks: ["pcidss"],
+            services: ["aadiam"],
+            severity: "medium",
+            topics: ["api", "unstable", "preview"],
         });
     });
 
-    it("enforcementLevel", async function () {
+    it("enforcementLevel", async function() {
         assertResourcePolicyEnforcementLevel(policy);
     });
 
-    it("description", async function () {
+    it("description", async function() {
         assertResourcePolicyDescription(policy);
     });
 
@@ -66,16 +67,8 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
-    it("#1", async function () {
+    it("#1", async function() {
         const args = getResourceValidationArgs();
-        await assertNoResourceViolations(policy, args);
-    });
-
-    it("#2", async function () {
-        const args = getResourceValidationArgs();
-        args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
-        await assertHasResourceViolation(policy, args, {
-            message: "Authentication to Linux machines should require SSH keys.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiagnosticSetting shouldn't use an unstable API (aadiam.v20170401preview.DiagnosticSetting)." });
     });
 });

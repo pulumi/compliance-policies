@@ -18,12 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as azure from "@pulumi/azure";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { KubernetesCluster } from "@pulumi/azure/containerservice";
 
 /**
  * Checks AKS cluster has Network Policy configured.
@@ -36,7 +36,7 @@ export const configureNetworkPolicy: ResourceValidationPolicy = policyManager.re
         name: "azure-containerservice-kubernetescluster-configure-network-policy",
         description: "Checks AKS cluster has Network Policy configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(azure.containerservice.KubernetesCluster, (kubernetesCluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(KubernetesCluster, (kubernetesCluster, args, reportViolation) => {
             if (kubernetesCluster.networkProfile) {
                 if (!kubernetesCluster.networkProfile.networkPolicy) {
                     reportViolation("Ensure AKS cluster has Network Policy configured.");

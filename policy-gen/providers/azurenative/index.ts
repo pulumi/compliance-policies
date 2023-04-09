@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import { error } from "console";
 import { Provider, ProviderArgs } from "../../base/provider";
 import * as eta from "eta";
 
@@ -85,12 +86,20 @@ export class AzureNativeProvider extends Provider {
         });
 
         // eslint-disable-next-line prefer-const
-        for (let [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
-            if (schemaResourceName.toLowerCase().indexOf("preview") < 0) {
+        for (let [rawSchemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
+            if (rawSchemaResourceName.toLowerCase().indexOf("preview") < 0) {
                 continue;
             }
 
-            schemaResourceName = this.getSchemaResourceName(schemaResourceName);
+            const schemaResourceName = this.getSchemaResourceName(rawSchemaResourceName);
+
+            let resourceTypeAlias: string;
+            const schemResourceAlias: string = this.getBestResourceAlias(rawSchemaResourceName) || "";
+            if (schemResourceAlias) {
+                resourceTypeAlias = this.getResourceType(schemResourceAlias);
+            } else {
+                resourceTypeAlias = "";
+            }
 
             const policyTemplateArgs = {
                 resourceType: this.getResourceType(schemaResourceName),
@@ -99,6 +108,7 @@ export class AzureNativeProvider extends Provider {
                 policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
                 metadataServices: this.getTemplatePolicyServices(schemaResourceName),
                 scopedImport: this.getScopedImportFrom(schemaResourceName),
+                resourceTypeAlias: resourceTypeAlias,
             };
 
             const specTemplateArgs = {
@@ -108,6 +118,7 @@ export class AzureNativeProvider extends Provider {
                 policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
                 metadataServices: this.getTemplatePolicyServices(schemaResourceName),
                 policiesImportPath: this.getPoliciesRelativeImportPath(schemaResourceName),
+                resourceTypeAlias: resourceTypeAlias,
             };
 
             const resourceTemplateArgs = {
@@ -124,13 +135,84 @@ export class AzureNativeProvider extends Provider {
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
-            console.log(resourceSourceCode);
-
             if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
                 return;
             }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
         }
+    }
+
+    /**
+     * This function returns a schema resource name that is an alias of the resource provided. The returned value is considered a stable resource.
+     *
+     * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
+     * @returns A schema resource name as an alias of the provided schema resource name, otherise returns `undefined`.
+     */
+    private getBestResourceAlias(schemaResourceName: string): string | undefined {
+        const schemaResourceNameParts: string[] = schemaResourceName.split(":");
+        if (schemaResourceNameParts.length !== 3) {
+            throw new Error(`Unexpected schema resource name '${schemaResourceName}'`);
+        }
+
+        if (!this.schemaObject.resources) {
+            throw new Error(`Unable to find 'schemaObject.resources' in the provider's schema`);
+        }
+
+        if (!this.schemaObject.resources[schemaResourceName]) {
+            throw new Error(`Unable for find resource 'schemaObject.resources["${schemaResourceName}"]'`);
+        }
+
+        const resource = this.schemaObject.resources[schemaResourceName];
+
+        if (!resource.aliases) {
+            return undefined;
+        }
+
+        const aliases: Array<any> = resource.aliases;
+        const unversionedResources: string[] = [];
+        const versionedResources: string[] = [];
+
+        for (let index = 0; index < aliases.length; index++) {
+            const aliasObject = aliases[index];
+
+            if (!aliasObject.type) {
+                throw new Error(`Unable to find alias type 'schemaObject.resources["${schemaResourceName}"].aliases[${index}]'`);
+            }
+            const aliasName: string = <string>aliasObject.type;
+            const aliasParts: string[] = aliasName.split(":");
+
+            if (aliasParts[1].toLowerCase().indexOf("preview") >= 0) {
+                /**
+                 * This is a non-stable resource, let's skip it.
+                 */
+                continue;
+            }
+
+            if (aliasParts[1].indexOf("/") >= 0) {
+                /**
+                 * Found something like `azure-native:insights/v20180601:guestDiagnosticsSetting`.
+                 */
+                versionedResources.push(aliasName);
+            } else {
+                /**
+                 * Found something like `azure-native:insights:guestDiagnosticsSetting`.
+                 */
+                unversionedResources.push(aliasName);
+            }
+        }
+
+        if (unversionedResources.length > 1) {
+            throw new Error(`Found more than one top level resources. ${unversionedResources.toString()}`);
+        }
+
+        if (unversionedResources.length === 1) {
+            return this.getSchemaResourceName(unversionedResources.pop()!);
+        }
+
+        if (versionedResources.length > 1) {
+            return this.getSchemaResourceName(versionedResources.sort().pop()!);
+        }
+        return this.getSchemaResourceName(versionedResources.pop()!);
     }
 
     /**

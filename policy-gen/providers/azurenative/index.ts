@@ -275,7 +275,7 @@ export class AzureNativeProvider extends Provider {
     /**
      * From the schema resource name, this function returns the formatted and consistent resource name.
      *
-     * @param schemaResourceName From the schema resource The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
+     * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
      * @returns The consistently formatted schema resource name.
      * @link https://github.com/pulumi/pulumi-azure-native/issues/2365
      */
@@ -299,6 +299,12 @@ export class AzureNativeProvider extends Provider {
         return `${matches[1]}${matches[2]}${matches[3].toUpperCase()}${matches[4]}`;
     }
 
+    /**
+     * From the schema resource name, this function returns the scoped import statement.
+     *
+     * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
+     * @returns The scoped resource import (`@pulumi/azure-native/insights` or `@pulumi/azure-native/insights/v20180601preview`).
+     */
     private getScopedImportFrom(schemaResourceName: string): string {
         const schemaResourceNameParts: string[] = schemaResourceName.split(":");
         if (schemaResourceNameParts.length !== 3) {

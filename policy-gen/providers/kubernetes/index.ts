@@ -87,10 +87,13 @@ export class KubernetesProvider extends Provider {
             filename: resourceFilename,
         });
 
-        for (const [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
+        // eslint-disable-next-line prefer-const
+        for (let [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
             if (schemaResourceName.toLowerCase().indexOf("alpha") < 0) {
                 continue;
             }
+
+            schemaResourceName = this.getSchemaResourceName(schemaResourceName);
 
             const policyTemplateArgs = {
                 resourceType: this.getResourceType(schemaResourceName),
@@ -98,6 +101,7 @@ export class KubernetesProvider extends Provider {
                 policyVariableName: policyVariableName,
                 policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
                 metadataServices: this.getTemplatePolicyServices(schemaResourceName),
+                scopedImport: this.getScopedImportFrom(schemaResourceName),
             };
 
             const specTemplateArgs = {
@@ -111,6 +115,8 @@ export class KubernetesProvider extends Provider {
 
             const resourceTemplateArgs = {
                 resourceType: this.getResourceType(schemaResourceName),
+                scopedImport: this.getScopedImportFrom(schemaResourceName),
+                shortResourceType: this.getShortResourceType(schemaResourceName),
             };
 
             const sourceFile: string = this.getPolicySourceFile(schemaResourceName, policyVariableName);
@@ -149,10 +155,13 @@ export class KubernetesProvider extends Provider {
             filename: resourceFilename,
         });
 
-        for (const [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
+        // eslint-disable-next-line prefer-const
+        for (let [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
             if (schemaResourceName.toLowerCase().indexOf("beta") < 0) {
                 continue;
             }
+
+            schemaResourceName = this.getSchemaResourceName(schemaResourceName);
 
             const policyTemplateArgs = {
                 resourceType: this.getResourceType(schemaResourceName),
@@ -160,6 +169,7 @@ export class KubernetesProvider extends Provider {
                 policyVariableName: policyVariableName,
                 policyName: this.getPolicyName(schemaResourceName, policyNameSuffix),
                 metadataServices: this.getTemplatePolicyServices(schemaResourceName),
+                scopedImport: this.getScopedImportFrom(schemaResourceName),
             };
 
             const specTemplateArgs = {
@@ -173,6 +183,8 @@ export class KubernetesProvider extends Provider {
 
             const resourceTemplateArgs = {
                 resourceType: this.getResourceType(schemaResourceName),
+                scopedImport: this.getScopedImportFrom(schemaResourceName),
+                shortResourceType: this.getShortResourceType(schemaResourceName),
             };
 
             const sourceFile: string = this.getPolicySourceFile(schemaResourceName, policyVariableName);
@@ -182,6 +194,8 @@ export class KubernetesProvider extends Provider {
             const policySourceCode = eta.render(policyTemplateFunction, policyTemplateArgs);
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
+
+            console.log(policySourceCode);
 
             this.saveSourceFile(sourceFile, policySourceCode, policyVariableName);
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
@@ -238,7 +252,7 @@ export class KubernetesProvider extends Provider {
     private getTemplatePolicyServices(schemaResourceName: string): string {
         const packageName: string = this.getPackageName(schemaResourceName).split(".")[0];
         const shortResourceType: string = this.getShortResourceType(schemaResourceName);
-        return `["${packageName}", "${shortResourceType}"]`.toLowerCase();
+        return `["${packageName}"]`.toLowerCase();
     }
 
     /**
@@ -343,5 +357,65 @@ export class KubernetesProvider extends Provider {
         }
 
         return this.schemaObject.language.nodejs.moduleToPackage[moduleName].replace(/\//g, ".");
+    }
+
+    /**
+     * From the schema resource name, this function returns the formatted and consistent resource name.
+     *
+     * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
+     * @returns The consistently formatted schema resource name.
+     * @link https://github.com/pulumi/pulumi-azure-native/issues/2365
+     */
+    private getSchemaResourceName(schemaResourceName: string): string {
+        const schemaResourceNameParts: string[] = schemaResourceName.split(":");
+        if (schemaResourceNameParts.length !== 3) {
+            throw new Error(`Unexpected schema resource name '${schemaResourceName}'`);
+        }
+
+        const regex = RegExp(/(.*:)(.*:)([a-z])(.*)/gi);
+        const matches = regex.exec(schemaResourceName);
+
+        if (!matches) {
+            throw new Error(`Failed to format schema resource name '${schemaResourceName}'`);
+        }
+
+        if (matches.length !== 5) {
+            throw new Error(`The schema resource name '${schemaResourceName}' did not decompose in 4 elements.`);
+        }
+
+        return `${matches[1]}${matches[2]}${matches[3].toUpperCase()}${matches[4]}`;
+    }
+
+    /**
+     * From the schema resource name, this function returns the scoped import statement.
+     *
+     * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
+     * @returns The scoped resource import (`@pulumi/azure-native/insights` or `@pulumi/azure-native/insights/v20180601preview`).
+     */
+    private getScopedImportFrom(schemaResourceName: string): string {
+        const schemaResourceNameParts: string[] = schemaResourceName.split(":");
+        if (schemaResourceNameParts.length !== 3) {
+            throw new Error(`Unexpected schema resource name '${schemaResourceName}'`);
+        }
+
+        if (!this.schemaObject.language) {
+            throw new Error(`Unable to find 'schemaObject.language' in the provider's schema.`);
+        }
+
+        if (!this.schemaObject.language.nodejs) {
+            throw new Error(`Unable to find 'schemaObject.language.nodejs' in the provider's schema.`);
+        }
+
+        if (!this.schemaObject.language.nodejs.moduleToPackage) {
+            throw new Error(`Unable to find 'schemaObject.language.nodejs.moduleToPackage' in the provider's schema.`);
+        }
+
+        const moduleName: string = schemaResourceNameParts[1];
+
+        if (!this.schemaObject.language.nodejs.moduleToPackage[moduleName]) {
+            throw new Error(`Unable to find 'schemaObject.language.nodejs.moduleToPackage."${moduleName}"' in the provider's schema.`);
+        }
+
+        return `@pulumi/${this.args.name}/${this.schemaObject.language.nodejs.moduleToPackage[moduleName]}`;
     }
 };

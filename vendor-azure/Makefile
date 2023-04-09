@@ -33,3 +33,7 @@ publish:
 	@cp .npmrc bin/
 	@/bin/bash ../build/publish.sh
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
+
+stats:
+	@echo -n "Number of resources: "
+	@find $$PWD/az* -type f  | grep -v index.ts | wc -l

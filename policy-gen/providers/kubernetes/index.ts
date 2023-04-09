@@ -195,8 +195,6 @@ export class KubernetesProvider extends Provider {
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
-            console.log(policySourceCode);
-
             this.saveSourceFile(sourceFile, policySourceCode, policyVariableName);
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
         }

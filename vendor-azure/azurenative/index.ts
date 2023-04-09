@@ -29,3 +29,8 @@ export * as app from "./app";
 export * as appcomplianceautomation from "./appcomplianceautomation";
 export * as appconfiguration from "./appconfiguration";
 export * as appplatform from "./appplatform";
+export * as attestation from "./attestation";
+export * as authorization from "./authorization";
+export * as automanage from "./automanage";
+export * as automation from "./automation";
+export * as autonomousdevelopmentplatform from "./autonomousdevelopmentplatform";

@@ -49,7 +49,7 @@ describe("kubernetes.apiregistration.v1beta1.APIServicePatch.disallowBetaResourc
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apiregistration", "apiservicepatch"],
+            services: ["apiregistration"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

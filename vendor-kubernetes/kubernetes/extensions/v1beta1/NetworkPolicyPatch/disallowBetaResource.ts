@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { NetworkPolicyPatch } from "@pulumi/kubernetes/extensions/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (extensions.v1beta1.NetworkPolicyPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-extensions-v1beta1-networkpolicypatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (extensions.v1beta1.NetworkPolicyPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.extensions.v1beta1.NetworkPolicyPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(NetworkPolicyPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes NetworkPolicyPatch shouldn't use an unstable API (extensions.v1beta1.NetworkPolicyPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["extensions", "networkpolicypatch"],
+    services: ["extensions"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

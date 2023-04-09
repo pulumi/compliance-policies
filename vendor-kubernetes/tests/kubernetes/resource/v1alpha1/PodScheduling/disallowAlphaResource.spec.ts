@@ -49,7 +49,7 @@ describe("kubernetes.resource.v1alpha1.PodScheduling.disallowAlphaResource", fun
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["resource", "podscheduling"],
+            services: ["resource"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

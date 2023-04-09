@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { EndpointSlice } from "@pulumi/kubernetes/discovery/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (discovery.v1beta1.EndpointSlice).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-discovery-v1beta1-endpointslice-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (discovery.v1beta1.EndpointSlice).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.discovery.v1beta1.EndpointSlice, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(EndpointSlice, (_, args, reportViolation) => {
             reportViolation("Kubernetes EndpointSlice shouldn't use an unstable API (discovery.v1beta1.EndpointSlice).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["discovery", "endpointslice"],
+    services: ["discovery"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

@@ -49,7 +49,7 @@ describe("kubernetes.coordination.v1beta1.Lease.disallowBetaResource", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["coordination", "lease"],
+            services: ["coordination"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

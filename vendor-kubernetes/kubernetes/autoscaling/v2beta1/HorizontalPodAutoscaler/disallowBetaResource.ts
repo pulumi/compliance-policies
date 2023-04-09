@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { HorizontalPodAutoscaler } from "@pulumi/kubernetes/autoscaling/v2beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (autoscaling.v2beta1.HorizontalPodAutoscaler).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-autoscaling-v2beta1-horizontalpodautoscaler-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (autoscaling.v2beta1.HorizontalPodAutoscaler).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.autoscaling.v2beta1.HorizontalPodAutoscaler, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(HorizontalPodAutoscaler, (_, args, reportViolation) => {
             reportViolation("Kubernetes HorizontalPodAutoscaler shouldn't use an unstable API (autoscaling.v2beta1.HorizontalPodAutoscaler).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["autoscaling", "horizontalpodautoscaler"],
+    services: ["autoscaling"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

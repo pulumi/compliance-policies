@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { DaemonSet } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         name: "kubernetes-apps-v1-daemonset-configure-recommended-labels",
         description: "Checks that Kubernetes DaemonSets have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.DaemonSet, (daemonSet, args, reportViolation) => {
+        validateResource: validateResourceOfType(DaemonSet, (daemonSet, args, reportViolation) => {
             if (!daemonSet.metadata || !daemonSet.metadata.labels) {
                 reportViolation("Kubernetes DaemonSets should use the recommended labels.");
             } else {
@@ -59,7 +59,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "daemonset"],
+    services: ["apps"],
     severity: "low",
     topics: ["usability"],
 });

@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1beta1.ClusterRolePatch.disallowBetaResource", functi
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "clusterrolepatch"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

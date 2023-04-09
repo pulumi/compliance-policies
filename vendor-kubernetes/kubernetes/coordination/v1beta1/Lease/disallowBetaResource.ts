@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { Lease } from "@pulumi/kubernetes/coordination/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (coordination.v1beta1.Lease).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-coordination-v1beta1-lease-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (coordination.v1beta1.Lease).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.coordination.v1beta1.Lease, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(Lease, (_, args, reportViolation) => {
             reportViolation("Kubernetes Lease shouldn't use an unstable API (coordination.v1beta1.Lease).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["coordination", "lease"],
+    services: ["coordination"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

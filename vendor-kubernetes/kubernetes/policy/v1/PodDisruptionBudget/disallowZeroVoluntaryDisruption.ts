@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { PodDisruptionBudget } from "@pulumi/kubernetes/policy/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -45,7 +45,7 @@ export const disallowZeroVoluntaryDisruption: ResourceValidationPolicy = policyM
         name: "kubernetes-policy-v1-poddisruptionbudget-disallow-zero-voluntary-disruption",
         description: "Checks that Kubernetes PodDisruptionBudgets have a voluntary disruption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.policy.v1.PodDisruptionBudget, (podDisruptionBudget, args, reportViolation) => {
+        validateResource: validateResourceOfType(PodDisruptionBudget, (podDisruptionBudget, args, reportViolation) => {
             if (podDisruptionBudget.spec) {
                 if (podDisruptionBudget.spec.maxUnavailable !== undefined) {
 

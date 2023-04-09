@@ -49,7 +49,7 @@ describe("kubernetes.policy.v1beta1.PodSecurityPolicyList.disallowBetaResource",
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["policy", "podsecuritypolicylist"],
+            services: ["policy"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

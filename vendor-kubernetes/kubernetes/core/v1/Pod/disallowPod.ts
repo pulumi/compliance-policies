@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Pod } from "@pulumi/kubernetes/core/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,12 +36,12 @@ export const disallowPod: ResourceValidationPolicy = policyManager.registerPolic
         name: "kubernetes-core-v1-pod-disallow-pod",
         description: "Checks that Kubernetes Pods are not used directly.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.core.v1.Pod, (pod, args, reportViolation) => {
+        validateResource: validateResourceOfType(Pod, (pod, args, reportViolation) => {
             reportViolation("Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job.");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["core", "pod"],
+    services: ["core"],
     severity: "critical",
     topics: ["availability"],
 });

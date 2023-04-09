@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.Deployment.enableReadOnlyRootFilesystem", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "deployment"],
+            services: ["apps"],
             severity: "high",
             topics: ["runtime", "security"],
         });

@@ -49,7 +49,7 @@ describe("kubernetes.flowcontrol.v1alpha1.PriorityLevelConfigurationPatch.disall
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["flowcontrol", "prioritylevelconfigurationpatch"],
+            services: ["flowcontrol"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

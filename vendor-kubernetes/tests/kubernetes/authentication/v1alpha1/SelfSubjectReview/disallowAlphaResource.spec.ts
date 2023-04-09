@@ -49,7 +49,7 @@ describe("kubernetes.authentication.v1alpha1.SelfSubjectReview.disallowAlphaReso
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authentication", "selfsubjectreview"],
+            services: ["authentication"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

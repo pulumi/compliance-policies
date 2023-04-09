@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1beta1.CSIDriverList.disallowBetaResource", functi
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "csidriverlist"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

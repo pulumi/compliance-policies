@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ResourceClassList } from "@pulumi/kubernetes/resource/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.ResourceClassList).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-resource-v1alpha1-resourceclasslist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.ResourceClassList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.resource.v1alpha1.ResourceClassList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ResourceClassList, (_, args, reportViolation) => {
             reportViolation("Kubernetes ResourceClassList shouldn't use an unstable API (resource.v1alpha1.ResourceClassList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["resource", "resourceclasslist"],
+    services: ["resource"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

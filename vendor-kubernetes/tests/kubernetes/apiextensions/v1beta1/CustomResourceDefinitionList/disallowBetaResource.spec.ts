@@ -49,7 +49,7 @@ describe("kubernetes.apiextensions.v1beta1.CustomResourceDefinitionList.disallow
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apiextensions", "customresourcedefinitionlist"],
+            services: ["apiextensions"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

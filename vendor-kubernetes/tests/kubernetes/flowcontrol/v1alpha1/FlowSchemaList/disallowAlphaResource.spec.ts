@@ -49,7 +49,7 @@ describe("kubernetes.flowcontrol.v1alpha1.FlowSchemaList.disallowAlphaResource",
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["flowcontrol", "flowschemalist"],
+            services: ["flowcontrol"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

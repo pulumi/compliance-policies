@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Deployment } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -36,14 +36,14 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policyMana
         name: "kubernetes-apps-v1-deployment-configure-minimum-replica-count",
         description: "Checks that Kubernetes Deployments have at least three replicas.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
+        validateResource: validateResourceOfType(Deployment, (deployment, args, reportViolation) => {
             if (!deployment.spec || !deployment.spec.replicas || deployment.spec.replicas < 3) {
                 reportViolation("Kubernetes Deployments should have at least three replicas.");
             }
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["apps"],
     severity: "high",
     topics: ["availability"],
 });

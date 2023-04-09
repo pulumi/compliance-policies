@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1alpha1.RoleBindingPatch.disallowAlphaResource", func
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "rolebindingpatch"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ResourceClaimPatch } from "@pulumi/kubernetes/resource/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.ResourceClaimPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-resource-v1alpha1-resourceclaimpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.ResourceClaimPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.resource.v1alpha1.ResourceClaimPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ResourceClaimPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes ResourceClaimPatch shouldn't use an unstable API (resource.v1alpha1.ResourceClaimPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["resource", "resourceclaimpatch"],
+    services: ["resource"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

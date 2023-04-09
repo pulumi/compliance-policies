@@ -37,7 +37,7 @@ describe("kubernetes.batch.v1.Job.configureRecommendedLabels", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "job"],
+            services: ["batch"],
             severity: "low",
             topics: ["usability"],
         });

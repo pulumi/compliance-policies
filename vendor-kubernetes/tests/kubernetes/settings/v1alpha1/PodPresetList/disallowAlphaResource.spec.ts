@@ -49,7 +49,7 @@ describe("kubernetes.settings.v1alpha1.PodPresetList.disallowAlphaResource", fun
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["settings", "podpresetlist"],
+            services: ["settings"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

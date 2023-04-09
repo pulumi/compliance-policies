@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ClusterCIDRList } from "@pulumi/kubernetes/networking/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (networking.v1alpha1.ClusterCIDRList).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-networking-v1alpha1-clustercidrlist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (networking.v1alpha1.ClusterCIDRList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.networking.v1alpha1.ClusterCIDRList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ClusterCIDRList, (_, args, reportViolation) => {
             reportViolation("Kubernetes ClusterCIDRList shouldn't use an unstable API (networking.v1alpha1.ClusterCIDRList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["networking", "clustercidrlist"],
+    services: ["networking"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

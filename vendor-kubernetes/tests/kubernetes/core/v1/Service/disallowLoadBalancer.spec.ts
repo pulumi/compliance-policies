@@ -37,7 +37,7 @@ describe("kubernetes.core.v1.Service.disallowLoadBalancer", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["core", "service"],
+            services: ["core"],
             severity: "low",
             topics: ["cost", "network"],
         });

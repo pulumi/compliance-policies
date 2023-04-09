@@ -49,7 +49,7 @@ describe("kubernetes.flowcontrol.v1alpha1.PriorityLevelConfiguration.disallowAlp
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["flowcontrol", "prioritylevelconfiguration"],
+            services: ["flowcontrol"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PriorityClassPatch } from "@pulumi/kubernetes/scheduling/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (scheduling.v1alpha1.PriorityClassPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-scheduling-v1alpha1-priorityclasspatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (scheduling.v1alpha1.PriorityClassPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.scheduling.v1alpha1.PriorityClassPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PriorityClassPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes PriorityClassPatch shouldn't use an unstable API (scheduling.v1alpha1.PriorityClassPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["scheduling", "priorityclasspatch"],
+    services: ["scheduling"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

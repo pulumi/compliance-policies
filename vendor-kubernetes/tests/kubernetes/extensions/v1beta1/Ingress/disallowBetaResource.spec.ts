@@ -49,7 +49,7 @@ describe("kubernetes.extensions.v1beta1.Ingress.disallowBetaResource", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["extensions", "ingress"],
+            services: ["extensions"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

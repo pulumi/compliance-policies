@@ -49,7 +49,7 @@ describe("kubernetes.networking.v1alpha1.ClusterCIDR.disallowAlphaResource", fun
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["networking", "clustercidr"],
+            services: ["networking"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

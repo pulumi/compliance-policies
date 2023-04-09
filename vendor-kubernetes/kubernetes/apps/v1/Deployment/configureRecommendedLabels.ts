@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Deployment } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         name: "kubernetes-apps-v1-deployment-configure-recommended-labels",
         description: "Checks that Kubernetes Deployments have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.Deployment, (deployment, args, reportViolation) => {
+        validateResource: validateResourceOfType(Deployment, (deployment, args, reportViolation) => {
             if (!deployment.metadata || !deployment.metadata.labels) {
                 reportViolation("Kubernetes Deployments should use the recommended labels.");
             } else {
@@ -59,7 +59,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "deployment"],
+    services: ["apps"],
     severity: "low",
     topics: ["usability"],
 });

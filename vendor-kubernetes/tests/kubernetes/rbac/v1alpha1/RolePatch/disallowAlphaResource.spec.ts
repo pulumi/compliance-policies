@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1alpha1.RolePatch.disallowAlphaResource", function() 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "rolepatch"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

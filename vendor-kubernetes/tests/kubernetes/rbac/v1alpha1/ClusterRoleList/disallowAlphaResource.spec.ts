@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1alpha1.ClusterRoleList.disallowAlphaResource", funct
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "clusterrolelist"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

@@ -49,7 +49,7 @@ describe("kubernetes.discovery.v1beta1.EndpointSlicePatch.disallowBetaResource",
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["discovery", "endpointslicepatch"],
+            services: ["discovery"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

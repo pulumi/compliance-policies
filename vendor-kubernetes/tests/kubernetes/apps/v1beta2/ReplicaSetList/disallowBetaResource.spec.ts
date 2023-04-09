@@ -49,7 +49,7 @@ describe("kubernetes.apps.v1beta2.ReplicaSetList.disallowBetaResource", function
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "replicasetlist"],
+            services: ["apps"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

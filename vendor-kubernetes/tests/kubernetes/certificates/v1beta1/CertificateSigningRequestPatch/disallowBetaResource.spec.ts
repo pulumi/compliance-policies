@@ -49,7 +49,7 @@ describe("kubernetes.certificates.v1beta1.CertificateSigningRequestPatch.disallo
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["certificates", "certificatesigningrequestpatch"],
+            services: ["certificates"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

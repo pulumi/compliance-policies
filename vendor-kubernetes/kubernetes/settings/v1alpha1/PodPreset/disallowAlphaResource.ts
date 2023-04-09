@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PodPreset } from "@pulumi/kubernetes/settings/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (settings.v1alpha1.PodPreset).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-settings-v1alpha1-podpreset-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (settings.v1alpha1.PodPreset).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.settings.v1alpha1.PodPreset, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PodPreset, (_, args, reportViolation) => {
             reportViolation("Kubernetes PodPreset shouldn't use an unstable API (settings.v1alpha1.PodPreset).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["settings", "podpreset"],
+    services: ["settings"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { EventPatch } from "@pulumi/kubernetes/events/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (events.v1beta1.EventPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-events-v1beta1-eventpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (events.v1beta1.EventPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.events.v1beta1.EventPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(EventPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes EventPatch shouldn't use an unstable API (events.v1beta1.EventPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["events", "eventpatch"],
+    services: ["events"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

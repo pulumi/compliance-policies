@@ -49,7 +49,7 @@ describe("kubernetes.scheduling.v1beta1.PriorityClassPatch.disallowBetaResource"
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["scheduling", "priorityclasspatch"],
+            services: ["scheduling"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

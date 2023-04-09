@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { AuditSinkPatch } from "@pulumi/kubernetes/auditregistration/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (auditregistration.v1alpha1.AuditSinkPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-auditregistration-v1alpha1-auditsinkpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (auditregistration.v1alpha1.AuditSinkPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.auditregistration.v1alpha1.AuditSinkPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(AuditSinkPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes AuditSinkPatch shouldn't use an unstable API (auditregistration.v1alpha1.AuditSinkPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["auditregistration", "auditsinkpatch"],
+    services: ["auditregistration"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

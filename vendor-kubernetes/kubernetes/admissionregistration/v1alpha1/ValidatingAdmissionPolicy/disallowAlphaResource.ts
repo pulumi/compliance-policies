@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ValidatingAdmissionPolicy } from "@pulumi/kubernetes/admissionregistration/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (admissionregistration.v1alpha1.ValidatingAdmissionPolicy).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-admissionregistration-v1alpha1-validatingadmissionpolicy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (admissionregistration.v1alpha1.ValidatingAdmissionPolicy).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.admissionregistration.v1alpha1.ValidatingAdmissionPolicy, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ValidatingAdmissionPolicy, (_, args, reportViolation) => {
             reportViolation("Kubernetes ValidatingAdmissionPolicy shouldn't use an unstable API (admissionregistration.v1alpha1.ValidatingAdmissionPolicy).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["admissionregistration", "validatingadmissionpolicy"],
+    services: ["admissionregistration"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

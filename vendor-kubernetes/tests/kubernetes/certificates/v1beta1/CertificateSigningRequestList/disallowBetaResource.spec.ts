@@ -49,7 +49,7 @@ describe("kubernetes.certificates.v1beta1.CertificateSigningRequestList.disallow
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["certificates", "certificatesigningrequestlist"],
+            services: ["certificates"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

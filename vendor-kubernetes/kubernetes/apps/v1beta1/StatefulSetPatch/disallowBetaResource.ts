@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { StatefulSetPatch } from "@pulumi/kubernetes/apps/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (apps.v1beta1.StatefulSetPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-apps-v1beta1-statefulsetpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (apps.v1beta1.StatefulSetPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1beta1.StatefulSetPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(StatefulSetPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes StatefulSetPatch shouldn't use an unstable API (apps.v1beta1.StatefulSetPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "statefulsetpatch"],
+    services: ["apps"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

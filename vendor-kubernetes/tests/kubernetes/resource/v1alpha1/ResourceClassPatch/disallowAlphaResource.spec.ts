@@ -49,7 +49,7 @@ describe("kubernetes.resource.v1alpha1.ResourceClassPatch.disallowAlphaResource"
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["resource", "resourceclasspatch"],
+            services: ["resource"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

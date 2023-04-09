@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { CronJobList } from "@pulumi/kubernetes/batch/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (batch.v1beta1.CronJobList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-batch-v1beta1-cronjoblist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (batch.v1beta1.CronJobList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v1beta1.CronJobList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(CronJobList, (_, args, reportViolation) => {
             reportViolation("Kubernetes CronJobList shouldn't use an unstable API (batch.v1beta1.CronJobList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "cronjoblist"],
+    services: ["batch"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

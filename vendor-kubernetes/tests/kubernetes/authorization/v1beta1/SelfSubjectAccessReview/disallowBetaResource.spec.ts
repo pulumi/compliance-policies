@@ -49,7 +49,7 @@ describe("kubernetes.authorization.v1beta1.SelfSubjectAccessReview.disallowBetaR
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authorization", "selfsubjectaccessreview"],
+            services: ["authorization"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

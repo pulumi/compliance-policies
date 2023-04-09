@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { DaemonSet } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -40,7 +40,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         name: "kubernetes-apps-v1-daemonset-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes DaemonSets run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.DaemonSet, (daemonSet, args, reportViolation) => {
+        validateResource: validateResourceOfType(DaemonSet, (daemonSet, args, reportViolation) => {
             if (daemonSet.spec && daemonSet.spec.template.spec && daemonSet.spec.template.spec.containers.length > 0) {
                 daemonSet.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
@@ -52,7 +52,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "daemonset"],
+    services: ["apps"],
     severity: "high",
     topics: ["runtime", "security"],
 });

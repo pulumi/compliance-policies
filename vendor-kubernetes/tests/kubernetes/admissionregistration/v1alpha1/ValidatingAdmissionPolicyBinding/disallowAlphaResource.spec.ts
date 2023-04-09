@@ -49,7 +49,7 @@ describe("kubernetes.admissionregistration.v1alpha1.ValidatingAdmissionPolicyBin
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["admissionregistration", "validatingadmissionpolicybinding"],
+            services: ["admissionregistration"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

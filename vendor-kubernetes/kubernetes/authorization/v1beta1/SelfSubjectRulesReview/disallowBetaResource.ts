@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { SelfSubjectRulesReview } from "@pulumi/kubernetes/authorization/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (authorization.v1beta1.SelfSubjectRulesReview).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-authorization-v1beta1-selfsubjectrulesreview-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (authorization.v1beta1.SelfSubjectRulesReview).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.authorization.v1beta1.SelfSubjectRulesReview, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(SelfSubjectRulesReview, (_, args, reportViolation) => {
             reportViolation("Kubernetes SelfSubjectRulesReview shouldn't use an unstable API (authorization.v1beta1.SelfSubjectRulesReview).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["authorization", "selfsubjectrulesreview"],
+    services: ["authorization"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

@@ -49,7 +49,7 @@ describe("kubernetes.flowcontrol.v1beta2.FlowSchemaPatch.disallowBetaResource", 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["flowcontrol", "flowschemapatch"],
+            services: ["flowcontrol"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

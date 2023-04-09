@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1alpha1.ClusterRoleBinding.disallowAlphaResource", fu
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "clusterrolebinding"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

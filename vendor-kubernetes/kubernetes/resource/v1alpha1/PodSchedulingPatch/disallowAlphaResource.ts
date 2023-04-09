@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PodSchedulingPatch } from "@pulumi/kubernetes/resource/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.PodSchedulingPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-resource-v1alpha1-podschedulingpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha1.PodSchedulingPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.resource.v1alpha1.PodSchedulingPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PodSchedulingPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes PodSchedulingPatch shouldn't use an unstable API (resource.v1alpha1.PodSchedulingPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["resource", "podschedulingpatch"],
+    services: ["resource"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

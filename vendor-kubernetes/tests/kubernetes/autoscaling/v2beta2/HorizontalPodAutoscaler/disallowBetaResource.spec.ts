@@ -49,7 +49,7 @@ describe("kubernetes.autoscaling.v2beta2.HorizontalPodAutoscaler.disallowBetaRes
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["autoscaling", "horizontalpodautoscaler"],
+            services: ["autoscaling"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

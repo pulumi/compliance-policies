@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { TokenReview } from "@pulumi/kubernetes/authentication/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (authentication.v1beta1.TokenReview).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-authentication-v1beta1-tokenreview-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (authentication.v1beta1.TokenReview).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.authentication.v1beta1.TokenReview, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(TokenReview, (_, args, reportViolation) => {
             reportViolation("Kubernetes TokenReview shouldn't use an unstable API (authentication.v1beta1.TokenReview).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["authentication", "tokenreview"],
+    services: ["authentication"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

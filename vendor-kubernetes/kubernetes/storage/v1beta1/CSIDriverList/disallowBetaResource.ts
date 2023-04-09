@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { CSIDriverList } from "@pulumi/kubernetes/storage/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.CSIDriverList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-storage-v1beta1-csidriverlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.CSIDriverList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.storage.v1beta1.CSIDriverList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(CSIDriverList, (_, args, reportViolation) => {
             reportViolation("Kubernetes CSIDriverList shouldn't use an unstable API (storage.v1beta1.CSIDriverList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["storage", "csidriverlist"],
+    services: ["storage"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

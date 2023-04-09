@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ClusterRoleList } from "@pulumi/kubernetes/rbac/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (rbac.v1alpha1.ClusterRoleList).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-rbac-v1alpha1-clusterrolelist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (rbac.v1alpha1.ClusterRoleList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.rbac.v1alpha1.ClusterRoleList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ClusterRoleList, (_, args, reportViolation) => {
             reportViolation("Kubernetes ClusterRoleList shouldn't use an unstable API (rbac.v1alpha1.ClusterRoleList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["rbac", "clusterrolelist"],
+    services: ["rbac"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

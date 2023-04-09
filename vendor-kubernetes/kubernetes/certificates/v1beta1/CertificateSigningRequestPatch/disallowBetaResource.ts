@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { CertificateSigningRequestPatch } from "@pulumi/kubernetes/certificates/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (certificates.v1beta1.CertificateSigningRequestPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-certificates-v1beta1-certificatesigningrequestpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (certificates.v1beta1.CertificateSigningRequestPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.certificates.v1beta1.CertificateSigningRequestPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(CertificateSigningRequestPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes CertificateSigningRequestPatch shouldn't use an unstable API (certificates.v1beta1.CertificateSigningRequestPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["certificates", "certificatesigningrequestpatch"],
+    services: ["certificates"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

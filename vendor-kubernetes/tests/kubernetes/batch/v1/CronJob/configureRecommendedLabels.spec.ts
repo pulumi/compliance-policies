@@ -37,7 +37,7 @@ describe("kubernetes.batch.v1.CronJob.configureRecommendedLabels", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "cronjob"],
+            services: ["batch"],
             severity: "low",
             topics: ["usability"],
         });

@@ -49,7 +49,7 @@ describe("kubernetes.apiextensions.v1beta1.CustomResourceDefinitionPatch.disallo
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apiextensions", "customresourcedefinitionpatch"],
+            services: ["apiextensions"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Service } from "@pulumi/kubernetes/core/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -38,7 +38,7 @@ export const disallowLoadBalancer: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-core-v1-service-disallow-load-balancer",
         description: "Checks that Kubernetes Services do not use a LoadBalancer as service type.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.core.v1.Service, (service, args, reportViolation) => {
+        validateResource: validateResourceOfType(Service, (service, args, reportViolation) => {
             if (service.spec) {
                 if (service.spec.type && service.spec.type === "LoadBalancer") {
                     reportViolation("Kubernetes Services should not use a 'LoadBalancer' as a service type.");
@@ -47,7 +47,7 @@ export const disallowLoadBalancer: ResourceValidationPolicy = policyManager.regi
         }),
     },
     vendors: ["kubernetes"],
-    services: ["core", "service"],
+    services: ["core"],
     severity: "low",
     topics: ["cost", "network"],
 });

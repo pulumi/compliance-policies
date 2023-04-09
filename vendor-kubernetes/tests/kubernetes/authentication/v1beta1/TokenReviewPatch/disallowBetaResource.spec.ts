@@ -49,7 +49,7 @@ describe("kubernetes.authentication.v1beta1.TokenReviewPatch.disallowBetaResourc
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authentication", "tokenreviewpatch"],
+            services: ["authentication"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

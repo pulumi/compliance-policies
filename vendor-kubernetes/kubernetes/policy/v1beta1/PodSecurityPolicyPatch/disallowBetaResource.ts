@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PodSecurityPolicyPatch } from "@pulumi/kubernetes/policy/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (policy.v1beta1.PodSecurityPolicyPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-policy-v1beta1-podsecuritypolicypatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (policy.v1beta1.PodSecurityPolicyPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.policy.v1beta1.PodSecurityPolicyPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PodSecurityPolicyPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes PodSecurityPolicyPatch shouldn't use an unstable API (policy.v1beta1.PodSecurityPolicyPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["policy", "podsecuritypolicypatch"],
+    services: ["policy"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

@@ -49,7 +49,7 @@ describe("kubernetes.flowcontrol.v1beta3.PriorityLevelConfigurationList.disallow
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["flowcontrol", "prioritylevelconfigurationlist"],
+            services: ["flowcontrol"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

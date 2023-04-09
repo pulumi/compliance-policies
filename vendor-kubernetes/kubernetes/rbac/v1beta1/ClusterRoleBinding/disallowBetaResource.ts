@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ClusterRoleBinding } from "@pulumi/kubernetes/rbac/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.ClusterRoleBinding).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-rbac-v1beta1-clusterrolebinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.ClusterRoleBinding).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.rbac.v1beta1.ClusterRoleBinding, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ClusterRoleBinding, (_, args, reportViolation) => {
             reportViolation("Kubernetes ClusterRoleBinding shouldn't use an unstable API (rbac.v1beta1.ClusterRoleBinding).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["rbac", "clusterrolebinding"],
+    services: ["rbac"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

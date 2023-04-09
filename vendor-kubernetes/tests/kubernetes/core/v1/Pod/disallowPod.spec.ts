@@ -37,7 +37,7 @@ describe("kubernetes.core.v1.Pod.disallowPod", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["core", "pod"],
+            services: ["core"],
             severity: "critical",
             topics: ["availability"],
         });

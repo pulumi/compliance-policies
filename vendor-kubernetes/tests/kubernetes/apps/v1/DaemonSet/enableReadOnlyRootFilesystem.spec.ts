@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.DaemonSet.enableReadOnlyRootFilesystem", function()
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "daemonset"],
+            services: ["apps"],
             severity: "high",
             topics: ["runtime", "security"],
         });

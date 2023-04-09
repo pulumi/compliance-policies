@@ -49,7 +49,7 @@ describe("kubernetes.auditregistration.v1alpha1.AuditSinkList.disallowAlphaResou
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["auditregistration", "auditsinklist"],
+            services: ["auditregistration"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { CronJob } from "@pulumi/kubernetes/batch/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         name: "kubernetes-batch-v1-cronjob-configure-recommended-labels",
         description: "Checks that Kubernetes CronJobs have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v1.CronJob, (cronJob, args, reportViolation) => {
+        validateResource: validateResourceOfType(CronJob, (cronJob, args, reportViolation) => {
             if (!cronJob.metadata || !cronJob.metadata.labels) {
                 reportViolation("Kubernetes CronJobs should use the recommended labels.");
             } else {
@@ -59,7 +59,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "cronjob"],
+    services: ["batch"],
     severity: "low",
     topics: ["usability"],
 });

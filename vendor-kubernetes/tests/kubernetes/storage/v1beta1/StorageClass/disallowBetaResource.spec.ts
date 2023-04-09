@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1beta1.StorageClass.disallowBetaResource", functio
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "storageclass"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

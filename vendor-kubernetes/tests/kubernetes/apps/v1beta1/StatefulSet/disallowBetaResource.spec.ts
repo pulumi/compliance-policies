@@ -49,7 +49,7 @@ describe("kubernetes.apps.v1beta1.StatefulSet.disallowBetaResource", function() 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "statefulset"],
+            services: ["apps"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1beta1.CSIStorageCapacity.disallowBetaResource", f
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "csistoragecapacity"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

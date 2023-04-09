@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ValidatingWebhookConfigurationList } from "@pulumi/kubernetes/admissionregistration/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (admissionregistration.v1beta1.ValidatingWebhookConfigurationList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-admissionregistration-v1beta1-validatingwebhookconfigurationlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (admissionregistration.v1beta1.ValidatingWebhookConfigurationList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.admissionregistration.v1beta1.ValidatingWebhookConfigurationList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ValidatingWebhookConfigurationList, (_, args, reportViolation) => {
             reportViolation("Kubernetes ValidatingWebhookConfigurationList shouldn't use an unstable API (admissionregistration.v1beta1.ValidatingWebhookConfigurationList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["admissionregistration", "validatingwebhookconfigurationlist"],
+    services: ["admissionregistration"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

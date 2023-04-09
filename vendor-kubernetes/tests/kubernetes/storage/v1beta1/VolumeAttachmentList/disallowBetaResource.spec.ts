@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1beta1.VolumeAttachmentList.disallowBetaResource",
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "volumeattachmentlist"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

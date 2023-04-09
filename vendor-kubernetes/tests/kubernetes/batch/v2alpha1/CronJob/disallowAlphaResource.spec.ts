@@ -49,7 +49,7 @@ describe("kubernetes.batch.v2alpha1.CronJob.disallowAlphaResource", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "cronjob"],
+            services: ["batch"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

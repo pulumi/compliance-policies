@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { SelfSubjectReview } from "@pulumi/kubernetes/authentication/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (authentication.v1alpha1.SelfSubjectReview).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-authentication-v1alpha1-selfsubjectreview-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (authentication.v1alpha1.SelfSubjectReview).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.authentication.v1alpha1.SelfSubjectReview, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(SelfSubjectReview, (_, args, reportViolation) => {
             reportViolation("Kubernetes SelfSubjectReview shouldn't use an unstable API (authentication.v1alpha1.SelfSubjectReview).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["authentication", "selfsubjectreview"],
+    services: ["authentication"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

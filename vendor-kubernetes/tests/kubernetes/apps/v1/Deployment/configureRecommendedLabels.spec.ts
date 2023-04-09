@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.Deployment.configureRecommendedLabels", function() 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "deployment"],
+            services: ["apps"],
             severity: "low",
             topics: ["usability"],
         });

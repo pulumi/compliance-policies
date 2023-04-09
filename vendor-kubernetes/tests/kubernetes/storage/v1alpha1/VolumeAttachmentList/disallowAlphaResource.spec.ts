@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1alpha1.VolumeAttachmentList.disallowAlphaResource
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "volumeattachmentlist"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

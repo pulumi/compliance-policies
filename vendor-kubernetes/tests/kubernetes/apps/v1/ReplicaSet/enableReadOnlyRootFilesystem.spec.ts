@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.ReplicaSet.enableReadOnlyRootFilesystem", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "replicaset"],
+            services: ["apps"],
             severity: "high",
             topics: ["runtime", "security"],
         });

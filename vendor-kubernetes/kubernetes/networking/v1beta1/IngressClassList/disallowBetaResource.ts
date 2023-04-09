@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { IngressClassList } from "@pulumi/kubernetes/networking/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (networking.v1beta1.IngressClassList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-networking-v1beta1-ingressclasslist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (networking.v1beta1.IngressClassList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.networking.v1beta1.IngressClassList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(IngressClassList, (_, args, reportViolation) => {
             reportViolation("Kubernetes IngressClassList shouldn't use an unstable API (networking.v1beta1.IngressClassList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["networking", "ingressclasslist"],
+    services: ["networking"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.ReplicaSet.configureRecommendedLabels", function() 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "replicaset"],
+            services: ["apps"],
             severity: "low",
             topics: ["usability"],
         });

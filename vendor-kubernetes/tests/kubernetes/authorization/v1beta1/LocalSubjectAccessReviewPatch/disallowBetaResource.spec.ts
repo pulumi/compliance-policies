@@ -49,7 +49,7 @@ describe("kubernetes.authorization.v1beta1.LocalSubjectAccessReviewPatch.disallo
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authorization", "localsubjectaccessreviewpatch"],
+            services: ["authorization"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

@@ -49,7 +49,7 @@ describe("kubernetes.storage.v1beta1.CSINodePatch.disallowBetaResource", functio
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["storage", "csinodepatch"],
+            services: ["storage"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

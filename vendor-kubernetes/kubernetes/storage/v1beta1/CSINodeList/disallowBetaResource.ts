@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { CSINodeList } from "@pulumi/kubernetes/storage/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.CSINodeList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-storage-v1beta1-csinodelist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.CSINodeList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.storage.v1beta1.CSINodeList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(CSINodeList, (_, args, reportViolation) => {
             reportViolation("Kubernetes CSINodeList shouldn't use an unstable API (storage.v1beta1.CSINodeList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["storage", "csinodelist"],
+    services: ["storage"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

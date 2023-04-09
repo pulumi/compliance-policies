@@ -49,7 +49,7 @@ describe("kubernetes.authentication.v1alpha1.SelfSubjectReviewPatch.disallowAlph
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authentication", "selfsubjectreviewpatch"],
+            services: ["authentication"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

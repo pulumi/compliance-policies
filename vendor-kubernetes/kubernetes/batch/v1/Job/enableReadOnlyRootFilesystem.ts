@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Job } from "@pulumi/kubernetes/batch/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -40,7 +40,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         name: "kubernetes-batch-v1-job-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes Jobs run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v1.Job, (job, args, reportViolation) => {
+        validateResource: validateResourceOfType(Job, (job, args, reportViolation) => {
             if (job.spec && job.spec.template && job.spec.template.spec && job.spec.template.spec.containers.length > 0) {
                 job.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
@@ -51,7 +51,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "job"],
+    services: ["batch"],
     severity: "high",
     topics: ["runtime", "security"],
 });

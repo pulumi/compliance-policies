@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { LocalSubjectAccessReview } from "@pulumi/kubernetes/authorization/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (authorization.v1beta1.LocalSubjectAccessReview).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-authorization-v1beta1-localsubjectaccessreview-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (authorization.v1beta1.LocalSubjectAccessReview).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.authorization.v1beta1.LocalSubjectAccessReview, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(LocalSubjectAccessReview, (_, args, reportViolation) => {
             reportViolation("Kubernetes LocalSubjectAccessReview shouldn't use an unstable API (authorization.v1beta1.LocalSubjectAccessReview).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["authorization", "localsubjectaccessreview"],
+    services: ["authorization"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

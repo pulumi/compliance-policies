@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { ReplicaSet } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         name: "kubernetes-apps-v1-replicaset-configure-recommended-labels",
         description: "Checks that Kubernetes ReplicaSets use the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.ReplicaSet, (replicaSet, args, reportViolation) => {
+        validateResource: validateResourceOfType(ReplicaSet, (replicaSet, args, reportViolation) => {
             if (!replicaSet.metadata || !replicaSet.metadata.labels) {
                 reportViolation("Kubernetes ReplicaSets should use the recommended labels.");
             } else {
@@ -59,7 +59,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "replicaset"],
+    services: ["apps"],
     severity: "low",
     topics: ["usability"],
 });

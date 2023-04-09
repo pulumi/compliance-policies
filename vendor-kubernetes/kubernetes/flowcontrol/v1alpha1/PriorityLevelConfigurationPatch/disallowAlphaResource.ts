@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PriorityLevelConfigurationPatch } from "@pulumi/kubernetes/flowcontrol/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (flowcontrol.v1alpha1.PriorityLevelConfigurationPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-flowcontrol-v1alpha1-prioritylevelconfigurationpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (flowcontrol.v1alpha1.PriorityLevelConfigurationPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.flowcontrol.v1alpha1.PriorityLevelConfigurationPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PriorityLevelConfigurationPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes PriorityLevelConfigurationPatch shouldn't use an unstable API (flowcontrol.v1alpha1.PriorityLevelConfigurationPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["flowcontrol", "prioritylevelconfigurationpatch"],
+    services: ["flowcontrol"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

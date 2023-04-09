@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { Job } from "@pulumi/kubernetes/batch/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -37,7 +37,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         name: "kubernetes-batch-v1-job-configure-recommended-labels",
         description: "Checks that Kubernetes Jobs have the recommended labels.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v1.Job, (job, args, reportViolation) => {
+        validateResource: validateResourceOfType(Job, (job, args, reportViolation) => {
             if (!job.metadata || !job.metadata.labels) {
                 reportViolation("Kubernetes Jobs should use the recommended labels.");
             } else {
@@ -59,7 +59,7 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "job"],
+    services: ["batch"],
     severity: "low",
     topics: ["usability"],
 });

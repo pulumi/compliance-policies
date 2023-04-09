@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { CronJob } from "@pulumi/kubernetes/batch/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -40,7 +40,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         name: "kubernetes-batch-v1-cronjob-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes CronJobs run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v1.CronJob, (cronJob, args, reportViolation) => {
+        validateResource: validateResourceOfType(CronJob, (cronJob, args, reportViolation) => {
             if (cronJob.spec && cronJob.spec.jobTemplate.spec && cronJob.spec.jobTemplate.spec.template.spec && cronJob.spec.jobTemplate.spec.template.spec.containers.length > 0) {
                 cronJob.spec.jobTemplate.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
@@ -51,7 +51,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "cronjob"],
+    services: ["batch"],
     severity: "high",
     topics: ["runtime", "security"],
 });

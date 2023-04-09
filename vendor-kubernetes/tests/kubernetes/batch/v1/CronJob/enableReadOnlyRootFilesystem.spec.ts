@@ -37,7 +37,7 @@ describe("kubernetes.batch.v1.CronJob.enableReadOnlyRootFilesystem", function() 
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "cronjob"],
+            services: ["batch"],
             severity: "high",
             topics: ["runtime", "security"],
         });

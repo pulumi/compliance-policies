@@ -49,7 +49,7 @@ describe("kubernetes.authentication.v1beta1.TokenReview.disallowBetaResource", f
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["authentication", "tokenreview"],
+            services: ["authentication"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

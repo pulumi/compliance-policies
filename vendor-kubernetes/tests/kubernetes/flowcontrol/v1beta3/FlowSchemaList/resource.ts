@@ -17,9 +17,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
 import { ResourceValidationArgs } from "@pulumi/policy";
 import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
-import * as kubernetes from "@pulumi/kubernetes";
+import { FlowSchemaList } from "@pulumi/kubernetes/flowcontrol/v1beta3";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.
@@ -27,7 +28,7 @@ import * as kubernetes from "@pulumi/kubernetes";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(kubernetes.flowcontrol.v1beta3.FlowSchemaList, {
+    return createResourceValidationArgs(FlowSchemaList, {
         items: [],
     });
 }

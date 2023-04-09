@@ -37,7 +37,7 @@ describe("kubernetes.batch.v1.Job.enableReadOnlyRootFilesystem", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "job"],
+            services: ["batch"],
             severity: "high",
             topics: ["runtime", "security"],
         });

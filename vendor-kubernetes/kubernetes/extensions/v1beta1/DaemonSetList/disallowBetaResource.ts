@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { DaemonSetList } from "@pulumi/kubernetes/extensions/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (extensions.v1beta1.DaemonSetList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-extensions-v1beta1-daemonsetlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (extensions.v1beta1.DaemonSetList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.extensions.v1beta1.DaemonSetList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(DaemonSetList, (_, args, reportViolation) => {
             reportViolation("Kubernetes DaemonSetList shouldn't use an unstable API (extensions.v1beta1.DaemonSetList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["extensions", "daemonsetlist"],
+    services: ["extensions"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

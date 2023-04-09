@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.StatefulSet.configureRecommendedLabels", function()
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "statefulset"],
+            services: ["apps"],
             severity: "low",
             topics: ["usability"],
         });

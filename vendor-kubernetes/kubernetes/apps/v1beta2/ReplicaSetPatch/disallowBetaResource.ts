@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { ReplicaSetPatch } from "@pulumi/kubernetes/apps/v1beta2";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (apps.v1beta2.ReplicaSetPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-apps-v1beta2-replicasetpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (apps.v1beta2.ReplicaSetPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1beta2.ReplicaSetPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(ReplicaSetPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes ReplicaSetPatch shouldn't use an unstable API (apps.v1beta2.ReplicaSetPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "replicasetpatch"],
+    services: ["apps"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

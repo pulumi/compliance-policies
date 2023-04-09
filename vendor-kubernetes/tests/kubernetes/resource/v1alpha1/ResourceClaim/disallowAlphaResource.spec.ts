@@ -49,7 +49,7 @@ describe("kubernetes.resource.v1alpha1.ResourceClaim.disallowAlphaResource", fun
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["resource", "resourceclaim"],
+            services: ["resource"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

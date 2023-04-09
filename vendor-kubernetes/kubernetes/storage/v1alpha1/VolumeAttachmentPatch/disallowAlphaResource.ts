@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { VolumeAttachmentPatch } from "@pulumi/kubernetes/storage/v1alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (storage.v1alpha1.VolumeAttachmentPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-storage-v1alpha1-volumeattachmentpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (storage.v1alpha1.VolumeAttachmentPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.storage.v1alpha1.VolumeAttachmentPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(VolumeAttachmentPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes VolumeAttachmentPatch shouldn't use an unstable API (storage.v1alpha1.VolumeAttachmentPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["storage", "volumeattachmentpatch"],
+    services: ["storage"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

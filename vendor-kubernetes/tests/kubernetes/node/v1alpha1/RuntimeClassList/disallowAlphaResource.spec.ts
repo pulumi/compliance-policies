@@ -49,7 +49,7 @@ describe("kubernetes.node.v1alpha1.RuntimeClassList.disallowAlphaResource", func
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["node", "runtimeclasslist"],
+            services: ["node"],
             severity: "medium",
             topics: ["api", "unstable", "alpha"],
         });

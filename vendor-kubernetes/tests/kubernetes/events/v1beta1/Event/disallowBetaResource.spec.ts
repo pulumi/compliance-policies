@@ -49,7 +49,7 @@ describe("kubernetes.events.v1beta1.Event.disallowBetaResource", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["events", "event"],
+            services: ["events"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

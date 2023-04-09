@@ -49,7 +49,7 @@ describe("kubernetes.networking.v1beta1.Ingress.disallowBetaResource", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["networking", "ingress"],
+            services: ["networking"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

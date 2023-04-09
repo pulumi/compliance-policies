@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { RoleBindingPatch } from "@pulumi/kubernetes/rbac/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.RoleBindingPatch).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-rbac-v1beta1-rolebindingpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.RoleBindingPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.rbac.v1beta1.RoleBindingPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(RoleBindingPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes RoleBindingPatch shouldn't use an unstable API (rbac.v1beta1.RoleBindingPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["rbac", "rolebindingpatch"],
+    services: ["rbac"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

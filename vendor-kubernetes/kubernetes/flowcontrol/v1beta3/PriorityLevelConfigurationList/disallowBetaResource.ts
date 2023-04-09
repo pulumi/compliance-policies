@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { PriorityLevelConfigurationList } from "@pulumi/kubernetes/flowcontrol/v1beta3";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (flowcontrol.v1beta3.PriorityLevelConfigurationList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-flowcontrol-v1beta3-prioritylevelconfigurationlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (flowcontrol.v1beta3.PriorityLevelConfigurationList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.flowcontrol.v1beta3.PriorityLevelConfigurationList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(PriorityLevelConfigurationList, (_, args, reportViolation) => {
             reportViolation("Kubernetes PriorityLevelConfigurationList shouldn't use an unstable API (flowcontrol.v1beta3.PriorityLevelConfigurationList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["flowcontrol", "prioritylevelconfigurationlist"],
+    services: ["flowcontrol"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

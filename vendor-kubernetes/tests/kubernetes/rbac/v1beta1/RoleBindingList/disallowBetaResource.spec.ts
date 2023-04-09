@@ -49,7 +49,7 @@ describe("kubernetes.rbac.v1beta1.RoleBindingList.disallowBetaResource", functio
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["rbac", "rolebindinglist"],
+            services: ["rbac"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

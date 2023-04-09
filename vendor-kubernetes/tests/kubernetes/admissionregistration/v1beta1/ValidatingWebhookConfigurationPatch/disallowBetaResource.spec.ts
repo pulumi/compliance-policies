@@ -49,7 +49,7 @@ describe("kubernetes.admissionregistration.v1beta1.ValidatingWebhookConfiguratio
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["admissionregistration", "validatingwebhookconfigurationpatch"],
+            services: ["admissionregistration"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

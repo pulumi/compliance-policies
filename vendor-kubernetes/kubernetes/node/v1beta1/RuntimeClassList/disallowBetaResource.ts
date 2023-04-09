@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { RuntimeClassList } from "@pulumi/kubernetes/node/v1beta1";
 
 /**
  * Disallow the use of non-stable (Beta) Kubernetes resouces (node.v1beta1.RuntimeClassList).
@@ -39,12 +39,12 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
         name: "kubernetes-node-v1beta1-runtimeclasslist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (node.v1beta1.RuntimeClassList).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.node.v1beta1.RuntimeClassList, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(RuntimeClassList, (_, args, reportViolation) => {
             reportViolation("Kubernetes RuntimeClassList shouldn't use an unstable API (node.v1beta1.RuntimeClassList).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["node", "runtimeclasslist"],
+    services: ["node"],
     severity: "medium",
     topics: ["api", "unstable", "beta"],
 });

@@ -49,7 +49,7 @@ describe("kubernetes.batch.v1beta1.CronJobPatch.disallowBetaResource", function(
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["batch", "cronjobpatch"],
+            services: ["batch"],
             severity: "medium",
             topics: ["api", "unstable", "beta"],
         });

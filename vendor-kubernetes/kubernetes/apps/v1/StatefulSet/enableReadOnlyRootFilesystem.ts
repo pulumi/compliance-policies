@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as k8s from "@pulumi/kubernetes";
+import { StatefulSet } from "@pulumi/kubernetes/apps/v1";
 import {
     ResourceValidationPolicy,
     validateResourceOfType,
@@ -40,7 +40,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         name: "kubernetes-apps-v1-statefulset-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes StatefulSets run pods with a read-only filesystem.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.apps.v1.StatefulSet, (statefulSet, args, reportViolation) => {
+        validateResource: validateResourceOfType(StatefulSet, (statefulSet, args, reportViolation) => {
             if (statefulSet.spec && statefulSet.spec.template.spec && statefulSet.spec.template.spec.containers.length > 0) {
                 statefulSet.spec.template.spec.containers.forEach(container => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
@@ -51,7 +51,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         }),
     },
     vendors: ["kubernetes"],
-    services: ["apps", "statefulset"],
+    services: ["apps"],
     severity: "high",
     topics: ["runtime", "security"],
 });

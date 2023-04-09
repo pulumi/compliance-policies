@@ -37,7 +37,7 @@ describe("kubernetes.apps.v1.DaemonSet.configureRecommendedLabels", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["kubernetes"],
-            services: ["apps", "daemonset"],
+            services: ["apps"],
             severity: "low",
             topics: ["usability"],
         });

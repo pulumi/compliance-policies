@@ -26,7 +26,7 @@ import {
     validateResourceOfType,
 } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
-import * as k8s from "@pulumi/kubernetes";
+import { CronJobPatch } from "@pulumi/kubernetes/batch/v2alpha1";
 
 /**
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (batch.v2alpha1.CronJobPatch).
@@ -39,12 +39,12 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
         name: "kubernetes-batch-v2alpha1-cronjobpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (batch.v2alpha1.CronJobPatch).",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(k8s.batch.v2alpha1.CronJobPatch, (_, args, reportViolation) => {
+        validateResource: validateResourceOfType(CronJobPatch, (_, args, reportViolation) => {
             reportViolation("Kubernetes CronJobPatch shouldn't use an unstable API (batch.v2alpha1.CronJobPatch).");
         }),
     },
     vendors: ["kubernetes"],
-    services: ["batch", "cronjobpatch"],
+    services: ["batch"],
     severity: "medium",
     topics: ["api", "unstable", "alpha"],
 });

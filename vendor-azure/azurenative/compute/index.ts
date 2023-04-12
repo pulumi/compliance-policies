@@ -20,3 +20,5 @@
 
 export * as Disk from "./Disk";
 export * as VirtualMachine from "./VirtualMachine";
+export * as v20160430preview from "./v20160430preview";
+export * as v20201001preview from "./v20201001preview";

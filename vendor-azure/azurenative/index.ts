@@ -53,3 +53,6 @@ export * as communication from "./communication";
 export * as confidentialledger from "./confidentialledger";
 export * as confluent from "./confluent";
 export * as connectedvmwarevsphere from "./connectedvmwarevsphere";
+export * as consumption from "./consumption";
+export * as containerinstance from "./containerinstance";
+export * as containerregistry from "./containerregistry";

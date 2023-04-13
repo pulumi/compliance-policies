@@ -307,7 +307,7 @@
 
 "@pulumi-premium-policies/policy-manager@^0.0.3":
   version "0.0.3"
-  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com:443/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-manager/-/policy-manager-0.0.3.tgz#631f3a6c7f5d33bd0d935098d1b74ba292d0ac8d"
+  resolved "https://pulumi-policy-as-code-052848974346.d.codeartifact.ap-southeast-2.amazonaws.com/npm/pulumi-premium-policies/@pulumi-premium-policies/policy-manager/-/policy-manager-0.0.3.tgz#631f3a6c7f5d33bd0d935098d1b74ba292d0ac8d"
   integrity sha512-sYrnllNnsG5UMjNObrzWbocloBfHPIGoK1HbWmchApvk5YCp7kLyAJxYN1IAS9ZoOJiB5l4WHcEmGqJ+seYbag==
   dependencies:
     "@pulumi/policy" "^1.5.0"

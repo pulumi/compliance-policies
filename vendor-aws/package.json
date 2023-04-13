@@ -40,7 +40,9 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
+        "lintfix": "eslint --fix --max-warnings=0 -c .eslintrc.js --ext .ts .",
         "test": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts",
-        "watchtest": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts --watch --watch-files tests/**/*.spec.ts"
+        "watchtest": "mocha --require ./node_modules/ts-node/register tests/**/*.spec.ts --watch --watch-files tests/**/*.spec.ts",
+        "targettedtest": "mocha --node-option max-old-space-size=3072 --require ./node_modules/ts-node/register"
     }
 }

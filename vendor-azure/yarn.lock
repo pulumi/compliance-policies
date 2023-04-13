@@ -461,17 +461,17 @@
     ts-node "^8.4.1"
     typescript "^3.4.6"
 
-"@pulumi/azure-native@^1.99.1":
-  version "1.99.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/azure-native/-/azure-native-1.99.1.tgz#f398cb133915209424b38374a623c792d31ec6fe"
-  integrity sha512-GH3eDZh4evKgc6/0D4s8EekkWhJCUJTwrLiv+A8uYNMqhEu32GFC+3pgkdvdEvTh8Eddu2815Wk0Usyw20g/uA==
+"@pulumi/azure-native@^1.99.2":
+  version "1.99.2"
+  resolved "https://registry.yarnpkg.com/@pulumi/azure-native/-/azure-native-1.99.2.tgz#b062af2f0ec19f35e3a5d4b702208f2be0e484b2"
+  integrity sha512-U7l6QiwAERsHkzMP6WByK+wp1/QMvzUXtT3QEmkFZtP8Lmp/vzIcv9xOwNL+ECch3gf/F6GkYxbOhyB6QmFT9w==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
-"@pulumi/azure@^5.30.0":
-  version "5.30.0"
-  resolved "https://registry.yarnpkg.com/@pulumi/azure/-/azure-5.30.0.tgz#d056e9ea5e1ee98ed4ffcd3f03740f0c8a25f48d"
-  integrity sha512-uGV9wm7NLdvORij+xgcM5ZDykW55oerafHZYKfKQOkY2837wqWyeAU7St90+7eWMeDNIIe5yHOh0ETWUKxLX9A==
+"@pulumi/azure@^5.39.0":
+  version "5.39.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/azure/-/azure-5.39.0.tgz#19a8e347ffb50b1fe54da548319c3f334ac9ab13"
+  integrity sha512-u9ZX1Q2pf6FV/Sx4raQeyLqppo3II2CNlAk6qgfDXKY14d3iBUXy+7m7KIc52LtMCBf1HmlsNbdcW7G9afmZSg==
   dependencies:
     "@azure/eventgrid" "^4.6.0"
     "@azure/functions" "=1.2.2"

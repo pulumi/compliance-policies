@@ -147,7 +147,9 @@ module.exports = {
             "error", {
                 "definedTags": [
                     "link",
-                    "severity"
+                    "severity",
+                    "topics",
+                    "frameworks"
                 ]
             }
         ],
@@ -164,6 +166,14 @@ module.exports = {
                         comment: 'JsdocBlock:not(*:has(JsdocTag[tag=link]))',
                         context: 'VariableDeclaration',
                         message: '@link required on each block',
+                    },{
+                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=topics]))',
+                        context: 'VariableDeclaration',
+                        message: '@topics required on each block',
+                    },{
+                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=frameworks]))',
+                        context: 'VariableDeclaration',
+                        message: '@frameworks required on each block',
                     }
                 ],
             },

@@ -160,19 +160,19 @@ module.exports = {
                 contexts: [
                     {
                         comment: 'JsdocBlock:not(*:has(JsdocTag[tag=severity]))',
-                        context: 'VariableDeclaration',
+                        context: 'ExportNamedDeclaration:has([type="VariableDeclaration"])',
                         message: '@severity required on each block',
                     },{
                         comment: 'JsdocBlock:not(*:has(JsdocTag[tag=link]))',
-                        context: 'VariableDeclaration',
+                        context: 'ExportNamedDeclaration:has([type="VariableDeclaration"])',
                         message: '@link required on each block',
                     },{
                         comment: 'JsdocBlock:not(*:has(JsdocTag[tag=topics]))',
-                        context: 'VariableDeclaration',
+                        context: 'ExportNamedDeclaration:has([type="VariableDeclaration"])',
                         message: '@topics required on each block',
                     },{
                         comment: 'JsdocBlock:not(*:has(JsdocTag[tag=frameworks]))',
-                        context: 'VariableDeclaration',
+                        context: 'ExportNamedDeclaration:has([type="VariableDeclaration"])',
                         message: '@frameworks required on each block',
                     }
                 ],

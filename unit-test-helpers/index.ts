@@ -46,6 +46,11 @@ const empytOptions = {
  * the specified `resourceClass` and `props` returned from the specified `argsFactory`.
  * The return type of the `argsFactory` is the unwrapped args bag for the resource, inferred
  * from the resource's constructor parameters.
+ *
+ * @param resourceClass The provider resource class.
+ * @param args The resource class arguments to create the resource.
+ * @param config The policy configuration.
+ * @returns A resource validation used to assert against a policy.
  */
 export function createResourceValidationArgs<TResource extends Resource, TArgs>(
     resourceClass: { new(name: string, args: TArgs, ...rest: any[]): TResource }, // eslint-disable-line @typescript-eslint/no-shadow
@@ -77,6 +82,11 @@ export interface PolicyViolation {
 /**
  * The function createStackValidationArgs() will create a StackValidationArgs, simulating a stack that has a
  * single resource with the provided type and properties.
+ *
+ * @param resourceClass The provider resource class.
+ * @param props The outputs of the resource.
+ * @param config The stack validation configuration.
+ * @returns A stack validation used to assert against a stack validation policy.
  */
 export function createStackValidationArgs<TResource extends Resource, TArgs>(
     resourceClass: { new(name: string, args: TArgs, ...rest: any[]): TResource },
@@ -109,6 +119,10 @@ export function createStackValidationArgs<TResource extends Resource, TArgs>(
 /**
  * The function runResourcePolicy() will run some basic checks for a policy's metadata, and then
  * execute its rules with the provided type and properties.
+ *
+ * @param resPolicy A resource validation policy to evaluate.
+ * @param args The resource validation policy arguments.
+ * @returns A promise of a policy violation.
  */
 async function runResourcePolicy(resPolicy: ResourceValidationPolicy, args: ResourceValidationArgs): Promise<PolicyViolation[]> {
     const violations: PolicyViolation[] = [];
@@ -127,6 +141,10 @@ async function runResourcePolicy(resPolicy: ResourceValidationPolicy, args: Reso
 /**
  * The function runStackPolicy() will run some basic checks for a policy's metadata, and then
  * execute its rules with the provided type and properties.
+ *
+ * @param stackPolicy A stack validation policy to evaluate.
+ * @param args The stack validation policy arguments.
+ * @returns A promise of a policy violation.
  */
 async function runStackPolicy(stackPolicy: StackValidationPolicy, args: StackValidationArgs): Promise<PolicyViolation[]> {
     const violations: PolicyViolation[] = [];
@@ -140,6 +158,8 @@ async function runStackPolicy(stackPolicy: StackValidationPolicy, args: StackVal
 
 /**
  * The function assertNoViolations() runs the policy and confirms no violations were found.
+ *
+ * @param allViolations An array of all policy violations.
  */
 function assertNoViolations(allViolations: PolicyViolation[]) {
     if (allViolations && allViolations.length > 0) {
@@ -154,6 +174,9 @@ function assertNoViolations(allViolations: PolicyViolation[]) {
 
 /**
  * The function assertHasViolation() runs the policy and confirms the expected violation is reported.
+ *
+ * @param allViolations An array of all policy violations.
+ * @param wantViolation An array of expected policy violations.
  */
 function assertHasViolation(allViolations: PolicyViolation[], wantViolation: PolicyViolation) {
     if (!allViolations || allViolations.length === 0) {
@@ -190,6 +213,9 @@ function assertHasViolation(allViolations: PolicyViolation[], wantViolation: Pol
 
 /**
  * The function daysFromNow() returns "now", d days in the future or past.
+ *
+ * @param days Number of days.
+ * @returns A Date object.
  */
 export function daysFromNow(days: number): Date {
     const date = new Date();
@@ -199,6 +225,10 @@ export function daysFromNow(days: number): Date {
 
 /**
  * The function asserts the resource provided reports a violation.
+ *
+ * @param resPolicy A resource validation policy.
+ * @param args Arguments for the resource validation policy.
+ * @param wantViolation An expected policy violation.
  */
 export async function assertHasResourceViolation(resPolicy: ResourceValidationPolicy, args: ResourceValidationArgs, wantViolation: PolicyViolation) {
     const allViolations = await runResourcePolicy(resPolicy, args);
@@ -207,6 +237,9 @@ export async function assertHasResourceViolation(resPolicy: ResourceValidationPo
 
 /**
  * The function asserts the resource provided does NOT reports any violation.
+ *
+ * @param resPolicy A resource validation policy.
+ * @param args Arguments for the resource validation policy.
  */
 export async function assertNoResourceViolations(resPolicy: ResourceValidationPolicy, args: ResourceValidationArgs) {
     const allViolations = await runResourcePolicy(resPolicy, args);
@@ -214,7 +247,10 @@ export async function assertNoResourceViolations(resPolicy: ResourceValidationPo
 }
 
 /**
- * The function asserts the stack provided reports a violation.
+ * The function asserts the stack provided does NOT report any violation.
+ *
+ * @param stackPolicy A stack validation policy.
+ * @param args Arguments for the stack validation policy.
  */
 export async function assertNoStackViolations(stackPolicy: StackValidationPolicy, args: StackValidationArgs) {
     const allViolations = await runStackPolicy(stackPolicy, args);
@@ -222,7 +258,11 @@ export async function assertNoStackViolations(stackPolicy: StackValidationPolicy
 }
 
 /**
- * The function asserts the stack provided does NOT reports any violation.
+ * The function asserts the stack provided report a violation.
+ *
+ * @param stackPolicy A stack validation policy.
+ * @param args Arguments for the stack validation policy.
+ * @param wantViolation An expected violation.
  */
 export async function assertHasStackViolation(
     stackPolicy: StackValidationPolicy, args: StackValidationArgs, wantViolation: PolicyViolation) {
@@ -232,6 +272,8 @@ export async function assertHasStackViolation(
 
 /**
  * The function asserts the policy has been registered.
+ *
+ * @param policy A resource validation policy.
  */
 export function assertResourcePolicyIsRegistered(policy: ResourceValidationPolicy) {
     if (!policymanager.policyManager.getPolicyByName(policy.name)) {
@@ -241,6 +283,9 @@ export function assertResourcePolicyIsRegistered(policy: ResourceValidationPolic
 
 /**
  * The function asserts the policy name is as expected.
+ *
+ * @param policy A resource validation policy.
+ * @param name The resource validation policy expected name.
  */
 export function assertResourcePolicyName(policy: ResourceValidationPolicy, name: string) {
     const re = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
@@ -265,6 +310,8 @@ export function assertResourcePolicyName(policy: ResourceValidationPolicy, name:
 
 /**
  * The function asserts the policy has the correct enforcementLevel.
+ *
+ * @param policy A resource validation policy.
  */
 export function assertResourcePolicyEnforcementLevel(policy: ResourceValidationPolicy) {
     if (policy.enforcementLevel !== "advisory") {
@@ -274,6 +321,8 @@ export function assertResourcePolicyEnforcementLevel(policy: ResourceValidationP
 
 /**
  * The function asserts the policy has a sentence as a description.
+ *
+ * @param policy A resource validation policy.
  */
 export function assertResourcePolicyDescription(policy: ResourceValidationPolicy) {
     if (!policy.description) {
@@ -307,7 +356,10 @@ export function assertResourcePolicyDescription(policy: ResourceValidationPolicy
 }
 
 /**
- * The function asserts the policy has the expeced policy metadata.
+ * The function asserts the policy has the expected policy metadata.
+ *
+ * @param policy A resource validation policy.
+ * @param metadata The expected policy metadata.
  */
 export function assertResourcePolicyRegistrationDetails(policy: ResourceValidationPolicy, metadata: policymanager.PolicyMetadata) {
     const registeredPolicy: policymanager.PolicyInfo | undefined = policymanager.policyManager.getPolicyByName(policy.name);
@@ -458,15 +510,19 @@ export function assertHasNoRemainingPolicies() {
 
 /**
  * The function asserts an expected number of policies is selectable.
+ *
+ * @param expectedtedRemainingPolicyCount The expected number of remaining policies.
  */
 export function assertExpectedRemainingPolicyCount(expectedtedRemainingPolicyCount: number) {
     if (policymanager.policyManager.getSelectionStats().remainingPolicyCount !== expectedtedRemainingPolicyCount) {
-        assert.fail(`Expected remaining policy counts don't match. Found ${policymanager.policyManager.getSelectionStats().remainingPolicyCount} but expeced ${expectedtedRemainingPolicyCount}.`);
+        assert.fail(`Expected remaining policy counts don't match. Found ${policymanager.policyManager.getSelectionStats().remainingPolicyCount} but expected ${expectedtedRemainingPolicyCount}.`);
     }
 }
 
 /**
  * The function asserts no policies are selected twice.
+ *
+ * @param filterPolicy A policy selection filter.
  */
 export function assertNoDoubleSelection(filterPolicy: policymanager.FilterPolicyArgs) {
     policymanager.policyManager.resetPolicySelector();
@@ -480,6 +536,9 @@ export function assertNoDoubleSelection(filterPolicy: policymanager.FilterPolicy
 
 /**
  * The function asserts the enforcementLevel is applied when selecting policies.
+ *
+ * @param filterPolicy A policy selection filter.
+ * @param enforcementLevel An expected policy enforcement level.
  */
 export function assertSelectionEnforcementLevel(filterPolicy: policymanager.FilterPolicyArgs, enforcementLevel: string) {
     policymanager.policyManager.resetPolicySelector();
@@ -494,6 +553,9 @@ export function assertSelectionEnforcementLevel(filterPolicy: policymanager.Filt
     policymanager.policyManager.resetPolicySelector();
 }
 
+/**
+ * An interface used to store a policy source file details.
+ */
 interface SourceFileDetails {
     /**
      * Name of the current MochaJS suite.
@@ -521,15 +583,23 @@ interface SourceFileDetails {
     error?: string;
 }
 
+/**
+ * An interface used to store details about a resource policy.
+ */
 interface PolicyDetails {
     sourceFileDetails?: SourceFileDetails;
     name?: string;
     description?: string;
     severity?: string;
     comment?: string;
+    topics?: string;
+    frameworks?: string;
     error?: string;
 }
 
+/**
+ * An array of allowed policy verbs. This is used to improve consistency.
+ */
 const allowedPolicyVerbs = [
     "missing",
     "disallow",
@@ -892,14 +962,21 @@ function capitalize(str: string) {
 
 /**
  * Determine whether the given `input` is a string in lowercase.
+ *
+ * @param input A string to evaluate.
+ * @returns `true` if the provided input is all lower case, otherwise `false`.
  */
-function isLowerCase (input: string) {
+function isLowerCase (input: string): boolean {
     return input === String(input).toLowerCase();
 }
 
 /**
  * This function compares 2 arrays.
  * See for context: https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript/.
+ *
+ * @param array1 First array to compare.
+ * @param array2 Second to compare.
+ * @returns `true` is the 2 arrays are identical, otherwise `false`.
  */
 function compareArray(array1: string[], array2: string[]): boolean {
 
@@ -911,6 +988,10 @@ function compareArray(array1: string[], array2: string[]): boolean {
 
 /**
  * Helper to check if `type` is the type of `resourceClass`.
+ *
+ * @param type A resource type as a string.
+ * @param resourceClass A resource class.
+ * @returns `true` if the `type` and the resource class match, otherwise `false`.
  */
 function isTypeOf<TResource extends Resource>(
     type: string,

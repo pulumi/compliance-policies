@@ -357,13 +357,13 @@ export function assertResourcePolicyRegistrationDetails(policy: ResourceValidati
          */
         if (registeredPolicy.policyMetadata.severity) {
             switch(registeredPolicy.policyMetadata.severity) {
-            case "low":
-            case "medium":
-            case "high":
-            case "critical":
-                break;
-            default:
-                assert.fail(`Policy ${policy.name} 'severity' isn't valid ('low', 'medium', 'high', 'critical').`);
+                case "low":
+                case "medium":
+                case "high":
+                case "critical":
+                    break;
+                default:
+                    assert.fail(`Policy ${policy.name} 'severity' isn't valid ('low', 'medium', 'high', 'critical').`);
             }
         }
         if (registeredPolicy.policyMetadata.severity && metadata.severity) {
@@ -708,20 +708,20 @@ function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarNam
                     }
                     const objectProperty = <parserTypes.ObjectProperty>objectExpression.properties[oepIndex];
                     switch(objectProperty.value.type) {
-                    case "ObjectExpression": // the `resourceValidationPolicy`
-                        if (objectProperty.key.type === "Identifier" && objectProperty.key.name.includes("resourceValidationPolicy")) {
-                            const p = getPolicyCodeDetails(objectProperty.value.properties);
-                            policyDetails.name = p.name;
-                            policyDetails.description = p.description;
-                        }
-                        break;
-                    case "ArrayExpression": // Vendors[] || Services[] || Frameworks[] || Topics[]
-                        break;
-                    case "StringLiteral": // Policy Severity
-                        policyDetails.severity = objectProperty.value.value.toLowerCase(); // this needs to be lowercase as the value is made case insensitive
-                        break;
-                    default:
-                        continue;
+                        case "ObjectExpression": // the `resourceValidationPolicy`
+                            if (objectProperty.key.type === "Identifier" && objectProperty.key.name.includes("resourceValidationPolicy")) {
+                                const p = getPolicyCodeDetails(objectProperty.value.properties);
+                                policyDetails.name = p.name;
+                                policyDetails.description = p.description;
+                            }
+                            break;
+                        case "ArrayExpression": // Vendors[] || Services[] || Frameworks[] || Topics[]
+                            break;
+                        case "StringLiteral": // Policy Severity
+                            policyDetails.severity = objectProperty.value.value.toLowerCase(); // this needs to be lowercase as the value is made case insensitive
+                            break;
+                        default:
+                            continue;
                     }
                 }
             }
@@ -791,17 +791,17 @@ function getPolicyCodeDetails(properties: (parserTypes.ObjectProperty | parserTy
         }
 
         switch(property.key.name) {
-        case "name":
-            if (property.value.type === "StringLiteral") {
-                policyDetails.name = property.value.value;
-            }
-            break;
-        case "description":
-            if (property.value.type === "StringLiteral") {
-                policyDetails.description = property.value.value;
-            }
-            break;
-        default:
+            case "name":
+                if (property.value.type === "StringLiteral") {
+                    policyDetails.name = property.value.value;
+                }
+                break;
+            case "description":
+                if (property.value.type === "StringLiteral") {
+                    policyDetails.description = property.value.value;
+                }
+                break;
+            default:
         }
     });
     return policyDetails;

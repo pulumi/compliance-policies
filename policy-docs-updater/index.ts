@@ -112,7 +112,7 @@ function extractArrayToString(arrayExpressionObject: babelCore.types.ArrayExpres
         if(!element || element.type !== "StringLiteral") {
             continue;
         }
-        items.push(element.value);
+        items.push(element.value.toLowerCase());
     }
 
     return items.sort().join(", ").toLowerCase();

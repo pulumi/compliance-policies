@@ -104,7 +104,7 @@ function extractPolicyDescription(resourceValidationPolicyObject: babelCore.type
  */
 function extractArrayToString(arrayExpressionObject: babelCore.types.ArrayExpression): string {
 
-    let result: string = "";
+    const items: string[] = [];
 
     for(let i = 0; i < arrayExpressionObject.elements.length; i++) {
         const element = arrayExpressionObject.elements[i];
@@ -112,9 +112,10 @@ function extractArrayToString(arrayExpressionObject: babelCore.types.ArrayExpres
         if(!element || element.type !== "StringLiteral") {
             continue;
         }
-        result += `${element.value}, `;
+        items.push(element.value);
     }
-    return result.replace(/, $/, "").toLowerCase();
+
+    return items.sort().join(", ").toLowerCase();
 }
 
 /**

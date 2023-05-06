@@ -7,6 +7,16 @@ This tools also does a bit of code formatting due to the way `prettier` works.
 
 ## Execution
 
+```bash
+make runaws
+make runazure
+make runkubernetes
+# run all the above
+make run
+```
+
+## Usage
+
 ```
 # command: updatedocs
 # vendor-directory: /path/to/vendor/policy

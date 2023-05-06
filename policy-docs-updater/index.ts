@@ -21,8 +21,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as commander from "commander";
-import * as babelParser from "@babel/parser";
-import * as babelCore from "@babel/core";
+import * as parser from "@babel/parser";
 import traverse from "@babel/traverse";
 import generate from "@babel/generator";
 import * as parserTypes from "@babel/types";
@@ -71,7 +70,7 @@ function findFilesByExtension(directory: string, extension: string): string[] {
  * @param objectExpressionNode An ObjectExpression Node that contains the basic policy definition (resourceValidationPolicy).
  * @returns A string that contains the policy description.
  */
-function extractPolicyDescription(resourceValidationPolicyObject: babelCore.types.ObjectExpression): string {
+function extractPolicyDescription(resourceValidationPolicyObject: parserTypes.ObjectExpression): string {
 
     for(let i = 0; i < resourceValidationPolicyObject.properties.length; i++) {
         const obj = resourceValidationPolicyObject.properties[i];
@@ -102,7 +101,7 @@ function extractPolicyDescription(resourceValidationPolicyObject: babelCore.type
  * @param arrayExpressionObject The ArrayExpression containing the multiple strings.
  * @returns A string representing the values of the provided ArrayExpression, or "none" is there was no values.
  */
-function extractArrayToString(arrayExpressionObject: babelCore.types.ArrayExpression): string {
+function extractArrayToString(arrayExpressionObject: parserTypes.ArrayExpression): string {
 
     const items: string[] = [];
 
@@ -124,12 +123,12 @@ function extractArrayToString(arrayExpressionObject: babelCore.types.ArrayExpres
  * @param policyLeadingComments An array of comments. Only the last one is used as it's the one shown by Intellisense.
  * @returns A string containing a hyperlink for the provided policy, or "none" is there's no value.
  */
-function extractPolicyLink(policyLeadingComments?: babelCore.types.Comment[] | null ): string {
+function extractPolicyLink(policyLeadingComments?: parserTypes.Comment[] | null ): string {
 
     if(!policyLeadingComments || policyLeadingComments.length < 1) {
         return "none";
     }
-    const lastComment: babelCore.types.Comment = policyLeadingComments[policyLeadingComments.length-1];
+    const lastComment: parserTypes.Comment = policyLeadingComments[policyLeadingComments.length-1];
 
     const result = lastComment.value.match(/\* ?@link (.*)$/m);
     if(!result) {
@@ -172,7 +171,7 @@ function cmd_run(vendorDir: string, providerName: string) {
         const sourceFileText: string = fs.readFileSync(sourceFile, "utf-8");
         const sourceFileDir: string = path.dirname(sourceFile);
 
-        const sourceFileParseResults = babelParser.parse(sourceFileText, {
+        const sourceFileParseResults = parser.parse(sourceFileText, {
             attachComment: true,
             sourceType: "module",
             sourceFilename: sourceFile,

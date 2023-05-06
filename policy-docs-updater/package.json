@@ -12,7 +12,6 @@
         "documentation"
     ],
     "dependencies": {
-        "@babel/core": "^7.21.8",
         "@babel/generator": "^7.21.5",
         "@babel/parser": "^7.21.3",
         "@babel/traverse": "^7.21.5",

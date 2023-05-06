@@ -10,7 +10,8 @@ TARGETS := 0-internal $(shell /bin/bash -c "find tests/kubernetes/ -maxdepth 1 !
 
 # After a few tests, I found that running on half available CPUs gives the best performance results.
 # Internally to NodeJS, it seems processing is done in parallel at up to 2 CPUs at a time.
-MAKEJOBS := $(shell /bin/sh -c "echo $$(($$(nproc)/2))")
+# The value can be changed at runtime with MAKEJOBS=1 make test
+MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || echo $$(($$(nproc)/2))")
 
 .PHONY: build lint publish test paralleltests $(TARGETS)
 

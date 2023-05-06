@@ -44,6 +44,7 @@ module.exports = {
             "error",
             4,
             {
+                "SwitchCase": 1,
                 "FunctionDeclaration": {
                     "parameters": "first"
                 },
@@ -143,31 +144,7 @@ module.exports = {
         "jsdoc/check-indentation": 1,
         "jsdoc/check-line-alignment": 1,
         "jsdoc/check-property-names": 1,
-        "jsdoc/check-tag-names": [
-            "error", {
-                "definedTags": [
-                    "link",
-                    "severity"
-                ]
-            }
-        ],
         "jsdoc/check-types": 1,
-        'jsdoc/no-restricted-syntax': [
-            'error',
-            {
-                contexts: [
-                    {
-                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=severity]))',
-                        context: 'VariableDeclaration',
-                        message: '@severity required on each block',
-                    },{
-                        comment: 'JsdocBlock:not(*:has(JsdocTag[tag=link]))',
-                        context: 'VariableDeclaration',
-                        message: '@link required on each block',
-                    }
-                ],
-            },
-        ],
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-jsdoc": 1,
         "no-bitwise": "off",

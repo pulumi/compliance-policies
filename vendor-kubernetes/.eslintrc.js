@@ -44,6 +44,7 @@ module.exports = {
             "error",
             4,
             {
+                "SwitchCase": 1,
                 "FunctionDeclaration": {
                     "parameters": "first"
                 },

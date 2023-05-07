@@ -18,4 +18,4 @@ runazure:: lint
 	@yarn run updatedocs --directory ../vendor-azure --providers azure,azurenative
 
 runkubernetes:: lint
-	@yarn run updatedocs --directory ../vendor-kubernetes
+	@yarn run updatedocs --directory ../vendor-kubernetes --providers kubernetes

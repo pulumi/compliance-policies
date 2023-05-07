@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { WorkloadNetworkDnsService } from "@pulumi/azure-native/avs/v20200717preview";
 
@@ -32,6 +29,8 @@ import { WorkloadNetworkDnsService } from "@pulumi/azure-native/avs/v20200717pre
  * Disallow the use of non-stable (Preview) Azure resouces (avs.v20200717preview.WorkloadNetworkDnsService).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (avs.v20200717preview.WorkloadNetworkDnsService).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkloadNetworkDnsService, (_, args, reportViolation) => {
-            reportViolation("Azure WorkloadNetworkDnsService shouldn't use an unstable API (avs.v20200717preview.WorkloadNetworkDnsService). A compatible replacement can be found at 'avs.WorkloadNetworkDnsService'.");
+            reportViolation(
+                "Azure WorkloadNetworkDnsService shouldn't use an unstable API (avs.v20200717preview.WorkloadNetworkDnsService). A compatible replacement can be found at 'avs.WorkloadNetworkDnsService'."
+            );
         }),
     },
     vendors: ["azure"],

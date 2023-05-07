@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PolicyAssignment } from "@pulumi/azure-native/authorization/v20151001preview";
 
@@ -32,6 +29,8 @@ import { PolicyAssignment } from "@pulumi/azure-native/authorization/v20151001pr
  * Disallow the use of non-stable (Preview) Azure resouces (authorization.v20151001preview.PolicyAssignment).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (authorization.v20151001preview.PolicyAssignment).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PolicyAssignment, (_, args, reportViolation) => {
-            reportViolation("Azure PolicyAssignment shouldn't use an unstable API (authorization.v20151001preview.PolicyAssignment). A compatible replacement can be found at 'authorization.PolicyAssignment'.");
+            reportViolation(
+                "Azure PolicyAssignment shouldn't use an unstable API (authorization.v20151001preview.PolicyAssignment). A compatible replacement can be found at 'authorization.PolicyAssignment'."
+            );
         }),
     },
     vendors: ["azure"],

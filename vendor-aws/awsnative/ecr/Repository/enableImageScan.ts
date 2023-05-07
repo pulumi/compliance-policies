@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ECR repositories have 'scan-on-push' enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics container, vulnerability
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
 export const enableImageScan: ResourceValidationPolicy = policyManager.registerPolicy({

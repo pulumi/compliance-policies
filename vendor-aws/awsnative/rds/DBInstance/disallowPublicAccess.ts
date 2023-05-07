@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that RDS DB Instances public access is not enabled.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({

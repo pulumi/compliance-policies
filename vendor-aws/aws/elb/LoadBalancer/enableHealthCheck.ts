@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that ELB Load Balancers have a health check enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
  */
 export const enableHealthCheck: ResourceValidationPolicy = policyManager.registerPolicy({

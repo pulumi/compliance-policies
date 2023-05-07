@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that KMS Keys do not bypass the key policy lockout safety check.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics encryption
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-bypass-policy-lockout-safety-check
  */
 export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = policyManager.registerPolicy({

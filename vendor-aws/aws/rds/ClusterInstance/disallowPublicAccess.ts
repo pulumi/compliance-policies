@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that RDS Cluster Instances public access is not enabled.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
 export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({

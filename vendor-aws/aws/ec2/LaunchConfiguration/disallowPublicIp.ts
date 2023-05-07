@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EC2 Launch Configurations do not have a public IP address.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html
  */
 export const disallowPublicIp: ResourceValidationPolicy = policyManager.registerPolicy({

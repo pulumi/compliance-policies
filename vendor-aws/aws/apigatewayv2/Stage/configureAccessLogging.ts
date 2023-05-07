@@ -19,17 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
-
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that any ApiGatewayV2 Stages have access logging configured.
  *
- * @severity Medium
+ * @severity medium
+ * @frameworks none
+ * @topics logging, network
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-logging.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({

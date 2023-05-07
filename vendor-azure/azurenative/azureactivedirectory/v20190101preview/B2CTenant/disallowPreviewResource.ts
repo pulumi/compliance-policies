@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { B2CTenant } from "@pulumi/azure-native/azureactivedirectory/v20190101preview";
 
@@ -32,6 +29,8 @@ import { B2CTenant } from "@pulumi/azure-native/azureactivedirectory/v20190101pr
  * Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20190101preview.B2CTenant).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20190101preview.B2CTenant).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(B2CTenant, (_, args, reportViolation) => {
-            reportViolation("Azure B2CTenant shouldn't use an unstable API (azureactivedirectory.v20190101preview.B2CTenant). A compatible replacement can be found at 'azureactivedirectory.B2CTenant'.");
+            reportViolation(
+                "Azure B2CTenant shouldn't use an unstable API (azureactivedirectory.v20190101preview.B2CTenant). A compatible replacement can be found at 'azureactivedirectory.B2CTenant'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { Cluster } from "@pulumi/azure-native/connectedvmwarevsphere/v20201001preview";
 
@@ -32,6 +29,8 @@ import { Cluster } from "@pulumi/azure-native/connectedvmwarevsphere/v20201001pr
  * Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20201001preview.Cluster).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20201001preview.Cluster).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (_, args, reportViolation) => {
-            reportViolation("Azure Cluster shouldn't use an unstable API (connectedvmwarevsphere.v20201001preview.Cluster). A compatible replacement can be found at 'connectedvmwarevsphere.Cluster'.");
+            reportViolation(
+                "Azure Cluster shouldn't use an unstable API (connectedvmwarevsphere.v20201001preview.Cluster). A compatible replacement can be found at 'connectedvmwarevsphere.Cluster'."
+            );
         }),
     },
     vendors: ["azure"],

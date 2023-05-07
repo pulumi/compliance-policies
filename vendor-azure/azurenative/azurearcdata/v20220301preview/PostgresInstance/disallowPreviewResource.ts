@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PostgresInstance } from "@pulumi/azure-native/azurearcdata/v20220301preview";
 
@@ -32,6 +29,8 @@ import { PostgresInstance } from "@pulumi/azure-native/azurearcdata/v20220301pre
  * Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220301preview.PostgresInstance).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220301preview.PostgresInstance).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PostgresInstance, (_, args, reportViolation) => {
-            reportViolation("Azure PostgresInstance shouldn't use an unstable API (azurearcdata.v20220301preview.PostgresInstance). A compatible replacement can be found at 'azurearcdata.PostgresInstance'.");
+            reportViolation(
+                "Azure PostgresInstance shouldn't use an unstable API (azurearcdata.v20220301preview.PostgresInstance). A compatible replacement can be found at 'azurearcdata.PostgresInstance'."
+            );
         }),
     },
     vendors: ["azure"],

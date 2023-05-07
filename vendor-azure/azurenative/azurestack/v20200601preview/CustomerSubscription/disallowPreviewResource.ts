@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CustomerSubscription } from "@pulumi/azure-native/azurestack/v20200601preview";
 
@@ -32,6 +29,8 @@ import { CustomerSubscription } from "@pulumi/azure-native/azurestack/v20200601p
  * Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.CustomerSubscription).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.CustomerSubscription).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomerSubscription, (_, args, reportViolation) => {
-            reportViolation("Azure CustomerSubscription shouldn't use an unstable API (azurestack.v20200601preview.CustomerSubscription). A compatible replacement can be found at 'azurestack.CustomerSubscription'.");
+            reportViolation(
+                "Azure CustomerSubscription shouldn't use an unstable API (azurestack.v20200601preview.CustomerSubscription). A compatible replacement can be found at 'azurestack.CustomerSubscription'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { LinkedSubscription } from "@pulumi/azure-native/azurestack/v20200601preview";
 
@@ -32,6 +29,8 @@ import { LinkedSubscription } from "@pulumi/azure-native/azurestack/v20200601pre
  * Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.LinkedSubscription).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.LinkedSubscription).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LinkedSubscription, (_, args, reportViolation) => {
-            reportViolation("Azure LinkedSubscription shouldn't use an unstable API (azurestack.v20200601preview.LinkedSubscription). A compatible replacement can be found at 'azurestack.LinkedSubscription'.");
+            reportViolation(
+                "Azure LinkedSubscription shouldn't use an unstable API (azurestack.v20200601preview.LinkedSubscription). A compatible replacement can be found at 'azurestack.LinkedSubscription'."
+            );
         }),
     },
     vendors: ["azure"],

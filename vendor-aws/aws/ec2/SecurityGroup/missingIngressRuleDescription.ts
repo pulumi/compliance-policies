@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that all Ingress Security Groups rules have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/working-with-security-groups.html
  */
 export const missingIngressRuleDescription: ResourceValidationPolicy = policyManager.registerPolicy({

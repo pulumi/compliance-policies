@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ECR Repositories have immutable images enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics container
  * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
 export const disallowMutableImage: ResourceValidationPolicy = policyManager.registerPolicy({

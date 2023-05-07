@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ALB loadbalancers have access logging configured and enabled.
  *
  * @severity medium
+ * @frameworks none
+ * @topics logging, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
 export const configureAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({

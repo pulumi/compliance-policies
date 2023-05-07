@@ -18,17 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { LinuxVirtualMachine } from "@pulumi/azure/compute";
 
 /**
  * Authentication to Linux machines should require SSH keys.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics authentication, security
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
  */
 export const disallowPasswordAuthentication: ResourceValidationPolicy = policyManager.registerPolicy({

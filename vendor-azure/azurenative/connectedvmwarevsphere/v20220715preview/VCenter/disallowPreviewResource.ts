@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { VCenter } from "@pulumi/azure-native/connectedvmwarevsphere/v20220715preview";
 
@@ -32,6 +29,8 @@ import { VCenter } from "@pulumi/azure-native/connectedvmwarevsphere/v20220715pr
  * Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220715preview.VCenter).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220715preview.VCenter).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VCenter, (_, args, reportViolation) => {
-            reportViolation("Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20220715preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'.");
+            reportViolation(
+                "Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20220715preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Databases storage uses a customer-managed-key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/encryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({

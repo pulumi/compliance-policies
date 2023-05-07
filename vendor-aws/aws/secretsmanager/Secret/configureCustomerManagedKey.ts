@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that Secrets Manager Secrets use a customer-manager KMS key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({

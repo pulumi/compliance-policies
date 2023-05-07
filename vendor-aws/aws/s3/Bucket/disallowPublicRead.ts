@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks cis, pcidss
+ * @topics security, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
 export const disallowPublicRead: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -38,10 +37,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.acl) {
-                if (
-                    bucket.acl.toLowerCase() === "public-read" ||
-                    bucket.acl.toLowerCase() === "public-read-write" ||
-                    bucket.acl.toLowerCase() === "authenticated-read") {
+                if (bucket.acl.toLowerCase() === "public-read" || bucket.acl.toLowerCase() === "public-read-write" || bucket.acl.toLowerCase() === "authenticated-read") {
                     reportViolation("S3 Buckets ACLs should not be set to 'public-read', 'public-read-write' or 'authenticated-read'.");
                 }
             }

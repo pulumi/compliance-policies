@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ContainerGroup } from "@pulumi/azure-native/containerinstance/v20171201preview";
 
@@ -32,6 +29,8 @@ import { ContainerGroup } from "@pulumi/azure-native/containerinstance/v20171201
  * Disallow the use of non-stable (Preview) Azure resouces (containerinstance.v20171201preview.ContainerGroup).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerinstance.v20171201preview.ContainerGroup).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ContainerGroup, (_, args, reportViolation) => {
-            reportViolation("Azure ContainerGroup shouldn't use an unstable API (containerinstance.v20171201preview.ContainerGroup). A compatible replacement can be found at 'containerinstance.ContainerGroup'.");
+            reportViolation(
+                "Azure ContainerGroup shouldn't use an unstable API (containerinstance.v20171201preview.ContainerGroup). A compatible replacement can be found at 'containerinstance.ContainerGroup'."
+            );
         }),
     },
     vendors: ["azure"],

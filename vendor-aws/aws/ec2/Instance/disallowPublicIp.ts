@@ -19,16 +19,16 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EC2 instances do not have a public IP address.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics network
+ * @link none
  */
 export const disallowPublicIp: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {

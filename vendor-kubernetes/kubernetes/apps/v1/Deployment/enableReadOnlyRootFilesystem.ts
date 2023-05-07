@@ -19,20 +19,15 @@
 // SOFTWARE.
 
 import { Deployment } from "@pulumi/kubernetes/apps/v1";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Deployments run pods with a read-only filesystem.
  *
- * An immutable root filesystem prevents applications from writing to their local disk. This is
- * desirable in the event of an intrusion as the attacker will not be able to tamper with the
- * filesystem or write foreign executables to disk.
- *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics runtime, security
  * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
  */
 export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -42,13 +37,12 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Deployment, (deployment, args, reportViolation) => {
             if (deployment.spec && deployment.spec.template.spec && deployment.spec.template.spec.containers.length > 0) {
-                deployment.spec.template.spec.containers.forEach(container => {
+                deployment.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
                         reportViolation("Kubernetes Deployments should run their pods using a read-only filesystem.");
                     }
                 });
             }
-
         }),
     },
     vendors: ["kubernetes"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ConnectedRegistry } from "@pulumi/azure-native/containerregistry/v20211201preview";
 
@@ -32,6 +29,8 @@ import { ConnectedRegistry } from "@pulumi/azure-native/containerregistry/v20211
  * Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20211201preview.ConnectedRegistry).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20211201preview.ConnectedRegistry).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectedRegistry, (_, args, reportViolation) => {
-            reportViolation("Azure ConnectedRegistry shouldn't use an unstable API (containerregistry.v20211201preview.ConnectedRegistry). A compatible replacement can be found at 'containerregistry.ConnectedRegistry'.");
+            reportViolation(
+                "Azure ConnectedRegistry shouldn't use an unstable API (containerregistry.v20211201preview.ConnectedRegistry). A compatible replacement can be found at 'containerregistry.ConnectedRegistry'."
+            );
         }),
     },
     vendors: ["azure"],

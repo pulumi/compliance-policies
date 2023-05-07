@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ManagedCCF } from "@pulumi/azure-native/confidentialledger/v20220908preview";
 
@@ -32,6 +29,8 @@ import { ManagedCCF } from "@pulumi/azure-native/confidentialledger/v20220908pre
  * Disallow the use of non-stable (Preview) Azure resouces (confidentialledger.v20220908preview.ManagedCCF).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

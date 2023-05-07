@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PrivateEndpointConnection } from "@pulumi/azure-native/botservice/v20210501preview";
 
@@ -32,6 +29,8 @@ import { PrivateEndpointConnection } from "@pulumi/azure-native/botservice/v2021
  * Disallow the use of non-stable (Preview) Azure resouces (botservice.v20210501preview.PrivateEndpointConnection).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (botservice.v20210501preview.PrivateEndpointConnection).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateEndpointConnection, (_, args, reportViolation) => {
-            reportViolation("Azure PrivateEndpointConnection shouldn't use an unstable API (botservice.v20210501preview.PrivateEndpointConnection). A compatible replacement can be found at 'botservice.PrivateEndpointConnection'.");
+            reportViolation(
+                "Azure PrivateEndpointConnection shouldn't use an unstable API (botservice.v20210501preview.PrivateEndpointConnection). A compatible replacement can be found at 'botservice.PrivateEndpointConnection'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ContainerAppsSourceControl } from "@pulumi/azure-native/app/v20220101preview";
 
@@ -32,6 +29,8 @@ import { ContainerAppsSourceControl } from "@pulumi/azure-native/app/v20220101pr
  * Disallow the use of non-stable (Preview) Azure resouces (app.v20220101preview.ContainerAppsSourceControl).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20220101preview.ContainerAppsSourceControl).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ContainerAppsSourceControl, (_, args, reportViolation) => {
-            reportViolation("Azure ContainerAppsSourceControl shouldn't use an unstable API (app.v20220101preview.ContainerAppsSourceControl). A compatible replacement can be found at 'app.ContainerAppsSourceControl'.");
+            reportViolation(
+                "Azure ContainerAppsSourceControl shouldn't use an unstable API (app.v20220101preview.ContainerAppsSourceControl). A compatible replacement can be found at 'app.ContainerAppsSourceControl'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { SqlServerInstance } from "@pulumi/azure-native/azurearcdata/v20220301preview";
 
@@ -32,6 +29,8 @@ import { SqlServerInstance } from "@pulumi/azure-native/azurearcdata/v20220301pr
  * Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220301preview.SqlServerInstance).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220301preview.SqlServerInstance).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlServerInstance, (_, args, reportViolation) => {
-            reportViolation("Azure SqlServerInstance shouldn't use an unstable API (azurearcdata.v20220301preview.SqlServerInstance). A compatible replacement can be found at 'azurearcdata.SqlServerInstance'.");
+            reportViolation(
+                "Azure SqlServerInstance shouldn't use an unstable API (azurearcdata.v20220301preview.SqlServerInstance). A compatible replacement can be found at 'azurearcdata.SqlServerInstance'."
+            );
         }),
     },
     vendors: ["azure"],

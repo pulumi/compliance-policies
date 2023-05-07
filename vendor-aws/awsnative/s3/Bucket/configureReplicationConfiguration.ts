@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that S3 Bucket have cross-region replication configured.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
 export const configureReplicationConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({

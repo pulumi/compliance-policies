@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Workgroups use a customer-managed-key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -37,9 +36,12 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         description: "Checks that Athena Workgroups use a customer-managed-key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.athena.Workgroup, (workgroup, args, reportViolation) => {
-            if (workgroup.configuration && workgroup.configuration.resultConfiguration &&
+            if (
+                workgroup.configuration &&
+                workgroup.configuration.resultConfiguration &&
                 workgroup.configuration.resultConfiguration.encryptionConfiguration &&
-                workgroup.configuration.resultConfiguration.encryptionConfiguration.encryptionOption !== "SSE_KMS") {
+                workgroup.configuration.resultConfiguration.encryptionConfiguration.encryptionOption !== "SSE_KMS"
+            ) {
                 reportViolation("Athena Workgroups should be encrypted using a customer-managed key.");
             }
         }),

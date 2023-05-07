@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that EFS File Systems do not have an unencrypted file system.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html
  */
 export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyManager.registerPolicy({

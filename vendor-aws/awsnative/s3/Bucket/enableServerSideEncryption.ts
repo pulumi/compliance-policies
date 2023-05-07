@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that S3 Bucket Server-Side Encryption (SSE) is enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html
  */
 export const enableServerSideEncryption: ResourceValidationPolicy = policyManager.registerPolicy({

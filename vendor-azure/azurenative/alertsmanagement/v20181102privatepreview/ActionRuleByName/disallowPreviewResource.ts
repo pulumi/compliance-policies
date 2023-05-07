@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ActionRuleByName } from "@pulumi/azure-native/alertsmanagement/v20181102privatepreview";
 
@@ -32,6 +29,8 @@ import { ActionRuleByName } from "@pulumi/azure-native/alertsmanagement/v2018110
  * Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20181102privatepreview.ActionRuleByName).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20181102privatepreview.ActionRuleByName).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ActionRuleByName, (_, args, reportViolation) => {
-            reportViolation("Azure ActionRuleByName shouldn't use an unstable API (alertsmanagement.v20181102privatepreview.ActionRuleByName). A compatible replacement can be found at 'alertsmanagement.ActionRuleByName'.");
+            reportViolation(
+                "Azure ActionRuleByName shouldn't use an unstable API (alertsmanagement.v20181102privatepreview.ActionRuleByName). A compatible replacement can be found at 'alertsmanagement.ActionRuleByName'."
+            );
         }),
     },
     vendors: ["azure"],

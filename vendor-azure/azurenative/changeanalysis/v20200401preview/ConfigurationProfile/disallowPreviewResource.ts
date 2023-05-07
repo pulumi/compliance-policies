@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ConfigurationProfile } from "@pulumi/azure-native/changeanalysis/v20200401preview";
 
@@ -32,6 +29,8 @@ import { ConfigurationProfile } from "@pulumi/azure-native/changeanalysis/v20200
  * Disallow the use of non-stable (Preview) Azure resouces (changeanalysis.v20200401preview.ConfigurationProfile).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (changeanalysis.v20200401preview.ConfigurationProfile).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConfigurationProfile, (_, args, reportViolation) => {
-            reportViolation("Azure ConfigurationProfile shouldn't use an unstable API (changeanalysis.v20200401preview.ConfigurationProfile). A compatible replacement can be found at 'changeanalysis.ConfigurationProfile'.");
+            reportViolation(
+                "Azure ConfigurationProfile shouldn't use an unstable API (changeanalysis.v20200401preview.ConfigurationProfile). A compatible replacement can be found at 'changeanalysis.ConfigurationProfile'."
+            );
         }),
     },
     vendors: ["azure"],

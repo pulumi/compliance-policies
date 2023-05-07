@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PrometheusRuleGroup } from "@pulumi/azure-native/alertsmanagement/v20210722preview";
 
@@ -32,6 +29,8 @@ import { PrometheusRuleGroup } from "@pulumi/azure-native/alertsmanagement/v2021
  * Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20210722preview.PrometheusRuleGroup).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20210722preview.PrometheusRuleGroup).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrometheusRuleGroup, (_, args, reportViolation) => {
-            reportViolation("Azure PrometheusRuleGroup shouldn't use an unstable API (alertsmanagement.v20210722preview.PrometheusRuleGroup). A compatible replacement can be found at 'alertsmanagement.v20230301.PrometheusRuleGroup'.");
+            reportViolation(
+                "Azure PrometheusRuleGroup shouldn't use an unstable API (alertsmanagement.v20210722preview.PrometheusRuleGroup). A compatible replacement can be found at 'alertsmanagement.v20230301.PrometheusRuleGroup'."
+            );
         }),
     },
     vendors: ["azure"],

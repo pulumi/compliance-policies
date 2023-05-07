@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Secrets Manager Secrets have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
 export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
             if (!secret.description) {
                 reportViolation("Secrets Manager Secrets should have a description.");
             } else {
-                if (secret.description.length < 6 ) {
+                if (secret.description.length < 6) {
                     reportViolation("Secrets Manager Secrets should have a meaningful description.");
                 }
             }

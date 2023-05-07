@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EC2 Security Groups do not allow inbound HTTP traffic.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics encryption, network
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -42,7 +41,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
                     if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {
                         reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
                     }
-                    if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort < 80 && ingress.toPort > 80)) {
+                    if (ingress.protocol.toLowerCase() === "tcp" && ingress.fromPort < 80 && ingress.toPort > 80) {
                         reportViolation("EC2 Security Groups should not allow ingress HTTP traffic.");
                     }
                 });

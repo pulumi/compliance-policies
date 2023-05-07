@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena DataCatalogs have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/athena/latest/ug/understanding-tables-databases-and-the-data-catalog.html
  */
 export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({

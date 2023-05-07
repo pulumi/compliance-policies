@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BuildpackBinding } from "@pulumi/azure-native/appplatform/v20220501preview";
 
@@ -32,6 +29,8 @@ import { BuildpackBinding } from "@pulumi/azure-native/appplatform/v20220501prev
  * Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220501preview.BuildpackBinding).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220501preview.BuildpackBinding).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BuildpackBinding, (_, args, reportViolation) => {
-            reportViolation("Azure BuildpackBinding shouldn't use an unstable API (appplatform.v20220501preview.BuildpackBinding). A compatible replacement can be found at 'appplatform.BuildpackBinding'.");
+            reportViolation(
+                "Azure BuildpackBinding shouldn't use an unstable API (appplatform.v20220501preview.BuildpackBinding). A compatible replacement can be found at 'appplatform.BuildpackBinding'."
+            );
         }),
     },
     vendors: ["azure"],

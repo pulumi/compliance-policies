@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { VirtualMachineExtension } from "@pulumi/azure-native/compute/v20160430preview";
 
@@ -32,6 +29,8 @@ import { VirtualMachineExtension } from "@pulumi/azure-native/compute/v20160430p
  * Disallow the use of non-stable (Preview) Azure resouces (compute.v20160430preview.VirtualMachineExtension).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (compute.v20160430preview.VirtualMachineExtension).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualMachineExtension, (_, args, reportViolation) => {
-            reportViolation("Azure VirtualMachineExtension shouldn't use an unstable API (compute.v20160430preview.VirtualMachineExtension). A compatible replacement can be found at 'compute.VirtualMachineExtension'.");
+            reportViolation(
+                "Azure VirtualMachineExtension shouldn't use an unstable API (compute.v20160430preview.VirtualMachineExtension). A compatible replacement can be found at 'compute.VirtualMachineExtension'."
+            );
         }),
     },
     vendors: ["azure"],

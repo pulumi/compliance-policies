@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { EndpointSliceList } from "@pulumi/kubernetes/discovery/v1beta1";
 
@@ -32,6 +29,8 @@ import { EndpointSliceList } from "@pulumi/kubernetes/discovery/v1beta1";
  * Disallow the use of non-stable (Beta) Kubernetes resouces (discovery.v1beta1.EndpointSliceList).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, beta, unstable
  * @link https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups-and-versioning
  */
 export const disallowBetaResource: ResourceValidationPolicy = policyManager.registerPolicy({

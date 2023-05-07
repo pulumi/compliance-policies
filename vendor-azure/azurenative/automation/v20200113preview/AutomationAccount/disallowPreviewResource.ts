@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { AutomationAccount } from "@pulumi/azure-native/automation/v20200113preview";
 
@@ -32,6 +29,8 @@ import { AutomationAccount } from "@pulumi/azure-native/automation/v20200113prev
  * Disallow the use of non-stable (Preview) Azure resouces (automation.v20200113preview.AutomationAccount).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (automation.v20200113preview.AutomationAccount).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AutomationAccount, (_, args, reportViolation) => {
-            reportViolation("Azure AutomationAccount shouldn't use an unstable API (automation.v20200113preview.AutomationAccount). A compatible replacement can be found at 'automation.AutomationAccount'.");
+            reportViolation(
+                "Azure AutomationAccount shouldn't use an unstable API (automation.v20200113preview.AutomationAccount). A compatible replacement can be found at 'automation.AutomationAccount'."
+            );
         }),
     },
     vendors: ["azure"],

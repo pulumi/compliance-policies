@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html
  */
 export const configureServerSideEncryptionCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -39,9 +38,11 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.bucketEncryption && bucket.bucketEncryption.serverSideEncryptionConfiguration) {
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
-                    if (serverSideEncryptionConfiguration.serverSideEncryptionByDefault &&
+                    if (
+                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault &&
                         serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sSEAlgorithm === awsnative.s3.BucketServerSideEncryptionByDefaultSSEAlgorithm.Awskms &&
-                        !serverSideEncryptionConfiguration.serverSideEncryptionByDefault.kMSMasterKeyID) {
+                        !serverSideEncryptionConfiguration.serverSideEncryptionByDefault.kMSMasterKeyID
+                    ) {
                         reportViolation("S3 Buckets Server-Side Encryption (SSE) should use a Customer-managed KMS key.");
                     }
                 });

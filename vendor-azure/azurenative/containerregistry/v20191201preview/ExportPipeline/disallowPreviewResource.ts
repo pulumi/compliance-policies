@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ExportPipeline } from "@pulumi/azure-native/containerregistry/v20191201preview";
 
@@ -32,6 +29,8 @@ import { ExportPipeline } from "@pulumi/azure-native/containerregistry/v20191201
  * Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20191201preview.ExportPipeline).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20191201preview.ExportPipeline).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ExportPipeline, (_, args, reportViolation) => {
-            reportViolation("Azure ExportPipeline shouldn't use an unstable API (containerregistry.v20191201preview.ExportPipeline). A compatible replacement can be found at 'containerregistry.ExportPipeline'.");
+            reportViolation(
+                "Azure ExportPipeline shouldn't use an unstable API (containerregistry.v20191201preview.ExportPipeline). A compatible replacement can be found at 'containerregistry.ExportPipeline'."
+            );
         }),
     },
     vendors: ["azure"],

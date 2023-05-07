@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that S3 Bucket ACLs don't allow 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks cis, pcidss
+ * @topics security, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
 export const disallowPublicRead: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -38,9 +37,11 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
             if (bucket.accessControl) {
-                if (bucket.accessControl === awsnative.s3.BucketAccessControl.PublicRead ||
+                if (
+                    bucket.accessControl === awsnative.s3.BucketAccessControl.PublicRead ||
                     bucket.accessControl === awsnative.s3.BucketAccessControl.PublicReadWrite ||
-                    bucket.accessControl === awsnative.s3.BucketAccessControl.AuthenticatedRead) {
+                    bucket.accessControl === awsnative.s3.BucketAccessControl.AuthenticatedRead
+                ) {
                     reportViolation("S3 Buckets ACLs should not be set to 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.");
                 }
             }

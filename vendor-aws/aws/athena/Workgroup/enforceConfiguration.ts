@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Workgroups enforce their configuration to their clients.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
 export const enforceConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({

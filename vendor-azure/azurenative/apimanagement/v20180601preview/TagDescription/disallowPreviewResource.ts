@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { TagDescription } from "@pulumi/azure-native/apimanagement/v20180601preview";
 
@@ -32,6 +29,8 @@ import { TagDescription } from "@pulumi/azure-native/apimanagement/v20180601prev
  * Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.TagDescription).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20180601preview.TagDescription).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TagDescription, (_, args, reportViolation) => {
-            reportViolation("Azure TagDescription shouldn't use an unstable API (apimanagement.v20180601preview.TagDescription). A compatible replacement can be found at 'apimanagement.TagDescription'.");
+            reportViolation(
+                "Azure TagDescription shouldn't use an unstable API (apimanagement.v20180601preview.TagDescription). A compatible replacement can be found at 'apimanagement.TagDescription'."
+            );
         }),
     },
     vendors: ["azure"],

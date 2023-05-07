@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Workgroups use a customer-managed-key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -37,14 +36,20 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         description: "Checks that Athena Workgroups use a customer-managed-key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.athena.WorkGroup, (workgroup, args, reportViolation) => {
-            if (workgroup.workGroupConfiguration && workgroup.workGroupConfiguration.resultConfiguration &&
+            if (
+                workgroup.workGroupConfiguration &&
+                workgroup.workGroupConfiguration.resultConfiguration &&
                 workgroup.workGroupConfiguration.resultConfiguration.encryptionConfiguration &&
-                workgroup.workGroupConfiguration.resultConfiguration.encryptionConfiguration.encryptionOption !== "SSE_KMS") {
+                workgroup.workGroupConfiguration.resultConfiguration.encryptionConfiguration.encryptionOption !== "SSE_KMS"
+            ) {
                 reportViolation("Athena Workgroups Configurations should be encrypted using a customer-managed key.");
             }
-            if (workgroup.workGroupConfigurationUpdates && workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates &&
+            if (
+                workgroup.workGroupConfigurationUpdates &&
+                workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates &&
                 workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration &&
-                workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration.encryptionOption !== "SSE_KMS") {
+                workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration.encryptionOption !== "SSE_KMS"
+            ) {
                 reportViolation("Athena Workgroups Configuration Updates should be encrypted using a customer-managed key.");
             }
         }),

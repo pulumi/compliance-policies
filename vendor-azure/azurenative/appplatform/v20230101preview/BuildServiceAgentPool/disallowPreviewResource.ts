@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BuildServiceAgentPool } from "@pulumi/azure-native/appplatform/v20230101preview";
 
@@ -32,6 +29,8 @@ import { BuildServiceAgentPool } from "@pulumi/azure-native/appplatform/v2023010
  * Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20230101preview.BuildServiceAgentPool).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20230101preview.BuildServiceAgentPool).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BuildServiceAgentPool, (_, args, reportViolation) => {
-            reportViolation("Azure BuildServiceAgentPool shouldn't use an unstable API (appplatform.v20230101preview.BuildServiceAgentPool). A compatible replacement can be found at 'appplatform.BuildServiceAgentPool'.");
+            reportViolation(
+                "Azure BuildServiceAgentPool shouldn't use an unstable API (appplatform.v20230101preview.BuildServiceAgentPool). A compatible replacement can be found at 'appplatform.BuildServiceAgentPool'."
+            );
         }),
     },
     vendors: ["azure"],

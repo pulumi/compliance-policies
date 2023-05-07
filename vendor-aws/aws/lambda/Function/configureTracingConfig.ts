@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Lambda functions have tracing configured.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics logging, performance
  * @link https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html
  */
 export const configureTracingConfig: ResourceValidationPolicy = policyManager.registerPolicy({

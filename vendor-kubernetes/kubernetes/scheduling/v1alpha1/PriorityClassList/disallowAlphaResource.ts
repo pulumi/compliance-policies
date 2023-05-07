@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PriorityClassList } from "@pulumi/kubernetes/scheduling/v1alpha1";
 
@@ -32,6 +29,8 @@ import { PriorityClassList } from "@pulumi/kubernetes/scheduling/v1alpha1";
  * Disallow the use of non-stable (Alpha) Kubernetes resouces (scheduling.v1alpha1.PriorityClassList).
  *
  * @severity medium
+ * @frameworks none
+ * @topics alpha, api, unstable
  * @link https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups-and-versioning
  */
 export const disallowAlphaResource: ResourceValidationPolicy = policyManager.registerPolicy({

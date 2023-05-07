@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that AppFlow Flow uses a customer-managed KMS key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html#encryption-transit
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({

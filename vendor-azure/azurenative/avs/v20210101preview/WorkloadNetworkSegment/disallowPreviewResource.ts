@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { WorkloadNetworkSegment } from "@pulumi/azure-native/avs/v20210101preview";
 
@@ -32,6 +29,8 @@ import { WorkloadNetworkSegment } from "@pulumi/azure-native/avs/v20210101previe
  * Disallow the use of non-stable (Preview) Azure resouces (avs.v20210101preview.WorkloadNetworkSegment).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (avs.v20210101preview.WorkloadNetworkSegment).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkloadNetworkSegment, (_, args, reportViolation) => {
-            reportViolation("Azure WorkloadNetworkSegment shouldn't use an unstable API (avs.v20210101preview.WorkloadNetworkSegment). A compatible replacement can be found at 'avs.WorkloadNetworkSegment'.");
+            reportViolation(
+                "Azure WorkloadNetworkSegment shouldn't use an unstable API (avs.v20210101preview.WorkloadNetworkSegment). A compatible replacement can be found at 'avs.WorkloadNetworkSegment'."
+            );
         }),
     },
     vendors: ["azure"],

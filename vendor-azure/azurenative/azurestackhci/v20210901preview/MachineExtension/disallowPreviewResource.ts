@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { MachineExtension } from "@pulumi/azure-native/azurestackhci/v20210901preview";
 
@@ -32,6 +29,8 @@ import { MachineExtension } from "@pulumi/azure-native/azurestackhci/v20210901pr
  * Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20210901preview.MachineExtension).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { IdentityProvider } from "@pulumi/azure-native/apimanagement/v20210401preview";
 
@@ -32,6 +29,8 @@ import { IdentityProvider } from "@pulumi/azure-native/apimanagement/v20210401pr
  * Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20210401preview.IdentityProvider).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20210401preview.IdentityProvider).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IdentityProvider, (_, args, reportViolation) => {
-            reportViolation("Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20210401preview.IdentityProvider). A compatible replacement can be found at 'apimanagement.IdentityProvider'.");
+            reportViolation(
+                "Azure IdentityProvider shouldn't use an unstable API (apimanagement.v20210401preview.IdentityProvider). A compatible replacement can be found at 'apimanagement.IdentityProvider'."
+            );
         }),
     },
     vendors: ["azure"],

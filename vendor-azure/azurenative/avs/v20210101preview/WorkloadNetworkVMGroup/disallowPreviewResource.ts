@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { WorkloadNetworkVMGroup } from "@pulumi/azure-native/avs/v20210101preview";
 
@@ -32,6 +29,8 @@ import { WorkloadNetworkVMGroup } from "@pulumi/azure-native/avs/v20210101previe
  * Disallow the use of non-stable (Preview) Azure resouces (avs.v20210101preview.WorkloadNetworkVMGroup).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (avs.v20210101preview.WorkloadNetworkVMGroup).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkloadNetworkVMGroup, (_, args, reportViolation) => {
-            reportViolation("Azure WorkloadNetworkVMGroup shouldn't use an unstable API (avs.v20210101preview.WorkloadNetworkVMGroup). A compatible replacement can be found at 'avs.WorkloadNetworkVMGroup'.");
+            reportViolation(
+                "Azure WorkloadNetworkVMGroup shouldn't use an unstable API (avs.v20210101preview.WorkloadNetworkVMGroup). A compatible replacement can be found at 'avs.WorkloadNetworkVMGroup'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { VariableValue } from "@pulumi/azure-native/authorization/v20220801preview";
 
@@ -32,6 +29,8 @@ import { VariableValue } from "@pulumi/azure-native/authorization/v20220801previ
  * Disallow the use of non-stable (Preview) Azure resouces (authorization.v20220801preview.VariableValue).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

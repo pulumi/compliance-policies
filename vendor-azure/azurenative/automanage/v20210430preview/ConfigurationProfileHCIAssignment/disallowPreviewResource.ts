@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ConfigurationProfileHCIAssignment } from "@pulumi/azure-native/automanage/v20210430preview";
 
@@ -32,6 +29,8 @@ import { ConfigurationProfileHCIAssignment } from "@pulumi/azure-native/automana
  * Disallow the use of non-stable (Preview) Azure resouces (automanage.v20210430preview.ConfigurationProfileHCIAssignment).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (automanage.v20210430preview.ConfigurationProfileHCIAssignment).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConfigurationProfileHCIAssignment, (_, args, reportViolation) => {
-            reportViolation("Azure ConfigurationProfileHCIAssignment shouldn't use an unstable API (automanage.v20210430preview.ConfigurationProfileHCIAssignment). A compatible replacement can be found at 'automanage.v20220504.ConfigurationProfileHCIAssignment'.");
+            reportViolation(
+                "Azure ConfigurationProfileHCIAssignment shouldn't use an unstable API (automanage.v20210430preview.ConfigurationProfileHCIAssignment). A compatible replacement can be found at 'automanage.v20220504.ConfigurationProfileHCIAssignment'."
+            );
         }),
     },
     vendors: ["azure"],

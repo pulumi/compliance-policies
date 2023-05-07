@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ScopeAccessReviewHistoryDefinitionById } from "@pulumi/azure-native/authorization/v20211201preview";
 
@@ -32,6 +29,8 @@ import { ScopeAccessReviewHistoryDefinitionById } from "@pulumi/azure-native/aut
  * Disallow the use of non-stable (Preview) Azure resouces (authorization.v20211201preview.ScopeAccessReviewHistoryDefinitionById).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (authorization.v20211201preview.ScopeAccessReviewHistoryDefinitionById).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScopeAccessReviewHistoryDefinitionById, (_, args, reportViolation) => {
-            reportViolation("Azure ScopeAccessReviewHistoryDefinitionById shouldn't use an unstable API (authorization.v20211201preview.ScopeAccessReviewHistoryDefinitionById). A compatible replacement can be found at 'authorization.ScopeAccessReviewHistoryDefinitionById'.");
+            reportViolation(
+                "Azure ScopeAccessReviewHistoryDefinitionById shouldn't use an unstable API (authorization.v20211201preview.ScopeAccessReviewHistoryDefinitionById). A compatible replacement can be found at 'authorization.ScopeAccessReviewHistoryDefinitionById'."
+            );
         }),
     },
     vendors: ["azure"],

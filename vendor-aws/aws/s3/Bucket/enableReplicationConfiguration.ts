@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that S3 Bucket have cross-region replication enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
 export const enableReplicationConfiguration: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -37,10 +36,7 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyMa
         description: "Checks that S3 Bucket have cross-region replication enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
-            if (
-                !bucket.replicationConfiguration ||
-                !bucket.replicationConfiguration.rules ||
-                bucket.replicationConfiguration.rules.length < 1) {
+            if (!bucket.replicationConfiguration || !bucket.replicationConfiguration.rules || bucket.replicationConfiguration.rules.length < 1) {
                 reportViolation("S3 buckets should have cross-region replication enabled.");
             }
         }),

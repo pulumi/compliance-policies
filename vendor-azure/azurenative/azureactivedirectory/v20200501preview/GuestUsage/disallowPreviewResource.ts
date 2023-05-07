@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { GuestUsage } from "@pulumi/azure-native/azureactivedirectory/v20200501preview";
 
@@ -32,6 +29,8 @@ import { GuestUsage } from "@pulumi/azure-native/azureactivedirectory/v20200501p
  * Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20200501preview.GuestUsage).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20200501preview.GuestUsage).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GuestUsage, (_, args, reportViolation) => {
-            reportViolation("Azure GuestUsage shouldn't use an unstable API (azureactivedirectory.v20200501preview.GuestUsage). A compatible replacement can be found at 'azureactivedirectory.GuestUsage'.");
+            reportViolation(
+                "Azure GuestUsage shouldn't use an unstable API (azureactivedirectory.v20200501preview.GuestUsage). A compatible replacement can be found at 'azureactivedirectory.GuestUsage'."
+            );
         }),
     },
     vendors: ["azure"],

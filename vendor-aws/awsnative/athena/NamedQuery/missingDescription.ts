@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena NamedQueries have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/athena/latest/ug/saved-queries.html
  */
 export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CommunicationService } from "@pulumi/azure-native/communication/v20211001preview";
 
@@ -32,6 +29,8 @@ import { CommunicationService } from "@pulumi/azure-native/communication/v202110
  * Disallow the use of non-stable (Preview) Azure resouces (communication.v20211001preview.CommunicationService).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (communication.v20211001preview.CommunicationService).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CommunicationService, (_, args, reportViolation) => {
-            reportViolation("Azure CommunicationService shouldn't use an unstable API (communication.v20211001preview.CommunicationService). A compatible replacement can be found at 'communication.CommunicationService'.");
+            reportViolation(
+                "Azure CommunicationService shouldn't use an unstable API (communication.v20211001preview.CommunicationService). A compatible replacement can be found at 'communication.CommunicationService'."
+            );
         }),
     },
     vendors: ["azure"],

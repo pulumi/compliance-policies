@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { MonitoringSetting } from "@pulumi/azure-native/appplatform/v20220301preview";
 
@@ -32,6 +29,8 @@ import { MonitoringSetting } from "@pulumi/azure-native/appplatform/v20220301pre
  * Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220301preview.MonitoringSetting).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220301preview.MonitoringSetting).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MonitoringSetting, (_, args, reportViolation) => {
-            reportViolation("Azure MonitoringSetting shouldn't use an unstable API (appplatform.v20220301preview.MonitoringSetting). A compatible replacement can be found at 'appplatform.MonitoringSetting'.");
+            reportViolation(
+                "Azure MonitoringSetting shouldn't use an unstable API (appplatform.v20220301preview.MonitoringSetting). A compatible replacement can be found at 'appplatform.MonitoringSetting'."
+            );
         }),
     },
     vendors: ["azure"],

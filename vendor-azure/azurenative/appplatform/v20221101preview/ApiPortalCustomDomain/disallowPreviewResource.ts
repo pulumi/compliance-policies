@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ApiPortalCustomDomain } from "@pulumi/azure-native/appplatform/v20221101preview";
 
@@ -32,6 +29,8 @@ import { ApiPortalCustomDomain } from "@pulumi/azure-native/appplatform/v2022110
  * Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20221101preview.ApiPortalCustomDomain).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20221101preview.ApiPortalCustomDomain).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApiPortalCustomDomain, (_, args, reportViolation) => {
-            reportViolation("Azure ApiPortalCustomDomain shouldn't use an unstable API (appplatform.v20221101preview.ApiPortalCustomDomain). A compatible replacement can be found at 'appplatform.ApiPortalCustomDomain'.");
+            reportViolation(
+                "Azure ApiPortalCustomDomain shouldn't use an unstable API (appplatform.v20221101preview.ApiPortalCustomDomain). A compatible replacement can be found at 'appplatform.ApiPortalCustomDomain'."
+            );
         }),
     },
     vendors: ["azure"],

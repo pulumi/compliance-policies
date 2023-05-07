@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ApiVersionSet } from "@pulumi/azure-native/apimanagement/v20211201preview";
 
@@ -32,6 +29,8 @@ import { ApiVersionSet } from "@pulumi/azure-native/apimanagement/v20211201previ
  * Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20211201preview.ApiVersionSet).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20211201preview.ApiVersionSet).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApiVersionSet, (_, args, reportViolation) => {
-            reportViolation("Azure ApiVersionSet shouldn't use an unstable API (apimanagement.v20211201preview.ApiVersionSet). A compatible replacement can be found at 'apimanagement.ApiVersionSet'.");
+            reportViolation(
+                "Azure ApiVersionSet shouldn't use an unstable API (apimanagement.v20211201preview.ApiVersionSet). A compatible replacement can be found at 'apimanagement.ApiVersionSet'."
+            );
         }),
     },
     vendors: ["azure"],

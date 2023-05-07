@@ -19,19 +19,16 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
-
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EKS Cluster Encryption Config is enabled.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, kubernetes
  * @link https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/
- * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws_native-properties-eks-cluster-encryptionconfig.html
  */
 export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {

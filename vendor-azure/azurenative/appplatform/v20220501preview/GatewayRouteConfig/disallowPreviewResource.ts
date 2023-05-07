@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { GatewayRouteConfig } from "@pulumi/azure-native/appplatform/v20220501preview";
 
@@ -32,6 +29,8 @@ import { GatewayRouteConfig } from "@pulumi/azure-native/appplatform/v20220501pr
  * Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220501preview.GatewayRouteConfig).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20220501preview.GatewayRouteConfig).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GatewayRouteConfig, (_, args, reportViolation) => {
-            reportViolation("Azure GatewayRouteConfig shouldn't use an unstable API (appplatform.v20220501preview.GatewayRouteConfig). A compatible replacement can be found at 'appplatform.GatewayRouteConfig'.");
+            reportViolation(
+                "Azure GatewayRouteConfig shouldn't use an unstable API (appplatform.v20220501preview.GatewayRouteConfig). A compatible replacement can be found at 'appplatform.GatewayRouteConfig'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { NotificationRecipientUser } from "@pulumi/azure-native/apimanagement/v20210101preview";
 
@@ -32,6 +29,8 @@ import { NotificationRecipientUser } from "@pulumi/azure-native/apimanagement/v2
  * Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20210101preview.NotificationRecipientUser).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20210101preview.NotificationRecipientUser).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NotificationRecipientUser, (_, args, reportViolation) => {
-            reportViolation("Azure NotificationRecipientUser shouldn't use an unstable API (apimanagement.v20210101preview.NotificationRecipientUser). A compatible replacement can be found at 'apimanagement.NotificationRecipientUser'.");
+            reportViolation(
+                "Azure NotificationRecipientUser shouldn't use an unstable API (apimanagement.v20210101preview.NotificationRecipientUser). A compatible replacement can be found at 'apimanagement.NotificationRecipientUser'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ResourcePool } from "@pulumi/azure-native/connectedvmwarevsphere/v20220110preview";
 
@@ -32,6 +29,8 @@ import { ResourcePool } from "@pulumi/azure-native/connectedvmwarevsphere/v20220
  * Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220110preview.ResourcePool).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220110preview.ResourcePool).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourcePool, (_, args, reportViolation) => {
-            reportViolation("Azure ResourcePool shouldn't use an unstable API (connectedvmwarevsphere.v20220110preview.ResourcePool). A compatible replacement can be found at 'connectedvmwarevsphere.ResourcePool'.");
+            reportViolation(
+                "Azure ResourcePool shouldn't use an unstable API (connectedvmwarevsphere.v20220110preview.ResourcePool). A compatible replacement can be found at 'connectedvmwarevsphere.ResourcePool'."
+            );
         }),
     },
     vendors: ["azure"],

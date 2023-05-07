@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EC2 Security Groups do not allow ingress traffic from the Internet.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
 export const disallowPublicInternetIngress: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -38,10 +37,10 @@ export const disallowPublicInternetIngress: ResourceValidationPolicy = policyMan
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, _, reportViolation) => {
             if (securityGroup.ingress) {
-                if (securityGroup.ingress.some(ingressRule => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
+                if (securityGroup.ingress.some((ingressRule) => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
                     reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");
                 }
-                if (securityGroup.ingress.some(ingressRule => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
+                if (securityGroup.ingress.some((ingressRule) => ingressRule.ipv6CidrBlocks?.includes("::/0"))) {
                     reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (::/0).");
                 }
             }

@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that RDS Cluster doesn't use single availability zone.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({

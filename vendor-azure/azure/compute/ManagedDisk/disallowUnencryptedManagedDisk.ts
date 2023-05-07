@@ -18,17 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ManagedDisk } from "@pulumi/azure/compute";
 
 /**
  * Checks that Disks are encrypted.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
  */
 export const disallowUnencryptedManagedDisk: ResourceValidationPolicy = policyManager.registerPolicy({

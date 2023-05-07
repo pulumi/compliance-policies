@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { AttestationProvider } from "@pulumi/azure-native/attestation/v20180901preview";
 
@@ -32,6 +29,8 @@ import { AttestationProvider } from "@pulumi/azure-native/attestation/v20180901p
  * Disallow the use of non-stable (Preview) Azure resouces (attestation.v20180901preview.AttestationProvider).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (attestation.v20180901preview.AttestationProvider).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AttestationProvider, (_, args, reportViolation) => {
-            reportViolation("Azure AttestationProvider shouldn't use an unstable API (attestation.v20180901preview.AttestationProvider). A compatible replacement can be found at 'attestation.AttestationProvider'.");
+            reportViolation(
+                "Azure AttestationProvider shouldn't use an unstable API (attestation.v20180901preview.AttestationProvider). A compatible replacement can be found at 'attestation.AttestationProvider'."
+            );
         }),
     },
     vendors: ["azure"],

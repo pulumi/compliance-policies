@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ALB Load Balancers uses secure/modern TLS encryption.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
  */
 export const configureSecureTls: ResourceValidationPolicy = policyManager.registerPolicy({

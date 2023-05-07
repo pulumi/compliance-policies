@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import { Deployment } from "@pulumi/kubernetes/apps/v1";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Deployments have at least three replicas.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
 export const configureMinimumReplicaCount: ResourceValidationPolicy = policyManager.registerPolicy({

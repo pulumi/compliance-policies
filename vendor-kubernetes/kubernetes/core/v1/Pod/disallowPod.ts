@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import { Pod } from "@pulumi/kubernetes/core/v1";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes Pods are not used directly.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics availability
  * @link https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
  */
 export const disallowPod: ResourceValidationPolicy = policyManager.registerPolicy({

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ConnectedEnvironmentsCertificate } from "@pulumi/azure-native/app/v20220601preview";
 
@@ -32,6 +29,8 @@ import { ConnectedEnvironmentsCertificate } from "@pulumi/azure-native/app/v2022
  * Disallow the use of non-stable (Preview) Azure resouces (app.v20220601preview.ConnectedEnvironmentsCertificate).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20220601preview.ConnectedEnvironmentsCertificate).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectedEnvironmentsCertificate, (_, args, reportViolation) => {
-            reportViolation("Azure ConnectedEnvironmentsCertificate shouldn't use an unstable API (app.v20220601preview.ConnectedEnvironmentsCertificate). A compatible replacement can be found at 'app.v20221001.ConnectedEnvironmentsCertificate'.");
+            reportViolation(
+                "Azure ConnectedEnvironmentsCertificate shouldn't use an unstable API (app.v20220601preview.ConnectedEnvironmentsCertificate). A compatible replacement can be found at 'app.v20221001.ConnectedEnvironmentsCertificate'."
+            );
         }),
     },
     vendors: ["azure"],

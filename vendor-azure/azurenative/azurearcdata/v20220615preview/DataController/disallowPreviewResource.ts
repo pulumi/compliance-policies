@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { DataController } from "@pulumi/azure-native/azurearcdata/v20220615preview";
 
@@ -32,6 +29,8 @@ import { DataController } from "@pulumi/azure-native/azurearcdata/v20220615previ
  * Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220615preview.DataController).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20220615preview.DataController).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataController, (_, args, reportViolation) => {
-            reportViolation("Azure DataController shouldn't use an unstable API (azurearcdata.v20220615preview.DataController). A compatible replacement can be found at 'azurearcdata.DataController'.");
+            reportViolation(
+                "Azure DataController shouldn't use an unstable API (azurearcdata.v20220615preview.DataController). A compatible replacement can be found at 'azurearcdata.DataController'."
+            );
         }),
     },
     vendors: ["azure"],

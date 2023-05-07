@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that encrypted EBS volume uses a customer-managed KMS key.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
 export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
             if (lt.blockDeviceMappings) {
                 lt.blockDeviceMappings.forEach((blockDevice) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257
-                    if (blockDevice.ebs && (valToBoolean(blockDevice.ebs.encrypted) && !blockDevice.ebs.kmsKeyId)) {
+                    if (blockDevice.ebs && valToBoolean(blockDevice.ebs.encrypted) && !blockDevice.ebs.kmsKeyId) {
                         reportViolation("EC2 Launch Templates should not have encrypted block device using a customer-managed KMS key.");
                     }
                 });

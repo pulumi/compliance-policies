@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Databases have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/athena/latest/ug/creating-databases.html
  */
 export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({

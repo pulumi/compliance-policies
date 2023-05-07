@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { Host } from "@pulumi/azure-native/connectedvmwarevsphere/v20220715preview";
 
@@ -32,6 +29,8 @@ import { Host } from "@pulumi/azure-native/connectedvmwarevsphere/v20220715previ
  * Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220715preview.Host).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

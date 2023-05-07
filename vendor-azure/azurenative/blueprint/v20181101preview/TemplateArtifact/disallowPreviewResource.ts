@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { TemplateArtifact } from "@pulumi/azure-native/blueprint/v20181101preview";
 
@@ -32,6 +29,8 @@ import { TemplateArtifact } from "@pulumi/azure-native/blueprint/v20181101previe
  * Disallow the use of non-stable (Preview) Azure resouces (blueprint.v20181101preview.TemplateArtifact).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (blueprint.v20181101preview.TemplateArtifact).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TemplateArtifact, (_, args, reportViolation) => {
-            reportViolation("Azure TemplateArtifact shouldn't use an unstable API (blueprint.v20181101preview.TemplateArtifact). A compatible replacement can be found at 'blueprint.TemplateArtifact'.");
+            reportViolation(
+                "Azure TemplateArtifact shouldn't use an unstable API (blueprint.v20181101preview.TemplateArtifact). A compatible replacement can be found at 'blueprint.TemplateArtifact'."
+            );
         }),
     },
     vendors: ["azure"],

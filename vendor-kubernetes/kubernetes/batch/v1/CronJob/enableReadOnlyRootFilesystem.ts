@@ -19,20 +19,15 @@
 // SOFTWARE.
 
 import { CronJob } from "@pulumi/kubernetes/batch/v1";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes CronJobs run pods with a read-only filesystem.
  *
- * An immutable root filesystem prevents applications from writing to their local disk. This is
- * desirable in the event of an intrusion as the attacker will not be able to tamper with the
- * filesystem or write foreign executables to disk.
- *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics runtime, security
  * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
  */
 export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -42,7 +37,7 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CronJob, (cronJob, args, reportViolation) => {
             if (cronJob.spec && cronJob.spec.jobTemplate.spec && cronJob.spec.jobTemplate.spec.template.spec && cronJob.spec.jobTemplate.spec.template.spec.containers.length > 0) {
-                cronJob.spec.jobTemplate.spec.template.spec.containers.forEach(container => {
+                cronJob.spec.jobTemplate.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {
                         reportViolation("Kubernetes CronJobs should run their pods using a read-only filesystem.");
                     }

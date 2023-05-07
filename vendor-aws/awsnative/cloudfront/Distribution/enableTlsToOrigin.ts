@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics encryption, network
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
 export const enableTlsToOrigin: ResourceValidationPolicy = policyManager.registerPolicy({

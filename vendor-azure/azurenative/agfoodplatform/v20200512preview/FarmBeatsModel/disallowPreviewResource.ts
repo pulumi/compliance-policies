@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { FarmBeatsModel } from "@pulumi/azure-native/agfoodplatform/v20200512preview";
 
@@ -32,6 +29,8 @@ import { FarmBeatsModel } from "@pulumi/azure-native/agfoodplatform/v20200512pre
  * Disallow the use of non-stable (Preview) Azure resouces (agfoodplatform.v20200512preview.FarmBeatsModel).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (agfoodplatform.v20200512preview.FarmBeatsModel).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FarmBeatsModel, (_, args, reportViolation) => {
-            reportViolation("Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20200512preview.FarmBeatsModel). A compatible replacement can be found at 'agfoodplatform.FarmBeatsModel'.");
+            reportViolation(
+                "Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20200512preview.FarmBeatsModel). A compatible replacement can be found at 'agfoodplatform.FarmBeatsModel'."
+            );
         }),
     },
     vendors: ["azure"],

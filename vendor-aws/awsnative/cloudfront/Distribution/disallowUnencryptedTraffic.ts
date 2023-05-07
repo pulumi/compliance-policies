@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that CloudFront distributions only allow encypted ingress traffic.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -41,7 +40,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }
             if (distribution.distributionConfig.cacheBehaviors) {
-                if (distribution.distributionConfig.cacheBehaviors.some(cacheBehaviors => cacheBehaviors.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
+                if (distribution.distributionConfig.cacheBehaviors.some((cacheBehaviors) => cacheBehaviors.viewerProtocolPolicy.toLowerCase() === "allow-all")) {
                     reportViolation("CloudFront distributions should not allow unencrypted traffic.");
                 }
             }

@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that any CloudFront distribution has a WAF ACL associated.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
 export const configureWaf: ResourceValidationPolicy = policyManager.registerPolicy({

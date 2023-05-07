@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301preview";
 
@@ -32,6 +29,8 @@ import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301prev
  * Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200301preview.PrivateLinkForAzureAd).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200301preview.PrivateLinkForAzureAd).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkForAzureAd, (_, args, reportViolation) => {
-            reportViolation("Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd). A compatible replacement can be found at 'aadiam.PrivateLinkForAzureAd'.");
+            reportViolation(
+                "Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd). A compatible replacement can be found at 'aadiam.PrivateLinkForAzureAd'."
+            );
         }),
     },
     vendors: ["azure"],

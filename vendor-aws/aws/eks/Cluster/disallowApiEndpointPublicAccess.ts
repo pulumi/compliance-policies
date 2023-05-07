@@ -19,17 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
-
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EKS Clusters API Endpoint are not publicly accessible.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
 export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({

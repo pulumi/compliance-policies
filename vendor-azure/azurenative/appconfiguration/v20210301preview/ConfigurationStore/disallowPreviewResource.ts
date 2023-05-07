@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ConfigurationStore } from "@pulumi/azure-native/appconfiguration/v20210301preview";
 
@@ -32,6 +29,8 @@ import { ConfigurationStore } from "@pulumi/azure-native/appconfiguration/v20210
  * Disallow the use of non-stable (Preview) Azure resouces (appconfiguration.v20210301preview.ConfigurationStore).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (appconfiguration.v20210301preview.ConfigurationStore).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConfigurationStore, (_, args, reportViolation) => {
-            reportViolation("Azure ConfigurationStore shouldn't use an unstable API (appconfiguration.v20210301preview.ConfigurationStore). A compatible replacement can be found at 'appconfiguration.ConfigurationStore'.");
+            reportViolation(
+                "Azure ConfigurationStore shouldn't use an unstable API (appconfiguration.v20210301preview.ConfigurationStore). A compatible replacement can be found at 'appconfiguration.ConfigurationStore'."
+            );
         }),
     },
     vendors: ["azure"],

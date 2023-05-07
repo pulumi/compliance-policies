@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, network
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
 export const configureDomainNameSecurityPolicy: ResourceValidationPolicy = policyManager.registerPolicy({

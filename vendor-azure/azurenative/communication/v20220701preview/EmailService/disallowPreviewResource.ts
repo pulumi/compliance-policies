@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { EmailService } from "@pulumi/azure-native/communication/v20220701preview";
 
@@ -32,6 +29,8 @@ import { EmailService } from "@pulumi/azure-native/communication/v20220701previe
  * Disallow the use of non-stable (Preview) Azure resouces (communication.v20220701preview.EmailService).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

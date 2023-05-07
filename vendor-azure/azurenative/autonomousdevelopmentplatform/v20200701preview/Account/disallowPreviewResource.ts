@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { Account } from "@pulumi/azure-native/autonomousdevelopmentplatform/v20200701preview";
 
@@ -32,6 +29,8 @@ import { Account } from "@pulumi/azure-native/autonomousdevelopmentplatform/v202
  * Disallow the use of non-stable (Preview) Azure resouces (autonomousdevelopmentplatform.v20200701preview.Account).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (autonomousdevelopmentplatform.v20200701preview.Account).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Account, (_, args, reportViolation) => {
-            reportViolation("Azure Account shouldn't use an unstable API (autonomousdevelopmentplatform.v20200701preview.Account). A compatible replacement can be found at 'autonomousdevelopmentplatform.Account'.");
+            reportViolation(
+                "Azure Account shouldn't use an unstable API (autonomousdevelopmentplatform.v20200701preview.Account). A compatible replacement can be found at 'autonomousdevelopmentplatform.Account'."
+            );
         }),
     },
     vendors: ["azure"],

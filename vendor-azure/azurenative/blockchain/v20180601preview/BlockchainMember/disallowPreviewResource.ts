@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BlockchainMember } from "@pulumi/azure-native/blockchain/v20180601preview";
 
@@ -32,6 +29,8 @@ import { BlockchainMember } from "@pulumi/azure-native/blockchain/v20180601previ
  * Disallow the use of non-stable (Preview) Azure resouces (blockchain.v20180601preview.BlockchainMember).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (blockchain.v20180601preview.BlockchainMember).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BlockchainMember, (_, args, reportViolation) => {
-            reportViolation("Azure BlockchainMember shouldn't use an unstable API (blockchain.v20180601preview.BlockchainMember). A compatible replacement can be found at 'blockchain.BlockchainMember'.");
+            reportViolation(
+                "Azure BlockchainMember shouldn't use an unstable API (blockchain.v20180601preview.BlockchainMember). A compatible replacement can be found at 'blockchain.BlockchainMember'."
+            );
         }),
     },
     vendors: ["azure"],

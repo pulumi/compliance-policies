@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { VirtualnetworkRetrieve } from "@pulumi/azure-native/azurestackhci/v20210701preview";
 
@@ -32,6 +29,8 @@ import { VirtualnetworkRetrieve } from "@pulumi/azure-native/azurestackhci/v2021
  * Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20210701preview.VirtualnetworkRetrieve).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({

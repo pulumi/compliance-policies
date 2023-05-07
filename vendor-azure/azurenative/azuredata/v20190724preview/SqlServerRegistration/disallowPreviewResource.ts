@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { SqlServerRegistration } from "@pulumi/azure-native/azuredata/v20190724preview";
 
@@ -32,6 +29,8 @@ import { SqlServerRegistration } from "@pulumi/azure-native/azuredata/v20190724p
  * Disallow the use of non-stable (Preview) Azure resouces (azuredata.v20190724preview.SqlServerRegistration).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (azuredata.v20190724preview.SqlServerRegistration).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlServerRegistration, (_, args, reportViolation) => {
-            reportViolation("Azure SqlServerRegistration shouldn't use an unstable API (azuredata.v20190724preview.SqlServerRegistration). A compatible replacement can be found at 'azuredata.SqlServerRegistration'.");
+            reportViolation(
+                "Azure SqlServerRegistration shouldn't use an unstable API (azuredata.v20190724preview.SqlServerRegistration). A compatible replacement can be found at 'azuredata.SqlServerRegistration'."
+            );
         }),
     },
     vendors: ["azure"],

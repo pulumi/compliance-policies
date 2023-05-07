@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Workgroups are encrypted.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
 export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -37,14 +36,14 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyMana
         description: "Checks that Athena Workgroups are encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.athena.WorkGroup, (workgroup, args, reportViolation) => {
-            if (!workgroup.workGroupConfiguration ||
-                !workgroup.workGroupConfiguration.resultConfiguration ||
-                !workgroup.workGroupConfiguration.resultConfiguration.encryptionConfiguration) {
+            if (!workgroup.workGroupConfiguration || !workgroup.workGroupConfiguration.resultConfiguration || !workgroup.workGroupConfiguration.resultConfiguration.encryptionConfiguration) {
                 reportViolation("Athena Workgroup Configurations should be encrypted.");
             }
-            if (!workgroup.workGroupConfigurationUpdates ||
+            if (
+                !workgroup.workGroupConfigurationUpdates ||
                 !workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates ||
-                !workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration) {
+                !workgroup.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration
+            ) {
                 reportViolation("Athena Workgroup Configuration Updates should be encrypted.");
             }
         }),

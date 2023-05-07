@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that EFS File system doesn't use single availability zone.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics availability, storage
  * @link https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
  */
 export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({

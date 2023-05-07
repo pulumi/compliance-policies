@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { EmailTemplate } from "@pulumi/azure-native/apimanagement/v20191201preview";
 
@@ -32,6 +29,8 @@ import { EmailTemplate } from "@pulumi/azure-native/apimanagement/v20191201previ
  * Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20191201preview.EmailTemplate).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20191201preview.EmailTemplate).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EmailTemplate, (_, args, reportViolation) => {
-            reportViolation("Azure EmailTemplate shouldn't use an unstable API (apimanagement.v20191201preview.EmailTemplate). A compatible replacement can be found at 'apimanagement.EmailTemplate'.");
+            reportViolation(
+                "Azure EmailTemplate shouldn't use an unstable API (apimanagement.v20191201preview.EmailTemplate). A compatible replacement can be found at 'apimanagement.EmailTemplate'."
+            );
         }),
     },
     vendors: ["azure"],

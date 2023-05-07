@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Athena Workgroups are encrypted.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
 export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -37,9 +36,7 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyMana
         description: "Checks that Athena Workgroups are encrypted.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(aws.athena.Workgroup, (workgroup, args, reportViolation) => {
-            if (!workgroup.configuration ||
-                !workgroup.configuration.resultConfiguration ||
-                !workgroup.configuration.resultConfiguration.encryptionConfiguration) {
+            if (!workgroup.configuration || !workgroup.configuration.resultConfiguration || !workgroup.configuration.resultConfiguration.encryptionConfiguration) {
                 reportViolation("Athena Workgroups should be encrypted.");
             }
         }),

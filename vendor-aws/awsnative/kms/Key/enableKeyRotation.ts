@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as awsnative from "@pulumi/aws-native";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that KMS Keys have key rotation enabled.
  *
- * @severity Medium
+ * @severity medium
+ * @frameworks none
+ * @topics encryption
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
  */
 export const enableKeyRotation: ResourceValidationPolicy = policyManager.registerPolicy({

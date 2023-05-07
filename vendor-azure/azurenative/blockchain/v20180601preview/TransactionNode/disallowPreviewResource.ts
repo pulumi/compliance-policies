@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { TransactionNode } from "@pulumi/azure-native/blockchain/v20180601preview";
 
@@ -32,6 +29,8 @@ import { TransactionNode } from "@pulumi/azure-native/blockchain/v20180601previe
  * Disallow the use of non-stable (Preview) Azure resouces (blockchain.v20180601preview.TransactionNode).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (blockchain.v20180601preview.TransactionNode).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TransactionNode, (_, args, reportViolation) => {
-            reportViolation("Azure TransactionNode shouldn't use an unstable API (blockchain.v20180601preview.TransactionNode). A compatible replacement can be found at 'blockchain.TransactionNode'.");
+            reportViolation(
+                "Azure TransactionNode shouldn't use an unstable API (blockchain.v20180601preview.TransactionNode). A compatible replacement can be found at 'blockchain.TransactionNode'."
+            );
         }),
     },
     vendors: ["azure"],

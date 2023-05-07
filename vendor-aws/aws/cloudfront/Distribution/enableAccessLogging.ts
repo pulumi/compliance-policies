@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that any CloudFront distributions have access logging enabled.
  *
- * @severity Medium
+ * @severity medium
+ * @frameworks none
+ * @topics logging, network
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
 export const enableAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({

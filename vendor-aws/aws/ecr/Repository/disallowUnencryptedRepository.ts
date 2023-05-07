@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that ECR Repositories are encrypted.
  *
- * @severity High
+ * @severity high
+ * @frameworks none
+ * @topics container, encryption, storage
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
 export const disallowUnencryptedRepository: ResourceValidationPolicy = policyManager.registerPolicy({

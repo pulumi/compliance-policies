@@ -19,16 +19,15 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
- * @severity Critical
+ * @severity critical
+ * @frameworks none
+ * @topics network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html
  */
 export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManager.registerPolicy({

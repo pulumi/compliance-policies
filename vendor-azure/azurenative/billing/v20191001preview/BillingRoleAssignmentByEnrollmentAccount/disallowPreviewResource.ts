@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BillingRoleAssignmentByEnrollmentAccount } from "@pulumi/azure-native/billing/v20191001preview";
 
@@ -32,6 +29,8 @@ import { BillingRoleAssignmentByEnrollmentAccount } from "@pulumi/azure-native/b
  * Disallow the use of non-stable (Preview) Azure resouces (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const disallowPreviewResource: ResourceValidationPolicy = policyManager.registerPolicy({
@@ -40,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BillingRoleAssignmentByEnrollmentAccount, (_, args, reportViolation) => {
-            reportViolation("Azure BillingRoleAssignmentByEnrollmentAccount shouldn't use an unstable API (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount). A compatible replacement can be found at 'billing.BillingRoleAssignmentByEnrollmentAccount'.");
+            reportViolation(
+                "Azure BillingRoleAssignmentByEnrollmentAccount shouldn't use an unstable API (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount). A compatible replacement can be found at 'billing.BillingRoleAssignmentByEnrollmentAccount'."
+            );
         }),
     },
     vendors: ["azure"],

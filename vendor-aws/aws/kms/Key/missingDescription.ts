@@ -19,18 +19,16 @@
 // SOFTWARE.
 
 import * as aws from "@pulumi/aws";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that KMS Keys have a description.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics documentation
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html
- * https://docs.aws.amazon.com/kms/latest/APIReference/API_DescribeKey.html
  */
 export const missingDescription: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
@@ -41,7 +39,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
             if (!key.description) {
                 reportViolation("KMS Keys should have a description.");
             } else {
-                if (key.description.length < 6 ) {
+                if (key.description.length < 6) {
                     reportViolation("KMS Keys should have a meaningful description.");
                 }
             }

@@ -19,18 +19,16 @@
 // SOFTWARE.
 
 import { DaemonSet } from "@pulumi/kubernetes/apps/v1";
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
  * Checks that Kubernetes DaemonSets have the recommended labels.
  *
- * @severity Low
+ * @severity low
+ * @frameworks none
+ * @topics usability
  * @link https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
- * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
  */
 export const configureRecommendedLabels: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
@@ -50,7 +48,6 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
                         "app.kubernetes.io/part-of",
                         "app.kubernetes.io/managed-by",
                     ];
-
                     if (recommendedLabels.indexOf(key) === -1) {
                         reportViolation("Kubernetes DaemonSets should have the recommended labels.");
                     }

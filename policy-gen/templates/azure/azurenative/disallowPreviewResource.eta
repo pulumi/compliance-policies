@@ -5,6 +5,8 @@ import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
  * Disallow the use of non-stable (Preview) Azure resouces (<%~ it.resourceType %>).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, preview, unstable
  * @link https://learn.microsoft.com/en-us/rest/api/azure/
  */
 export const <%~ it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({

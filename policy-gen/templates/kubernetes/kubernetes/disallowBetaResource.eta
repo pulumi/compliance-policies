@@ -5,6 +5,8 @@ import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
  * Disallow the use of non-stable (Beta) Kubernetes resouces (<%~ it.resourceType %>).
  *
  * @severity medium
+ * @frameworks none
+ * @topics api, beta, unstable
  * @link https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups-and-versioning
  */
 export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({

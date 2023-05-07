@@ -1,7 +1,7 @@
 {
     "devDependencies": {
-        "markdownlint": "^0.27.0",
-        "markdownlint-cli2": "^0.6.0"
+        "markdownlint": "^0.28.2",
+        "markdownlint-cli2": "^0.7.1"
     },
     "files": [
         "*.md",
@@ -11,6 +11,6 @@
         "lint": "markdownlint-cli2 README.md docs/"
     },
     "dependencies": {
-        "@checkly/pulumi": "^1.1.2"
+        "@checkly/pulumi": "^1.1.4"
     }
 }

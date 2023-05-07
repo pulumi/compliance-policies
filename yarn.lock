@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@checkly/pulumi@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@checkly/pulumi/-/pulumi-1.1.2.tgz"
-  integrity sha512-t5zftLR98jo78joJAh7+njNpc8bkD7whox9wKFr4Sw9vt8vr7/S8RbI3A+vWGK++EiLY6+ZRxdD4FJX5ef80RA==
+"@checkly/pulumi@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@checkly/pulumi/-/pulumi-1.1.4.tgz#b29c0e5cbe7c4c6b71c7b255278266abea9da6eb"
+  integrity sha512-YPNYtwEnKu23VDHNFu91xd/Ueu5zYONHcYwKDA5qTvtgZZ1nzrvPJgrO15KF0fLRVlGo7yckirDS26GpvBTe6w==
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
@@ -41,7 +41,7 @@
     "@nodelib/fs.stat" "2.0.5"
     run-parallel "^1.1.9"
 
-"@nodelib/fs.stat@^2.0.2", "@nodelib/fs.stat@2.0.5":
+"@nodelib/fs.stat@2.0.5", "@nodelib/fs.stat@^2.0.2":
   version "2.0.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-2.0.5.tgz"
   integrity sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==
@@ -61,7 +61,7 @@
   dependencies:
     "@opentelemetry/api" "^1.0.0"
 
-"@opentelemetry/api@^1.0.0", "@opentelemetry/api@^1.2.0", "@opentelemetry/api@>=1.0.0 <1.5.0":
+"@opentelemetry/api@^1.0.0", "@opentelemetry/api@^1.2.0":
   version "1.4.0"
   resolved "https://registry.npmjs.org/@opentelemetry/api/-/api-1.4.0.tgz"
   integrity sha512-IgMK9i3sFGNUqPMbjABm0G26g0QCKCUBfglhQ7rQq6WcxbKfEHRcmwsoER4hZcuYqJgkYn2OeuoJIv7Jsftp7g==
@@ -121,7 +121,7 @@
   dependencies:
     "@opentelemetry/core" "1.9.1"
 
-"@opentelemetry/resources@^1.6.0", "@opentelemetry/resources@1.9.1":
+"@opentelemetry/resources@1.9.1", "@opentelemetry/resources@^1.6.0":
   version "1.9.1"
   resolved "https://registry.npmjs.org/@opentelemetry/resources/-/resources-1.9.1.tgz"
   integrity sha512-VqBGbnAfubI+l+yrtYxeLyOoL358JK57btPMJDd3TCOV3mV5TNBmzvOfmesM4NeTyXuGJByd3XvOHvFezLn3rQ==
@@ -129,7 +129,7 @@
     "@opentelemetry/core" "1.9.1"
     "@opentelemetry/semantic-conventions" "1.9.1"
 
-"@opentelemetry/sdk-trace-base@^1.6.0", "@opentelemetry/sdk-trace-base@1.9.1":
+"@opentelemetry/sdk-trace-base@1.9.1", "@opentelemetry/sdk-trace-base@^1.6.0":
   version "1.9.1"
   resolved "https://registry.npmjs.org/@opentelemetry/sdk-trace-base/-/sdk-trace-base-1.9.1.tgz"
   integrity sha512-Y9gC5M1efhDLYHeeo2MWcDDMmR40z6QpqcWnPCm4Dmh+RHAMf4dnEBBntIe1dDpor686kyU6JV1D29ih1lZpsQ==
@@ -150,15 +150,15 @@
     "@opentelemetry/sdk-trace-base" "1.9.1"
     semver "^7.3.5"
 
-"@opentelemetry/semantic-conventions@^1.6.0", "@opentelemetry/semantic-conventions@1.9.1":
-  version "1.9.1"
-  resolved "https://registry.npmjs.org/@opentelemetry/semantic-conventions/-/semantic-conventions-1.9.1.tgz"
-  integrity sha512-oPQdbFDmZvjXk5ZDoBGXG8B4tSB/qW5vQunJWQMFUBp7Xe8O1ByPANueJ+Jzg58esEBegyyxZ7LRmfJr7kFcFg==
-
 "@opentelemetry/semantic-conventions@1.6.0":
   version "1.6.0"
   resolved "https://registry.npmjs.org/@opentelemetry/semantic-conventions/-/semantic-conventions-1.6.0.tgz"
   integrity sha512-aPfcBeLErM/PPiAuAbNFLN5sNbZLc3KZlar27uohllN8Zs6jJbHyJU1y7cMA6W/zuq+thkaG8mujiS+3iD/FWQ==
+
+"@opentelemetry/semantic-conventions@1.9.1", "@opentelemetry/semantic-conventions@^1.6.0":
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/@opentelemetry/semantic-conventions/-/semantic-conventions-1.9.1.tgz"
+  integrity sha512-oPQdbFDmZvjXk5ZDoBGXG8B4tSB/qW5vQunJWQMFUBp7Xe8O1ByPANueJ+Jzg58esEBegyyxZ7LRmfJr7kFcFg==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -622,10 +622,10 @@ globalthis@^1.0.3:
   dependencies:
     define-properties "^1.1.3"
 
-globby@13.1.3:
-  version "13.1.3"
-  resolved "https://registry.npmjs.org/globby/-/globby-13.1.3.tgz"
-  integrity sha512-8krCNHXvlCgHDpegPzleMq07yMYTO2sXKASmZmquEYWEmCx6J5UTRbp5RwMJkTJGtcQ44YpiUYUiN0b9mzy8Bw==
+globby@13.1.4:
+  version "13.1.4"
+  resolved "https://registry.yarnpkg.com/globby/-/globby-13.1.4.tgz#2f91c116066bcec152465ba36e5caa4a13c01317"
+  integrity sha512-iui/IiiW+QrJ1X1hKH5qwlMQyv34wJAYwH1vrf8b9kBA4sNiif3gKsMHa+BrdnOpEudWjpotfa7LrTzB1ERS/g==
   dependencies:
     dir-glob "^3.0.1"
     fast-glob "^3.2.11"
@@ -920,29 +920,35 @@ markdown-it@13.0.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdownlint-cli2-formatter-default@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/markdownlint-cli2-formatter-default/-/markdownlint-cli2-formatter-default-0.0.3.tgz"
-  integrity sha512-QEAJitT5eqX1SNboOD+SO/LNBpu4P4je8JlR02ug2cLQAqmIhh8IJnSK7AcaHBHhNADqdGydnPpQOpsNcEEqCw==
+markdownlint-cli2-formatter-default@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli2-formatter-default/-/markdownlint-cli2-formatter-default-0.0.4.tgz#81e26b0a50409c0357c6f0d38d8246946b236fab"
+  integrity sha512-xm2rM0E+sWgjpPn1EesPXx5hIyrN2ddUnUwnbCsD/ONxYtw3PX6LydvdH6dciWAoFDpwzbHM1TO7uHfcMd6IYg==
 
-markdownlint-cli2@^0.6.0, markdownlint-cli2@>=0.0.4:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/markdownlint-cli2/-/markdownlint-cli2-0.6.0.tgz"
-  integrity sha512-Bv20r6WGdcHMWi8QvAFZ3CBunf4i4aYmVdTfpAvXODI/1k3f09DZZ0i0LcX9ZMhlVxjoOzbVDz1NWyKc5hwTqg==
+markdownlint-cli2@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli2/-/markdownlint-cli2-0.7.1.tgz#42cd126f640c1bd0b820759c29b47c06fb2246cf"
+  integrity sha512-N58lw50Ws0WOfCc07B9dPKMnPMbIj6ZCMlszZLVfxBwKN/M+WZqXLdOHyRL2BWCZ3APBxQN9qDEw7Vf1PRqFkg==
   dependencies:
-    globby "13.1.3"
-    markdownlint "0.27.0"
-    markdownlint-cli2-formatter-default "0.0.3"
+    globby "13.1.4"
+    markdownlint "0.28.2"
+    markdownlint-cli2-formatter-default "0.0.4"
     micromatch "4.0.5"
     strip-json-comments "5.0.0"
-    yaml "2.2.1"
+    yaml "2.2.2"
 
-markdownlint@^0.27.0, markdownlint@0.27.0:
-  version "0.27.0"
-  resolved "https://registry.npmjs.org/markdownlint/-/markdownlint-0.27.0.tgz"
-  integrity sha512-HtfVr/hzJJmE0C198F99JLaeada+646B5SaG2pVoEakLFI6iRGsvMqrnnrflq8hm1zQgwskEgqSnhDW11JBp0w==
+markdownlint-micromark@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/markdownlint-micromark/-/markdownlint-micromark-0.1.2.tgz#5520e04febffa46741875a2f297509ffdb561f5c"
+  integrity sha512-jRxlQg8KpOfM2IbCL9RXM8ZiYWz2rv6DlZAnGv8ASJQpUh6byTBnEsbuMZ6T2/uIgntyf7SKg/mEaEBo1164fQ==
+
+markdownlint@0.28.2, markdownlint@^0.28.2:
+  version "0.28.2"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.28.2.tgz#ea31586a02fe3a06403ecafbbe22d77e363c8ed5"
+  integrity sha512-yYaQXoKKPV1zgrFsyAuZPEQoe+JrY9GDag9ObKpk09twx4OCU5lut+0/kZPrQ3W7w82SmgKhd7D8m34aG1unVw==
   dependencies:
     markdown-it "13.0.1"
+    markdownlint-micromark "0.1.2"
 
 mdurl@^1.0.1:
   version "1.0.1"
@@ -959,7 +965,7 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-micromatch@^4.0.4, micromatch@4.0.5:
+micromatch@4.0.5, micromatch@^4.0.4:
   version "4.0.5"
   resolved "https://registry.npmjs.org/micromatch/-/micromatch-4.0.5.tgz"
   integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
@@ -1202,29 +1208,22 @@ safe-regex-test@^1.0.0:
     get-intrinsic "^1.1.3"
     is-regex "^1.1.4"
 
+"semver@2 || 3 || 4 || 5":
+  version "5.7.1"
+  resolved "https://registry.npmjs.org/semver/-/semver-5.7.1.tgz"
+  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
+
 semver@^6.1.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
-semver@^7.3.2:
+semver@^7.3.2, semver@^7.3.5:
   version "7.3.8"
   resolved "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
   integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
   dependencies:
     lru-cache "^6.0.0"
-
-semver@^7.3.5:
-  version "7.3.8"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
-  integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
-  dependencies:
-    lru-cache "^6.0.0"
-
-"semver@2 || 3 || 4 || 5":
-  version "5.7.1"
-  resolved "https://registry.npmjs.org/semver/-/semver-5.7.1.tgz"
-  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
 shebang-command@^2.0.0:
   version "2.0.0"
@@ -1479,10 +1478,10 @@ yallist@^4.0.0:
   resolved "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/yaml/-/yaml-2.2.1.tgz"
-  integrity sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==
+yaml@2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.2.tgz#ec551ef37326e6d42872dad1970300f8eb83a073"
+  integrity sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==
 
 yargs-parser@^20.2.2:
   version "20.2.9"

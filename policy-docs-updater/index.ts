@@ -316,7 +316,6 @@ commander.program
         const providers: Array<string> = (options.providers as string).split(",");
         for(let i = 0; i < providers.length; i++) {
             cmd_run((options.directory as string), providers[i]);
-            return;
         }
 
     });

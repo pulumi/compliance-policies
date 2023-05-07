@@ -1,4 +1,4 @@
-# Copyright 2016-2019, Pulumi Corporation.  All rights reserved.
+# Copyright 2016-2023, Pulumi Corporation.  All rights reserved.
 
 # common.mk provides most of the scalfholding for our build system. It
 # provides default targets for each project we want to build.
@@ -140,9 +140,6 @@ all::
 	@echo -e "\033[1;37m$(PROJECT_NAME)\033[1;37m"
 	@echo -e "\033[1;37m$(shell echo '$(PROJECT_NAME)' | sed -e 's/./=/g')\033[1;37m"
 endif
-
-default:: build install lint test_fast
-all:: build install lint test_all
 
 ensure::
 	$(call STEP_MESSAGE)

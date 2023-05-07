@@ -25,7 +25,7 @@
         "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.10",
+        "@pulumi-premium-policies/unit-test-helpers": "^0.0.11",
         "@types/node": "^20.1.0",
         "@typescript-eslint/eslint-plugin": "^5.59.2",
         "@typescript-eslint/parser": "^5.59.2",

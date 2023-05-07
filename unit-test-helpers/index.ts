@@ -666,6 +666,15 @@ export function assertCodeQuality(suiteName?: string, suiteFile?: string) {
     if (!policyDetails.comment.toLowerCase().includes(`@severity ${policyDetails.severity}`)) {
         assert.fail("The policy's severity isn't matching the one in the jsDoc comment.");
     }
+
+    if(!policyDetails.comment.toLowerCase().includes(`@topics ${policyDetails.topics || "none"}`)) {
+        assert.fail("The policy's topics list isn't matching the one in the jsDoc comment.");
+    }
+
+    if(!policyDetails.comment.toLowerCase().includes(`@frameworks ${policyDetails.frameworks || "none"}`)) {
+        assert.fail("The policy's frameworks list isn't matching the one in the jsDoc comment.");
+    }
+
     checkPolicyVerbDetails(policyDetails);
     if (policyDetails.error) {
         assert.fail(policyDetails.error);
@@ -729,7 +738,7 @@ function parseSourceFile(suiteName?: string, suiteFile?: string): SourceFileDeta
 }
 
 /**
- * This functions the necessary details related to the current registered policy.
+ * This functions extracts the necessary details related to the current registered policy.
  *
  * @param objectExpression An object expression as it is provided to `policymanager.policyManager.registerPolicy()`.
  * @returns An array of information related to the current policy.
@@ -785,7 +794,19 @@ function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarNam
                                 policyDetails.description = p.description;
                             }
                             break;
-                        case "ArrayExpression": // Vendors[] || Services[] || Frameworks[] || Topics[]
+                        case "ArrayExpression": // vendors[] || services[] || frameworks[] || topics[]
+                            if(objectProperty.key.type === "Identifier") {
+                                switch(objectProperty.key.name) {
+                                    case "frameworks":
+                                        policyDetails.frameworks = extractArrayToString(objectProperty.value);
+                                        break;
+                                    case "topics":
+                                        policyDetails.topics = extractArrayToString(objectProperty.value);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                             break;
                         case "StringLiteral": // Policy Severity
                             policyDetails.severity = objectProperty.value.value.toLowerCase(); // this needs to be lowercase as the value is made case insensitive
@@ -800,6 +821,28 @@ function getPolicyDetails(node: parserTypes.ExportNamedDeclaration, policyVarNam
     }
 
     return policyDetails;
+}
+
+/**
+ * From an ArrayExpression object, returns a string of the values.
+ *
+ * @param arrayExpressionObject The ArrayExpression containing the multiple strings.
+ * @returns A string representing the values of the provided ArrayExpression, or "none" is there was no values.
+ */
+function extractArrayToString(arrayExpressionObject: parserTypes.ArrayExpression): string {
+
+    const items: string[] = [];
+
+    for(let i = 0; i < arrayExpressionObject.elements.length; i++) {
+        const element = arrayExpressionObject.elements[i];
+
+        if(!element || element.type !== "StringLiteral") {
+            continue;
+        }
+        items.push(element.value.toLowerCase());
+    }
+
+    return items.sort().join(", ").toLowerCase();
 }
 
 /**

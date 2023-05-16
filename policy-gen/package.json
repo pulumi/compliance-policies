@@ -46,7 +46,7 @@
         "build": "tsc",
         "runkubernetes": "ts-node index.ts run --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
         "dryrunkubernetes": "ts-node index.ts run --dryrun --provider kubernetes --version 3.24.2 --directory ../vendor-kubernetes/",
-        "runazurenative": "ts-node index.ts run --provider azure-native --version 1.99.1 --directory ../vendor-azure/ --max 100",
-        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azure-native --version 1.99.1 --directory ../vendor-azure/ --max 100"
+        "runazurenative": "ts-node index.ts run --provider azure-native --version 1.102.0 --directory ../vendor-azure/ --max 100",
+        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azure-native --version 1.102.0 --directory ../vendor-azure/ --max 100"
     }
 }

@@ -56,3 +56,4 @@ export * as connectedvmwarevsphere from "./connectedvmwarevsphere";
 export * as consumption from "./consumption";
 export * as containerinstance from "./containerinstance";
 export * as containerregistry from "./containerregistry";
+export * as azuresphere from "./azuresphere";

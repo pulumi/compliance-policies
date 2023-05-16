@@ -96,14 +96,7 @@ export class AzureNativeProvider extends Provider {
                 const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
 
                 this.deleteSourceFile(sourceFile, policyVariableName);
-
-                /**
-                 * `resource.ts` files are potentially complex and expensive files to
-                 * (re)create so we don't delete them automatically in case we add
-                 * a policy for that same resource later on.
-                 */
                 this.deleteSpecFile(specFile);
-                // return;
             }
         }
 

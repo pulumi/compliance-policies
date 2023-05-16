@@ -542,6 +542,13 @@ export class Provider {
             return;
         }
         fs.unlinkSync(`${this.directory}/${specFile}`);
+
+        const specDirectory: string = path.dirname(specFile);
+        const files = fs.readdirSync(specDirectory);
+        if (files.length === 1) { // only `resource.ts` should remain
+            fs.unlinkSync(`${specDirectory}/resource.ts`);
+            fs.rmdirSync(specDirectory);
+        }
     }
 
     protected deleteSourceFile(sourceFile: string, policyVariableName: string) {

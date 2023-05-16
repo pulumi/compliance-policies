@@ -18,7 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Artifact from "./Artifact";
 export * as Assignment from "./Assignment";
 export * as Blueprint from "./Blueprint";
 export * as PolicyAssignmentArtifact from "./PolicyAssignmentArtifact";

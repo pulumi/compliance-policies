@@ -100,8 +100,6 @@ export class AzureNativeProvider extends Provider {
             }
         }
 
-        return;
-
         // eslint-disable-next-line prefer-const
         for (let [rawSchemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
             if (rawSchemaResourceName.toLowerCase().indexOf("preview") < 0) {

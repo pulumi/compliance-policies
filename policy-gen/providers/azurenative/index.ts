@@ -18,7 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { error } from "console";
+import * as fs from "fs";
+import * as path from "path";
 import { Provider, ProviderArgs } from "../../base/provider";
 import * as eta from "eta";
 
@@ -84,6 +85,29 @@ export class AzureNativeProvider extends Provider {
         const resourceTemplateFunction = eta.loadFile(resourceFilename, {
             filename: resourceFilename,
         });
+
+        const sourceFiles: string[] = this.findFilesByExtension(`${this.directory}/${this.schemaName}`, ".ts").sort();
+        for(let x = 0; x < sourceFiles.length; x++) {
+            const sourceFile: string = sourceFiles[x].replace(`${this.directory}/`, "");
+
+            const schemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile);
+            const altschemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile, true);
+            if (!this.isSchemaResource(schemaResourceName) && !this.isSchemaResource(altschemaResourceName)) {
+                const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
+
+                this.deleteSourceFile(sourceFile, policyVariableName);
+
+                /**
+                 * `resource.ts` files are potentially complex and expensive files to
+                 * (re)create so we don't delete them automatically in case we add
+                 * a policy for that same resource later on.
+                 */
+                this.deleteSpecFile(specFile);
+                // return;
+            }
+        }
+
+        return;
 
         // eslint-disable-next-line prefer-const
         for (let [rawSchemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
@@ -237,7 +261,7 @@ export class AzureNativeProvider extends Provider {
      *
      * @param schemaResourceName The resource name as found in the schema (`kubernetes:apps/v1:DaemonSet` or `kubernetes:apiextensions.k8s.io/v1:CustomResourceDefinition`).
      * @param policyName The policy variable name (`disableAlphaResource`).
-     * @returns The partial path where the policy source file is located (`tests/kubernetes/apps/v1/DaemonSet/disableAlphaResource.ts`).
+     * @returns The partial path where the policy source file is located (`tests/kubernetes/apps/v1/DaemonSet/disableAlphaResource.spec.ts`).
      */
     private getPolicySpecFile(schemaResourceName: string, policyVariableName: string): string {
         const packageName: string = this.getPackageName(schemaResourceName).toLowerCase().replace(/\./g, "/");
@@ -386,6 +410,59 @@ export class AzureNativeProvider extends Provider {
     }
 
     /**
+     * Convert the path of a policy source file into a schema resource name.
+     *
+     * @param policySourceFile The absolute or relative path to the policy source file (`azure-native/aadiam/v20170401preview/DiagnosticSetting`). If `policySourceFile` starts with `/`, the path is assumed absolute.
+     * @param useBrokenCase Some resource names have inconsistent case. Set this to `true` to obtain such resource name.
+     * @returns A schema resource name. (`azure-native:aadiam/v20170401preview:DiagnosticSetting`).
+     * @link https://github.com/pulumi/pulumi-azure-native/issues/2365
+     */
+    private getSchemaResourceNameFromPath(policySourceFile: string, useBrokenCase?: boolean): string {
+
+        let schemaResourceName: string = "";
+        let filename: string = "";
+        if (policySourceFile.startsWith("/")) {
+            filename = policySourceFile.replace(`${this.directory}/`, "");
+        } else {
+            filename = policySourceFile;
+        }
+        filename = path.dirname(filename);
+        filename = filename.replace(this.schemaName, this.args.name);
+
+        const matches = filename.match(/([a-zA-Z0-9\-]+\/?[a-zA-Z0-9\-]*?)/g);
+        if (matches) {
+            for (let x = 0; x < matches.length; x++) {
+                const match = matches[x];
+                if (x === 0 || x === (matches.length - 2)) {
+                    schemaResourceName += match.replace("/", ":");
+                } else if (x === (matches.length - 1) && useBrokenCase) {
+                    schemaResourceName += `${match.charAt(0).toLowerCase()}${match.slice(1)}`;
+                } else {
+                    schemaResourceName += match;
+                }
+            }
+        }
+        return schemaResourceName;
+    }
+
+    /**
+     * Check if the provided resource name exists in the schema.
+     *
+     * @param schemaResourceName The schema resource name to search for (`azure-native:containerregistry/v20211201preview:ScopeMap`).
+     * @returns `true` if the resource exists in the schema, `false` otherwise.
+     */
+    private isSchemaResource(schemaResourceName: string): boolean {
+        if (!this.schemaObject.resources) {
+            throw new Error(`Unable to find 'schemaObject.resources' in the provider's schema`);
+        }
+
+        if (this.schemaObject.resources[schemaResourceName]) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * From the schema resource name, this function returns the scoped import statement.
      *
      * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
@@ -398,5 +475,32 @@ export class AzureNativeProvider extends Provider {
         }
 
         return `@pulumi/${this.args.name}/${schemaResourceNameParts[1]}`;
+    }
+
+    /**
+     * This function scans a given directory for files with a matching extensions and returns the results as an array.
+     *
+     * @param directory A path to an existing directory to find files in.
+     * @param extension The desired file extension to look for.
+     * @returns An array of files.
+     */
+    private findFilesByExtension(directory: string, extension: string): string[] {
+        const files: string[] = [];
+
+        const dirContent = fs.readdirSync(directory);
+
+        for (let index = 0; index < dirContent.length; index++) {
+            const file = dirContent[index];
+            const fullPath = path.join(directory, file);
+
+            if (fs.statSync(fullPath).isDirectory()) {
+                files.push(...this.findFilesByExtension(fullPath, extension));
+            } else if (path.extname(file) === extension) {
+                if (path.basename(file) !== "index.ts") {
+                    files.push(fullPath);
+                }
+            }
+        }
+        return files;
     }
 };

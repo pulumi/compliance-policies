@@ -158,9 +158,13 @@ export class Provider {
      *
      * @param exportsFile The full path in which the exports headers will be saved in.
      */
-    private createEmtpyExport(exportsFile: string) {
+    private createEmtpyExport(exportsFile: string, overwrite?: boolean) {
 
-        if (fs.existsSync(exportsFile) || this.args.dryrun === true) {
+        if (this.args.dryrun === true) {
+            return;
+        }
+
+        if (fs.existsSync(exportsFile) && !overwrite) {
             return;
         }
 
@@ -260,7 +264,7 @@ export class Provider {
         fs.closeSync(exportsFileHandle);
     }
 
-    private updatePolicyExport(exportsFile: string, policyVariableName: string) {
+    private addPolicyExport(exportsFile: string, policyVariableName: string) {
         this.createEmtpyExport(exportsFile);
         /*
          * - List all files.
@@ -315,7 +319,6 @@ export class Provider {
             }
         }
 
-        // FIXME: Need to remove policy exports for which we don't find a file for?
         const transformedCode = babel.transformFromAstSync(exportsFileParseResults, undefined, {});
 
         if (!transformedCode || !transformedCode.code) {
@@ -325,7 +328,7 @@ export class Provider {
         /*
          * FIXME: I haven't been able to find a clean way to insert
          * an empty line at the end of the license header and the 1st
-         * export.So for now, I'm using a regular expression to insert
+         * export. So for now, I'm using a regular expression to insert
          * that line whenever it's missing.
          */
         const formattedCode: string = `${transformedCode.code.replace(/(SOFTWARE.)\n(export)/gm, "$1\n\n$2")}\n`;
@@ -336,12 +339,99 @@ export class Provider {
 
     }
 
+    private removePolicyExport(exportsFile: string, policyVariableName: string) {
+
+        if (this.args.dryrun === true) {
+            return;
+        }
+
+        if (path.dirname(exportsFile) === this.directory) {
+            /**
+             * We have reached the top of our provider's directory so we should stop there.
+             */
+            return;
+        }
+
+        /**
+         * - Load `index.ts` in the same directory using babel.
+         * - if policyVariableName !== ""
+         * -   Iterate over each node to find a `ExportNamedDeclaration` with the matching `policyVariableName`.
+         * -   Delete the matching node.
+         * -   if empty code, then delete `index.ts` and directory
+         * -   call removePolicyExport() with current folder name
+         * - Save the updated `index.ts`.
+         */
+
+        const exportsFileText: string = fs.readFileSync(exportsFile, "utf-8");
+        const exportsFileParseResults = parser.parse(exportsFileText, {
+            attachComment: true,
+            sourceType: "module",
+            sourceFilename: exportsFile,
+            plugins: [ "typescript" ],
+        });
+
+        let exportExists: boolean = false;
+
+        traverse(exportsFileParseResults, {
+            ExportNamedDeclaration(nodePath: NodePath<babeltypes.ExportNamedDeclaration>) {
+                if (nodePath.node.specifiers.length > 0 && babeltypes.isIdentifier(nodePath.node.specifiers[0].exported, { name: policyVariableName })) {
+                    exportExists = true;
+                    nodePath.remove(); // remove the match node
+                    nodePath.stop(); // stop traversing once we find the export
+                }
+            },
+        });
+
+        if (exportExists) {
+            const transformedCode = babel.transformFromAstSync(exportsFileParseResults, exportsFileText, {});
+
+            if (!transformedCode) {
+                throw new Error(`Failed to generate code.`);
+            }
+
+            if (!transformedCode.code ) {
+                /**
+                 * Only comments are left in the `index.ts` file so there's no code
+                 * to actually generate. We should delete the file and the directory.
+                 * Then we should remove any upward exports from `index.ts`.
+                 */
+
+                const exportsDirectory: string = path.dirname(exportsFile);
+                const exportsDirectoryBasename: string = path.basename(exportsDirectory);
+                const upperExportsDirectory: string = path.dirname(exportsDirectory);
+
+                fs.unlinkSync(exportsFile); // remove the current `index.ts` since it has no code and it's not a valid typescript module.
+                fs.rmdirSync(exportsDirectory); // remove the current directory, since it's empty.
+                this.removePolicyExport(`${upperExportsDirectory}/index.ts`, exportsDirectoryBasename); // process the upper directory
+            } else {
+                /**
+                 * One or more `export` remain in the code, so we only need to save the generated
+                 * code into the file.
+                 */
+
+                /*
+                 * FIXME: I haven't been able to find a clean way to insert
+                 * an empty line at the end of the license header and the 1st
+                 * export. So for now, I'm using a regular expression to insert
+                 * that line whenever it's missing.
+                 * Using `prettier` could be an option but I'm unsure what rule
+                 * I should use for that.
+                 */
+                const formattedCode: string = `${transformedCode.code.replace(/(SOFTWARE.)\n(export)/gm, "$1\n\n$2")}\n`;
+
+                const exportsFileHandle = fs.openSync(exportsFile, "w", 0o640);
+                fs.writeFileSync(exportsFileHandle, formattedCode);
+                fs.closeSync(exportsFileHandle);
+            }
+        }
+    }
+
     /**********************************
      ******** Protected methods. ******
      **********************************/
 
     /**
-     * Saves the provided policy source code into the desired source file.
+     * Saves the provided policy unit test source code into the desired spec file.
      *
      * @param specFile The relative path in which the `specSourceCode` should be saved into.
      * @param specSourceCode The policy spec source code to save.
@@ -428,7 +518,7 @@ export class Provider {
             if (index !== (directoryParts.length - 1)) {
                 this.updateNamespaceExport(exportsFile);
             } else {
-                this.updatePolicyExport(exportsFile, policyVariableName);
+                this.addPolicyExport(exportsFile, policyVariableName);
             }
         }
 
@@ -442,6 +532,34 @@ export class Provider {
         return true;
     }
 
+    /**
+     * Delete the provided policy unit test spec file.
+     *
+     * @param specFile The relative path to the policy spec file.
+     */
+    protected deleteSpecFile(specFile: string) {
+        if (this.args.dryrun === true) {
+            return;
+        }
+        fs.unlinkSync(`${this.directory}/${specFile}`);
+    }
+
+    protected deleteSourceFile(sourceFile: string, policyVariableName: string) {
+        if (this.args.dryrun === true) {
+            return;
+        }
+
+        /**
+         * - Delete the policy source file.
+         * - Recursively remove exports in `index.ts`.
+         */
+
+        fs.unlinkSync(`${this.directory}/${sourceFile}`);
+
+        const exportsFile: string = path.dirname(`${this.directory}/${sourceFile}`) + "/index.ts";
+
+        this.removePolicyExport(exportsFile, policyVariableName);
+    }
 
     /**
      * Recursively create the specified directory.

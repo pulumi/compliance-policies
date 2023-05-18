@@ -41,6 +41,7 @@ describe("aws.ec2.LaunchConfiguration.disallowPublicIp", function() {
             services: ["ec2"],
             severity: "high",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

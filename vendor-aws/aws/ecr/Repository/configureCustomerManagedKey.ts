@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ECR repositories use a customer-managed KMS key.
  *
  * @severity low
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics container, encryption, storage
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
@@ -53,4 +53,5 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     services: ["ecr"],
     severity: "low",
     topics: ["container", "encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

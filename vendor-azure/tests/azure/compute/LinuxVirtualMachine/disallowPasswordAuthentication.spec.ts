@@ -50,6 +50,7 @@ describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", fun
             services: ["compute"],
             severity: "high",
             topics: ["security", "authentication"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

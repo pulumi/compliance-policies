@@ -42,6 +42,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionKms", function() {
             services: ["s3"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

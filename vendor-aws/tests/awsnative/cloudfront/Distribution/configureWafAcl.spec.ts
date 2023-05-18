@@ -41,6 +41,7 @@ describe("awsnative.cloudfront.Distribution.configureWafAcl", function() {
             services: ["cloudfront"],
             severity: "high",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

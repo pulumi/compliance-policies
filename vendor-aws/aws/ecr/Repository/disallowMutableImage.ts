@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ECR Repositories have immutable images enabled.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics container
  * @link https://sysdig.com/blog/toctou-tag-mutability/
  */
@@ -45,4 +45,5 @@ export const disallowMutableImage: ResourceValidationPolicy = policyManager.regi
     services: ["ecr"],
     severity: "high",
     topics: ["container"],
+    frameworks: ["pcidss", "iso27001"],
 });

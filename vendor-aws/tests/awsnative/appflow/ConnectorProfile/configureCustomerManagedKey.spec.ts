@@ -41,6 +41,7 @@ describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", funct
             services: ["appflow"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

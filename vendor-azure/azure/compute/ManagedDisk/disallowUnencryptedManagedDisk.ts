@@ -26,7 +26,7 @@ import { ManagedDisk } from "@pulumi/azure/compute";
  * Checks that Disks are encrypted.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
  */
@@ -45,4 +45,5 @@ export const disallowUnencryptedManagedDisk: ResourceValidationPolicy = policyMa
     services: ["compute"],
     severity: "high",
     topics: ["storage", "encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that CloudFront distributions only allow encypted ingress traffic.
  *
  * @severity critical
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics network
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
@@ -48,4 +48,5 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
     services: ["cloudfront"],
     severity: "critical",
     topics: ["network"],
+    frameworks: ["pcidss", "iso27001"],
 });

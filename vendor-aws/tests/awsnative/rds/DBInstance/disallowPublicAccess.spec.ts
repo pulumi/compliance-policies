@@ -41,6 +41,7 @@ describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
             services: ["rds"],
             severity: "critical",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

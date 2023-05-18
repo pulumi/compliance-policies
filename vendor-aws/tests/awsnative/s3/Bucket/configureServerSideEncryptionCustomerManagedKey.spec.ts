@@ -41,6 +41,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", 
             services: ["s3"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

@@ -50,6 +50,7 @@ describe("azurenative.compute.Disk.disallowUnencryptedDisk", function () {
             services: ["compute"],
             severity: "high",
             topics: ["storage", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

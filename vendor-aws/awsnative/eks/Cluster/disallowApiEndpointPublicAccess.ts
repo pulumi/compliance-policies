@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that EKS Clusters API Endpoint are not publicly accessible.
  *
  * @severity critical
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
  */
@@ -54,4 +54,5 @@ export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policyM
     services: ["eks"],
     severity: "critical",
     topics: ["network"],
+    frameworks: ["pcidss", "iso27001"],
 });

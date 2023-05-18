@@ -41,6 +41,7 @@ describe("awsnative.s3.Bucket.enableServerSideEncryptionBucketKey", function() {
             services: ["s3"],
             severity: "medium",
             topics: ["encryption", "storage", "cost"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

@@ -40,6 +40,7 @@ describe("kubernetes.apps.v1.StatefulSet.enableReadOnlyRootFilesystem", function
             services: ["apps"],
             severity: "high",
             topics: ["runtime", "security"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

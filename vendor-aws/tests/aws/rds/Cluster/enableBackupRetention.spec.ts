@@ -41,6 +41,7 @@ describe("aws.rds.Cluster.enableBackupRetention", function() {
             services: ["rds"],
             severity: "medium",
             topics: ["backup", "resilience"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

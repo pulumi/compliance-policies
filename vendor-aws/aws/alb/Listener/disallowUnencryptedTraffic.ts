@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
  * @severity critical
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html
  */
@@ -45,4 +45,5 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
     services: ["alb"],
     severity: "critical",
     topics: ["network"],
+    frameworks: ["pcidss", "iso27001"],
 });

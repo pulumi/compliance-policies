@@ -41,6 +41,7 @@ describe("aws.rds.ClusterInstance.disallowPublicAccess", function() {
             services: ["rds"],
             severity: "critical",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

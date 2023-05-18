@@ -41,6 +41,7 @@ describe("aws.ecr.Repository.configureCustomerManagedKey", function() {
             services: ["ecr"],
             severity: "low",
             topics: ["container", "encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

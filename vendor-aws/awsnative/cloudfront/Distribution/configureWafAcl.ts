@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that CloudFront distributions have a WAF ACL associated.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/waf/latest/developerguide/cloudfront-features.html
  */
@@ -45,4 +45,5 @@ export const configureWafAcl: ResourceValidationPolicy = policyManager.registerP
     services: ["cloudfront"],
     severity: "high",
     topics: ["network"],
+    frameworks: ["pcidss", "iso27001"],
 });

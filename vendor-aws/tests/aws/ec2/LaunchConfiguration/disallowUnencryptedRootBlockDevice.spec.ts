@@ -41,6 +41,7 @@ describe("aws.ec2.LaunchConfiguration.disallowUnencryptedRootBlockDevice", funct
             services: ["ec2"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

@@ -50,7 +50,7 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
             services: ["compute"],
             severity: "high",
             topics: ["security", "authentication"],
-            frameworks: ["pcidss"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

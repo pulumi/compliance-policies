@@ -41,6 +41,7 @@ describe("aws.secretsmanager.Secret.configureCustomerManagedKey", function() {
             services: ["secretsmanager"],
             severity: "low",
             topics: ["encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

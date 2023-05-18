@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ALB Load Balancers uses secure/modern TLS encryption.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
  */
@@ -47,4 +47,5 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
     services: ["alb"],
     severity: "high",
     topics: ["network", "encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

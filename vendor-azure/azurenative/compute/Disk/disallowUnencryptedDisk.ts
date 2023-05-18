@@ -26,7 +26,7 @@ import { Disk } from "@pulumi/azure-native/compute/disk";
  * Checks that Disks are encrypted.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/disk-encryption-overview
  */
@@ -47,4 +47,5 @@ export const disallowUnencryptedDisk: ResourceValidationPolicy = policyManager.r
     services: ["compute"],
     severity: "high",
     topics: ["storage", "encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

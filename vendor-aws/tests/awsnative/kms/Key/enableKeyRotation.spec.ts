@@ -40,6 +40,7 @@ describe("awsnative.kms.Key.enableKeyRotation", function() {
             services: ["kms"],
             severity: "medium",
             topics: ["encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

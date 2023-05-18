@@ -41,6 +41,7 @@ describe("awsnative.ec2.Volume.disallowUnencryptedVolume", function() {
             services: ["ebs"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

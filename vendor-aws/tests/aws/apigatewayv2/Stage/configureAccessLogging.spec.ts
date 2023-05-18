@@ -41,6 +41,7 @@ describe("aws.apigatewayv2.Stage.configureAccessLogging", function() {
             services: ["apigatewayv2"],
             severity: "medium",
             topics: ["network", "logging"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

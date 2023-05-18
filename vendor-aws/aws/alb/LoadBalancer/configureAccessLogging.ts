@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ALB loadbalancers have access logging configured and enabled.
  *
  * @severity medium
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics logging, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
  */
@@ -45,4 +45,5 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     services: ["alb"],
     severity: "medium",
     topics: ["network", "logging"],
+    frameworks: ["pcidss", "iso27001"],
 });

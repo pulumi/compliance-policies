@@ -41,6 +41,7 @@ describe("awsnative.apigateway.DomainName.configureSecurityPolicy", function() {
             services: ["apigateway"],
             severity: "high",
             topics: ["network", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

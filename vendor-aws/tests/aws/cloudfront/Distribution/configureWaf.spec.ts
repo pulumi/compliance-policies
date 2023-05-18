@@ -41,6 +41,7 @@ describe("aws.cloudfront.Distribution.configureWaf", function() {
             services: ["cloudfront"],
             severity: "high",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

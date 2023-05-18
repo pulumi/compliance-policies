@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
@@ -52,4 +52,5 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = policy
     services: ["s3"],
     severity: "high",
     topics: ["encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

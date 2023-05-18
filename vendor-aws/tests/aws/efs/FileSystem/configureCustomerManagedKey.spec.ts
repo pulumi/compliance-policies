@@ -41,6 +41,7 @@ describe("aws.efs.FileSystem.configureCustomerManagedKey", function() {
             services: ["efs"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

@@ -26,7 +26,7 @@ import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-man
  * Check that encrypted EBS volume uses a customer-managed KMS key.
  *
  * @severity low
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
@@ -50,4 +50,5 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     services: ["ec2"],
     severity: "low",
     topics: ["encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

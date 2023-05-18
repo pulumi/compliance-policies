@@ -41,6 +41,7 @@ describe("aws.alb.Listener.disallowUnencryptedTraffic", function() {
             services: ["alb"],
             severity: "critical",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

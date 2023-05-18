@@ -41,6 +41,7 @@ describe("aws.alb.Listener.configureSecureTls", function() {
             services: ["alb"],
             severity: "high",
             topics: ["network", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

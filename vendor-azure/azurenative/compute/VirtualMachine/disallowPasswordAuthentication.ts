@@ -26,7 +26,7 @@ import { VirtualMachine } from "@pulumi/azure-native/compute/virtualMachine";
  * Authentication to Linux machines should require SSH keys.
  *
  * @severity high
- * @frameworks pcidss
+ * @frameworks iso27001, pcidss
  * @topics authentication, security
  * @link https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed
  */
@@ -49,5 +49,5 @@ export const disallowPasswordAuthentication: ResourceValidationPolicy = policyMa
     services: ["compute"],
     severity: "high",
     topics: ["security", "authentication"],
-    frameworks: ["pcidss"],
+    frameworks: ["pcidss", "iso27001"],
 });

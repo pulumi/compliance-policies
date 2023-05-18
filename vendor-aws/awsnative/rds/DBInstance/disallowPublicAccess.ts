@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that RDS DB Instances public access is not enabled.
  *
  * @severity critical
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
@@ -45,4 +45,5 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyManager.regi
     services: ["rds"],
     severity: "critical",
     topics: ["network"],
+    frameworks: ["pcidss", "iso27001"],
 });

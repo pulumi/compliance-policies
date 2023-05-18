@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that S3 Buckets Server-Side Encryption (SSE) is using a Bucket key.
  *
  * @severity medium
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics cost, encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html
  */
@@ -49,4 +49,5 @@ export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = pol
     services: ["s3"],
     severity: "medium",
     topics: ["encryption", "storage", "cost"],
+    frameworks: ["pcidss", "iso27001"],
 });

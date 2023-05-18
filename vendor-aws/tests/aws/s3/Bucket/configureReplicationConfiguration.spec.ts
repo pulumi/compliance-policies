@@ -41,6 +41,7 @@ describe("aws.s3.Bucket.configureReplicationConfiguration", function() {
             services: ["s3"],
             severity: "high",
             topics: ["availability"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

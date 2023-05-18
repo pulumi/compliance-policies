@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that Kubernetes DaemonSets run pods with a read-only filesystem.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics runtime, security
  * @link https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
  */
@@ -49,4 +49,5 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     services: ["apps"],
     severity: "high",
     topics: ["runtime", "security"],
+    frameworks: ["pcidss", "iso27001"],
 });

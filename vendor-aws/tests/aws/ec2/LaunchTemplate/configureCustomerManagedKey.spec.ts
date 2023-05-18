@@ -41,6 +41,7 @@ describe("aws.ec2.LaunchTemplate.configureCustomerManagedKey", function() {
             services: ["ec2"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

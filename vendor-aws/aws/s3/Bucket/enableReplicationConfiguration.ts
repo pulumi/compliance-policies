@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that S3 Bucket have cross-region replication enabled.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics availability
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html
  */
@@ -45,4 +45,5 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyMa
     services: ["s3"],
     severity: "high",
     topics: ["availability"],
+    frameworks: ["pcidss", "iso27001"],
 });

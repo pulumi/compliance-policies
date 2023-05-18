@@ -41,6 +41,7 @@ describe("aws.eks.Cluster.enableClusterEncryptionConfig", function() {
             services: ["eks"],
             severity: "high",
             topics: ["encryption", "kubernetes"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

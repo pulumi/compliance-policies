@@ -41,6 +41,7 @@ describe("aws.alb.LoadBalancer.configureAccessLogging", function() {
             services: ["alb"],
             severity: "medium",
             topics: ["network", "logging"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

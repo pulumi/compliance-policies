@@ -41,6 +41,7 @@ describe("awsnative.s3.Bucket.enableReplicationConfiguration", function() {
             services: ["s3"],
             severity: "high",
             topics: ["availability"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

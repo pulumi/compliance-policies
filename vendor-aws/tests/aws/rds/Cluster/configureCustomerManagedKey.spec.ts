@@ -41,6 +41,7 @@ describe("aws.rds.Cluster.configureCustomerManagedKey", function() {
             services: ["rds"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

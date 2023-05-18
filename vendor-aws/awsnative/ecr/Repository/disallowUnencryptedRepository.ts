@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ECR Repositories are encrypted.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics container, encryption, storage
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/encryption-at-rest.html
  */
@@ -45,4 +45,5 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policyMan
     services: ["ecr"],
     severity: "high",
     topics: ["container", "encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

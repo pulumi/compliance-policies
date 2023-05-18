@@ -41,6 +41,7 @@ describe("awsnative.cloudfront.Distribution.enableTlsToOrigin", function() {
             services: ["cloudfront"],
             severity: "critical",
             topics: ["network", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

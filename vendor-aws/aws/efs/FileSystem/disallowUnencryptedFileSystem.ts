@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that EFS File Systems do not have an unencrypted file system.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html
  */
@@ -45,4 +45,5 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyMan
     services: ["efs"],
     severity: "high",
     topics: ["encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

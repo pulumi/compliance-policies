@@ -41,6 +41,7 @@ describe("awsnative.cloudfront.Distribution.enableAccessLogging", function() {
             services: ["cloudfront"],
             severity: "medium",
             topics: ["network", "logging"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

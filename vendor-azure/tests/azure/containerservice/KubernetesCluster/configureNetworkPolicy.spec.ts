@@ -50,6 +50,7 @@ describe("azure.containerservice.KubernetesCluster.configureNetworkPolicy", func
             services: ["containerservice"],
             severity: "high",
             topics: ["network", "kubernetes"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

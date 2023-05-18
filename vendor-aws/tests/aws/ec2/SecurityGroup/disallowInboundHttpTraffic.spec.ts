@@ -41,6 +41,7 @@ describe("aws.ec2.SecurityGroup.disallowInboundHttpTraffic", function() {
             services: ["ec2"],
             severity: "critical",
             topics: ["network", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

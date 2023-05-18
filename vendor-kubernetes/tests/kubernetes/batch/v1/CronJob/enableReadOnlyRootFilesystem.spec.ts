@@ -40,6 +40,7 @@ describe("kubernetes.batch.v1.CronJob.enableReadOnlyRootFilesystem", function() 
             services: ["batch"],
             severity: "high",
             topics: ["runtime", "security"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

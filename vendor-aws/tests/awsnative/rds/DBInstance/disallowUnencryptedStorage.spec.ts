@@ -41,6 +41,7 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedStorage", function() {
             services: ["rds"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

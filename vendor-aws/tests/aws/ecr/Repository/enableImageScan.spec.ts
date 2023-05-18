@@ -41,7 +41,7 @@ describe("aws.ecr.Repository.enableImageScan", function() {
             services: ["ecr"],
             severity: "high",
             topics: ["container", "vulnerability"],
-            frameworks: ["soc2", "pcidss"],
+            frameworks: ["soc2", "pcidss", "iso27001"],
         });
     });
 

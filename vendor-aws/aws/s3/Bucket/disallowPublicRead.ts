@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.
  *
  * @severity critical
- * @frameworks cis, pcidss
+ * @frameworks cis, iso27001, pcidss
  * @topics security, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
@@ -47,5 +47,5 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
     services: ["s3"],
     severity: "critical",
     topics: ["storage", "security"],
-    frameworks: ["cis", "pcidss"],
+    frameworks: ["cis", "pcidss", "iso27001"],
 });

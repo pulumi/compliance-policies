@@ -41,6 +41,7 @@ describe("aws.athena.Workgroup.enforceConfiguration", function() {
             services: ["athena"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

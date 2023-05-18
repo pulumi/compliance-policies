@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that ApiGateway Domain Name Security Policy uses secure/modern TLS encryption.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption, network
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
@@ -45,4 +45,5 @@ export const configureSecurityPolicy: ResourceValidationPolicy = policyManager.r
     services: ["apigateway"],
     severity: "high",
     topics: ["network", "encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

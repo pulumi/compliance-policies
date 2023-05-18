@@ -41,6 +41,7 @@ describe("aws.eks.Cluster.disallowApiEndpointPublicAccess", function() {
             services: ["eks"],
             severity: "critical",
             topics: ["network"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

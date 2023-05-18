@@ -26,7 +26,7 @@ import { ManagedCluster } from "@pulumi/azure-native/containerservice/managedClu
  * Checks AKS cluster has Network Policy configured.
  *
  * @severity high
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics kubernetes, network
  * @link https://kubernetes.io/docs/concepts/services-networking/network-policies
  */
@@ -47,4 +47,5 @@ export const configureNetworkPolicy: ResourceValidationPolicy = policyManager.re
     services: ["containerservice"],
     severity: "high",
     topics: ["network", "kubernetes"],
+    frameworks: ["pcidss", "iso27001"],
 });

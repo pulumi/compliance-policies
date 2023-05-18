@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that KMS Keys have key rotation enabled.
  *
  * @severity medium
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption
  * @link https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
  */
@@ -45,4 +45,5 @@ export const enableKeyRotation: ResourceValidationPolicy = policyManager.registe
     services: ["kms"],
     severity: "medium",
     topics: ["encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

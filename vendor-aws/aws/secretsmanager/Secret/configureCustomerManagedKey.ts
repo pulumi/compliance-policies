@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that Secrets Manager Secrets use a customer-manager KMS key.
  *
  * @severity low
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics encryption
  * @link https://docs.aws.amazon.com/secretsmanager/latest/userguide/create_secret.html
  */
@@ -45,4 +45,5 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     services: ["secretsmanager"],
     severity: "low",
     topics: ["encryption"],
+    frameworks: ["pcidss", "iso27001"],
 });

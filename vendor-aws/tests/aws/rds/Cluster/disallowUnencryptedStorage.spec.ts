@@ -41,6 +41,7 @@ describe("aws.rds.Cluster.disallowUnencryptedStorage", function() {
             services: ["rds"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

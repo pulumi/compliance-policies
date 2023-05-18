@@ -41,6 +41,7 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", functi
             services: ["apigatewayv2"],
             severity: "high",
             topics: ["network", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

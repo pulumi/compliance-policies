@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Checks that RDS DB Instances backup retention policy is enabled.
  *
  * @severity medium
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics backup, resilience
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
@@ -45,4 +45,5 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
     services: ["rds"],
     severity: "medium",
     topics: ["backup", "resilience"],
+    frameworks: ["pcidss", "iso27001"],
 });

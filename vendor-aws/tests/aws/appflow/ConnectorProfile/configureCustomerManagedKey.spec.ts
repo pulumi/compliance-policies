@@ -41,6 +41,7 @@ describe("aws.appflow.ConnectorProfile.configureCustomerManagedKey", function() 
             services: ["appflow"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

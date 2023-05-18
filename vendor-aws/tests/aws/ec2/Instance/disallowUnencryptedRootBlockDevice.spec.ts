@@ -41,6 +41,7 @@ describe("aws.ec2.Instance.disallowUnencryptedRootBlockDevice", function() {
             services: ["ec2"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

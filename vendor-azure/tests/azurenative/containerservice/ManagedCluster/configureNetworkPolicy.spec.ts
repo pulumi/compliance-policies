@@ -50,6 +50,7 @@ describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", f
             services: ["containerservice"],
             severity: "high",
             topics: ["network", "kubernetes"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

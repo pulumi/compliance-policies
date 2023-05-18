@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi-premium-policies/policy-manager";
  * Check that ELB Load Balancers uses access logging.
  *
  * @severity medium
- * @frameworks none
+ * @frameworks iso27001, pcidss
  * @topics logging, network
  * @link none
  */
@@ -45,4 +45,5 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     services: ["elb"],
     severity: "medium",
     topics: ["network", "logging"],
+    frameworks: ["pcidss", "iso27001"],
 });

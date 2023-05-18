@@ -50,6 +50,7 @@ describe("azure.compute.ManagedDisk.disallowUnencryptedManagedDisk", function ()
             services: ["compute"],
             severity: "high",
             topics: ["storage", "encryption"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

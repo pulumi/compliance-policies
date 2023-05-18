@@ -41,6 +41,7 @@ describe("awsnative.athena.WorkGroup.configureCustomerManagedKey", function() {
             services: ["athena"],
             severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

@@ -41,6 +41,7 @@ describe("aws.athena.Workgroup.disallowUnencryptedWorkgroup", function() {
             services: ["athena"],
             severity: "high",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 

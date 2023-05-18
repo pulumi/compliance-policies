@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { OpenShiftManagedCluster } from "@pulumi/azure-native/containerservice/v20191027preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20191027preview.OpenShiftManagedCluster).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OpenShiftManagedCluster, (_, args, reportViolation) => {
-            reportViolation("Azure OpenShiftManagedCluster shouldn't use an unstable API (containerservice.v20191027preview.OpenShiftManagedCluster). A compatible replacement can be found at 'containerservice.OpenShiftManagedCluster'.");
+            reportViolation(
+                "Azure OpenShiftManagedCluster shouldn't use an unstable API (containerservice.v20191027preview.OpenShiftManagedCluster). A compatible replacement can be found at 'containerservice.OpenShiftManagedCluster'."
+            );
         }),
     },
     vendors: ["azure"],

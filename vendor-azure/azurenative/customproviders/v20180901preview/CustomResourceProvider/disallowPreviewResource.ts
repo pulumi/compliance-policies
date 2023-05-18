@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CustomResourceProvider } from "@pulumi/azure-native/customproviders/v20180901preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (customproviders.v20180901preview.CustomResourceProvider).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomResourceProvider, (_, args, reportViolation) => {
-            reportViolation("Azure CustomResourceProvider shouldn't use an unstable API (customproviders.v20180901preview.CustomResourceProvider). A compatible replacement can be found at 'customproviders.CustomResourceProvider'.");
+            reportViolation(
+                "Azure CustomResourceProvider shouldn't use an unstable API (customproviders.v20180901preview.CustomResourceProvider). A compatible replacement can be found at 'customproviders.CustomResourceProvider'."
+            );
         }),
     },
     vendors: ["azure"],

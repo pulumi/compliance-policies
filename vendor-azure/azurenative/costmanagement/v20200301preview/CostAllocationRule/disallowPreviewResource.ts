@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CostAllocationRule } from "@pulumi/azure-native/costmanagement/v20200301preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20200301preview.CostAllocationRule).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CostAllocationRule, (_, args, reportViolation) => {
-            reportViolation("Azure CostAllocationRule shouldn't use an unstable API (costmanagement.v20200301preview.CostAllocationRule). A compatible replacement can be found at 'costmanagement.CostAllocationRule'.");
+            reportViolation(
+                "Azure CostAllocationRule shouldn't use an unstable API (costmanagement.v20200301preview.CostAllocationRule). A compatible replacement can be found at 'costmanagement.CostAllocationRule'."
+            );
         }),
     },
     vendors: ["azure"],

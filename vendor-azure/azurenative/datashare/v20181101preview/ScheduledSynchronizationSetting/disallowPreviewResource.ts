@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ScheduledSynchronizationSetting } from "@pulumi/azure-native/datashare/v20181101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20181101preview.ScheduledSynchronizationSetting).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScheduledSynchronizationSetting, (_, args, reportViolation) => {
-            reportViolation("Azure ScheduledSynchronizationSetting shouldn't use an unstable API (datashare.v20181101preview.ScheduledSynchronizationSetting). A compatible replacement can be found at 'datashare.ScheduledSynchronizationSetting'.");
+            reportViolation(
+                "Azure ScheduledSynchronizationSetting shouldn't use an unstable API (datashare.v20181101preview.ScheduledSynchronizationSetting). A compatible replacement can be found at 'datashare.ScheduledSynchronizationSetting'."
+            );
         }),
     },
     vendors: ["azure"],

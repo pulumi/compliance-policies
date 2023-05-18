@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ScheduledAction } from "@pulumi/azure-native/costmanagement/v20220601preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20220601preview.ScheduledAction).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScheduledAction, (_, args, reportViolation) => {
-            reportViolation("Azure ScheduledAction shouldn't use an unstable API (costmanagement.v20220601preview.ScheduledAction). A compatible replacement can be found at 'costmanagement.ScheduledAction'.");
+            reportViolation(
+                "Azure ScheduledAction shouldn't use an unstable API (costmanagement.v20220601preview.ScheduledAction). A compatible replacement can be found at 'costmanagement.ScheduledAction'."
+            );
         }),
     },
     vendors: ["azure"],

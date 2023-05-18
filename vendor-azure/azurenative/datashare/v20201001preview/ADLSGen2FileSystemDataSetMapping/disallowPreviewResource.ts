@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ADLSGen2FileSystemDataSetMapping } from "@pulumi/azure-native/datashare/v20201001preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20201001preview.ADLSGen2FileSystemDataSetMapping).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ADLSGen2FileSystemDataSetMapping, (_, args, reportViolation) => {
-            reportViolation("Azure ADLSGen2FileSystemDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.ADLSGen2FileSystemDataSetMapping). A compatible replacement can be found at 'datashare.ADLSGen2FileSystemDataSetMapping'.");
+            reportViolation(
+                "Azure ADLSGen2FileSystemDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.ADLSGen2FileSystemDataSetMapping). A compatible replacement can be found at 'datashare.ADLSGen2FileSystemDataSetMapping'."
+            );
         }),
     },
     vendors: ["azure"],

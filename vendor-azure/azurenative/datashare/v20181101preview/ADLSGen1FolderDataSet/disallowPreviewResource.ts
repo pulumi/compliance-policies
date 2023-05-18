@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ADLSGen1FolderDataSet } from "@pulumi/azure-native/datashare/v20181101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20181101preview.ADLSGen1FolderDataSet).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ADLSGen1FolderDataSet, (_, args, reportViolation) => {
-            reportViolation("Azure ADLSGen1FolderDataSet shouldn't use an unstable API (datashare.v20181101preview.ADLSGen1FolderDataSet). A compatible replacement can be found at 'datashare.ADLSGen1FolderDataSet'.");
+            reportViolation(
+                "Azure ADLSGen1FolderDataSet shouldn't use an unstable API (datashare.v20181101preview.ADLSGen1FolderDataSet). A compatible replacement can be found at 'datashare.ADLSGen1FolderDataSet'."
+            );
         }),
     },
     vendors: ["azure"],

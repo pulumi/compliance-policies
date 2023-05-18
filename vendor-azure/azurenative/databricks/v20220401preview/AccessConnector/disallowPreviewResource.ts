@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { AccessConnector } from "@pulumi/azure-native/databricks/v20220401preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (databricks.v20220401preview.AccessConnector).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AccessConnector, (_, args, reportViolation) => {
-            reportViolation("Azure AccessConnector shouldn't use an unstable API (databricks.v20220401preview.AccessConnector). A compatible replacement can be found at 'databricks.AccessConnector'.");
+            reportViolation(
+                "Azure AccessConnector shouldn't use an unstable API (databricks.v20220401preview.AccessConnector). A compatible replacement can be found at 'databricks.AccessConnector'."
+            );
         }),
     },
     vendors: ["azure"],

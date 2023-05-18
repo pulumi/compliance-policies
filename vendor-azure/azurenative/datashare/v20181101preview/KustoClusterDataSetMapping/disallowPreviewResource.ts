@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { KustoClusterDataSetMapping } from "@pulumi/azure-native/datashare/v20181101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20181101preview.KustoClusterDataSetMapping).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KustoClusterDataSetMapping, (_, args, reportViolation) => {
-            reportViolation("Azure KustoClusterDataSetMapping shouldn't use an unstable API (datashare.v20181101preview.KustoClusterDataSetMapping). A compatible replacement can be found at 'datashare.KustoClusterDataSetMapping'.");
+            reportViolation(
+                "Azure KustoClusterDataSetMapping shouldn't use an unstable API (datashare.v20181101preview.KustoClusterDataSetMapping). A compatible replacement can be found at 'datashare.KustoClusterDataSetMapping'."
+            );
         }),
     },
     vendors: ["azure"],

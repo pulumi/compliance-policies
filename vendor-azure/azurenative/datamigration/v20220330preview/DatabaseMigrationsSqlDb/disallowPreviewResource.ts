@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { DatabaseMigrationsSqlDb } from "@pulumi/azure-native/datamigration/v20220330preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20220330preview.DatabaseMigrationsSqlDb).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseMigrationsSqlDb, (_, args, reportViolation) => {
-            reportViolation("Azure DatabaseMigrationsSqlDb shouldn't use an unstable API (datamigration.v20220330preview.DatabaseMigrationsSqlDb). A compatible replacement can be found at 'datamigration.DatabaseMigrationsSqlDb'.");
+            reportViolation(
+                "Azure DatabaseMigrationsSqlDb shouldn't use an unstable API (datamigration.v20220330preview.DatabaseMigrationsSqlDb). A compatible replacement can be found at 'datamigration.DatabaseMigrationsSqlDb'."
+            );
         }),
     },
     vendors: ["azure"],

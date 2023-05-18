@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ResourceGuard } from "@pulumi/azure-native/dataprotection/v20221101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (dataprotection.v20221101preview.ResourceGuard).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourceGuard, (_, args, reportViolation) => {
-            reportViolation("Azure ResourceGuard shouldn't use an unstable API (dataprotection.v20221101preview.ResourceGuard). A compatible replacement can be found at 'dataprotection.ResourceGuard'.");
+            reportViolation(
+                "Azure ResourceGuard shouldn't use an unstable API (dataprotection.v20221101preview.ResourceGuard). A compatible replacement can be found at 'dataprotection.ResourceGuard'."
+            );
         }),
     },
     vendors: ["azure"],

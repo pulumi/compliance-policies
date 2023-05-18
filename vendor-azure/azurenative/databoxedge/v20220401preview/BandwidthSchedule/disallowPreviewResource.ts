@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BandwidthSchedule } from "@pulumi/azure-native/databoxedge/v20220401preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20220401preview.BandwidthSchedule).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BandwidthSchedule, (_, args, reportViolation) => {
-            reportViolation("Azure BandwidthSchedule shouldn't use an unstable API (databoxedge.v20220401preview.BandwidthSchedule). A compatible replacement can be found at 'databoxedge.BandwidthSchedule'.");
+            reportViolation(
+                "Azure BandwidthSchedule shouldn't use an unstable API (databoxedge.v20220401preview.BandwidthSchedule). A compatible replacement can be found at 'databoxedge.BandwidthSchedule'."
+            );
         }),
     },
     vendors: ["azure"],

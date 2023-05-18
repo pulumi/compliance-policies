@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { FirewallRule } from "@pulumi/azure-native/datalakeanalytics/v20191101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datalakeanalytics.v20191101preview.FirewallRule).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallRule, (_, args, reportViolation) => {
-            reportViolation("Azure FirewallRule shouldn't use an unstable API (datalakeanalytics.v20191101preview.FirewallRule). A compatible replacement can be found at 'datalakeanalytics.FirewallRule'.");
+            reportViolation(
+                "Azure FirewallRule shouldn't use an unstable API (datalakeanalytics.v20191101preview.FirewallRule). A compatible replacement can be found at 'datalakeanalytics.FirewallRule'."
+            );
         }),
     },
     vendors: ["azure"],

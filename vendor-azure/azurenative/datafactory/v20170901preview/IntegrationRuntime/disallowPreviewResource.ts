@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { IntegrationRuntime } from "@pulumi/azure-native/datafactory/v20170901preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datafactory.v20170901preview.IntegrationRuntime).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IntegrationRuntime, (_, args, reportViolation) => {
-            reportViolation("Azure IntegrationRuntime shouldn't use an unstable API (datafactory.v20170901preview.IntegrationRuntime). A compatible replacement can be found at 'datafactory.IntegrationRuntime'.");
+            reportViolation(
+                "Azure IntegrationRuntime shouldn't use an unstable API (datafactory.v20170901preview.IntegrationRuntime). A compatible replacement can be found at 'datafactory.IntegrationRuntime'."
+            );
         }),
     },
     vendors: ["azure"],

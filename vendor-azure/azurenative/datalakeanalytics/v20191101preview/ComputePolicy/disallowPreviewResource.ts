@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ComputePolicy } from "@pulumi/azure-native/datalakeanalytics/v20191101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datalakeanalytics.v20191101preview.ComputePolicy).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ComputePolicy, (_, args, reportViolation) => {
-            reportViolation("Azure ComputePolicy shouldn't use an unstable API (datalakeanalytics.v20191101preview.ComputePolicy). A compatible replacement can be found at 'datalakeanalytics.ComputePolicy'.");
+            reportViolation(
+                "Azure ComputePolicy shouldn't use an unstable API (datalakeanalytics.v20191101preview.ComputePolicy). A compatible replacement can be found at 'datalakeanalytics.ComputePolicy'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CloudConnector } from "@pulumi/azure-native/costmanagement/v20190301preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20190301preview.CloudConnector).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CloudConnector, (_, args, reportViolation) => {
-            reportViolation("Azure CloudConnector shouldn't use an unstable API (costmanagement.v20190301preview.CloudConnector). A compatible replacement can be found at 'costmanagement.CloudConnector'.");
+            reportViolation(
+                "Azure CloudConnector shouldn't use an unstable API (costmanagement.v20190301preview.CloudConnector). A compatible replacement can be found at 'costmanagement.CloudConnector'."
+            );
         }),
     },
     vendors: ["azure"],

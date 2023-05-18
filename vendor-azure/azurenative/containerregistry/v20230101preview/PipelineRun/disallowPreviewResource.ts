@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { PipelineRun } from "@pulumi/azure-native/containerregistry/v20230101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20230101preview.PipelineRun).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PipelineRun, (_, args, reportViolation) => {
-            reportViolation("Azure PipelineRun shouldn't use an unstable API (containerregistry.v20230101preview.PipelineRun). A compatible replacement can be found at 'containerregistry.PipelineRun'.");
+            reportViolation(
+                "Azure PipelineRun shouldn't use an unstable API (containerregistry.v20230101preview.PipelineRun). A compatible replacement can be found at 'containerregistry.PipelineRun'."
+            );
         }),
     },
     vendors: ["azure"],

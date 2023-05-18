@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { MaintenanceConfiguration } from "@pulumi/azure-native/containerservice/v20230102preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20230102preview.MaintenanceConfiguration).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MaintenanceConfiguration, (_, args, reportViolation) => {
-            reportViolation("Azure MaintenanceConfiguration shouldn't use an unstable API (containerservice.v20230102preview.MaintenanceConfiguration). A compatible replacement can be found at 'containerservice.MaintenanceConfiguration'.");
+            reportViolation(
+                "Azure MaintenanceConfiguration shouldn't use an unstable API (containerservice.v20230102preview.MaintenanceConfiguration). A compatible replacement can be found at 'containerservice.MaintenanceConfiguration'."
+            );
         }),
     },
     vendors: ["azure"],

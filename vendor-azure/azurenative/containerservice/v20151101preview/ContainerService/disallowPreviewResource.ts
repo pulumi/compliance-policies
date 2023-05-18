@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ContainerService } from "@pulumi/azure-native/containerservice/v20151101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20151101preview.ContainerService).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ContainerService, (_, args, reportViolation) => {
-            reportViolation("Azure ContainerService shouldn't use an unstable API (containerservice.v20151101preview.ContainerService). A compatible replacement can be found at 'containerservice.v20170131.ContainerService'.");
+            reportViolation(
+                "Azure ContainerService shouldn't use an unstable API (containerservice.v20151101preview.ContainerService). A compatible replacement can be found at 'containerservice.v20170131.ContainerService'."
+            );
         }),
     },
     vendors: ["azure"],

@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { BlobContainerDataSet } from "@pulumi/azure-native/datashare/v20201001preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20201001preview.BlobContainerDataSet).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BlobContainerDataSet, (_, args, reportViolation) => {
-            reportViolation("Azure BlobContainerDataSet shouldn't use an unstable API (datashare.v20201001preview.BlobContainerDataSet). A compatible replacement can be found at 'datashare.BlobContainerDataSet'.");
+            reportViolation(
+                "Azure BlobContainerDataSet shouldn't use an unstable API (datashare.v20201001preview.BlobContainerDataSet). A compatible replacement can be found at 'datashare.BlobContainerDataSet'."
+            );
         }),
     },
     vendors: ["azure"],

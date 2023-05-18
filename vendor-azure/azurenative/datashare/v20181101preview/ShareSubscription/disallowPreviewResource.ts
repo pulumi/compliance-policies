@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ShareSubscription } from "@pulumi/azure-native/datashare/v20181101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20181101preview.ShareSubscription).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ShareSubscription, (_, args, reportViolation) => {
-            reportViolation("Azure ShareSubscription shouldn't use an unstable API (datashare.v20181101preview.ShareSubscription). A compatible replacement can be found at 'datashare.ShareSubscription'.");
+            reportViolation(
+                "Azure ShareSubscription shouldn't use an unstable API (datashare.v20181101preview.ShareSubscription). A compatible replacement can be found at 'datashare.ShareSubscription'."
+            );
         }),
     },
     vendors: ["azure"],

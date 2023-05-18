@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { CloudEdgeManagementRole } from "@pulumi/azure-native/databoxedge/v20230101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20230101preview.CloudEdgeManagementRole).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CloudEdgeManagementRole, (_, args, reportViolation) => {
-            reportViolation("Azure CloudEdgeManagementRole shouldn't use an unstable API (databoxedge.v20230101preview.CloudEdgeManagementRole). A compatible replacement can be found at 'databoxedge.CloudEdgeManagementRole'.");
+            reportViolation(
+                "Azure CloudEdgeManagementRole shouldn't use an unstable API (databoxedge.v20230101preview.CloudEdgeManagementRole). A compatible replacement can be found at 'databoxedge.CloudEdgeManagementRole'."
+            );
         }),
     },
     vendors: ["azure"],

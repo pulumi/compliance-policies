@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { MonitoringConfig } from "@pulumi/azure-native/databoxedge/v20210201preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20210201preview.MonitoringConfig).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MonitoringConfig, (_, args, reportViolation) => {
-            reportViolation("Azure MonitoringConfig shouldn't use an unstable API (databoxedge.v20210201preview.MonitoringConfig). A compatible replacement can be found at 'databoxedge.MonitoringConfig'.");
+            reportViolation(
+                "Azure MonitoringConfig shouldn't use an unstable API (databoxedge.v20210201preview.MonitoringConfig). A compatible replacement can be found at 'databoxedge.MonitoringConfig'."
+            );
         }),
     },
     vendors: ["azure"],

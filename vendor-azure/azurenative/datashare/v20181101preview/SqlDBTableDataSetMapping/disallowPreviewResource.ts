@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { SqlDBTableDataSetMapping } from "@pulumi/azure-native/datashare/v20181101preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20181101preview.SqlDBTableDataSetMapping).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlDBTableDataSetMapping, (_, args, reportViolation) => {
-            reportViolation("Azure SqlDBTableDataSetMapping shouldn't use an unstable API (datashare.v20181101preview.SqlDBTableDataSetMapping). A compatible replacement can be found at 'datashare.SqlDBTableDataSetMapping'.");
+            reportViolation(
+                "Azure SqlDBTableDataSetMapping shouldn't use an unstable API (datashare.v20181101preview.SqlDBTableDataSetMapping). A compatible replacement can be found at 'datashare.SqlDBTableDataSetMapping'."
+            );
         }),
     },
     vendors: ["azure"],

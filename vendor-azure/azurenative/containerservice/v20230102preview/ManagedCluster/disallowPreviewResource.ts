@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ManagedCluster } from "@pulumi/azure-native/containerservice/v20230102preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20230102preview.ManagedCluster).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedCluster, (_, args, reportViolation) => {
-            reportViolation("Azure ManagedCluster shouldn't use an unstable API (containerservice.v20230102preview.ManagedCluster). A compatible replacement can be found at 'containerservice.ManagedCluster'.");
+            reportViolation(
+                "Azure ManagedCluster shouldn't use an unstable API (containerservice.v20230102preview.ManagedCluster). A compatible replacement can be found at 'containerservice.ManagedCluster'."
+            );
         }),
     },
     vendors: ["azure"],

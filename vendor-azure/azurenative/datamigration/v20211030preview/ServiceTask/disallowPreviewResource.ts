@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { ServiceTask } from "@pulumi/azure-native/datamigration/v20211030preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20211030preview.ServiceTask).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServiceTask, (_, args, reportViolation) => {
-            reportViolation("Azure ServiceTask shouldn't use an unstable API (datamigration.v20211030preview.ServiceTask). A compatible replacement can be found at 'datamigration.v20210630.ServiceTask'.");
+            reportViolation(
+                "Azure ServiceTask shouldn't use an unstable API (datamigration.v20211030preview.ServiceTask). A compatible replacement can be found at 'datamigration.v20210630.ServiceTask'."
+            );
         }),
     },
     vendors: ["azure"],

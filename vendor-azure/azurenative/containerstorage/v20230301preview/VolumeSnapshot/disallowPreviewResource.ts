@@ -21,10 +21,7 @@
 /**
  * Default imports for a policy.
  */
-import {
-    ResourceValidationPolicy,
-    validateResourceOfType,
-} from "@pulumi/policy";
+import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 import { VolumeSnapshot } from "@pulumi/azure-native/containerstorage/v20230301preview";
 
@@ -42,7 +39,9 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerstorage.v20230301preview.VolumeSnapshot).",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeSnapshot, (_, args, reportViolation) => {
-            reportViolation("Azure VolumeSnapshot shouldn't use an unstable API (containerstorage.v20230301preview.VolumeSnapshot). A compatible replacement can be found at 'containerstorage.VolumeSnapshot'.");
+            reportViolation(
+                "Azure VolumeSnapshot shouldn't use an unstable API (containerstorage.v20230301preview.VolumeSnapshot). A compatible replacement can be found at 'containerstorage.VolumeSnapshot'."
+            );
         }),
     },
     vendors: ["azure"],

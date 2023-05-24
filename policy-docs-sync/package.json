@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi-premium-policies/policy-docs-updater",
+    "name": "@pulumi-premium-policies/policy-docs-sync",
     "version": "${VERSION}",
     "license": "Apache-2.0",
     "homepage": "https://www.pulumi.com",

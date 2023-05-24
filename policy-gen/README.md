@@ -30,7 +30,7 @@ pulumi package get-schema aws@5.24.0
 
 ```bash
 # fish
-git status | grep tests/ | grep resource | sort | while read F; code -r "$F"; sleep 0.6; end
+git status | grep tests/ | grep resource | sort | while read F; code -r "$F"; sleep 0.5; end
 # bash
 git status | grep tests/ | grep resource | sort | while read F; do code -r "$F"; sleep 1; done
 ```

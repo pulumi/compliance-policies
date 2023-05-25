@@ -6,7 +6,10 @@ VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME)
 
 # List all services in each provider directory, but search search path is excluded from the results.
 # The command hasn't been tested in MacOS
-TARGETS := 0-internal $(shell /bin/bash -c "find tests/aws/ tests/awsnative/ -maxdepth 1 ! -path tests/aws/ ! -path tests/awsnative/ -type d | grep -v 0-internal | sed 's/^tests\///g;' | sort")
+TARGETS := 0-internal $(shell /bin/bash -c "find tests/aws/ tests/awsnative/ -maxdepth 1 ! -path tests/aws/ ! -path tests/awsnative/ -type d | grep -v 0-internal | sed 's/^tests\///g;' | sort -du")
+
+# same as above, except that only modified unit tests (unstagged or modified) are taken into account
+FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/aws/ tests/awsnative/ -maxdepth 1 ! -path tests/aws/ ! -path tests/awsnative/ -type d | grep -v 0-internal | sed "s/^tests\///g;" | sort -du | while read D; do test ! -z "$$(git status --porcelain "tests/$$D")" && echo "$$D"; done')
 
 # After a few tests, I found that running on half available CPUs gives the best performance results.
 # Internally to NodeJS, it seems processing is done in parallel at up to 2 CPUs at a time.
@@ -41,8 +44,11 @@ stats:
 	@echo -n "Number of resources: "
 	@find $$PWD/aws $$PWD/awsnative -type f  | grep -v index.ts | wc -l
 
-test:: lint
+test::
 	@$(MAKE) -j $(MAKEJOBS) paralleltests
+
+fasttest::
+	@$(MAKE) -j $(MAKEJOBS) fastparalleltests
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are
@@ -50,5 +56,9 @@ test:: lint
 # the provider which improves performance and significantly reduces memory requirements.
 paralleltests: $(TARGETS)
 
+# Same as above, but running only a subset of unit tests to save time.
+fastparalleltests: $(FAST_TARGETS)
+
+# Note that $(TARGETS) includes $(FAST_TARGETS)
 $(TARGETS):
 	@yarn run targettedtest "tests/$@/**/*.spec.ts"

@@ -59,5 +59,6 @@ paralleltests: $(TARGETS)
 # Same as above, but running only a subset of unit tests to save time.
 fastparalleltests: $(FAST_TARGETS)
 
+# Note that $(TARGETS) includes $(FAST_TARGETS)
 $(TARGETS):
 	@yarn run targettedtest "tests/$@/**/*.spec.ts"

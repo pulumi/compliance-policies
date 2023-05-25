@@ -27,3 +27,4 @@ export * as IntegrationAccountMap from "./IntegrationAccountMap";
 export * as IntegrationAccountPartner from "./IntegrationAccountPartner";
 export * as IntegrationAccountSchema from "./IntegrationAccountSchema";
 export * as IntegrationAccountSession from "./IntegrationAccountSession";
+export * as Workflow from "./Workflow";

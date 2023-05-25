@@ -41,8 +41,10 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources: "
-	@find $$PWD/azure $$PWD/azurenative -type f | grep -v index.ts | wc -l
+	@echo -n "Number of resources for azure: "
+	@find $$PWD/azure -type f | grep -v index.ts | wc -l
+	@echo -n "Number of resources for azure-native: "
+	@find $$PWD/azurenative -type f | grep -v index.ts | wc -l
 
 test::
 	@$(MAKE) -j $(MAKEJOBS) paralleltests

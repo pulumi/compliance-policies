@@ -41,7 +41,7 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources: "
+	@echo -n "Number of resources for kubernetes: "
 	@find "$$PWD/kubernetes" -type f  | grep -v index.ts | wc -l
 
 test::

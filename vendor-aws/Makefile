@@ -41,8 +41,10 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources: "
-	@find $$PWD/aws $$PWD/awsnative -type f  | grep -v index.ts | wc -l
+	@echo -n "Number of resources for aws: "
+	@find $$PWD/aws -type f  | grep -v index.ts | wc -l
+	@echo -n "Number of resources for aws-native: "
+	@find $$PWD/awsnative -type f  | grep -v index.ts | wc -l
 
 test::
 	@$(MAKE) -j $(MAKEJOBS) paralleltests

@@ -26,6 +26,7 @@ build:: lint test
 	@yarn build
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
+	@rm -rf bin/tests/
 
 lint::
 	@yarn run lint

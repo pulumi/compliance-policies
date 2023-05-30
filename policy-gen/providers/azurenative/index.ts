@@ -140,6 +140,7 @@ export class AzureNativeProvider extends Provider {
                 resourceType: this.getResourceType(schemaResourceName),
                 scopedImport: this.getScopedImportFrom(schemaResourceName),
                 shortResourceType: this.getShortResourceType(schemaResourceName),
+                sourceCode: this.resourceBuilder.getSchemaResourceSourceCode(schemaResourceName, rawSchemaResourceName),
             };
 
             const sourceFile: string = this.getPolicySourceFile(schemaResourceName, policyVariableName);

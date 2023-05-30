@@ -7,7 +7,5 @@ import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(<%~ it.shortResourceType %>, {
-        resourceGroupName: "",
-    });
+    return createResourceValidationArgs(<%~ it.shortResourceType %>, <%~ it.sourceCode %>);
 }

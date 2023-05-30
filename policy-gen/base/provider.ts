@@ -26,6 +26,8 @@ import * as parser from "@babel/parser";
 import traverse, { NodePath } from "@babel/traverse";
 import * as babeltypes from "@babel/types";
 import * as eta from "eta";
+import * as prettier from "prettier";
+import { ResourceBuilder } from "./resourceBuilder";
 
 // type SchemaMap = Map<string, Map<string, Map<string, string>>>;
 
@@ -82,6 +84,8 @@ export class Provider {
 
     private policyCount: number = 0;
 
+    protected readonly resourceBuilder: ResourceBuilder;
+
     constructor(args: ProviderArgs) {
 
         this.args = args;
@@ -123,7 +127,9 @@ export class Provider {
             views: this.templateBasePath,
         });
 
-        // this.schemaToMap();
+        this.resourceBuilder = new ResourceBuilder({
+            provider: this,
+        });
     }
 
     /**********************************
@@ -448,14 +454,26 @@ export class Provider {
 
         if (!fs.existsSync(`${this.directory}/${specFile}`)) {
             const specFileHandle = fs.openSync(`${this.directory}/${specFile}`, "w", 0o640);
-            fs.appendFileSync(specFileHandle, specSourceCode);
+            fs.appendFileSync(specFileHandle, prettier.format(specSourceCode, {
+                tabWidth: 4,
+                printWidth: 200,
+                proseWrap: "preserve",
+                quoteProps: "preserve",
+                parser: "babel",
+            }));
             fs.closeSync(specFileHandle);
         }
 
         this.mkdirpSync(path.dirname(`${this.directory}/${resourceFile}`));
         if (resourceFile && !fs.existsSync(`${this.directory}/${resourceFile}`) && resourceSourceCode && resourceSourceCode.length > 0) {
             const specFileHandle = fs.openSync(`${this.directory}/${resourceFile}`, "w", 0o640);
-            fs.appendFileSync(specFileHandle, resourceSourceCode);
+            fs.appendFileSync(specFileHandle, prettier.format(resourceSourceCode, {
+                tabWidth: 4,
+                printWidth: 200,
+                proseWrap: "preserve",
+                quoteProps: "preserve",
+                parser: "babel",
+            }));
             fs.closeSync(specFileHandle);
         }
     }
@@ -524,7 +542,13 @@ export class Provider {
 
         if (!fs.existsSync(`${this.directory}/${sourceFile}`)) {
             const sourceFileHandle = fs.openSync(`${this.directory}/${sourceFile}`, "w", 0o640);
-            fs.appendFileSync(sourceFileHandle, policySourceCode);
+            fs.appendFileSync(sourceFileHandle, prettier.format(policySourceCode, {
+                tabWidth: 4,
+                printWidth: 200,
+                proseWrap: "preserve",
+                quoteProps: "preserve",
+                parser: "babel",
+            }));
             fs.closeSync(sourceFileHandle);
             this.policyCount++;
         }

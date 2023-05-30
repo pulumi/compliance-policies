@@ -166,3 +166,6 @@ export * as servicefabricmesh from "./servicefabricmesh";
 export * as servicelinker from "./servicelinker";
 export * as servicenetworking from "./servicenetworking";
 export * as signalrservice from "./signalrservice";
+export * as sql from "./sql";
+export * as softwareplan from "./softwareplan";
+export * as solutions from "./solutions";

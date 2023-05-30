@@ -6,10 +6,10 @@ VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME)
 
 # List all services in each provider directory, but search search path is excluded from the results.
 # The command hasn't been tested in MacOS
-TARGETS := 0-internal $(shell /bin/bash -c "find tests/azure/ tests/azurenative/ -maxdepth 1 ! -path tests/azure/ ! -path tests/azurenative/ -type d | grep -v 0-internal | sed 's/^tests\///g;' | sort -du")
+TARGETS := 0-internal $(shell /bin/bash -c "find tests/azure/ tests/azurenative/ -mindepth 2 -maxdepth 2 -type d | grep -v 0-internal | sed 's/^tests\///g;' | sort -du")
 
 # same as above, except that only modified unit tests (unstagged or modified) are taken into account
-FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/azure/ tests/azurenative/ -maxdepth 1 ! -path tests/azure/ ! -path tests/azurenative/ -type d | grep -v 0-internal | sed "s/^tests\///g;" | sort -du | while read D; do test ! -z "$$(git status --porcelain "tests/$$D")" && echo "$$D"; done')
+FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/azure/ tests/azurenative/ -mindepth 2 -maxdepth 2 -type d | grep -v 0-internal | sed "s/^tests\///g;" | sort -du | while read D; do test ! -z "$$(git status --porcelain "tests/$$D")" && echo "$$D"; done')
 
 # After a few tests, I found that running on half available CPUs gives the best performance results.
 # Internally to NodeJS, it seems processing is done in parallel at up to 2 CPUs at a time.

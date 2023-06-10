@@ -3,4 +3,4 @@ bin
 *.tgz
 **/package-lock.json
 yarn-error.log
-.bundle
+vendor-*/.bundle

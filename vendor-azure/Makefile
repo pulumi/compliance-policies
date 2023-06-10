@@ -18,15 +18,15 @@ MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || e
 
 .PHONY: build lint publish test paralleltests $(TARGETS)
 
-build:: lint test
+build::
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
-	@yarn install
-	@yarn build
-	@sed -e 's/\$${VERSION}/$(VERSION)/g' < package.json > bin/package.json
+	@cd ../policy-bundler/ && make azure
+	@cd .bundle && yarn install
+	@cd .bundle && yarn build --outDir ../bin
+	@sed -e 's/\$${VERSION}/$(VERSION)/g' < .bundle/package.json > ../bin/package.json
 	@cp ../README.md ../LICENSE bin/
-	@rm -rf bin/tests/
 
 lint::
 	@yarn run lint

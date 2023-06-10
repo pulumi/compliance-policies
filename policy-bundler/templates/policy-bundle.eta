@@ -1,0 +1,5 @@
+<%~ includeFile("./headers.eta") %>
+
+<% it.imports.forEach(function(imp){ %><%~ imp+"\n" %><% }) %>
+
+<%~ it.sourceCode %>

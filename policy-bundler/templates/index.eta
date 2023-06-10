@@ -1,0 +1,3 @@
+<%~ includeFile("./headers.eta") %>
+
+<% it.exports.forEach(function(_export){ %><%~ _export+"\n" %><% }) %>

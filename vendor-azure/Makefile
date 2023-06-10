@@ -25,7 +25,7 @@ build::
 	@cd ../policy-bundler/ && make azure
 	@cd .bundle && yarn install
 	@cd .bundle && yarn build --outDir ../bin
-	@sed -e 's/\$${VERSION}/$(VERSION)/g' < .bundle/package.json > ../bin/package.json
+	@sed -e 's/\$${VERSION}/$(VERSION)/g' < .bundle/package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
 
 lint::

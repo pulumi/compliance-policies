@@ -17,6 +17,7 @@ module.exports = {
         "mocha"
     ],
     "ignorePatterns": [
+        "assets/*",
         "bin/**/*.ts",
         ".eslintrc.*"
     ],

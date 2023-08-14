@@ -20,7 +20,7 @@
     "dependencies": {
         "@pulumi-premium-policies/policy-manager": "^0.0.3",
         "@pulumi/azure": "^5.39.0",
-        "@pulumi/azure-native": "^1.102.0",
+        "@pulumi/azure-native": "^2.3.0",
         "@pulumi/policy": "^1.5.0",
         "@pulumi/pulumi": "^3.66.0"
     },

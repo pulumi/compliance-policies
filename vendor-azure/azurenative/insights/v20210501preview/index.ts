@@ -18,7 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AutoscaleSetting from "./AutoscaleSetting";
 export * as DiagnosticSetting from "./DiagnosticSetting";
 export * as ManagementGroupDiagnosticSetting from "./ManagementGroupDiagnosticSetting";
 export * as SubscriptionDiagnosticSetting from "./SubscriptionDiagnosticSetting";

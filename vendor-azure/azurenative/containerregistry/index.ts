@@ -19,14 +19,7 @@
 // SOFTWARE.
 
 export * as v20160627preview from "./v20160627preview";
-export * as v20170601preview from "./v20170601preview";
 export * as v20180201preview from "./v20180201preview";
-export * as v20190501preview from "./v20190501preview";
 export * as v20190601preview from "./v20190601preview";
-export * as v20191201preview from "./v20191201preview";
-export * as v20201101preview from "./v20201101preview";
-export * as v20210601preview from "./v20210601preview";
-export * as v20210801preview from "./v20210801preview";
-export * as v20211201preview from "./v20211201preview";
-export * as v20220201preview from "./v20220201preview";
 export * as v20230101preview from "./v20230101preview";
+export * as v20230601preview from "./v20230601preview";

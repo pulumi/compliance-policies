@@ -18,13 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as IntegrationAccount from "./IntegrationAccount";
-export * as IntegrationAccountAgreement from "./IntegrationAccountAgreement";
-export * as IntegrationAccountAssembly from "./IntegrationAccountAssembly";
-export * as IntegrationAccountBatchConfiguration from "./IntegrationAccountBatchConfiguration";
-export * as IntegrationAccountCertificate from "./IntegrationAccountCertificate";
-export * as IntegrationAccountMap from "./IntegrationAccountMap";
-export * as IntegrationAccountPartner from "./IntegrationAccountPartner";
-export * as IntegrationAccountSchema from "./IntegrationAccountSchema";
-export * as IntegrationAccountSession from "./IntegrationAccountSession";
 export * as Workflow from "./Workflow";

@@ -19,5 +19,3 @@
 // SOFTWARE.
 
 export * as Budget from "./Budget";
-export * as View from "./View";
-export * as ViewByScope from "./ViewByScope";

@@ -18,8 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AdvancedThreatProtection from "./AdvancedThreatProtection";
-export * as DeviceSecurityGroup from "./DeviceSecurityGroup";
 export * as IotSecuritySolution from "./IotSecuritySolution";
 export * as SecurityContact from "./SecurityContact";
 export * as WorkspaceSetting from "./WorkspaceSetting";

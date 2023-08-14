@@ -21,4 +21,3 @@
 export * as Compute from "./Compute";
 export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as Workspace from "./Workspace";
-export * as WorkspaceConnection from "./WorkspaceConnection";

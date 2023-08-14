@@ -18,9 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Application from "./Application";
-export * as ApplicationType from "./ApplicationType";
-export * as ApplicationTypeVersion from "./ApplicationTypeVersion";
 export * as ManagedCluster from "./ManagedCluster";
-export * as NodeType from "./NodeType";
-export * as Service from "./Service";

@@ -18,6 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as CommunicationsGateway from "./CommunicationsGateway";
 export * as Contact from "./Contact";
 export * as TestLine from "./TestLine";

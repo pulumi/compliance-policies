@@ -20,5 +20,3 @@
 
 export * as Machine from "./Machine";
 export * as MachineExtension from "./MachineExtension";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as PrivateLinkScope from "./PrivateLinkScope";

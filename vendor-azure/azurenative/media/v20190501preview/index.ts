@@ -19,5 +19,3 @@
 // SOFTWARE.
 
 export * as LiveEvent from "./LiveEvent";
-export * as LiveOutput from "./LiveOutput";
-export * as StreamingEndpoint from "./StreamingEndpoint";

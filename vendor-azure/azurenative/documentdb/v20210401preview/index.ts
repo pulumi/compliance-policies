@@ -18,23 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as CassandraCluster from "./CassandraCluster";
-export * as CassandraDataCenter from "./CassandraDataCenter";
-export * as CassandraResourceCassandraKeyspace from "./CassandraResourceCassandraKeyspace";
-export * as CassandraResourceCassandraTable from "./CassandraResourceCassandraTable";
 export * as DatabaseAccount from "./DatabaseAccount";
-export * as GremlinResourceGremlinDatabase from "./GremlinResourceGremlinDatabase";
-export * as GremlinResourceGremlinGraph from "./GremlinResourceGremlinGraph";
-export * as MongoDBResourceMongoDBCollection from "./MongoDBResourceMongoDBCollection";
-export * as MongoDBResourceMongoDBDatabase from "./MongoDBResourceMongoDBDatabase";
-export * as NotebookWorkspace from "./NotebookWorkspace";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Service from "./Service";
-export * as SqlResourceSqlContainer from "./SqlResourceSqlContainer";
-export * as SqlResourceSqlDatabase from "./SqlResourceSqlDatabase";
-export * as SqlResourceSqlRoleAssignment from "./SqlResourceSqlRoleAssignment";
-export * as SqlResourceSqlRoleDefinition from "./SqlResourceSqlRoleDefinition";
-export * as SqlResourceSqlStoredProcedure from "./SqlResourceSqlStoredProcedure";
-export * as SqlResourceSqlTrigger from "./SqlResourceSqlTrigger";
-export * as SqlResourceSqlUserDefinedFunction from "./SqlResourceSqlUserDefinedFunction";
-export * as TableResourceTable from "./TableResourceTable";

@@ -18,17 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DisasterRecoveryConfig from "./DisasterRecoveryConfig";
-export * as MigrationConfig from "./MigrationConfig";
-export * as Namespace from "./Namespace";
-export * as NamespaceAuthorizationRule from "./NamespaceAuthorizationRule";
 export * as NamespaceIpFilterRule from "./NamespaceIpFilterRule";
-export * as NamespaceNetworkRuleSet from "./NamespaceNetworkRuleSet";
 export * as NamespaceVirtualNetworkRule from "./NamespaceVirtualNetworkRule";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Queue from "./Queue";
-export * as QueueAuthorizationRule from "./QueueAuthorizationRule";
-export * as Rule from "./Rule";
-export * as Subscription from "./Subscription";
-export * as Topic from "./Topic";
-export * as TopicAuthorizationRule from "./TopicAuthorizationRule";

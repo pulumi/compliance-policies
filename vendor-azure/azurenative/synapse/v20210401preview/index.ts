@@ -18,27 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as BigDataPool from "./BigDataPool";
 export * as DatabasePrincipalAssignment from "./DatabasePrincipalAssignment";
-export * as EventGridDataConnection from "./EventGridDataConnection";
-export * as EventHubDataConnection from "./EventHubDataConnection";
-export * as IntegrationRuntime from "./IntegrationRuntime";
-export * as IotHubDataConnection from "./IotHubDataConnection";
-export * as IpFirewallRule from "./IpFirewallRule";
-export * as Key from "./Key";
-export * as KustoPoolPrincipalAssignment from "./KustoPoolPrincipalAssignment";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as PrivateLinkHub from "./PrivateLinkHub";
-export * as ReadWriteDatabase from "./ReadWriteDatabase";
-export * as SqlPool from "./SqlPool";
-export * as SqlPoolSensitivityLabel from "./SqlPoolSensitivityLabel";
-export * as SqlPoolTransparentDataEncryption from "./SqlPoolTransparentDataEncryption";
-export * as SqlPoolVulnerabilityAssessment from "./SqlPoolVulnerabilityAssessment";
-export * as SqlPoolVulnerabilityAssessmentRuleBaseline from "./SqlPoolVulnerabilityAssessmentRuleBaseline";
-export * as SqlPoolWorkloadClassifier from "./SqlPoolWorkloadClassifier";
-export * as SqlPoolWorkloadGroup from "./SqlPoolWorkloadGroup";
-export * as Workspace from "./Workspace";
-export * as WorkspaceAadAdmin from "./WorkspaceAadAdmin";
-export * as WorkspaceManagedSqlServerVulnerabilityAssessment from "./WorkspaceManagedSqlServerVulnerabilityAssessment";
-export * as WorkspaceSqlAadAdmin from "./WorkspaceSqlAadAdmin";
 export * as KustoPool from "./KustoPool";

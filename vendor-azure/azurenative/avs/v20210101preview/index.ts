@@ -19,15 +19,4 @@
 // SOFTWARE.
 
 export * as Addon from "./Addon";
-export * as Authorization from "./Authorization";
-export * as Cluster from "./Cluster";
-export * as Datastore from "./Datastore";
-export * as GlobalReachConnection from "./GlobalReachConnection";
-export * as HcxEnterpriseSite from "./HcxEnterpriseSite";
-export * as PrivateCloud from "./PrivateCloud";
 export * as WorkloadNetworkDhcp from "./WorkloadNetworkDhcp";
-export * as WorkloadNetworkDnsService from "./WorkloadNetworkDnsService";
-export * as WorkloadNetworkDnsZone from "./WorkloadNetworkDnsZone";
-export * as WorkloadNetworkPortMirroring from "./WorkloadNetworkPortMirroring";
-export * as WorkloadNetworkSegment from "./WorkloadNetworkSegment";
-export * as WorkloadNetworkVMGroup from "./WorkloadNetworkVMGroup";

@@ -19,7 +19,5 @@
 // SOFTWARE.
 
 export * as v20180101preview from "./v20180101preview";
-export * as v20210101preview from "./v20210101preview";
-export * as v20210601preview from "./v20210601preview";
 export * as v20220101preview from "./v20220101preview";
 export * as v20221001preview from "./v20221001preview";

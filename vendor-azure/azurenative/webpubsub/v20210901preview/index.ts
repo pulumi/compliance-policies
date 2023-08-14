@@ -19,5 +19,3 @@
 // SOFTWARE.
 
 export * as WebPubSub from "./WebPubSub";
-export * as WebPubSubPrivateEndpointConnection from "./WebPubSubPrivateEndpointConnection";
-export * as WebPubSubSharedPrivateLinkResource from "./WebPubSubSharedPrivateLinkResource";

@@ -19,6 +19,5 @@
 // SOFTWARE.
 
 export * as AlertsSuppressionRule from "./AlertsSuppressionRule";
-export * as Assessment from "./Assessment";
 export * as AssessmentsMetadataSubscription from "./AssessmentsMetadataSubscription";
 export * as Automation from "./Automation";

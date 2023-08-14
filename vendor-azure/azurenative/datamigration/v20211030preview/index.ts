@@ -18,9 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as File from "./File";
 export * as Project from "./Project";
-export * as Service from "./Service";
-export * as ServiceTask from "./ServiceTask";
-export * as SqlMigrationService from "./SqlMigrationService";
-export * as Task from "./Task";

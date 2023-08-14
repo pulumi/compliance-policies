@@ -19,4 +19,3 @@
 // SOFTWARE.
 
 export * as SoftwareUpdateConfigurationByName from "./SoftwareUpdateConfigurationByName";
-export * as SourceControl from "./SourceControl";

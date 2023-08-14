@@ -19,5 +19,4 @@
 // SOFTWARE.
 
 export * as Account from "./Account";
-export * as ConfigurationProfileAssignment from "./ConfigurationProfileAssignment";
 export * as ConfigurationProfilePreference from "./ConfigurationProfilePreference";

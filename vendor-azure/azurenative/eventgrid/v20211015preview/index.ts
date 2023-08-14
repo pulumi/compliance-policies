@@ -18,21 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Channel from "./Channel";
-export * as Domain from "./Domain";
-export * as DomainEventSubscription from "./DomainEventSubscription";
-export * as DomainTopic from "./DomainTopic";
-export * as DomainTopicEventSubscription from "./DomainTopicEventSubscription";
 export * as EventChannel from "./EventChannel";
-export * as EventSubscription from "./EventSubscription";
-export * as PartnerConfiguration from "./PartnerConfiguration";
 export * as PartnerDestination from "./PartnerDestination";
-export * as PartnerNamespace from "./PartnerNamespace";
 export * as PartnerRegistration from "./PartnerRegistration";
-export * as PartnerTopic from "./PartnerTopic";
-export * as PartnerTopicEventSubscription from "./PartnerTopicEventSubscription";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as SystemTopic from "./SystemTopic";
-export * as SystemTopicEventSubscription from "./SystemTopicEventSubscription";
-export * as Topic from "./Topic";
-export * as TopicEventSubscription from "./TopicEventSubscription";

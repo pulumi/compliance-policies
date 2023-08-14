@@ -20,13 +20,11 @@
 
 export * as v20171201preview from "./v20171201preview";
 export * as v20180601privatepreview from "./v20180601privatepreview";
-export * as v20200101privatepreview from "./v20200101privatepreview";
 export * as v20200214preview from "./v20200214preview";
 export * as v20200214privatepreview from "./v20200214privatepreview";
 export * as v20201005privatepreview from "./v20201005privatepreview";
-export * as v20201105preview from "./v20201105preview";
 export * as v20210410privatepreview from "./v20210410privatepreview";
-export * as v20210601preview from "./v20210601preview";
 export * as v20210615privatepreview from "./v20210615privatepreview";
-export * as v20220120preview from "./v20220120preview";
 export * as v20220308preview from "./v20220308preview";
+export * as v20220501preview from "./v20220501preview";
+export * as v20230301preview from "./v20230301preview";

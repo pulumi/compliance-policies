@@ -18,20 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as BareMetalMachine from "./BareMetalMachine";
-export * as BareMetalMachineKeySet from "./BareMetalMachineKeySet";
-export * as BmcKeySet from "./BmcKeySet";
-export * as CloudServicesNetwork from "./CloudServicesNetwork";
 export * as Cluster from "./Cluster";
-export * as ClusterManager from "./ClusterManager";
-export * as Console from "./Console";
 export * as DefaultCniNetwork from "./DefaultCniNetwork";
 export * as HybridAksCluster from "./HybridAksCluster";
-export * as L2Network from "./L2Network";
-export * as L3Network from "./L3Network";
-export * as MetricsConfiguration from "./MetricsConfiguration";
-export * as Rack from "./Rack";
-export * as StorageAppliance from "./StorageAppliance";
-export * as TrunkedNetwork from "./TrunkedNetwork";
-export * as VirtualMachine from "./VirtualMachine";
-export * as Volume from "./Volume";

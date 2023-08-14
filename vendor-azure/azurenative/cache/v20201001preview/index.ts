@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Database from "./Database";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as RedisEnterprise from "./RedisEnterprise";

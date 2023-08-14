@@ -18,11 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as App from "./App";
-export * as Binding from "./Binding";
 export * as Certificate from "./Certificate";
-export * as ConfigServer from "./ConfigServer";
-export * as CustomDomain from "./CustomDomain";
-export * as Deployment from "./Deployment";
-export * as MonitoringSetting from "./MonitoringSetting";
-export * as Service from "./Service";

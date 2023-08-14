@@ -18,16 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DatabaseAdvisor from "./DatabaseAdvisor";
-export * as DatabaseBlobAuditingPolicy from "./DatabaseBlobAuditingPolicy";
-export * as EncryptionProtector from "./EncryptionProtector";
-export * as FailoverGroup from "./FailoverGroup";
-export * as FirewallRule from "./FirewallRule";
-export * as ManagedInstance from "./ManagedInstance";
-export * as Server from "./Server";
-export * as ServerAdvisor from "./ServerAdvisor";
 export * as ServerKey from "./ServerKey";
-export * as SyncAgent from "./SyncAgent";
-export * as SyncGroup from "./SyncGroup";
-export * as SyncMember from "./SyncMember";
-export * as VirtualNetworkRule from "./VirtualNetworkRule";

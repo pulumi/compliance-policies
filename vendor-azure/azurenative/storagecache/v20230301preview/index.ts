@@ -19,5 +19,4 @@
 // SOFTWARE.
 
 export * as Cache from "./Cache";
-export * as StorageTarget from "./StorageTarget";
 export * as AmlFilesystem from "./AmlFilesystem";

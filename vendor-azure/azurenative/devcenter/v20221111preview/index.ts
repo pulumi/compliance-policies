@@ -18,14 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AttachedNetworkByDevCenter from "./AttachedNetworkByDevCenter";
-export * as Catalog from "./Catalog";
 export * as DevBoxDefinition from "./DevBoxDefinition";
-export * as DevCenter from "./DevCenter";
-export * as EnvironmentType from "./EnvironmentType";
-export * as Gallery from "./Gallery";
-export * as NetworkConnection from "./NetworkConnection";
-export * as Pool from "./Pool";
-export * as Project from "./Project";
-export * as ProjectEnvironmentType from "./ProjectEnvironmentType";
-export * as Schedule from "./Schedule";

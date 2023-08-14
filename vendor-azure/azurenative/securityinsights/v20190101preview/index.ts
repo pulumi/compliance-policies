@@ -18,36 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AADDataConnector from "./AADDataConnector";
-export * as AATPDataConnector from "./AATPDataConnector";
-export * as ASCDataConnector from "./ASCDataConnector";
-export * as Action from "./Action";
-export * as Anomalies from "./Anomalies";
 export * as AutomationRule from "./AutomationRule";
-export * as AwsCloudTrailDataConnector from "./AwsCloudTrailDataConnector";
 export * as Bookmark from "./Bookmark";
 export * as BookmarkRelation from "./BookmarkRelation";
-export * as Dynamics365DataConnector from "./Dynamics365DataConnector";
-export * as EntityAnalytics from "./EntityAnalytics";
-export * as EyesOn from "./EyesOn";
-export * as FusionAlertRule from "./FusionAlertRule";
 export * as IPSyncer from "./IPSyncer";
-export * as Incident from "./Incident";
-export * as IncidentComment from "./IncidentComment";
-export * as IncidentRelation from "./IncidentRelation";
-export * as MCASDataConnector from "./MCASDataConnector";
-export * as MDATPDataConnector from "./MDATPDataConnector";
-export * as MLBehaviorAnalyticsAlertRule from "./MLBehaviorAnalyticsAlertRule";
-export * as MSTIDataConnector from "./MSTIDataConnector";
-export * as MTPDataConnector from "./MTPDataConnector";
-export * as MicrosoftSecurityIncidentCreationAlertRule from "./MicrosoftSecurityIncidentCreationAlertRule";
-export * as OfficeATPDataConnector from "./OfficeATPDataConnector";
-export * as OfficeDataConnector from "./OfficeDataConnector";
-export * as ScheduledAlertRule from "./ScheduledAlertRule";
-export * as TIDataConnector from "./TIDataConnector";
-export * as ThreatIntelligenceAlertRule from "./ThreatIntelligenceAlertRule";
-export * as ThreatIntelligenceIndicator from "./ThreatIntelligenceIndicator";
-export * as TiTaxiiDataConnector from "./TiTaxiiDataConnector";
-export * as Ueba from "./Ueba";
 export * as Watchlist from "./Watchlist";
-export * as WatchlistItem from "./WatchlistItem";

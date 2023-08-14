@@ -21,5 +21,3 @@
 export * as HybridIdentityMetadatum from "./HybridIdentityMetadatum";
 export * as ProvisionedCluster from "./ProvisionedCluster";
 export * as AgentPool from "./AgentPool";
-export * as StorageSpaceRetrieve from "./StorageSpaceRetrieve";
-export * as VirtualNetworkRetrieve from "./VirtualNetworkRetrieve";

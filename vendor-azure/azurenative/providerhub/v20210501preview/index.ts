@@ -18,12 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as DefaultRollout from "./DefaultRollout";
-export * as NotificationRegistration from "./NotificationRegistration";
 export * as OperationByProviderRegistration from "./OperationByProviderRegistration";
-export * as ProviderRegistration from "./ProviderRegistration";
-export * as ResourceTypeRegistration from "./ResourceTypeRegistration";
-export * as Skus from "./Skus";
-export * as SkusNestedResourceTypeFirst from "./SkusNestedResourceTypeFirst";
-export * as SkusNestedResourceTypeSecond from "./SkusNestedResourceTypeSecond";
-export * as SkusNestedResourceTypeThird from "./SkusNestedResourceTypeThird";

@@ -19,4 +19,3 @@
 // SOFTWARE.
 
 export * as ManagedCluster from "./ManagedCluster";
-export * as NodeType from "./NodeType";

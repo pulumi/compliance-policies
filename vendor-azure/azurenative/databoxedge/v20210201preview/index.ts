@@ -18,20 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as ArcAddon from "./ArcAddon";
-export * as BandwidthSchedule from "./BandwidthSchedule";
-export * as CloudEdgeManagementRole from "./CloudEdgeManagementRole";
-export * as Container from "./Container";
 export * as Device from "./Device";
-export * as FileEventTrigger from "./FileEventTrigger";
-export * as IoTAddon from "./IoTAddon";
-export * as IoTRole from "./IoTRole";
-export * as KubernetesRole from "./KubernetesRole";
-export * as MECRole from "./MECRole";
-export * as MonitoringConfig from "./MonitoringConfig";
-export * as Order from "./Order";
-export * as PeriodicTimerEventTrigger from "./PeriodicTimerEventTrigger";
-export * as Share from "./Share";
-export * as StorageAccount from "./StorageAccount";
-export * as StorageAccountCredential from "./StorageAccountCredential";
 export * as User from "./User";

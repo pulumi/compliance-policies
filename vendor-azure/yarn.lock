@@ -491,7 +491,7 @@
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
 
-"@pulumi/azure@^5.39.0":
+"@pulumi/azure@^5.48.1":
   version "5.48.1"
   resolved "https://registry.yarnpkg.com/@pulumi/azure/-/azure-5.48.1.tgz#4ccfb0735b11c5c5bbe75e09a1774250f25d9c85"
   integrity sha512-aoNrlWx8P/Dm2EVW/22LKLUQLv9i/CTYQtNii38RAuso/e8nxvCN2BbYQFofboTxYLwfsTLYpT19EAmo7/wmCw==

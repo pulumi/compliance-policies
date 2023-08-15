@@ -21,3 +21,6 @@
 export * as ClusterCIDR from "./ClusterCIDR";
 export * as ClusterCIDRList from "./ClusterCIDRList";
 export * as ClusterCIDRPatch from "./ClusterCIDRPatch";
+export * as IPAddress from "./IPAddress";
+export * as IPAddressList from "./IPAddressList";
+export * as IPAddressPatch from "./IPAddressPatch";

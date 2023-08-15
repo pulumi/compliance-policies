@@ -18,5 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v1beta1 from "./v1beta1";
-export * as v1alpha1 from "./v1alpha1";
+export { disallowAlphaResource } from "./disallowAlphaResource";

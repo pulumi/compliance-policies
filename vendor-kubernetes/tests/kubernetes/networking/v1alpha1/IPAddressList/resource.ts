@@ -28,5 +28,7 @@ import { IPAddressList } from "@pulumi/kubernetes/networking/v1alpha1";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(IPAddressList, {});
+    return createResourceValidationArgs(IPAddressList, {
+        items: [],
+    });
 }

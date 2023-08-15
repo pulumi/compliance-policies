@@ -28,5 +28,7 @@ import { ResourceClass } from "@pulumi/kubernetes/resource/v1alpha2";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(ResourceClass, {});
+    return createResourceValidationArgs(ResourceClass, {
+        driverName: "",
+    });
 }

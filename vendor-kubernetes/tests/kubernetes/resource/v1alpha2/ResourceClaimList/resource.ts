@@ -28,5 +28,7 @@ import { ResourceClaimList } from "@pulumi/kubernetes/resource/v1alpha2";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(ResourceClaimList, {});
+    return createResourceValidationArgs(ResourceClaimList, {
+        items: [],
+    });
 }

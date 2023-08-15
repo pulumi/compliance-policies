@@ -28,5 +28,9 @@ import { ClusterTrustBundle } from "@pulumi/kubernetes/certificates/v1alpha1";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(ClusterTrustBundle, {});
+    return createResourceValidationArgs(ClusterTrustBundle, {
+        spec: {
+            trustBundle: "",
+        },
+    });
 }

@@ -28,5 +28,11 @@ import { ResourceClaimTemplate } from "@pulumi/kubernetes/resource/v1alpha2";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(ResourceClaimTemplate, {});
+    return createResourceValidationArgs(ResourceClaimTemplate, {
+        spec: {
+            spec: {
+                resourceClassName: "",
+            },
+        },
+    });
 }

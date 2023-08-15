@@ -28,5 +28,7 @@ import { PodSchedulingContextList } from "@pulumi/kubernetes/resource/v1alpha2";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(PodSchedulingContextList, {});
+    return createResourceValidationArgs(PodSchedulingContextList, {
+        items: [],
+    });
 }

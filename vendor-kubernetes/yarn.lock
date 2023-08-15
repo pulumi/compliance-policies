@@ -339,10 +339,10 @@
     ts-node "^8.4.1"
     typescript "^3.4.6"
 
-"@pulumi/kubernetes@3":
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/@pulumi/kubernetes/-/kubernetes-3.23.1.tgz#be05fcc372dfbe5c8beec30fb2593a0db2b4060f"
-  integrity sha512-tT7vqvefOGSTAold9n2ej5rJBsbn+RtwxoDHLG0f4lR/VP68Z3P48lI1ziPMMqWPIBYJrBDyS3V/Fv1QWbyNDg==
+"@pulumi/kubernetes@4":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@pulumi/kubernetes/-/kubernetes-4.0.3.tgz#9051e5326180f5014701258f950935229a40e003"
+  integrity sha512-Ly/RjjDtc+Q0hbRUuvTdMRAJfqSCm7dhrDRxjv1l14ocGOaaE5RiLjNpJeAA5VPKpw8mRbdNTbYTqprZzsOteQ==
   dependencies:
     "@pulumi/pulumi" "^3.25.0"
     "@types/glob" "^5.0.35"

@@ -19,10 +19,3 @@
 // SOFTWARE.
 
 export * as Database from "./Database";
-export * as ManagedDatabase from "./ManagedDatabase";
-export * as Server from "./Server";
-export * as ServerAzureADAdministrator from "./ServerAzureADAdministrator";
-export * as SyncGroup from "./SyncGroup";
-export * as SyncMember from "./SyncMember";
-export * as WorkloadClassifier from "./WorkloadClassifier";
-export * as WorkloadGroup from "./WorkloadGroup";

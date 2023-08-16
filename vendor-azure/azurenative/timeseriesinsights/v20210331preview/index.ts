@@ -18,10 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AccessPolicy from "./AccessPolicy";
-export * as EventHubEventSource from "./EventHubEventSource";
-export * as Gen1Environment from "./Gen1Environment";
 export * as Gen2Environment from "./Gen2Environment";
-export * as IoTHubEventSource from "./IoTHubEventSource";
 export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as ReferenceDataSet from "./ReferenceDataSet";

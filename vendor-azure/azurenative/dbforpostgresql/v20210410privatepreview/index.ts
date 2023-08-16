@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Configuration from "./Configuration";
-export * as FirewallRule from "./FirewallRule";
 export * as Server from "./Server";

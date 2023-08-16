@@ -19,4 +19,3 @@
 // SOFTWARE.
 
 export * as Account from "./Account";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";

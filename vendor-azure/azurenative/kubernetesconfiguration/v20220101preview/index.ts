@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Extension from "./Extension";
 export * as FluxConfiguration from "./FluxConfiguration";
-export * as SourceControlConfiguration from "./SourceControlConfiguration";

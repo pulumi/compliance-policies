@@ -18,17 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AutomationAccount from "./AutomationAccount";
-export * as Certificate from "./Certificate";
-export * as Connection from "./Connection";
-export * as ConnectionType from "./ConnectionType";
-export * as Credential from "./Credential";
-export * as DscNodeConfiguration from "./DscNodeConfiguration";
-export * as JobSchedule from "./JobSchedule";
-export * as Module from "./Module";
 export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Python2Package from "./Python2Package";
-export * as Schedule from "./Schedule";
-export * as SourceControl from "./SourceControl";
-export * as Variable from "./Variable";
 export * as Watcher from "./Watcher";

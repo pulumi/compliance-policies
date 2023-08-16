@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as Service from "./Service";
-export * as SharedPrivateLinkResource from "./SharedPrivateLinkResource";

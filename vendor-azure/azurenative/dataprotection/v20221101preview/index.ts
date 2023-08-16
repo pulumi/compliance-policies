@@ -18,8 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as BackupInstance from "./BackupInstance";
-export * as BackupPolicy from "./BackupPolicy";
-export * as BackupVault from "./BackupVault";
-export * as DppResourceGuardProxy from "./DppResourceGuardProxy";
 export * as ResourceGuard from "./ResourceGuard";

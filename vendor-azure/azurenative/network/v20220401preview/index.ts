@@ -18,21 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AdminRule from "./AdminRule";
-export * as AdminRuleCollection from "./AdminRuleCollection";
-export * as ConnectivityConfiguration from "./ConnectivityConfiguration";
-export * as DefaultAdminRule from "./DefaultAdminRule";
 export * as DefaultUserRule from "./DefaultUserRule";
 export * as Endpoint from "./Endpoint";
-export * as ManagementGroupNetworkManagerConnection from "./ManagementGroupNetworkManagerConnection";
 export * as NetworkGroup from "./NetworkGroup";
-export * as NetworkManager from "./NetworkManager";
 export * as Profile from "./Profile";
-export * as ScopeConnection from "./ScopeConnection";
-export * as SecurityAdminConfiguration from "./SecurityAdminConfiguration";
 export * as SecurityUserConfiguration from "./SecurityUserConfiguration";
-export * as StaticMember from "./StaticMember";
-export * as SubscriptionNetworkManagerConnection from "./SubscriptionNetworkManagerConnection";
 export * as TrafficManagerUserMetricsKey from "./TrafficManagerUserMetricsKey";
 export * as UserRule from "./UserRule";
 export * as UserRuleCollection from "./UserRuleCollection";

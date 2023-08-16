@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as CommunicationService from "./CommunicationService";
 export * as Domain from "./Domain";
-export * as EmailService from "./EmailService";

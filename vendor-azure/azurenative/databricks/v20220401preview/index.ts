@@ -19,6 +19,3 @@
 // SOFTWARE.
 
 export * as AccessConnector from "./AccessConnector";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Workspace from "./Workspace";
-export * as VNetPeering from "./VNetPeering";

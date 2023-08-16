@@ -18,13 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AttachedDataNetwork from "./AttachedDataNetwork";
-export * as DataNetwork from "./DataNetwork";
-export * as MobileNetwork from "./MobileNetwork";
 export * as PacketCoreControlPlane from "./PacketCoreControlPlane";
-export * as PacketCoreDataPlane from "./PacketCoreDataPlane";
-export * as Service from "./Service";
 export * as Sim from "./Sim";
-export * as SimPolicy from "./SimPolicy";
-export * as Site from "./Site";
-export * as Slice from "./Slice";

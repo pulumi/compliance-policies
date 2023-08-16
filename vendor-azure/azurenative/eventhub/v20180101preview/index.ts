@@ -18,14 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Cluster from "./Cluster";
-export * as ConsumerGroup from "./ConsumerGroup";
-export * as DisasterRecoveryConfig from "./DisasterRecoveryConfig";
-export * as EventHub from "./EventHub";
-export * as EventHubAuthorizationRule from "./EventHubAuthorizationRule";
-export * as Namespace from "./Namespace";
-export * as NamespaceAuthorizationRule from "./NamespaceAuthorizationRule";
 export * as NamespaceIpFilterRule from "./NamespaceIpFilterRule";
-export * as NamespaceNetworkRuleSet from "./NamespaceNetworkRuleSet";
 export * as NamespaceVirtualNetworkRule from "./NamespaceVirtualNetworkRule";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";

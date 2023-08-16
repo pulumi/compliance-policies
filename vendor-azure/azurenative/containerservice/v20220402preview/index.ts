@@ -19,9 +19,3 @@
 // SOFTWARE.
 
 export * as AgentPool from "./AgentPool";
-export * as MaintenanceConfiguration from "./MaintenanceConfiguration";
-export * as ManagedCluster from "./ManagedCluster";
-export * as ManagedClusterSnapshot from "./ManagedClusterSnapshot";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Snapshot from "./Snapshot";
-export * as TrustedAccessRoleBinding from "./TrustedAccessRoleBinding";

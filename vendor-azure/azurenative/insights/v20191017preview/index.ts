@@ -20,5 +20,3 @@
 
 export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as PrivateLinkScope from "./PrivateLinkScope";
-export * as PrivateLinkScopedResource from "./PrivateLinkScopedResource";
-export * as WorkbookTemplate from "./WorkbookTemplate";

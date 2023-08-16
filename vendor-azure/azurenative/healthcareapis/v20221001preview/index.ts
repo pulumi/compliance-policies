@@ -19,11 +19,3 @@
 // SOFTWARE.
 
 export * as AnalyticsConnector from "./AnalyticsConnector";
-export * as DicomService from "./DicomService";
-export * as FhirService from "./FhirService";
-export * as IotConnector from "./IotConnector";
-export * as IotConnectorFhirDestination from "./IotConnectorFhirDestination";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as Service from "./Service";
-export * as Workspace from "./Workspace";
-export * as WorkspacePrivateEndpointConnection from "./WorkspacePrivateEndpointConnection";

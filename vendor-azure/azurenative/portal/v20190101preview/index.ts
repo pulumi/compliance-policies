@@ -19,4 +19,3 @@
 // SOFTWARE.
 
 export * as Dashboard from "./Dashboard";
-export * as TenantConfiguration from "./TenantConfiguration";

@@ -19,20 +19,4 @@
 // SOFTWARE.
 
 export * as BackupLongTermRetentionPolicy from "./BackupLongTermRetentionPolicy";
-export * as Database from "./Database";
-export * as DatabaseBlobAuditingPolicy from "./DatabaseBlobAuditingPolicy";
-export * as DatabaseVulnerabilityAssessment from "./DatabaseVulnerabilityAssessment";
-export * as DatabaseVulnerabilityAssessmentRuleBaseline from "./DatabaseVulnerabilityAssessmentRuleBaseline";
-export * as ExtendedDatabaseBlobAuditingPolicy from "./ExtendedDatabaseBlobAuditingPolicy";
-export * as ExtendedServerBlobAuditingPolicy from "./ExtendedServerBlobAuditingPolicy";
-export * as Job from "./Job";
-export * as JobAgent from "./JobAgent";
-export * as JobCredential from "./JobCredential";
-export * as JobStep from "./JobStep";
-export * as JobTargetGroup from "./JobTargetGroup";
-export * as ManagedDatabase from "./ManagedDatabase";
-export * as ManagedInstanceAdministrator from "./ManagedInstanceAdministrator";
-export * as SensitivityLabel from "./SensitivityLabel";
-export * as ServerBlobAuditingPolicy from "./ServerBlobAuditingPolicy";
-export * as ServerDnsAlias from "./ServerDnsAlias";
 export * as ServerSecurityAlertPolicy from "./ServerSecurityAlertPolicy";

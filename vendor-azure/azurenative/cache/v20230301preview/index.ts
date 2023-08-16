@@ -19,5 +19,5 @@
 // SOFTWARE.
 
 export * as Database from "./Database";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as RedisEnterprise from "./RedisEnterprise";
+export * as EnterprisePrivateEndpointConnection from "./EnterprisePrivateEndpointConnection";

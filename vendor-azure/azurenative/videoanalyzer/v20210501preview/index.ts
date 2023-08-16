@@ -18,7 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as AccessPolicy from "./AccessPolicy";
-export * as EdgeModule from "./EdgeModule";
 export * as Video from "./Video";
 export * as VideoAnalyzer from "./VideoAnalyzer";

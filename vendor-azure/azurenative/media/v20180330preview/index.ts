@@ -18,13 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Asset from "./Asset";
-export * as ContentKeyPolicy from "./ContentKeyPolicy";
-export * as Job from "./Job";
-export * as LiveEvent from "./LiveEvent";
-export * as LiveOutput from "./LiveOutput";
-export * as MediaService from "./MediaService";
-export * as StreamingEndpoint from "./StreamingEndpoint";
 export * as StreamingLocator from "./StreamingLocator";
-export * as StreamingPolicy from "./StreamingPolicy";
-export * as Transform from "./Transform";

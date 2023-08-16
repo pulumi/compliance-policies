@@ -18,8 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Administrator from "./Administrator";
-export * as Configuration from "./Configuration";
-export * as Database from "./Database";
-export * as FirewallRule from "./FirewallRule";
 export * as Server from "./Server";

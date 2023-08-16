@@ -18,15 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Cluster from "./Cluster";
-export * as Datastore from "./Datastore";
-export * as GuestAgent from "./GuestAgent";
-export * as Host from "./Host";
-export * as HybridIdentityMetadatum from "./HybridIdentityMetadatum";
-export * as InventoryItem from "./InventoryItem";
 export * as MachineExtension from "./MachineExtension";
-export * as ResourcePool from "./ResourcePool";
-export * as VCenter from "./VCenter";
-export * as VirtualMachine from "./VirtualMachine";
-export * as VirtualMachineTemplate from "./VirtualMachineTemplate";
-export * as VirtualNetwork from "./VirtualNetwork";

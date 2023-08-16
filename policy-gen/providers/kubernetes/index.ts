@@ -18,8 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import * as fs from "fs";
+import * as path from "path";
 import { Provider, ProviderArgs } from "../../base/provider";
 import * as eta from "eta";
+import { sys } from "typescript";
 
 export interface KubernetesProviderArgs {
     /**
@@ -47,6 +50,42 @@ export interface KubernetesProviderArgs {
 export class KubernetesProvider extends Provider {
 
     // private vendorName: string = "kubernetes";
+
+    /**
+     * Some modules in k8s contain the word `k8s.io` and others don't.
+     * The list below are the ones that don't so we can later add `k8s.io`
+     * to the resources that need it.
+     */
+    private readonly serviceToModule: { [key: string]: string } = {
+        "admissionregistration": "admissionregistration.k8s.io",
+        "apiextensions": "apiextensions.k8s.io",
+        "apiregistration": "apiregistration.k8s.io",
+        "apps": "apps",
+        "auditregistration": "auditregistration.k8s.io",
+        "authentication": "authentication.k8s.io",
+        "authorization": "authorization.k8s.io",
+        "autoscaling": "autoscaling",
+        "batch": "batch",
+        "certificates": "certificates.k8s.io",
+        "coordination": "coordination.k8s.io",
+        "core": "core",
+        "discovery": "discovery.k8s.io",
+        "events": "events.k8s.io",
+        "extensions": "extensions",
+        "flowcontrol": "flowcontrol.apiserver.k8s.io",
+        "helm": "helm.sh",
+        "helm.sh": "",
+        "meta": "meta",
+        "networking": "networking.k8s.io",
+        "node": "node.k8s.io",
+        "pkg": "pkg",
+        "policy": "policy",
+        "rbac": "rbac.authorization.k8s.io",
+        "resource": "resource.k8s.io",
+        "scheduling": "scheduling.k8s.io",
+        "settings": "settings.k8s.io",
+        "storage": "storage.k8s.io",
+    };
 
     constructor(args: KubernetesProviderArgs) {
 
@@ -86,6 +125,23 @@ export class KubernetesProvider extends Provider {
         const resourceTemplateFunction = eta.loadFile(resourceFilename, {
             filename: resourceFilename,
         });
+
+        /*
+         * Remove policies for resources that aren't present in the provider's schema.
+         *
+         */
+        const sourceFiles: string[] = this.findFilesByExtension(`${this.directory}/${this.schemaName}`, ".ts", policyVariableName).sort();
+        for(let x = 0; x < sourceFiles.length; x++) {
+            const sourceFile: string = sourceFiles[x].replace(`${this.directory}/`, "");
+
+            const schemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile);
+            if (!this.isSchemaResource(schemaResourceName)) {
+                const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
+
+                this.deleteSourceFile(sourceFile, policyVariableName);
+                this.deleteSpecFile(specFile);
+            }
+        }
 
         // eslint-disable-next-line prefer-const
         for (let [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
@@ -154,6 +210,19 @@ export class KubernetesProvider extends Provider {
         const resourceTemplateFunction = eta.loadFile(resourceFilename, {
             filename: resourceFilename,
         });
+
+        const sourceFiles: string[] = this.findFilesByExtension(`${this.directory}/${this.schemaName}`, ".ts", policyVariableName).sort();
+        for(let x = 0; x < sourceFiles.length; x++) {
+            const sourceFile: string = sourceFiles[x].replace(`${this.directory}/`, "");
+
+            const schemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile);
+            if (!this.isSchemaResource(schemaResourceName)) {
+                const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
+
+                this.deleteSourceFile(sourceFile, policyVariableName);
+                this.deleteSpecFile(specFile);
+            }
+        }
 
         // eslint-disable-next-line prefer-const
         for (let [schemaResourceName, _] of Object.entries(this.schemaObject.resources)) {
@@ -350,6 +419,9 @@ export class KubernetesProvider extends Provider {
 
         const moduleName: string = schemaResourceNameParts[1];
 
+        // console.log(schemaResourceName);
+        // console.log(schemaResourceNameParts);
+
         if (!this.schemaObject.language.nodejs.moduleToPackage[moduleName]) {
             throw new Error(`Unable to find 'schemaObject.language.nodejs.moduleToPackage."${moduleName}"' in the provider's schema.`);
         }
@@ -385,6 +457,64 @@ export class KubernetesProvider extends Provider {
     }
 
     /**
+     * Convert the path of a policy source file into a schema resource name.
+     *
+     * @param policySourceFile The absolute or relative path to the policy source file (`kubernetes/apps/v1/DaemonSet`). If `policySourceFile` starts with `/`, the path is assumed absolute.
+     * @returns A schema resource name. (`kubernetes:apps/v1:DaemonSet` or `admissionregistration.k8s.io/v1alpha1`).
+     */
+    private getSchemaResourceNameFromPath(policySourceFile: string): string {
+
+        let schemaResourceName: string = "";
+        let filename: string = "";
+        if (policySourceFile.startsWith("/")) {
+            filename = policySourceFile.replace(`${this.directory}/`, "");
+        } else {
+            filename = policySourceFile;
+        }
+        filename = path.dirname(filename);
+        filename = filename.replace(this.schemaName, this.args.name);
+
+        const matches = filename.match(/([a-zA-Z0-9\-]+\/?[a-zA-Z0-9\-]*?)/g);
+        if (matches) {
+            for (let x = 0; x < matches.length; x++) {
+                const match = matches[x];
+                if (x === 0 || x === (matches.length - 2)) {
+                    /**
+                     * First or last element.
+                     */
+                    schemaResourceName += match.replace("/", ":");
+                } else if (x === 1) {
+
+                    if (! Object.keys(this.serviceToModule).includes(match.replace("/", ""))) {
+                        throw new Error(`A service may be missing ${match.replace("/", "")}`);
+                    }
+                    schemaResourceName += `${this.serviceToModule[match.replace("/", "")]}/`;
+                } else {
+                    schemaResourceName += match;
+                }
+            }
+        }
+        return schemaResourceName;
+    }
+
+    /**
+     * Check if the provided resource name exists in the schema.
+     *
+     * @param schemaResourceName The schema resource name to search for (`azure-native:containerregistry/v20211201preview:ScopeMap`).
+     * @returns `true` if the resource exists in the schema, `false` otherwise.
+     */
+    private isSchemaResource(schemaResourceName: string): boolean {
+        if (!this.schemaObject.resources) {
+            throw new Error(`Unable to find 'schemaObject.resources' in the provider's schema`);
+        }
+
+        if (this.schemaObject.resources[schemaResourceName]) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * From the schema resource name, this function returns the scoped import statement.
      *
      * @param schemaResourceName The resource name as found in the schema(`azure-native:insights:guestDiagnosticsSetting` or `azure-native:insights/v20180601preview:guestDiagnosticsSetting`).
@@ -415,5 +545,38 @@ export class KubernetesProvider extends Provider {
         }
 
         return `@pulumi/${this.args.name}/${this.schemaObject.language.nodejs.moduleToPackage[moduleName]}`;
+    }
+
+    /**
+     * This function scans a given directory for files with a matching extensions and returns the results as an array.
+     *
+     * @param directory A path to an existing directory to find files in.
+     * @param extension The desired file extension to look for.
+     * @returns An array of files.
+     */
+    private findFilesByExtension(directory: string, extension: string, policyVariableName?: string): string[] {
+        const files: string[] = [];
+
+        const dirContent = fs.readdirSync(directory);
+
+        for (let index = 0; index < dirContent.length; index++) {
+            const file = dirContent[index];
+            const fullPath = path.join(directory, file);
+
+            if (fs.statSync(fullPath).isDirectory()) {
+                files.push(...this.findFilesByExtension(fullPath, extension, policyVariableName));
+            } else if (path.extname(file) === extension) {
+                if (path.basename(file) !== "index.ts") {
+                    if (policyVariableName) {
+                        if (path.basename(file).indexOf(policyVariableName) === 0) {
+                            files.push(fullPath);
+                        }
+                    } else {
+                        files.push(fullPath);
+                    }
+                }
+            }
+        }
+        return files;
     }
 };

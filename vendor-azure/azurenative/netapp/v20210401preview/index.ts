@@ -18,10 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Account from "./Account";
-export * as Backup from "./Backup";
 export * as BackupPolicy from "./BackupPolicy";
-export * as Pool from "./Pool";
-export * as Snapshot from "./Snapshot";
-export * as SnapshotPolicy from "./SnapshotPolicy";
-export * as Volume from "./Volume";

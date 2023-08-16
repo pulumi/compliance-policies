@@ -15,7 +15,7 @@
     ],
     "dependencies": {
         "@pulumi-premium-policies/policy-manager": "^0.0.3",
-        "@pulumi/kubernetes": "3",
+        "@pulumi/kubernetes": "4",
         "@pulumi/policy": "^1.5.0",
         "@pulumi/pulumi": "^3.0.0"
     },

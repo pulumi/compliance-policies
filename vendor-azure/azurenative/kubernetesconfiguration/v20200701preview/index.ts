@@ -19,4 +19,3 @@
 // SOFTWARE.
 
 export * as Extension from "./Extension";
-export * as SourceControlConfiguration from "./SourceControlConfiguration";

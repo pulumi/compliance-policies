@@ -18,12 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as ACIService from "./ACIService";
-export * as AKSService from "./AKSService";
-export * as EndpointVariant from "./EndpointVariant";
 export * as LabelingJob from "./LabelingJob";
 export * as LinkedService from "./LinkedService";
-export * as MachineLearningCompute from "./MachineLearningCompute";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as Workspace from "./Workspace";
-export * as WorkspaceConnection from "./WorkspaceConnection";

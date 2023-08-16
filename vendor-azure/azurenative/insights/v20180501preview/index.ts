@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Component from "./Component";
 export * as ProactiveDetectionConfiguration from "./ProactiveDetectionConfiguration";
-export * as WebTest from "./WebTest";

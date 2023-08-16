@@ -19,13 +19,4 @@
 // SOFTWARE.
 
 export * as Domain from "./Domain";
-export * as DomainTopic from "./DomainTopic";
-export * as EventChannel from "./EventChannel";
-export * as EventSubscription from "./EventSubscription";
-export * as PartnerNamespace from "./PartnerNamespace";
-export * as PartnerRegistration from "./PartnerRegistration";
-export * as PartnerTopicEventSubscription from "./PartnerTopicEventSubscription";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as SystemTopic from "./SystemTopic";
-export * as SystemTopicEventSubscription from "./SystemTopicEventSubscription";
 export * as Topic from "./Topic";

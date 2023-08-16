@@ -19,7 +19,5 @@
 // SOFTWARE.
 
 export * as Configuration from "./Configuration";
-export * as Database from "./Database";
-export * as FirewallRule from "./FirewallRule";
 export * as Server from "./Server";
 export * as ServerKey from "./ServerKey";

@@ -203,6 +203,14 @@ export class AzureNativeProvider extends Provider {
                  */
                 continue;
             }
+            /**
+             * There's a bug where the resource name starts with a lower case, see https://github.com/pulumi/pulumi-azure-native/issues/2365
+             * In v2, properly cased resources are available, but lower case
+             * resources aren't discarded. So we need to discard them.
+             */
+            if (aliasParts[2].charAt(0).toLowerCase() === aliasParts[2].charAt(0) ) {
+                continue;
+            }
 
             if (aliasParts[1].indexOf("/") >= 0) {
                 /**

@@ -19,11 +19,3 @@
 // SOFTWARE.
 
 export * as DatabaseSecurityAlertPolicy from "./DatabaseSecurityAlertPolicy";
-export * as InstancePool from "./InstancePool";
-export * as ManagedDatabase from "./ManagedDatabase";
-export * as ManagedDatabaseSensitivityLabel from "./ManagedDatabaseSensitivityLabel";
-export * as ManagedInstance from "./ManagedInstance";
-export * as ManagedInstanceVulnerabilityAssessment from "./ManagedInstanceVulnerabilityAssessment";
-export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
-export * as ServerAzureADAdministrator from "./ServerAzureADAdministrator";
-export * as ServerVulnerabilityAssessment from "./ServerVulnerabilityAssessment";

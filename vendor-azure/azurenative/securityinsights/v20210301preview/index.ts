@@ -50,4 +50,3 @@ export * as ThreatIntelligenceAlertRule from "./ThreatIntelligenceAlertRule";
 export * as TiTaxiiDataConnector from "./TiTaxiiDataConnector";
 export * as Ueba from "./Ueba";
 export * as Watchlist from "./Watchlist";
-export * as WatchlistItem from "./WatchlistItem";

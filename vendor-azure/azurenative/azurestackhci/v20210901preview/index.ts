@@ -19,11 +19,6 @@
 // SOFTWARE.
 
 export * as ArcSetting from "./ArcSetting";
-export * as Cluster from "./Cluster";
-export * as Extension from "./Extension";
-export * as GuestAgent from "./GuestAgent";
-export * as HybridIdentityMetadatum from "./HybridIdentityMetadatum";
-export * as MachineExtension from "./MachineExtension";
 export * as GalleryimageRetrieve from "./GalleryimageRetrieve";
 export * as Marketplacegalleryimage from "./Marketplacegalleryimage";
 export * as NetworkinterfaceRetrieve from "./NetworkinterfaceRetrieve";

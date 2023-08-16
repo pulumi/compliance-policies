@@ -18,6 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v20191001preview from "./v20191001preview";
-export * as v20200801preview from "./v20200801preview";
 export * as v20210401preview from "./v20210401preview";

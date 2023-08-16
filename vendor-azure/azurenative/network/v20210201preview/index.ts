@@ -21,8 +21,6 @@
 export * as AdminRule from "./AdminRule";
 export * as AdminRuleCollection from "./AdminRuleCollection";
 export * as ConnectivityConfiguration from "./ConnectivityConfiguration";
-export * as DefaultAdminRule from "./DefaultAdminRule";
-export * as DefaultUserRule from "./DefaultUserRule";
 export * as NetworkGroup from "./NetworkGroup";
 export * as NetworkManager from "./NetworkManager";
 export * as NetworkSecurityPerimeter from "./NetworkSecurityPerimeter";
@@ -30,7 +28,4 @@ export * as NspAccessRule from "./NspAccessRule";
 export * as NspAssociation from "./NspAssociation";
 export * as NspLink from "./NspLink";
 export * as NspProfile from "./NspProfile";
-export * as SecurityAdminConfiguration from "./SecurityAdminConfiguration";
-export * as SecurityUserConfiguration from "./SecurityUserConfiguration";
-export * as UserRule from "./UserRule";
 export * as UserRuleCollection from "./UserRuleCollection";

@@ -19,22 +19,9 @@
 // SOFTWARE.
 
 export * as ManagedCluster from "./ManagedCluster";
-export * as v20151101preview from "./v20151101preview";
-export * as v20180801preview from "./v20180801preview";
-export * as v20180930preview from "./v20180930preview";
-export * as v20190930preview from "./v20190930preview";
 export * as v20191027preview from "./v20191027preview";
-export * as v20211101preview from "./v20211101preview";
-export * as v20220102preview from "./v20220102preview";
-export * as v20220202preview from "./v20220202preview";
-export * as v20220302preview from "./v20220302preview";
 export * as v20220402preview from "./v20220402preview";
-export * as v20220502preview from "./v20220502preview";
-export * as v20220602preview from "./v20220602preview";
 export * as v20220702preview from "./v20220702preview";
-export * as v20220802preview from "./v20220802preview";
-export * as v20220803preview from "./v20220803preview";
-export * as v20220902preview from "./v20220902preview";
-export * as v20221002preview from "./v20221002preview";
-export * as v20221102preview from "./v20221102preview";
-export * as v20230102preview from "./v20230102preview";
+export * as v20230315preview from "./v20230315preview";
+export * as v20230502preview from "./v20230502preview";
+export * as v20230602preview from "./v20230602preview";

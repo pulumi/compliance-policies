@@ -19,8 +19,6 @@
 // SOFTWARE.
 
 export * as DnsForwardingRuleset from "./DnsForwardingRuleset";
-export * as DnsResolver from "./DnsResolver";
-export * as ForwardingRule from "./ForwardingRule";
 export * as InboundEndpoint from "./InboundEndpoint";
 export * as OutboundEndpoint from "./OutboundEndpoint";
-export * as VirtualNetworkLink from "./VirtualNetworkLink";
+export * as PrivateResolverVirtualNetworkLink from "./PrivateResolverVirtualNetworkLink";

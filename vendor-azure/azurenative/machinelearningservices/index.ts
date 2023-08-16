@@ -18,15 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as v20180301preview from "./v20180301preview";
-export * as v20200218preview from "./v20200218preview";
 export * as v20200501preview from "./v20200501preview";
 export * as v20200515preview from "./v20200515preview";
 export * as v20200901preview from "./v20200901preview";
 export * as v20210301preview from "./v20210301preview";
 export * as v20220101preview from "./v20220101preview";
 export * as v20220201preview from "./v20220201preview";
-export * as v20220601preview from "./v20220601preview";
-export * as v20221001preview from "./v20221001preview";
-export * as v20221201preview from "./v20221201preview";
 export * as v20230401preview from "./v20230401preview";
+export * as v20230601preview from "./v20230601preview";

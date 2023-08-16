@@ -18,7 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Function from "./Function";
-export * as Input from "./Input";
-export * as Output from "./Output";
 export * as StreamingJob from "./StreamingJob";

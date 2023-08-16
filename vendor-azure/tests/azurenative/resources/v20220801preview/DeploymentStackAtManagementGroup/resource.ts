@@ -32,7 +32,9 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         actionOnUnmanage: {
             resources: "",
         },
-        denySettings: {},
+        denySettings: {
+            mode: "",
+        },
         managementGroupId: "",
     });
 }

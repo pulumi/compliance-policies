@@ -18,9 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as Application from "./Application";
-export * as ApplicationGroup from "./ApplicationGroup";
-export * as HostPool from "./HostPool";
-export * as MSIXPackage from "./MSIXPackage";
 export * as ScalingPlan from "./ScalingPlan";
-export * as Workspace from "./Workspace";

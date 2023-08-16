@@ -28,6 +28,7 @@ import * as babeltypes from "@babel/types";
 import * as eta from "eta";
 import * as prettier from "prettier";
 import { ResourceBuilder } from "./resourceBuilder";
+import { sys } from "typescript";
 
 // type SchemaMap = Map<string, Map<string, Map<string, string>>>;
 
@@ -567,11 +568,17 @@ export class Provider {
         }
         fs.unlinkSync(`${this.directory}/${specFile}`);
 
-        const specDirectory: string = path.dirname(specFile);
+        const specDirectory: string = path.dirname(`${this.directory}/${specFile}`);
         const files = fs.readdirSync(specDirectory);
         if (files.length === 1) { // only `resource.ts` should remain
             fs.unlinkSync(`${specDirectory}/resource.ts`);
-            fs.rmdirSync(specDirectory);
+            // fs.rmdirSync(specDirectory);
+            /**
+             * Since this is our last file and we deleted the directory,
+             * we need to check if the upper directory is empty and delete
+             * it so unit tests don't fail.
+             */
+            this.deleteEmtpyDirectories(specDirectory);
         }
     }
 
@@ -590,6 +597,33 @@ export class Provider {
         const exportsFile: string = path.dirname(`${this.directory}/${sourceFile}`) + "/index.ts";
 
         this.removePolicyExport(exportsFile, policyVariableName);
+    }
+
+    /**
+     * Delete the provided folder as long as it's emtpy and crawl one
+     * level up to see if that folder is also emtpy. If so, then it is
+     * delete and the function moves onto one level up. This is done
+     * until a given directory is not empty or the `this.basePath` is
+     * encountered.
+     *
+     * @param directoryPath Path to crawl back up and delete empty directories.
+     */
+    protected deleteEmtpyDirectories(directoryPath: string) {
+        if (this.args.dryrun === true) {
+            return;
+        }
+
+        if (!fs.existsSync(directoryPath)) {
+            return;
+        }
+
+        const files = fs.readdirSync(directoryPath);
+
+        if (files.length === 0) {
+            fs.rmdirSync(directoryPath);
+            this.deleteEmtpyDirectories(path.dirname(directoryPath));
+            return;
+        }
     }
 
     /**

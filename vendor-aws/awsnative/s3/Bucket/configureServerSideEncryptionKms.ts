@@ -40,7 +40,7 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = policy
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
                     if (
                         !serverSideEncryptionConfiguration.serverSideEncryptionByDefault ||
-                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sSEAlgorithm !== awsnative.s3.BucketServerSideEncryptionByDefaultSSEAlgorithm.Awskms
+                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm !== awsnative.s3.BucketServerSideEncryptionByDefaultSseAlgorithm.Awskms
                     ) {
                         reportViolation("S3 Buckets Server-Side Encryption (SSE) should use AWS KMS.");
                     }

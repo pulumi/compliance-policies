@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBCluster.disallowUnencryptedStorage", function() {
-    const policy = policies.awsnative.rds.DBCluster.disallowUnencryptedStorage;
+describe("awsnative.rds.DbCluster.disallowSingleAvailabilityZone", function() {
+    const policy = policies.awsnative.rds.DbCluster.disallowSingleAvailabilityZone;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-unencrypted-storage");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-single-availability-zone");
     });
 
     it("registration", async function() {
@@ -40,8 +40,7 @@ describe("awsnative.rds.DBCluster.disallowUnencryptedStorage", function() {
             vendors: ["aws"],
             services: ["rds"],
             severity: "high",
-            topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            topics: ["availability"],
         });
     });
 
@@ -64,7 +63,7 @@ describe("awsnative.rds.DBCluster.disallowUnencryptedStorage", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.storageEncrypted = false;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster storage should be encrypted." });
+        args.props.availabilityZones = [enums.root.availabilityZone1];
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Clusters should use more than one availability zone." });
     });
 });

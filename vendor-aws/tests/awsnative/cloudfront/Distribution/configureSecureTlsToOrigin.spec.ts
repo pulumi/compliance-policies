@@ -64,7 +64,7 @@ describe("awsnative.cloudfront.Distribution.configureSecureTlsToOrigin", functio
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.distributionConfig.origins[1].customOriginConfig.originSSLProtocols = ["TLSv1.2", "TLSv1"];
+        args.props.distributionConfig.origins[1].customOriginConfig.originSslProtocols = ["TLSv1.2", "TLSv1"];
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should only use TLS 1.2 encryption to communicate with custom origins." });
     });
 });

@@ -23,27 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Cluster storage uses a customer-managed KMS key.
+ * Checks that RDS DB Instance storage is encrypted.
  *
- * @severity low
+ * @severity high
  * @frameworks iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-configure-customer-managed-key",
-        description: "Checks that RDS DB Cluster storage uses a customer-managed KMS key.",
+        name: "awsnative-rds-dbinstance-disallow-unencrypted-storage",
+        description: "Checks that RDS DB Instance storage is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
-            if (cluster.storageEncrypted && !cluster.kmsKeyId) {
-                reportViolation("RDS DB Cluster storage should be encrypted using a customer-managed key.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (instance, args, reportViolation) => {
+            if (!instance.storageEncrypted) {
+                reportViolation("RDS DB Instances storage should be encrypted.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "low",
+    severity: "high",
     topics: ["encryption", "storage"],
     frameworks: ["pcidss", "iso27001"],
 });

@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBCluster.disallowSingleAvailabilityZone", function() {
-    const policy = policies.awsnative.rds.DBCluster.disallowSingleAvailabilityZone;
+describe("awsnative.rds.DbCluster.configureBackupRetention", function() {
+    const policy = policies.awsnative.rds.DbCluster.configureBackupRetention;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-single-availability-zone");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-backup-retention");
     });
 
     it("registration", async function() {
@@ -39,8 +39,9 @@ describe("awsnative.rds.DBCluster.disallowSingleAvailabilityZone", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "high",
-            topics: ["availability"],
+            severity: "medium",
+            topics: ["backup", "resilience"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 
@@ -63,7 +64,7 @@ describe("awsnative.rds.DBCluster.disallowSingleAvailabilityZone", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.availabilityZones = [enums.root.availabilityZone1];
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Clusters should use more than one availability zone." });
+        args.props.backupRetentionPeriod = 2;
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster backup retention period is lower than 3 days." });
     });
 });

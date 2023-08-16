@@ -56,6 +56,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             triggerType: "Event",
         },
         description: "Salesforce to S3 AppFlow flow.",
-        kMSArn: enums.kms.keyArn,
+        kmsArn: enums.kms.keyArn,
     });
 }

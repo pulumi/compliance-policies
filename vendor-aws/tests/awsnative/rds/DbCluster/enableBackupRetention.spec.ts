@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBInstance.enableBackupRetention", function() {
-    const policy = policies.awsnative.rds.DBInstance.enableBackupRetention;
+describe("awsnative.rds.DbCluster.enableBackupRetention", function() {
+    const policy = policies.awsnative.rds.DbCluster.enableBackupRetention;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-backup-retention");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-enable-backup-retention");
     });
 
     it("registration", async function() {
@@ -65,6 +65,6 @@ describe("awsnative.rds.DBInstance.enableBackupRetention", function() {
     it("#2", async function() {
         const args = getResourceValidationArgs();
         args.props.backupRetentionPeriod = undefined;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances backup retention should be enabled." });
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Clusters backup retention should be enabled." });
     });
 });

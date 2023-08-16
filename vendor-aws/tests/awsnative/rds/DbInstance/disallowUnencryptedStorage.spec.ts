@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
-    const policy = policies.awsnative.rds.DBInstance.disallowPublicAccess;
+describe("awsnative.rds.DbInstance.disallowUnencryptedStorage", function() {
+    const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedStorage;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-public-access");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-storage");
     });
 
     it("registration", async function() {
@@ -39,8 +39,8 @@ describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "critical",
-            topics: ["network"],
+            severity: "high",
+            topics: ["encryption", "storage"],
             frameworks: ["pcidss", "iso27001"],
         });
     });
@@ -64,7 +64,7 @@ describe("awsnative.rds.DBInstance.disallowPublicAccess", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.publiclyAccessible = true;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances public access should not be enabled." });
+        args.props.storageEncrypted = false;
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances storage should be encrypted." });
     });
 });

@@ -23,24 +23,21 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Cluster backup retention policy is configured.
+ * Checks that RDS DB Clusters backup retention policy is enabled.
  *
  * @severity medium
  * @frameworks iso27001, pcidss
  * @topics backup, resilience
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const configureBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
+export const enableBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-configure-backup-retention",
-        description: "Checks that RDS DB Cluster backup retention policy is configured.",
+        name: "awsnative-rds-dbcluster-enable-backup-retention",
+        description: "Checks that RDS DB Clusters backup retention policy is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
-            /**
-             * 3 (three) days should be the minimum in order to have full weekend coverage.
-             */
-            if (cluster.backupRetentionPeriod && cluster.backupRetentionPeriod < 3) {
-                reportViolation("RDS DB Cluster backup retention period is lower than 3 days.");
+        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+            if (!cluster.backupRetentionPeriod) {
+                reportViolation("RDS DB Clusters backup retention should be enabled.");
             }
         }),
     },

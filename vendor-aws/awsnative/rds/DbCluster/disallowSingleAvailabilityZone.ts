@@ -23,27 +23,26 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Cluster storage is encrypted.
+ * Check that RDS DB Cluster doesn't use single availability zone.
  *
  * @severity high
- * @frameworks iso27001, pcidss
- * @topics encryption, storage
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ * @frameworks none
+ * @topics availability
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
  */
-export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-disallow-unencrypted-storage",
-        description: "Checks that RDS DB Cluster storage is encrypted.",
+        name: "awsnative-rds-dbcluster-disallow-single-availability-zone",
+        description: "Check that RDS DB Cluster doesn't use single availability zone.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
-            if (!cluster.storageEncrypted) {
-                reportViolation("RDS DB Cluster storage should be encrypted.");
+        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+            if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
+                reportViolation("RDS DB Clusters should use more than one availability zone.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
     severity: "high",
-    topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    topics: ["availability"],
 });

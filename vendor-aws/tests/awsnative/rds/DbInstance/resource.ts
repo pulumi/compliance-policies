@@ -29,12 +29,13 @@ import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(awsnative.rds.DBCluster, {
-        availabilityZones: [
-            enums.root.availabilityZone1,
-            enums.root.availabilityZone2,
-        ],
+    return createResourceValidationArgs(awsnative.rds.DbInstance, {
+        dbInstanceClass: enums.rds.dbInstanceClass,
         backupRetentionPeriod: 5,
+        vpcSecurityGroups: [ enums.ec2.vpcSecurityGroupId ],
+        enablePerformanceInsights: true,
+        performanceInsightsKmsKeyId: enums.kms.keyArn,
+        publiclyAccessible: false,
         storageEncrypted: true,
         kmsKeyId: enums.kms.keyArn,
     });

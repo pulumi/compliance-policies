@@ -44,10 +44,10 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 domainName: "www.example.com",
                 id: "test-ddlwJDFEJeweDdwki-example",
                 customOriginConfig: {
-                    hTTPPort: 80,
-                    hTTPSPort: 443,
+                    httpPort: 80,
+                    httpsPort: 443,
                     originProtocolPolicy: "https-only",
-                    originSSLProtocols: ["TLSv1.2"],
+                    originSslProtocols: ["TLSv1.2"],
                 },
             }],
             defaultCacheBehavior: {
@@ -63,9 +63,9 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                     "HEAD",
                     "OPTIONS",
                 ],
-                defaultTTL: 600,
-                maxTTL: 600,
-                minTTL: 600,
+                defaultTtl: 600,
+                maxTtl: 600,
+                minTtl: 600,
                 forwardedValues: {
                     queryString: true,
                     cookies: {
@@ -91,9 +91,9 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                         forward: "none",
                     },
                 },
-                defaultTTL: 60,
-                minTTL: 0,
-                maxTTL: 60,
+                defaultTtl: 60,
+                minTtl: 0,
+                maxTtl: 60,
                 compress: true,
                 viewerProtocolPolicy: "redirect-to-https",
             }],
@@ -114,7 +114,7 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 minimumProtocolVersion: "TLSv1.2_2021",
                 sslSupportMethod: "sni-only",
             },
-            webACLId: enums.waf.webAclArn,
+            webAclId: enums.waf.webAclArn,
         },
     });
 }

@@ -23,30 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instances backup retention policy is adequate.
+ * Checks that RDS DB Cluster storage uses a customer-managed KMS key.
  *
- * @severity medium
+ * @severity low
  * @frameworks iso27001, pcidss
- * @topics backup, resilience
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
+ * @topics encryption, storage
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const configureBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-configure-backup-retention",
-        description: "Checks that RDS DB Instances backup retention policy is adequate.",
+        name: "awsnative-rds-dbcluster-configure-customer-managed-key",
+        description: "Checks that RDS DB Cluster storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
-            /**
-             * 3 (three) days should be the minimum in order to have full weekend coverage.
-             */
-            if (instance.backupRetentionPeriod && instance.backupRetentionPeriod < 3) {
-                reportViolation("RDS DB Instances backup retention period should be greater than 3 days.");
+        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+            if (cluster.storageEncrypted && !cluster.kmsKeyId) {
+                reportViolation("RDS DB Cluster storage should be encrypted using a customer-managed key.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "medium",
-    topics: ["backup", "resilience"],
+    severity: "low",
+    topics: ["encryption", "storage"],
     frameworks: ["pcidss", "iso27001"],
 });

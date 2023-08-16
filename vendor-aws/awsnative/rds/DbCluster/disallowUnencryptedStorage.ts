@@ -23,27 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instances public access is not enabled.
+ * Checks that RDS DB Cluster storage is encrypted.
  *
- * @severity critical
+ * @severity high
  * @frameworks iso27001, pcidss
- * @topics network
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
+ * @topics encryption, storage
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-disallow-public-access",
-        description: "Checks that RDS DB Instances public access is not enabled.",
+        name: "awsnative-rds-dbcluster-disallow-unencrypted-storage",
+        description: "Checks that RDS DB Cluster storage is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
-            if (dbInstance.publiclyAccessible) {
-                reportViolation("RDS DB Instances public access should not be enabled.");
+        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+            if (!cluster.storageEncrypted) {
+                reportViolation("RDS DB Cluster storage should be encrypted.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "critical",
-    topics: ["network"],
+    severity: "high",
+    topics: ["encryption", "storage"],
     frameworks: ["pcidss", "iso27001"],
 });

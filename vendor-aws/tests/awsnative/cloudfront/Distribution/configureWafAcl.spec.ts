@@ -64,7 +64,7 @@ describe("awsnative.cloudfront.Distribution.configureWafAcl", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.distributionConfig.webACLId = "";
+        args.props.distributionConfig.webAclId = "";
         await assertHasResourceViolation(policy, args, { message: "CloudFront Distributions should have a WAF ACL associated." });
     });
 });

@@ -23,26 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instances have performance insights enabled.
+ * Checks that RDS DB Instance storage uses a customer-managed KMS key.
  *
  * @severity low
- * @frameworks none
- * @topics logging, performance
- * @link https://aws.amazon.com/rds/performance-insights/
+ * @frameworks iso27001, pcidss
+ * @topics encryption, storage
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const enablePerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
+export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-enable-performance-insights",
-        description: "Checks that RDS DB Instances have performance insights enabled.",
+        name: "awsnative-rds-dbinstance-configure-customer-managed-key",
+        description: "Checks that RDS DB Instance storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
-            if (!dbInstance.enablePerformanceInsights) {
-                reportViolation("RDS DB Instances should have performance insights enabled.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (instance, args, reportViolation) => {
+            if (instance.storageEncrypted && !instance.kmsKeyId) {
+                reportViolation("RDS DB Instances storage should be encrypted using a customer-managed key.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
     severity: "low",
-    topics: ["logging", "performance"],
+    topics: ["encryption", "storage"],
+    frameworks: ["pcidss", "iso27001"],
 });

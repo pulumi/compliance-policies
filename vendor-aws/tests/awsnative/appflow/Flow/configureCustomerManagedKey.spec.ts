@@ -64,7 +64,7 @@ describe("awsnative.appflow.Flow.configureCustomerManagedKey", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.kMSArn = undefined;
+        args.props.kmsArn = undefined;
         await assertHasResourceViolation(policy, args, { message: "AppFlow Flow should be encrypted using a customer-managed KMS key." });
     });
 });

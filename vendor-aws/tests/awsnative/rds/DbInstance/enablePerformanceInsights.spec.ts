@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBInstance.configureBackupRetention", function() {
-    const policy = policies.awsnative.rds.DBInstance.configureBackupRetention;
+describe("awsnative.rds.DbInstance.enablePerformanceInsights", function() {
+    const policy = policies.awsnative.rds.DbInstance.enablePerformanceInsights;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-backup-retention");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-performance-insights");
     });
 
     it("registration", async function() {
@@ -39,9 +39,8 @@ describe("awsnative.rds.DBInstance.configureBackupRetention", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "medium",
-            topics: ["backup", "resilience"],
-            frameworks: ["pcidss", "iso27001"],
+            severity: "low",
+            topics: ["logging", "performance"],
         });
     });
 
@@ -64,7 +63,7 @@ describe("awsnative.rds.DBInstance.configureBackupRetention", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.backupRetentionPeriod = 2;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances backup retention period should be greater than 3 days." });
+        args.props.enablePerformanceInsights = undefined;
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights enabled." });
     });
 });

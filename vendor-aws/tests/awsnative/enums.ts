@@ -69,7 +69,7 @@ export enum lambda {
 
 export enum rds {
     dbClusterIdentifier = "mydbcluster",
-    dBInstanceClass = "db.m4.large",
+    dbInstanceClass = "db.m4.large",
 }
 
 export enum s3 {

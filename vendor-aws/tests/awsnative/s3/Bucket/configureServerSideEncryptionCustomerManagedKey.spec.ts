@@ -64,7 +64,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", 
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.bucketEncryption.serverSideEncryptionConfiguration[0].serverSideEncryptionByDefault.kMSMasterKeyID = "";
+        args.props.bucketEncryption.serverSideEncryptionConfiguration[0].serverSideEncryptionByDefault.kmsMasterKeyId = "";
         await assertHasResourceViolation(policy, args, { message: "S3 Buckets Server-Side Encryption (SSE) should use a Customer-managed KMS key." });
     });
 });

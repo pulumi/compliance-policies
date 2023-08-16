@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBCluster.enableBackupRetention", function() {
-    const policy = policies.awsnative.rds.DBCluster.enableBackupRetention;
+describe("awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights", function() {
+    const policy = policies.awsnative.rds.DbInstance.disallowUnencryptedPerformanceInsights;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-enable-backup-retention");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights");
     });
 
     it("registration", async function() {
@@ -39,9 +39,8 @@ describe("awsnative.rds.DBCluster.enableBackupRetention", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "medium",
-            topics: ["backup", "resilience"],
-            frameworks: ["pcidss", "iso27001"],
+            severity: "high",
+            topics: ["encryption", "storage"],
         });
     });
 
@@ -64,7 +63,7 @@ describe("awsnative.rds.DBCluster.enableBackupRetention", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.backupRetentionPeriod = undefined;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Clusters backup retention should be enabled." });
+        args.props.performanceInsightsKmsKeyId = "";
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights encrypted." });
     });
 });

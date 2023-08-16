@@ -46,6 +46,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         connectorType: awsnative.appflow.ConnectorProfileConnectorType.Salesforce,
-        kMSArn: enums.kms.keyArn,
+        kmsArn: enums.kms.keyArn,
     });
 }

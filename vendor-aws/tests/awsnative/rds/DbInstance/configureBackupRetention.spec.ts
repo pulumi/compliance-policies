@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBCluster.configureCustomerManagedKey", function() {
-    const policy = policies.awsnative.rds.DBCluster.configureCustomerManagedKey;
+describe("awsnative.rds.DbInstance.configureBackupRetention", function() {
+    const policy = policies.awsnative.rds.DbInstance.configureBackupRetention;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-customer-managed-key");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-backup-retention");
     });
 
     it("registration", async function() {
@@ -39,8 +39,8 @@ describe("awsnative.rds.DBCluster.configureCustomerManagedKey", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "low",
-            topics: ["encryption", "storage"],
+            severity: "medium",
+            topics: ["backup", "resilience"],
             frameworks: ["pcidss", "iso27001"],
         });
     });
@@ -64,7 +64,7 @@ describe("awsnative.rds.DBCluster.configureCustomerManagedKey", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.kmsKeyId = "";
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster storage should be encrypted using a customer-managed key." });
+        args.props.backupRetentionPeriod = 2;
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances backup retention period should be greater than 3 days." });
     });
 });

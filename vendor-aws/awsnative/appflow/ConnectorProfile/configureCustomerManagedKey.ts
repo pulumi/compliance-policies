@@ -36,7 +36,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         description: "Check that AppFlow ConnectorProfile uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(awsnative.appflow.ConnectorProfile, (connectorProfile, args, reportViolation) => {
-            if (!connectorProfile.kMSArn) {
+            if (!connectorProfile.kmsArn) {
                 reportViolation("AppFlow Connector Profiles should be encrypted using a customer-managed KMS key.");
             }
         }),

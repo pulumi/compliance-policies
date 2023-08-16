@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBInstance.enablePerformanceInsights", function() {
-    const policy = policies.awsnative.rds.DBInstance.enablePerformanceInsights;
+describe("awsnative.rds.DbCluster.configureCustomerManagedKey", function() {
+    const policy = policies.awsnative.rds.DbCluster.configureCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-enable-performance-insights");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-customer-managed-key");
     });
 
     it("registration", async function() {
@@ -40,7 +40,8 @@ describe("awsnative.rds.DBInstance.enablePerformanceInsights", function() {
             vendors: ["aws"],
             services: ["rds"],
             severity: "low",
-            topics: ["logging", "performance"],
+            topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 
@@ -63,7 +64,7 @@ describe("awsnative.rds.DBInstance.enablePerformanceInsights", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.enablePerformanceInsights = undefined;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights enabled." });
+        args.props.kmsKeyId = "";
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster storage should be encrypted using a customer-managed key." });
     });
 });

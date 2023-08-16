@@ -44,8 +44,8 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             serverSideEncryptionConfiguration: [{
                 bucketKeyEnabled: true,
                 serverSideEncryptionByDefault: {
-                    sSEAlgorithm: awsnative.s3.BucketServerSideEncryptionByDefaultSSEAlgorithm.Awskms,
-                    kMSMasterKeyID: enums.kms.keyArn,
+                    sseAlgorithm: awsnative.s3.BucketServerSideEncryptionByDefaultSseAlgorithm.Awskms,
+                    kmsMasterKeyId: enums.kms.keyArn,
                 },
             }],
         },

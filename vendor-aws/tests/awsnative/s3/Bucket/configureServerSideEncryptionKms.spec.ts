@@ -65,7 +65,7 @@ describe("awsnative.s3.Bucket.configureServerSideEncryptionKms", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.bucketEncryption.serverSideEncryptionConfiguration[0].serverSideEncryptionByDefault.sSEAlgorithm = awsnative.s3.BucketServerSideEncryptionByDefaultSSEAlgorithm.Aes256;
+        args.props.bucketEncryption.serverSideEncryptionConfiguration[0].serverSideEncryptionByDefault.sseAlgorithm = awsnative.s3.BucketServerSideEncryptionByDefaultSseAlgorithm.Aes256;
         await assertHasResourceViolation(policy, args, { message: "S3 Buckets Server-Side Encryption (SSE) should use AWS KMS." });
     });
 });

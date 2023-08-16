@@ -23,27 +23,30 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instance storage is encrypted.
+ * Checks that RDS DB Instances backup retention policy is adequate.
  *
- * @severity high
+ * @severity medium
  * @frameworks iso27001, pcidss
- * @topics encryption, storage
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ * @topics backup, resilience
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManager.registerPolicy({
+export const configureBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-disallow-unencrypted-storage",
-        description: "Checks that RDS DB Instance storage is encrypted.",
+        name: "awsnative-rds-dbinstance-configure-backup-retention",
+        description: "Checks that RDS DB Instances backup retention policy is adequate.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
-            if (!instance.storageEncrypted) {
-                reportViolation("RDS DB Instances storage should be encrypted.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (instance, args, reportViolation) => {
+            /**
+             * 3 (three) days should be the minimum in order to have full weekend coverage.
+             */
+            if (instance.backupRetentionPeriod && instance.backupRetentionPeriod < 3) {
+                reportViolation("RDS DB Instances backup retention period should be greater than 3 days.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "high",
-    topics: ["encryption", "storage"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
     frameworks: ["pcidss", "iso27001"],
 });

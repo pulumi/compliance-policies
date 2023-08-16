@@ -64,7 +64,7 @@ describe("awsnative.appflow.ConnectorProfile.configureCustomerManagedKey", funct
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.kMSArn = undefined;
+        args.props.kmsArn = undefined;
         await assertHasResourceViolation(policy, args, { message: "AppFlow Connector Profiles should be encrypted using a customer-managed KMS key." });
     });
 });

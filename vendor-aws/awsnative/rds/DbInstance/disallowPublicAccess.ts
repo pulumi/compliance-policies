@@ -23,27 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instance storage uses a customer-managed KMS key.
+ * Checks that RDS DB Instances public access is not enabled.
  *
- * @severity low
+ * @severity critical
  * @frameworks iso27001, pcidss
- * @topics encryption, storage
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ * @topics network
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html
  */
-export const configureCustomerManagedKey: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-configure-customer-managed-key",
-        description: "Checks that RDS DB Instance storage uses a customer-managed KMS key.",
+        name: "awsnative-rds-dbinstance-disallow-public-access",
+        description: "Checks that RDS DB Instances public access is not enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (instance, args, reportViolation) => {
-            if (instance.storageEncrypted && !instance.kmsKeyId) {
-                reportViolation("RDS DB Instances storage should be encrypted using a customer-managed key.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (dbInstance, args, reportViolation) => {
+            if (dbInstance.publiclyAccessible) {
+                reportViolation("RDS DB Instances public access should not be enabled.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "low",
-    topics: ["encryption", "storage"],
+    severity: "critical",
+    topics: ["network"],
     frameworks: ["pcidss", "iso27001"],
 });

@@ -23,26 +23,26 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Instances performance insights is encrypted.
+ * Checks that RDS DB Instances have performance insights enabled.
  *
- * @severity high
+ * @severity low
  * @frameworks none
- * @topics encryption, storage
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
+ * @topics logging, performance
+ * @link https://aws.amazon.com/rds/performance-insights/
  */
-export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
+export const enablePerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights",
-        description: "Checks that RDS DB Instances performance insights is encrypted.",
+        name: "awsnative-rds-dbinstance-enable-performance-insights",
+        description: "Checks that RDS DB Instances have performance insights enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBInstance, (dbInstance, args, reportViolation) => {
-            if (dbInstance.enablePerformanceInsights && !dbInstance.performanceInsightsKMSKeyId) {
-                reportViolation("RDS DB Instances should have performance insights encrypted.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (dbInstance, args, reportViolation) => {
+            if (!dbInstance.enablePerformanceInsights) {
+                reportViolation("RDS DB Instances should have performance insights enabled.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "high",
-    topics: ["encryption", "storage"],
+    severity: "low",
+    topics: ["logging", "performance"],
 });

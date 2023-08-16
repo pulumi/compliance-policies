@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights", function() {
-    const policy = policies.awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights;
+describe("awsnative.rds.DbInstance.configureCustomerManagedKey", function() {
+    const policy = policies.awsnative.rds.DbInstance.configureCustomerManagedKey;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights");
+        assertResourcePolicyName(policy, "awsnative-rds-dbinstance-configure-customer-managed-key");
     });
 
     it("registration", async function() {
@@ -39,8 +39,9 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights", func
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "high",
+            severity: "low",
             topics: ["encryption", "storage"],
+            frameworks: ["pcidss", "iso27001"],
         });
     });
 
@@ -63,7 +64,7 @@ describe("awsnative.rds.DBInstance.disallowUnencryptedPerformanceInsights", func
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.performanceInsightsKMSKeyId = "";
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances should have performance insights encrypted." });
+        args.props.kmsKeyId = "";
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Instances storage should be encrypted using a customer-managed key." });
     });
 });

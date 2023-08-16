@@ -24,11 +24,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("awsnative.rds.DBCluster.configureBackupRetention", function() {
-    const policy = policies.awsnative.rds.DBCluster.configureBackupRetention;
+describe("awsnative.rds.DbCluster.disallowUnencryptedStorage", function() {
+    const policy = policies.awsnative.rds.DbCluster.disallowUnencryptedStorage;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-configure-backup-retention");
+        assertResourcePolicyName(policy, "awsnative-rds-dbcluster-disallow-unencrypted-storage");
     });
 
     it("registration", async function() {
@@ -39,8 +39,8 @@ describe("awsnative.rds.DBCluster.configureBackupRetention", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["rds"],
-            severity: "medium",
-            topics: ["backup", "resilience"],
+            severity: "high",
+            topics: ["encryption", "storage"],
             frameworks: ["pcidss", "iso27001"],
         });
     });
@@ -64,7 +64,7 @@ describe("awsnative.rds.DBCluster.configureBackupRetention", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.backupRetentionPeriod = 2;
-        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster backup retention period is lower than 3 days." });
+        args.props.storageEncrypted = false;
+        await assertHasResourceViolation(policy, args, { message: "RDS DB Cluster storage should be encrypted." });
     });
 });

@@ -23,26 +23,27 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Check that RDS DB Cluster doesn't use single availability zone.
+ * Checks that RDS DB Instances backup retention policy is enabled.
  *
- * @severity high
- * @frameworks none
- * @topics availability
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
+ * @severity medium
+ * @frameworks iso27001, pcidss
+ * @topics backup, resilience
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
-export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyManager.registerPolicy({
+export const enableBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-disallow-single-availability-zone",
-        description: "Check that RDS DB Cluster doesn't use single availability zone.",
+        name: "awsnative-rds-dbinstance-enable-backup-retention",
+        description: "Checks that RDS DB Instances backup retention policy is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
-            if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
-                reportViolation("RDS DB Clusters should use more than one availability zone.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (instance, args, reportViolation) => {
+            if (!instance.backupRetentionPeriod) {
+                reportViolation("RDS DB Instances backup retention should be enabled.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "high",
-    topics: ["availability"],
+    severity: "medium",
+    topics: ["backup", "resilience"],
+    frameworks: ["pcidss", "iso27001"],
 });

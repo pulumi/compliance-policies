@@ -23,27 +23,26 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that RDS DB Clusters backup retention policy is enabled.
+ * Checks that RDS DB Instances performance insights is encrypted.
  *
- * @severity medium
- * @frameworks iso27001, pcidss
- * @topics backup, resilience
- * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
+ * @severity high
+ * @frameworks none
+ * @topics encryption, storage
+ * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
-export const enableBackupRetention: ResourceValidationPolicy = policyManager.registerPolicy({
+export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "awsnative-rds-dbcluster-enable-backup-retention",
-        description: "Checks that RDS DB Clusters backup retention policy is enabled.",
+        name: "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights",
+        description: "Checks that RDS DB Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DBCluster, (cluster, args, reportViolation) => {
-            if (!cluster.backupRetentionPeriod) {
-                reportViolation("RDS DB Clusters backup retention should be enabled.");
+        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (dbInstance, args, reportViolation) => {
+            if (dbInstance.enablePerformanceInsights && !dbInstance.performanceInsightsKmsKeyId) {
+                reportViolation("RDS DB Instances should have performance insights encrypted.");
             }
         }),
     },
     vendors: ["aws"],
     services: ["rds"],
-    severity: "medium",
-    topics: ["backup", "resilience"],
-    frameworks: ["pcidss", "iso27001"],
+    severity: "high",
+    topics: ["encryption", "storage"],
 });

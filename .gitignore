@@ -2,5 +2,6 @@ node_modules
 bin
 *.tgz
 **/package-lock.json
+**/yarn.lock
 yarn-error.log
 vendor-*/.bundle

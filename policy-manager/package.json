@@ -14,11 +14,10 @@
         "iac",
         "security",
         "compliance",
-        "infrastructure-as-code",
-        "unit-tests"
+        "infrastructure-as-code"
     ],
     "dependencies": {
-        "@pulumi/policy": "^1.5.0",
+        "@pulumi/policy": "^1.7.0",
         "findup-sync": "^5.0.0",
         "micromatch": "^4.0.5",
         "ts-node": "^10.9.1",
@@ -26,9 +25,9 @@
     },
     "devDependencies": {
         "@types/findup-sync": "^4.0.2",
-        "@types/node": "16",
-        "@typescript-eslint/eslint-plugin": "^5.47.1",
-        "@typescript-eslint/parser": "^5.44.0",
+        "@types/node": "18",
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "@typescript-eslint/parser": "^6.4.0",
         "eslint": "^8.28.0",
         "eslint-plugin-header": "^3.1.1",
         "eslint-plugin-import": "^2.26.0"

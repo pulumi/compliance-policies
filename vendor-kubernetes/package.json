@@ -14,24 +14,24 @@
         "kubernetes"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "^0.0.3",
-        "@pulumi/kubernetes": "4",
+        "@pulumi-premium-policies/policy-manager": "0.0.4",
+        "@pulumi/kubernetes": "^4.1.0",
         "@pulumi/policy": "^1.5.0",
-        "@pulumi/pulumi": "^3.0.0"
+        "@pulumi/pulumi": "^3.78.1"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.11",
+        "@pulumi-premium-policies/unit-test-helpers": "0.0.12",
         "@types/mocha": "^10.0.1",
-        "@types/node": "16",
-        "@typescript-eslint/eslint-plugin": "^5.51.0",
-        "@typescript-eslint/parser": "^5.51.0",
-        "eslint": "^8.34.0",
+        "@types/node": "18",
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "@typescript-eslint/parser": "^6.4.0",
+        "eslint": "^8.40.0",
         "eslint-plugin-header": "^3.1.1",
         "eslint-plugin-import": "^2.27.5",
-        "eslint-plugin-jsdoc": "^40.0.0",
+        "eslint-plugin-jsdoc": "^43.2.0",
         "eslint-plugin-mocha": "^10.1.0",
         "mocha": "^10.2.0",
-        "ts-node": "^8.4.1",
+        "ts-node": "^10.9.1",
         "typescript": "^4.9.0"
     },
     "scripts": {

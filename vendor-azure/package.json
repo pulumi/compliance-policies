@@ -12,10 +12,7 @@
         "security",
         "compliance",
         "infrastructure-as-code",
-        "aws",
-        "azure",
-        "gcp",
-        "kubernetes"
+        "azure"
     ],
     "dependencies": {
         "@pulumi-premium-policies/policy-manager": "0.0.4",

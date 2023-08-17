@@ -16,7 +16,7 @@ FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/azure/ tests/azurena
 # The value can be changed at runtime with MAKEJOBS=1 make test
 MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || echo $$(($$(nproc)/2))")
 
-.PHONY: build lint publish test paralleltests $(TARGETS)
+.PHONY: build lint publish test fasttest sequentialtest fastsequentialtest $(TARGETS)
 
 build::
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
@@ -48,19 +48,19 @@ stats:
 	@find $$PWD/azurenative -type f | grep -v index.ts | wc -l
 
 test::
-	@$(MAKE) -j $(MAKEJOBS) paralleltests
+	@$(MAKE) -j $(MAKEJOBS) sequentialtest
 
 fasttest::
-	@$(MAKE) -j $(MAKEJOBS) fastparalleltests
+	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are
 # executed per service instead as a single block. This way, NodeJS only loads a fraction of
 # the provider which improves performance and significantly reduces memory requirements.
-paralleltests: $(TARGETS)
+sequentialtest: $(TARGETS)
 
 # Same as above, but running only a subset of unit tests to save time.
-fastparalleltests: $(FAST_TARGETS)
+fastsequentialtest: $(FAST_TARGETS)
 
 # Note that $(TARGETS) includes $(FAST_TARGETS)
 $(TARGETS):

@@ -306,6 +306,9 @@ export function assertResourcePolicyName(policy: ResourceValidationPolicy, name:
             assert.fail(`Policy name '${policy.name}' should match '${re}' (#2)`);
         }
     }
+    if (policy.name.length > 100) {
+        assert.fail(`Policy name '${policy.name}' can't be more than 100 characters long.`);
+    }
 }
 
 /**

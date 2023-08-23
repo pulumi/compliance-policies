@@ -24,5 +24,8 @@ aws:: lint
 azure:: lint
 	@yarn run azure
 
+google:: lint
+	@yarn run google
+
 kubernetes:: lint
 	@yarn run kubernetes

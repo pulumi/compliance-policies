@@ -51,6 +51,7 @@
         "build": "tsc",
         "aws": "ts-node index.ts run --providers aws,awsnative --vendor-directory ../vendor-aws/ --bundle-directory ../vendor-aws/.bundle",
         "azure": "ts-node index.ts run --providers azure,azurenative --vendor-directory ../vendor-azure/ --bundle-directory ../vendor-azure/.bundle",
+        "google": "ts-node index.ts run --providers gcp,googlenative --vendor-directory ../vendor-google/ --bundle-directory ../vendor-google/.bundle",
         "kubernetes": "ts-node index.ts run --providers kubernetes --vendor-directory ../vendor-kubernetes/ --bundle-directory ../vendor-kubernetes/.bundle"
     }
 }

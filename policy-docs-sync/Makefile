@@ -4,7 +4,7 @@ include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
 
-.PHONY: lint run runaws runazure runkubernetes
+.PHONY: lint run runaws runazure runkubernetes rungoogle
 
 lint::
 	@yarn run lint
@@ -19,3 +19,6 @@ runazure:: lint
 
 runkubernetes:: lint
 	@yarn run updatedocs --directory ../vendor-kubernetes --providers kubernetes
+
+rungoogle:: lint
+	@yarn run updatedocs --directory ../vendor-google --providers gcp,googlenative

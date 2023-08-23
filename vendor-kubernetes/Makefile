@@ -16,7 +16,7 @@ FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/kubernetes/ -mindept
 # The value can be changed at runtime with MAKEJOBS=1 make test
 MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || echo $$(($$(nproc)/2))")
 
-.PHONY: build lint publish test fasttest sequentialtest fastsequentialtest $(TARGETS)
+.PHONY: build lint publish test fasttest sequentialtest fastsequentialtest docfix $(TARGETS)
 
 build::
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
@@ -27,6 +27,9 @@ build::
 	@cd .bundle && yarn build --outDir ../bin
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
+
+docfix::
+	@make -C ../policy-docs-sync/ rungoogle
 
 lint::
 	@yarn run lint

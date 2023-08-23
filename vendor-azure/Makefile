@@ -22,14 +22,14 @@ build::
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
-	@cd ../policy-bundler/ && make azure
+	@make -C ../policy-bundler/ azure
 	@cd .bundle && yarn install
 	@cd .bundle && yarn build --outDir ../bin
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < .bundle/package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
 
 docfix::
-	@make -C ../policy-docs-sync/ rungoogle
+	@make -C ../policy-docs-sync/ runazure
 
 lint::
 	@yarn run lint

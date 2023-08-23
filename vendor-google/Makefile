@@ -22,7 +22,7 @@ build::
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
-	@cd ../policy-bundler/ && make __VENDOR__
+	@make -C ../policy-bundler/ google
 	@cd .bundle && yarn install
 	@cd .bundle && yarn build --outDir ../bin
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < .bundle/package.json > bin/package.json

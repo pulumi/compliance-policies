@@ -311,7 +311,7 @@ export function assertResourcePolicyName(policy: ResourceValidationPolicy, name:
      * @link https://github.com/pulumi/pulumi-service/issues/14939
      */
     if (policy.name.length > 300) {
-        assert.fail(`Policy name '${policy.name}' can't be more than 100 characters long.`);
+        assert.fail(`Policy name '${policy.name}' can't be more than 300 characters long.`);
     }
 }
 

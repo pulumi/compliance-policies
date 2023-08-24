@@ -79,7 +79,6 @@ export * as firebaseml from "./firebaseml";
 export * as firestore from "./firestore";
 export * as gameservices from "./gameservices";
 export * as healthcare from "./healthcare";
-export * as iap from "./iap";
 export * as memcache from "./memcache";
 export * as networkmanagement from "./networkmanagement";
 export * as networksecurity from "./networksecurity";

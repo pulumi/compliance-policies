@@ -85,8 +85,9 @@ interface GenericImports {
 }
 
 const apiVersionPatterns: RegExp[] = [
-    /v\d{1}((alpha|beta)\d)?/,           // kubernetes (`v1`, `v1alpha1`, `v1beta2`)
-    /v\d{8}(preview|privatepreview)?/,   // azure (`v20190505`, `v20190505preview`, `v20181102privatepreview`)
+    /v\d{1}((alpha|beta)\d)?/,                              // kubernetes (`v1`, `v1alpha1`, `v1beta2`)
+    /v\d{8}(preview|privatepreview)?/,                      // azure (`v20190505`, `v20190505preview`, `v20181102privatepreview`)
+    /(v\d{1}((alpha|beta)\d?)|(v\d{1})|(alpha)|(beta))/,    // google (`v1alpha1`, `v1beta`, `v2`, `alpha`, `beta`)
 ];
 
 const genericImports: GenericImports = {
@@ -233,6 +234,8 @@ function findProviderBundlePoints(vendorDir: string, provider: string): string[]
             return;
         }
 
+        // some providers have versionless resources that need to be bundled
+        // directly under the service.
         if (dir.indexOf("/", provider.length + 1) === -1) {
             bundleDirs.push(dir);
         }
@@ -242,11 +245,12 @@ function findProviderBundlePoints(vendorDir: string, provider: string): string[]
 }
 
 /**
- * Bundle policies found in the provided `bundlePoint`.
+ * Bundle policies found in the provided `bundlePoint` as long as the
+ * `bundlePoint` doesn't have any directories that host an API version.
  *
  * @param vendorDir Policy vendor directory.
  * @param bundlePoint A path to start bundling policies into.
- * @returns TShe number of bundled policies.
+ * @returns The number of bundled policies.
  */
 function createPolicyBundle(vendorDir: string, bundlePoint: string, bundleDirectory: string): number {
 
@@ -261,15 +265,16 @@ function createPolicyBundle(vendorDir: string, bundlePoint: string, bundleDirect
         if (!result) {
             /**
              * We avoid including paths that contain an API version.
-             * This is because the Azure NAtive provider has default APIs
+             * This is because the Azure Native provider has default APIs
              * inside of which there are versioned ones too.
              */
             dirs.push(dir);
         }
     });
 
-    // if (searchBase.indexOf("/compute") === -1) {
-    //     return 0;
+    // if (bundlePoint.indexOf("googlenative/iap") >= 0 ) {
+    //     console.log(`vendorDir: ${vendorDir}, bundlePoint: ${bundlePoint}`);
+    //     console.log(dirs);
     // }
 
     const point: Bundle = {

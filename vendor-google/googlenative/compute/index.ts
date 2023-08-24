@@ -19,3 +19,5 @@
 // SOFTWARE.
 
 export * as v1 from "./v1";
+export * as alpha from "./alpha";
+export * as beta from "./beta";

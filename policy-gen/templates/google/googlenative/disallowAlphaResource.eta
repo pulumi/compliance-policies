@@ -1,0 +1,25 @@
+<%~ includeFile("policy.eta") %>
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
+
+/**
+ * Disallow the use of non-stable (Alpha) resouces (<%~ it.resourceType %>).
+ *
+ * @severity medium
+ * @frameworks none
+ * @topics alpha, api, unstable
+ * @link https://cloud.google.com/apis/design/versioning
+ */
+export const <%~ it.policyVariableName %>: ResourceValidationPolicy = policyManager.registerPolicy({
+    resourceValidationPolicy: {
+        name: "<%~ it.policyName %>",
+        description: "Disallow the use of non-stable (Alpha) resouces (<%~ it.resourceType %>).",
+        enforcementLevel: "advisory",
+        validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {
+            reportViolation("<%~ it.serviceName %> <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).");
+        }),
+    },
+    vendors: ["google"],
+    services: <%~ it.metadataServices %>,
+    severity: "medium",
+    topics: ["api", "unstable", "alpha"],
+});

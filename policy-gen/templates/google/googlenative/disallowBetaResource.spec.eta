@@ -1,0 +1,40 @@
+<%~ includeFile("spec.eta", { policiesImportPath: it.policiesImportPath }) %>
+import { getResourceValidationArgs } from "./resource";
+
+describe("<%= it.policyFullVariableName %>", function() {
+    const policy = policies.<%= it.policyFullVariableName %>;
+
+    it("name", async function() {
+        assertResourcePolicyName(policy, "<%= it.policyName %>");
+    });
+
+    it("registration", async function() {
+        assertResourcePolicyIsRegistered(policy);
+    });
+
+    it("metadata", async function() {
+        assertResourcePolicyRegistrationDetails(policy, {
+            vendors: ["google"],
+            services: <%~ it.metadataServices %>,
+            severity: "medium",
+            topics: ["api", "unstable", "beta"],
+        });
+    });
+
+    it("enforcementLevel", async function() {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async function() {
+        assertResourcePolicyDescription(policy);
+    });
+
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title, __filename);
+    });
+
+    it("#1", async function() {
+        const args = getResourceValidationArgs();
+        await assertHasResourceViolation(policy, args, { message: "<%~ it.serviceName %> <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>)." });
+    });
+});

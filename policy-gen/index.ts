@@ -22,6 +22,7 @@ import * as commander from "commander";
 
 import { KubernetesProvider } from "./providers/kubernetes";
 import { AzureNativeProvider } from "./providers/azurenative";
+import { GoogleNativeProvider } from "./providers/googlenative";
 
 interface RunArgs {
     /**
@@ -62,6 +63,12 @@ function cmd_run(args: RunArgs) {
 
     case "azure-native":
         new AzureNativeProvider({
+            ...args,
+        }).generatePolicies();
+        break;
+
+    case "google-native":
+        new GoogleNativeProvider({
             ...args,
         }).generatePolicies();
         break;

@@ -1,0 +1,11 @@
+<%~ includeFile("../../resource-imports.eta") %>
+import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
+
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(<%~ it.shortResourceType %>, <%~ it.sourceCode %>);
+}

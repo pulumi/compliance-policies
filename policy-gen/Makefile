@@ -29,3 +29,9 @@ runazurenative:: lint
 
 dryrunazurenative:: lint
 	@yarn run dryrunazurenative
+
+rungooglenative:: lint
+	@yarn run rungooglenative
+
+dryrungooglenative:: lint
+	@yarn run dryrungooglenative

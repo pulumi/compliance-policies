@@ -288,7 +288,14 @@ export function assertResourcePolicyIsRegistered(policy: ResourceValidationPolic
  * @param name The resource validation policy expected name.
  */
 export function assertResourcePolicyName(policy: ResourceValidationPolicy, name: string) {
-    const re = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
+    /**
+     * Check the policy name follows the Premium Policies expected pattern.
+     */
+    const localRE = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
+    /**
+     * Check the policy name is compliant with the Pulumi Cloud service.
+     */
+    const serviceRE = /^[a-zA-Z0-9\-_\.]{1,300}$/;
 
     if (!isLowerCase(policy.name)) {
         assert.fail(`Policy name '${policy.name}' should be in lower case.`);
@@ -298,12 +305,21 @@ export function assertResourcePolicyName(policy: ResourceValidationPolicy, name:
         assert.fail(`Policy name '${policy.name}' isn't matching the expected name '${name}'.`);
     }
 
-    const nameMatch = policy.name.match(re);
+    let nameMatch = policy.name.match(localRE);
     if (!nameMatch) {
-        assert.fail(`Policy name '${policy.name}' should match '${re}' (#1)`);
+        assert.fail(`Policy name '${policy.name}' should match '${localRE}' (#1)`);
     } else {
         if (nameMatch.length !== 1) {
-            assert.fail(`Policy name '${policy.name}' should match '${re}' (#2)`);
+            assert.fail(`Policy name '${policy.name}' should match '${localRE}' (#2)`);
+        }
+    }
+
+    nameMatch = policy.name.match(serviceRE);
+    if (!nameMatch) {
+        assert.fail(`Policy name '${policy.name}' should match '${serviceRE}' so it's accepted by the Pulumi service (#1)`);
+    } else {
+        if (nameMatch.length !== 1) {
+            assert.fail(`Policy name '${policy.name}' should match '${serviceRE}' so it's accepted by the Pulumi service (#2)`);
         }
     }
 

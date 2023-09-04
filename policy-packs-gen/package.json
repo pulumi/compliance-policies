@@ -1,0 +1,52 @@
+{
+    "name": "@pulumi/policy-packs-gen",
+    "version": "${VERSION}",
+    "license": "Apache-2.0",
+    "homepage": "https://www.pulumi.com",
+    "repository": "https://github.com/pulumi/premium-policies",
+    "keywords": [
+        "pulumi",
+        "policy",
+        "policy-pack",
+        "iac",
+        "security",
+        "compliance",
+        "infrastructure-as-code",
+        "template",
+        "templates-policy"
+    ],
+    "dependencies": {
+        "@babel/core": "^7.21.4",
+        "@babel/parser": "^7.21.4",
+        "@babel/traverse": "^7.21.4",
+        "@babel/types": "^7.21.4",
+        "@types/babel__traverse": "^7.18.3",
+        "@types/prettier": "^2.7.2",
+        "commander": "^10.0.0",
+        "eta": "^3.1.1",
+        "prettier": "^2.8.8",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.1.6"
+    },
+    "devDependencies": {
+        "@types/babel__core": "^7.20.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16",
+        "@typescript-eslint/eslint-plugin": "^5.47.1",
+        "@typescript-eslint/parser": "^5.44.0",
+        "eslint": "^8.28.0",
+        "eslint-plugin-header": "^3.1.1",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jsdoc": "^40.1.0",
+        "eslint-plugin-mocha": "^10.1.0",
+        "mocha": "^10.2.0"
+    },
+    "scripts": {
+        "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
+        "build": "tsc",
+        "gen-aws": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-aws --vendor-name aws --providers-directories aws,awsnative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-azure": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-azure --vendor-name azure --providers-directories azure,azurenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-google": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-google --vendor-name google --providers-directories gcp,googlenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-kubernetes": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-kubernetes --vendor-name kubernetes --providers-directories kubernetes --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite"
+    }
+}

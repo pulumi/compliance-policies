@@ -1,0 +1,39 @@
+import { PolicyPack } from "@pulumi/policy";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
+
+/**
+ * 📝
+ * To use Pulumi Premium Policies (beta),
+ * please read the README.md file for more information.
+ *
+ * ⚠️
+ * Using Pulumi Premium Policies as demonstrated below
+ * doesn't imply nor grant automatic compliance.
+ *
+ * The customer (you) is solely responsible for doing
+ * its due diligence on meeting these compliance
+ * requirements and working with its auditor(s) in
+ * order to obtain the certification(s) they wish.
+ * ⚠️
+ */
+new PolicyPack("<%~ it.vendor %>-<%~ it.framework %>-premium-policies-typescript", {
+    policies:[
+        ...policyManager.selectPolicies({
+            vendors: ["<%~ it.vendor %>"],
+            // services: ["<%~ it.services %>"],
+            // severities: ["<%~ it.severities %>"],
+            // topics: ["<%~ it.topics %>"],
+            frameworks: ["<%~ it.framework %>"] // Other available frameworks: <%~ it.frameworks %>
+        }, "advisory"),
+    ],
+});
+
+/**
+ * Optional✔️: Display additional stats and helpful
+ * information when the policy pack is evaluated.
+ */
+policyManager.displaySelectionStats({
+    displayGeneralStats: true,
+    displayModuleInformation: true,
+    displaySelectedPolicyNames: true,
+});

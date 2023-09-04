@@ -1,0 +1,20 @@
+{
+    "name": "<%~ it.vendor %>-<%~ it.framework %>-premium-policies-typescript",
+    "version": "0.0.1",
+    "files": [
+        ".npmrc",
+        "index.ts",
+        "package.json",
+        "PulumiPolicy.yaml",
+        "tsconfig.json"
+    ],
+    "dependencies": {
+        "@pulumi-premium-policies/aws-policies": "^0.0.8",
+        "@pulumi-premium-policies/policy-manager": "^0.0.3",
+        "@pulumi/policy": "^1.7.0",
+        "@pulumi/pulumi": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0"
+    }
+}

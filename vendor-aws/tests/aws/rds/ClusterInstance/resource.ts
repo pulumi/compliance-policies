@@ -35,5 +35,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         performanceInsightsEnabled: true,
         performanceInsightsKmsKeyId: enums.kms.keyArn,
         publiclyAccessible: false,
+        engine: "aurora",
     });
 }

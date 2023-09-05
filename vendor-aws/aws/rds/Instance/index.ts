@@ -20,7 +20,6 @@
 
 export { enableBackupRetention } from "./enableBackupRetention";
 export { configureBackupRetention } from "./configureBackupRetention";
-export { disallowClassicResource } from "./disallowClassicResource";
 export { enablePerformanceInsights } from "./enablePerformanceInsights";
 export { disallowUnencryptedPerformanceInsights } from "./disallowUnencryptedPerformanceInsights";
 export { disallowPublicAccess } from "./disallowPublicAccess";

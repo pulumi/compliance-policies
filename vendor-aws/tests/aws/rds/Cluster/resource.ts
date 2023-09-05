@@ -37,5 +37,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         backupRetentionPeriod: 5,
         storageEncrypted: true,
         kmsKeyId: enums.kms.keyArn,
+        engine: "mysql",
     });
 }

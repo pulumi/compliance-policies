@@ -83,7 +83,6 @@ export * as memcache from "./memcache";
 export * as networkmanagement from "./networkmanagement";
 export * as networksecurity from "./networksecurity";
 export * as networkservices from "./networkservices";
-export * as iap from "./iap";
 export * as policysimulator from "./policysimulator";
 export * as privateca from "./privateca";
 export * as pubsub from "./pubsub";

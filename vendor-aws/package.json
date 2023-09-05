@@ -15,7 +15,7 @@
         "aws"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "0.0.4",
+        "@pulumi-premium-policies/policy-manager": "^0.0.4",
         "@pulumi/aws": "^6.0.4",
         "@pulumi/aws-native": "^0.75.0",
         "@pulumi/policy": "^1.7.0",

@@ -15,11 +15,11 @@
         "google"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "0.0.4",
-        "@pulumi/gcp": "^6.62.0",
+        "@pulumi-premium-policies/policy-manager": "^0.0.4",
+        "@pulumi/gcp": "^6.64.0",
         "@pulumi/google-native": "^0.31.1",
         "@pulumi/policy": "^1.7.0",
-        "@pulumi/pulumi": "^3.78.1"
+        "@pulumi/pulumi": "^3.80.0"
     },
     "devDependencies": {
         "@pulumi-premium-policies/unit-test-helpers": "^0.0.16",

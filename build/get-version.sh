@@ -61,14 +61,16 @@ if ! git diff-files --quiet .; then
 fi
 
 # If we have an exact tag, just use it.
-if git describe --tags --exact-match "${COMMITISH}" >/dev/null 2>&1; then
-    echo -n "$(git describe --tags --exact-match "${COMMITISH}")"
-    if [ ! -z "${DIRTY_TAG}" ]; then
-        echo -n "+${DIRTY_TAG}"
-    fi
-    echo ""
-    exit 0
-fi
+# ⚠️ This commented block may notwork if the last commit has a tag
+#    on it that belongs to another policy package.
+# if git describe --tags --exact-match "${COMMITISH}" >/dev/null 2>&1; then
+#     echo -n "$(git describe --tags --exact-match "${COMMITISH}")"
+#     if [ ! -z "${DIRTY_TAG}" ]; then
+#         echo -n "+${DIRTY_TAG}"
+#     fi
+#     echo ""
+#     exit 0
+# fi
 
 # Otherwise, increment the patch version, add the -dev tag and some
 # commit metadata. If there's no existing tag, pretend a v0.0.0 was

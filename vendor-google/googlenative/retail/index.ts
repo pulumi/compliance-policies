@@ -19,3 +19,4 @@
 // SOFTWARE.
 
 export * as v2alpha from "./v2alpha";
+export * as v2beta from "./v2beta";

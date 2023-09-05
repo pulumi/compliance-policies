@@ -161,3 +161,8 @@ export * as mobilepacketcore from "./mobilepacketcore";
 export * as notificationhubs from "./notificationhubs";
 export * as professionalservice from "./professionalservice";
 export * as scvmm from "./scvmm";
+export * as quota from "./quota";
+export * as redhatopenshift from "./redhatopenshift";
+export * as signalrservice from "./signalrservice";
+export * as sqlvirtualmachine from "./sqlvirtualmachine";
+export * as storagemover from "./storagemover";

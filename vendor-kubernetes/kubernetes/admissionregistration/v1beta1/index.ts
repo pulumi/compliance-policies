@@ -24,3 +24,9 @@ export * as MutatingWebhookConfigurationPatch from "./MutatingWebhookConfigurati
 export * as ValidatingWebhookConfiguration from "./ValidatingWebhookConfiguration";
 export * as ValidatingWebhookConfigurationList from "./ValidatingWebhookConfigurationList";
 export * as ValidatingWebhookConfigurationPatch from "./ValidatingWebhookConfigurationPatch";
+export * as ValidatingAdmissionPolicy from "./ValidatingAdmissionPolicy";
+export * as ValidatingAdmissionPolicyBinding from "./ValidatingAdmissionPolicyBinding";
+export * as ValidatingAdmissionPolicyBindingList from "./ValidatingAdmissionPolicyBindingList";
+export * as ValidatingAdmissionPolicyBindingPatch from "./ValidatingAdmissionPolicyBindingPatch";
+export * as ValidatingAdmissionPolicyList from "./ValidatingAdmissionPolicyList";
+export * as ValidatingAdmissionPolicyPatch from "./ValidatingAdmissionPolicyPatch";

@@ -73,6 +73,10 @@ export class PolicyPackGenerator {
         for (let x = 0; x < args.frameworks.length; x++) {
             const framework: string = args.frameworks[x];
 
+            if (framework === "soc2") {
+                continue;
+            }
+
             const policyPackName: string = `${args.vendor}-${framework}-premium-policies-typescript`;
             const policyPackDir: string = path.resolve(`${args.destinationDir}/${policyPackName}`);
 

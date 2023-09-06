@@ -91,6 +91,8 @@ export class PolicyPackGenerator {
             this.genTsconfigJson(policyPackDir);
             this.genPackageJson(policyPackDir, args.vendor, framework);
             this.genIndexTs(policyPackDir, args.vendor, framework);
+
+            console.log(`command: pulumi policy new ${policyPackName}`);
         }
     }
 

@@ -1,0 +1,23 @@
+{
+    "name": "all-premium-policies-typescript-all",
+    "version": "0.0.1",
+    "files": [
+        ".npmrc",
+        "index.ts",
+        "package.json",
+        "PulumiPolicy.yaml",
+        "tsconfig.json"
+    ],
+    "dependencies": {
+        "@pulumi-premium-policies/aws-policies": "^0.0.14",
+        "@pulumi-premium-policies/azure-policies": "^0.0.14",
+        "@pulumi-premium-policies/google-policies": "^0.0.3",
+        "@pulumi-premium-policies/kubernetes-policies": "^0.0.12",
+        "@pulumi-premium-policies/policy-manager": "^0.0.4",
+        "@pulumi/policy": "^1.5.0",
+        "@pulumi/pulumi": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0"
+    }
+}

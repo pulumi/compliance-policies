@@ -1,0 +1,20 @@
+{
+    "name": "kubernetes-premium-policies-typescript-single",
+    "version": "0.0.1",
+    "files": [
+        ".npmrc",
+        "index.ts",
+        "package.json",
+        "PulumiPolicy.yaml",
+        "tsconfig.json"
+    ],
+    "dependencies": {
+        "@pulumi-premium-policies/kubernetes-policies": "^0.0.12",
+        "@pulumi-premium-policies/policy-manager": "^0.0.4",
+        "@pulumi/policy": "^1.5.0",
+        "@pulumi/pulumi": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0"
+    }
+}

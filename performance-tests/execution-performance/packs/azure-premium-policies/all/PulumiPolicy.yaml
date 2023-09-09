@@ -1,0 +1,2 @@
+runtime: nodejs
+description: A minimal Policy Pack for Azure using Pulumi Premium Policies and TypeScript. (See README.md for installation)

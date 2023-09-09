@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { ConnectorProfile } from "@pulumi/aws-native/appflow";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "awsnative-appflow-connectorprofile-configure-customer-managed-key",
         description: "Check that AppFlow ConnectorProfile uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.appflow.ConnectorProfile, (connectorProfile, args, reportViolation) => {
+        validateResource: validateResourceOfType(ConnectorProfile, (connectorProfile, args, reportViolation) => {
             if (!connectorProfile.kmsArn) {
                 reportViolation("AppFlow Connector Profiles should be encrypted using a customer-managed KMS key.");
             }

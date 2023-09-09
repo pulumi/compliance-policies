@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { NamedQuery } from "@pulumi/aws-native/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "awsnative-athena-namedquery-missing-description",
         description: "Checks that Athena NamedQueries have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.athena.NamedQuery, (namedQuery, args, reportViolation) => {
+        validateResource: validateResourceOfType(NamedQuery, (namedQuery, args, reportViolation) => {
             if (!namedQuery.description) {
                 reportViolation("Athena NamedQueries should have a description.");
             }

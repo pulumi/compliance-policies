@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyManager
         name: "aws-rds-instance-enable-performance-insights",
         description: "Checks that RDS instances have performance insights enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             if (!instance.performanceInsightsEnabled) {
                 reportViolation("RDS Instances should have performance insights enabled.");
             }

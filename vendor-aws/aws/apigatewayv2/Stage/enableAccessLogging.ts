@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Stage } from "@pulumi/aws/apigatewayv2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyManager.regis
         name: "aws-apigatewayv2-stage-enable-access-logging",
         description: "Checks that any ApiGatewayV2 Stages have access logging enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.apigatewayv2.Stage, (stage, args, reportViolation) => {
+        validateResource: validateResourceOfType(Stage, (stage, args, reportViolation) => {
             if (!stage.accessLogSettings) {
                 reportViolation("API Gateway V2 stages should have access logging enabled.");
             }

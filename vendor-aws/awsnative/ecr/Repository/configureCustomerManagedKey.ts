@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Repository, RepositoryEncryptionType } from "@pulumi/aws-native/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,12 +35,12 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "awsnative-ecr-repository-configure-customer-managed-key",
         description: "Checks that ECR repositories use a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfiguration) {
-                if (repo.encryptionConfiguration.encryptionType !== awsnative.ecr.RepositoryEncryptionType.Kms) {
+                if (repo.encryptionConfiguration.encryptionType !== RepositoryEncryptionType.Kms) {
                     reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
                 }
-                if (repo.encryptionConfiguration.encryptionType === awsnative.ecr.RepositoryEncryptionType.Kms && !repo.encryptionConfiguration.kmsKey) {
+                if (repo.encryptionConfiguration.encryptionType === RepositoryEncryptionType.Kms && !repo.encryptionConfiguration.kmsKey) {
                     reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
                 }
             }

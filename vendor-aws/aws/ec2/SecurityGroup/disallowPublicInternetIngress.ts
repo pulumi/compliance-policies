@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { SecurityGroup } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicInternetIngress: ResourceValidationPolicy = policyMan
         name: "aws-ec2-securitygroup-disallow-public-internet-ingress",
         description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, _, reportViolation) => {
+        validateResource: validateResourceOfType(SecurityGroup, (securityGroup, _, reportViolation) => {
             if (securityGroup.ingress) {
                 if (securityGroup.ingress.some((ingressRule) => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
                     reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");

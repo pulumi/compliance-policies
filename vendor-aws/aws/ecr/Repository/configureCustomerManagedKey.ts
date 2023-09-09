@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Repository } from "@pulumi/aws/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-ecr-repository-configure-customer-managed-key",
         description: "Checks that ECR repositories use a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfigurations) {
                 repo.encryptionConfigurations.forEach((encryptionConfiguration) => {
                     if (!encryptionConfiguration.encryptionType || encryptionConfiguration.encryptionType.toLowerCase() === "AES256".toLowerCase()) {

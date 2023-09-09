@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Workgroup } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-athena-workgroup-configure-customer-managed-key",
         description: "Checks that Athena Workgroups use a customer-managed-key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Workgroup, (workgroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(Workgroup, (workgroup, args, reportViolation) => {
             if (
                 workgroup.configuration &&
                 workgroup.configuration.resultConfiguration &&

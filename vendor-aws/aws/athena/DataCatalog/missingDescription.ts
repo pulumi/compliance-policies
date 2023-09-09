@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { DataCatalog } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "aws-athena-datacatalog-missing-description",
         description: "Checks that Athena DataCatalogs have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.DataCatalog, (dataCatalog, args, reportViolation) => {
+        validateResource: validateResourceOfType(DataCatalog, (dataCatalog, args, reportViolation) => {
             if (!dataCatalog.description) {
                 reportViolation("Athena DataCatalogs should have a description.");
             }

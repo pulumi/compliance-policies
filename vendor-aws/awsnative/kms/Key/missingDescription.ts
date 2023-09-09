@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Key } from "@pulumi/aws-native/kms";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "awsnative-kms-key-missing-description",
         description: "Checks that KMS Keys have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {
+        validateResource: validateResourceOfType(Key, (key, args, reportViolation) => {
             if (!key.description) {
                 reportViolation("KMS Keys should have a description.");
             } else {

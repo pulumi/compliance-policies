@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Distribution } from "@pulumi/aws/cloudfront";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
         name: "aws-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+        validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
             if (!distribution.viewerCertificate.minimumProtocolVersion || distribution.viewerCertificate.minimumProtocolVersion.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
                 reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
             }

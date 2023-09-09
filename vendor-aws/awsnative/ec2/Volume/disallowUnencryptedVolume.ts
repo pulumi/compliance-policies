@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Volume } from "@pulumi/aws-native/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policyManager
         name: "awsnative-ec2-volume-disallow-unencrypted-volume",
         description: "Checks that EBS volumes are encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.ec2.Volume, (v, args, reportViolation) => {
+        validateResource: validateResourceOfType(Volume, (v, args, reportViolation) => {
             if (!v.encrypted) {
                 reportViolation("An EBS volume is currently not encrypted.");
             }

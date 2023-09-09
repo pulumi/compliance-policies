@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Cluster } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
         name: "aws-rds-cluster-disallow-single-availability-zone",
         description: "Check that RDS Cluster doesn't use single availability zone.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
             if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
                 reportViolation("RDS Clusters should use more than one availability zone.");
             }

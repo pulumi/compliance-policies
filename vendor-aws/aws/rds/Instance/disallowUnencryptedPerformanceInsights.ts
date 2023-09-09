@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
         name: "aws-rds-instance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Instance performance insights is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             if (instance.performanceInsightsEnabled && !instance.performanceInsightsKmsKeyId) {
                 reportViolation("RDS Instances performance insights should be encrypted.");
             }

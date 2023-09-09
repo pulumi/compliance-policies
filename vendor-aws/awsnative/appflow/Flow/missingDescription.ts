@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Flow } from "@pulumi/aws-native/appflow";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "awsnative-appflow-flow-missing-description",
         description: "Checks that AppFlow Flows have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.appflow.Flow, (flow, args, reportViolation) => {
+        validateResource: validateResourceOfType(Flow, (flow, args, reportViolation) => {
             if (!flow.description) {
                 reportViolation("AppFlow Flow should have a description.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
         name: "aws-ec2-instance-disallow-unencrypted-root-block-device",
         description: "Checks that EC2 instances does not have unencrypted root volumes.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             if (instance.rootBlockDevice && !instance.rootBlockDevice.encrypted) {
                 reportViolation("EC2 instances should not have an unencypted root block device.");
             }

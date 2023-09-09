@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Listener } from "@pulumi/aws/alb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
         name: "aws-alb-listener-configure-secure-tls",
         description: "Checks that ALB Load Balancers uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.alb.Listener, (listener, args, reportViolation) => {
+        validateResource: validateResourceOfType(Listener, (listener, args, reportViolation) => {
             if ((listener.port && listener.port === 443) || (listener.protocol && listener.protocol === "HTTPS")) {
                 if (!listener.sslPolicy || !listener.sslPolicy.includes("ELBSecurityPolicy-FS-1-2")) {
                     reportViolation("ALB Load Balancers should use secure/modern TLS encryption with forward secrecy.");

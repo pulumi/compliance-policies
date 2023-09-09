@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { SecurityGroup } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "aws-ec2-securitygroup-missing-description",
         description: "Checks that all security groups have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
             if (!securityGroup.description) {
                 reportViolation("EC2 Security Groups should have a description.");
             }

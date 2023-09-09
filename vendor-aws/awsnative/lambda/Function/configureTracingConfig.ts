@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Function, FunctionTracingConfigMode } from "@pulumi/aws-native/lambda";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,8 +35,8 @@ export const configureTracingConfig: ResourceValidationPolicy = policyManager.re
         name: "awsnative-lambda-function-configure-tracing-config",
         description: "Checks that Lambda functions have tracing configured.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.lambda.Function, (f, args, reportViolation) => {
-            if (f.tracingConfig && f.tracingConfig.mode !== awsnative.lambda.FunctionTracingConfigMode.Active) {
+        validateResource: validateResourceOfType(Function, (f, args, reportViolation) => {
+            if (f.tracingConfig && f.tracingConfig.mode !== FunctionTracingConfigMode.Active) {
                 reportViolation("Lambda functions should have tracing configured.");
             }
         }),

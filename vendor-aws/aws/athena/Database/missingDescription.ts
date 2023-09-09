@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Database } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "aws-athena-database-missing-description",
         description: "Checks that Athena Databases have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Database, (database, args, reportViolation) => {
+        validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
             if (!database.comment) {
                 reportViolation("Athena Databases should have a description.");
             }

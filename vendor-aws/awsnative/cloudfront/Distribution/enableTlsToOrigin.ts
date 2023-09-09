@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Distribution } from "@pulumi/aws-native/cloudfront";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableTlsToOrigin: ResourceValidationPolicy = policyManager.registe
         name: "awsnative-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+        validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
             distribution.distributionConfig.origins?.forEach((origin) => {
                 if (origin.customOriginConfig && (!origin.customOriginConfig.originProtocolPolicy || origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only")) {
                     reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");

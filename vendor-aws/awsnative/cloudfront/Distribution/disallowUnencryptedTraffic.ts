@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Distribution } from "@pulumi/aws-native/cloudfront";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
         name: "awsnative-cloudfront-distribution-disallow-unencrypted-traffic",
         description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.cloudfront.Distribution, (distribution, args, reportViolation) => {
+        validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
             if (distribution.distributionConfig.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }

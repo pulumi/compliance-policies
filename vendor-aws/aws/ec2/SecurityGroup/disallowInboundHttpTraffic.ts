@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { SecurityGroup } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
         name: "aws-ec2-securitygroup-disallow-inbound-http-traffic",
         description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.SecurityGroup, (securityGroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
             if (securityGroup.ingress) {
                 securityGroup.ingress.forEach((ingress) => {
                     if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {

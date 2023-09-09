@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { DbInstance } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyManager
         name: "awsnative-rds-dbinstance-enable-performance-insights",
         description: "Checks that RDS DB Instances have performance insights enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (dbInstance, args, reportViolation) => {
+        validateResource: validateResourceOfType(DbInstance, (dbInstance, args, reportViolation) => {
             if (!dbInstance.enablePerformanceInsights) {
                 reportViolation("RDS DB Instances should have performance insights enabled.");
             }

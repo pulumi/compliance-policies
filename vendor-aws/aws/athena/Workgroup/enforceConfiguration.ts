@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Workgroup } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enforceConfiguration: ResourceValidationPolicy = policyManager.regi
         name: "aws-athena-workgroup-enforce-configuration",
         description: "Checks that Athena Workgroups enforce their configuration to their clients.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Workgroup, (workgroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(Workgroup, (workgroup, args, reportViolation) => {
             if (workgroup.configuration && !workgroup.configuration.enforceWorkgroupConfiguration) {
                 reportViolation("Athena Workgroups should enforce their configuration to their clients.");
             }

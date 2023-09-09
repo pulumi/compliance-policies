@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Cluster } from "@pulumi/aws/eks";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policyM
         name: "aws-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
             if (cluster.vpcConfig.endpointPublicAccess === undefined || cluster.vpcConfig.endpointPublicAccess === true) {
                 /**
                  * We need to check `publicAccessCidrs` for any `0.0.0.0/0`.

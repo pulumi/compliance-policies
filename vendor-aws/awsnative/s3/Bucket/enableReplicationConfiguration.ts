@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Bucket } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableReplicationConfiguration: ResourceValidationPolicy = policyMa
         name: "awsnative-s3-bucket-enable-replication-configuration",
         description: "Checks that S3 Bucket have cross-region replication enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
+        validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (!bucket.replicationConfiguration || !bucket.replicationConfiguration.rules || bucket.replicationConfiguration.rules.length < 1) {
                 reportViolation("S3 buckets should have cross-region replication enabled.");
             }

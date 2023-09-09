@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LaunchTemplate } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policyManager.register
         name: "aws-ec2-launchtemplate-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (launchTemplate, args, reportViolation) => {
+        validateResource: validateResourceOfType(LaunchTemplate, (launchTemplate, args, reportViolation) => {
             if (launchTemplate.networkInterfaces) {
                 launchTemplate.networkInterfaces.forEach((iface) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257

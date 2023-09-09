@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { DbCluster } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManage
         name: "awsnative-rds-dbcluster-disallow-unencrypted-storage",
         description: "Checks that RDS DB Cluster storage is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(DbCluster, (cluster, args, reportViolation) => {
             if (!cluster.storageEncrypted) {
                 reportViolation("RDS DB Cluster storage should be encrypted.");
             }

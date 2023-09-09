@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { WorkGroup } from "@pulumi/aws-native/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "awsnative-athena-workgroup-missing-description",
         description: "Checks that Athena WorkGroups have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.athena.WorkGroup, (workgroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(WorkGroup, (workgroup, args, reportViolation) => {
             if (!workgroup.description) {
                 reportViolation("Athena WorkGroups should have a description.");
             }

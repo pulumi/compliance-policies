@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LaunchTemplate } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-ec2-launchtemplate-configure-customer-managed-key",
         description: "Check that encrypted EBS volume uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.LaunchTemplate, (lt, args, reportViolation) => {
+        validateResource: validateResourceOfType(LaunchTemplate, (lt, args, reportViolation) => {
             if (lt.blockDeviceMappings) {
                 lt.blockDeviceMappings.forEach((blockDevice) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257

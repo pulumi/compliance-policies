@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-rds-instance-configure-customer-managed-key",
         description: "Checks that RDS Instance storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             if (instance.storageEncrypted && !instance.kmsKeyId) {
                 reportViolation("RDS Instance storage should be encrypted using a customer-managed key.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { DomainName } from "@pulumi/aws/apigatewayv2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policyMan
         name: "aws-apigatewayv2-domainname-enable-domain-name-configuration",
         description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.apigatewayv2.DomainName, (domainName, args, reportViolation) => {
+        validateResource: validateResourceOfType(DomainName, (domainName, args, reportViolation) => {
             if (!domainName.domainNameConfiguration) {
                 reportViolation("API GatewayV2 Domain Name Configuration should be enabled.");
             }

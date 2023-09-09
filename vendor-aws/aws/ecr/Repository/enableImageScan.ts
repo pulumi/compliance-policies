@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Repository } from "@pulumi/aws/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableImageScan: ResourceValidationPolicy = policyManager.registerP
         name: "aws-ecr-repository-enable-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
             if (repo.imageScanningConfiguration && !repo.imageScanningConfiguration.scanOnPush) {
                 reportViolation("ECR Repositories should enable 'scan-on-push'.");
             }

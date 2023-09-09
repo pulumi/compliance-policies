@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Distribution } from "@pulumi/aws/cloudfront";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyManager.regis
         name: "aws-cloudfront-distribution-enable-access-logging",
         description: "Checks that any CloudFront distributions have access logging enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.cloudfront.Distribution, (distribution, args, reportViolation) => {
+        validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
             if (!distribution.loggingConfig) {
                 reportViolation("CloudFront Distributions should have logging enabled.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Bucket } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
         name: "awsnative-s3-bucket-configure-server-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
+        validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.bucketEncryption && bucket.bucketEncryption.serverSideEncryptionConfiguration) {
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
                     if (

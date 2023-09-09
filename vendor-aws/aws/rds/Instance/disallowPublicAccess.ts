@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyManager.regi
         name: "aws-rds-instance-disallow-public-access",
         description: "Checks that RDS Instance public access is not enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             if (instance.publiclyAccessible === true) {
                 reportViolation("RDS Instances public access should not be enabled.");
             }

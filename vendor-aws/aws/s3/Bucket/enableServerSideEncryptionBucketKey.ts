@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Bucket } from "@pulumi/aws/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = pol
         name: "aws-s3-bucket-enable-server-side-encryption-bucket-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a Bucket key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
+        validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.serverSideEncryptionConfiguration && bucket.serverSideEncryptionConfiguration.rule.bucketKeyEnabled !== true) {
                 reportViolation("S3 Buckets Server-Side Encryption (SSE) should use a Bucket key to reduce cost.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { DomainName } from "@pulumi/aws/apigateway";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureSecurityPolicy: ResourceValidationPolicy = policyManager.r
         name: "aws-apigateway-domainname-configure-security-policy",
         description: "Checks that ApiGateway Domain Name Security Policy uses secure/modern TLS encryption.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.apigateway.DomainName, (domainName, args, reportViolation) => {
+        validateResource: validateResourceOfType(DomainName, (domainName, args, reportViolation) => {
             if (!domainName.securityPolicy || domainName.securityPolicy !== "TLS_1_2") {
                 reportViolation("API Gateway Domain Name Security Policy should use secure/modern TLS encryption.");
             }

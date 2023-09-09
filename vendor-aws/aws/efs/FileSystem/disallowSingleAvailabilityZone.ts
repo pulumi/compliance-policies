@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { FileSystem } from "@pulumi/aws/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
         name: "aws-efs-filesystem-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.efs.FileSystem, (fileSystem, args, reportViolation) => {
+        validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
             if (fileSystem.availabilityZoneName) {
                 reportViolation("EFS File Systems should use more than one availability zone.");
             }

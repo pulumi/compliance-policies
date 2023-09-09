@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Listener } from "@pulumi/aws/alb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
         name: "aws-alb-listener-disallow-unencrypted-traffic",
         description: "Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.alb.Listener, (listener, args, reportViolation) => {
+        validateResource: validateResourceOfType(Listener, (listener, args, reportViolation) => {
             if ((listener.port && listener.port === 80) || (listener.protocol && listener.protocol === "HTTP")) {
                 reportViolation("ALB Load Balancers should now allow unencrypted (HTTP) traffic.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Key } from "@pulumi/aws-native/kms";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableKeyRotation: ResourceValidationPolicy = policyManager.registe
         name: "awsnative-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.kms.Key, (key, args, reportViolation) => {
+        validateResource: validateResourceOfType(Key, (key, args, reportViolation) => {
             if (!key.enableKeyRotation) {
                 reportViolation("KMS Keys should have key rotation enabled.");
             }

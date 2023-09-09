@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Cluster } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
         name: "aws-rds-cluster-enable-backup-retention",
         description: "Checks that RDS Clusters backup retention policy is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
             if (!cluster.backupRetentionPeriod) {
                 reportViolation("RDS Clusters backup retention should be enabled.");
             }

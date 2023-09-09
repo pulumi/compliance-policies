@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Cluster } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-rds-cluster-configure-customer-managed-key",
         description: "Checks that RDS Clusters storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
             if (cluster.storageEncrypted && !cluster.kmsKeyId) {
                 reportViolation("RDS Cluster storage should be encrypted using a customer-managed key.");
             }

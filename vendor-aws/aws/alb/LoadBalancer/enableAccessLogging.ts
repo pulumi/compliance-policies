@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LoadBalancer }from "@pulumi/aws/alb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableAccessLogging: ResourceValidationPolicy = policyManager.regis
         name: "aws-alb-loadbalancer-enable-access-logging",
         description: "Checks that ALB loadbalancers have access logging enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.alb.LoadBalancer, (loadBalancer, args, reportViolation) => {
+        validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
             if (!loadBalancer.accessLogs) {
                 reportViolation("ALB LoadBalancers should have access logging enabled.");
             }

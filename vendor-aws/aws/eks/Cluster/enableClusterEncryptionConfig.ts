@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Cluster } from "@pulumi/aws/eks";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyMan
         name: "aws-eks-cluster-enable-cluster-encryption-config",
         description: "Check that EKS Cluster Encryption Config is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.eks.Cluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
             if (!cluster.encryptionConfig) {
                 reportViolation("EKS Cluster Encryption Configuration should be enabled.");
             }

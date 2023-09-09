@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Function } from "@pulumi/aws/lambda";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "aws-lambda-function-missing-description",
         description: "Checks that all Lambda Functions have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.lambda.Function, (f, args, reportViolation) => {
+        validateResource: validateResourceOfType(Function, (f, args, reportViolation) => {
             if (!f.description) {
                 reportViolation("Lambda functions should have a description.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { DbInstance } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
         name: "awsnative-rds-dbinstance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS DB Instances performance insights is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (dbInstance, args, reportViolation) => {
+        validateResource: validateResourceOfType(DbInstance, (dbInstance, args, reportViolation) => {
             if (dbInstance.enablePerformanceInsights && !dbInstance.performanceInsightsKmsKeyId) {
                 reportViolation("RDS DB Instances should have performance insights encrypted.");
             }

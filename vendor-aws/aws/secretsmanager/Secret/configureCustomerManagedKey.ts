@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Secret } from "@pulumi/aws/secretsmanager";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-secretsmanager-secret-configure-customer-managed-key",
         description: "Check that Secrets Manager Secrets use a customer-manager KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.secretsmanager.Secret, (secret, args, reportViolation) => {
+        validateResource: validateResourceOfType(Secret, (secret, args, reportViolation) => {
             if (!secret.kmsKeyId) {
                 reportViolation("Secrets Manager Secrets should be encrypted using a customer-managed KMS key.");
             }

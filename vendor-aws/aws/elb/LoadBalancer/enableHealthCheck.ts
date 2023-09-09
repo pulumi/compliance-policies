@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LoadBalancer } from "@pulumi/aws/elb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableHealthCheck: ResourceValidationPolicy = policyManager.registe
         name: "aws-elb-loadbalancer-enable-health-check",
         description: "Check that ELB Load Balancers have a health check enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
+        validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
             if (!loadBalancer.healthCheck) {
                 reportViolation("ELB Load Balancers should have health checks enabled.");
             }

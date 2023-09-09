@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Repository } from "@pulumi/aws/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policyMan
         name: "aws-ecr-repository-disallow-unencrypted-repository",
         description: "Checks that ECR Repositories are encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ecr.Repository, (repo, args, reportViolation) => {
+        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfigurations === undefined) {
                 reportViolation("ECR repositories should be encrypted.");
             }

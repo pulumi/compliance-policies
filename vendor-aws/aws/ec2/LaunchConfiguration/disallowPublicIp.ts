@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LaunchConfiguration } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicIp: ResourceValidationPolicy = policyManager.register
         name: "aws-ec2-launchconfiguration-disallow-public-ip",
         description: "Checks that EC2 Launch Configurations do not have a public IP address.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.ec2.LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
+        validateResource: validateResourceOfType(LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
             if (launchConfiguration.associatePublicIpAddress === undefined || launchConfiguration.associatePublicIpAddress === true) {
                 reportViolation("EC2 Launch Configurations should not have a public IP address.");
             }

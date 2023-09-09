@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Bucket } from "@pulumi/aws/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
         name: "aws-s3-bucket-disallow-public-read",
         description: "Checks that S3 Bucket ACLs don't allow 'public-read' or 'public-read-write' or 'authenticated-read'.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.s3.Bucket, (bucket, args, reportViolation) => {
+        validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.acl) {
                 if (bucket.acl.toLowerCase() === "public-read" || bucket.acl.toLowerCase() === "public-read-write" || bucket.acl.toLowerCase() === "authenticated-read") {
                     reportViolation("S3 Buckets ACLs should not be set to 'public-read', 'public-read-write' or 'authenticated-read'.");

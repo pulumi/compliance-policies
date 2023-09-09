@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { DbInstance } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
         name: "awsnative-rds-dbinstance-enable-backup-retention",
         description: "Checks that RDS DB Instances backup retention policy is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DbInstance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(DbInstance, (instance, args, reportViolation) => {
             if (!instance.backupRetentionPeriod) {
                 reportViolation("RDS DB Instances backup retention should be enabled.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { LoadBalancer } from "@pulumi/aws/elb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policyMa
         name: "aws-elb-loadbalancer-configure-multi-availability-zone",
         description: "Check that ELB Load Balancers uses more than one availability zone.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.elb.LoadBalancer, (loadBalancer, args, reportViolation) => {
+        validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
             if (!loadBalancer.availabilityZones || loadBalancer.availabilityZones.length < 2) {
                 reportViolation("ELB Load Balancers should use more than one availability zone.");
             }

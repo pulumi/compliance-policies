@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Bucket } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policyManage
         name: "awsnative-s3-bucket-enable-server-side-encryption",
         description: "Check that S3 Bucket Server-Side Encryption (SSE) is enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.s3.Bucket, (bucket, args, reportViolation) => {
+        validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (!bucket.bucketEncryption || !bucket.bucketEncryption.serverSideEncryptionConfiguration) {
                 reportViolation("S3 Buckets Server-Side Encryption (SSE) should be enabled.");
             }

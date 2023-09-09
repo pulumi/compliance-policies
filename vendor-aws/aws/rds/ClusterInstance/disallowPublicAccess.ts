@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { ClusterInstance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyManager.regi
         name: "aws-rds-clusterinstance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.ClusterInstance, (clusterInstance, args, reportViolation) => {
+        validateResource: validateResourceOfType(ClusterInstance, (clusterInstance, args, reportViolation) => {
             if (clusterInstance.publiclyAccessible) {
                 reportViolation("RDS Cluster Instances public access should not be enabled.");
             }

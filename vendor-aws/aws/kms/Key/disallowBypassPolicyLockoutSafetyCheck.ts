@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Key } from "@pulumi/aws/kms";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = 
         name: "aws-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that KMS Keys do not bypass the key policy lockout safety check.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.kms.Key, (key, args, reportViolation) => {
+        validateResource: validateResourceOfType(Key, (key, args, reportViolation) => {
             if (key.bypassPolicyLockoutSafetyCheck) {
                 reportViolation("KMS Keys should not bypass the key policy lockout safety check.");
             }

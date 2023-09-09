@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { DbCluster } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "awsnative-rds-dbcluster-configure-customer-managed-key",
         description: "Checks that RDS DB Cluster storage uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.rds.DbCluster, (cluster, args, reportViolation) => {
+        validateResource: validateResourceOfType(DbCluster, (cluster, args, reportViolation) => {
             if (cluster.storageEncrypted && !cluster.kmsKeyId) {
                 reportViolation("RDS DB Cluster storage should be encrypted using a customer-managed key.");
             }

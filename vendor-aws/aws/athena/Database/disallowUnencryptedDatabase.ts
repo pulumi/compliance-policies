@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Database } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedDatabase: ResourceValidationPolicy = policyManag
         name: "aws-athena-database-disallow-unencrypted-database",
         description: "Checks that Athena Databases storage is encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Database, (database, args, reportViolation) => {
+        validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
             if (!database.encryptionConfiguration) {
                 reportViolation("Athena Databases should be encrypted.");
             }

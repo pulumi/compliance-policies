@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { FileSystem } from "@pulumi/aws/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyMan
         name: "aws-efs-filesystem-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.efs.FileSystem, (fileSystem, args, reportViolation) => {
+        validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
             if (!fileSystem.encrypted) {
                 reportViolation("EFS File systems should not have an unencypted file system.");
             }

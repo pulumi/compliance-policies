@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Workgroup } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyMana
         name: "aws-athena-workgroup-disallow-unencrypted-workgroup",
         description: "Checks that Athena Workgroups are encrypted.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Workgroup, (workgroup, args, reportViolation) => {
+        validateResource: validateResourceOfType(Workgroup, (workgroup, args, reportViolation) => {
             if (!workgroup.configuration || !workgroup.configuration.resultConfiguration || !workgroup.configuration.resultConfiguration.encryptionConfiguration) {
                 reportViolation("Athena Workgroups should be encrypted.");
             }

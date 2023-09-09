@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureBackupRetention: ResourceValidationPolicy = policyManager.
         name: "aws-rds-instance-configure-backup-retention",
         description: "Checks that backup retention policy is adequate.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.rds.Instance, (instance, args, reportViolation) => {
+        validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
             /**
              * 3 (three) days should be the minimum in order to have full weekend coverage.
              */

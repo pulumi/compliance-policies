@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Repository, RepositoryImageTagMutability } from "@pulumi/aws-native/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,8 +35,8 @@ export const disallowMutableImage: ResourceValidationPolicy = policyManager.regi
         name: "awsnative-ecr-repository-disallow-mutable-image",
         description: "Checks that ECR Repositories have immutable images enabled.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.ecr.Repository, (repo, args, reportViolation) => {
-            if (repo.imageTagMutability !== awsnative.ecr.RepositoryImageTagMutability.Immutable) {
+        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
+            if (repo.imageTagMutability !== RepositoryImageTagMutability.Immutable) {
                 reportViolation("ECR repositories should enable immutable images.");
             }
         }),

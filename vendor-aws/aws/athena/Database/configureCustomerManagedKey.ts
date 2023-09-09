@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Database } from "@pulumi/aws/athena";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "aws-athena-database-configure-customer-managed-key",
         description: "Checks that Athena Databases storage uses a customer-managed-key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.athena.Database, (database, args, reportViolation) => {
+        validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
             if (database.encryptionConfiguration && database.encryptionConfiguration.encryptionOption !== "SSE_KMS") {
                 reportViolation("Athena Databases should be encrypted using a customer-managed key.");
             }

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Permission } from "@pulumi/aws/lambda";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureSourceArn: ResourceValidationPolicy = policyManager.regist
         name: "aws-lambda-permission-configure-source-arn",
         description: "Checks that lambda function permissions have a source arn specified.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.lambda.Permission, (f, args, reportViolation) => {
+        validateResource: validateResourceOfType(Permission, (f, args, reportViolation) => {
             if (!f.sourceArn) {
                 reportViolation("Lambda functions permissions should have a source ARN defined.");
             }

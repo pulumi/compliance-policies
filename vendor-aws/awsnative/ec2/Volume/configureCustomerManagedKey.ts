@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Volume } from "@pulumi/aws-native/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "awsnative-ec2-volume-configure-customer-managed-key",
         description: "Check that encrypted EBS volumes use a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.ec2.Volume, (v, args, reportViolation) => {
+        validateResource: validateResourceOfType(Volume, (v, args, reportViolation) => {
             if (v.encrypted && !v.kmsKeyId) {
                 reportViolation("An EBS volume should be encrypted using a customer-managed KMS key.");
             }

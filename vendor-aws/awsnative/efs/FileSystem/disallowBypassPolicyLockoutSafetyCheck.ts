@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { FileSystem } from "@pulumi/aws-native/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = 
         name: "awsnative-efs-filesystem-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that EFS File systems do not bypass the File System policy lockout safety check.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.efs.FileSystem, (fileSystem, args, reportViolation) => {
+        validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
             if (fileSystem.bypassPolicyLockoutSafetyCheck) {
                 reportViolation("EFS File Systems should not bypass the file system policy lockout safety check.");
             }

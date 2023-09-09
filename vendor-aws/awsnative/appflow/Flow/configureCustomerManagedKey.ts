@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as awsnative from "@pulumi/aws-native";
+import { Flow } from "@pulumi/aws-native/appflow";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         name: "awsnative-appflow-flow-configure-customer-managed-key",
         description: "Check that AppFlow Flow uses a customer-managed KMS key.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(awsnative.appflow.Flow, (flow, args, reportViolation) => {
+        validateResource: validateResourceOfType(Flow, (flow, args, reportViolation) => {
             if (!flow.kmsArn) {
                 reportViolation("AppFlow Flow should be encrypted using a customer-managed KMS key.");
             }

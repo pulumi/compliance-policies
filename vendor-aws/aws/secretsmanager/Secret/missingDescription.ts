@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as aws from "@pulumi/aws";
+import { Secret } from "@pulumi/aws/secretsmanager";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -35,7 +35,7 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
         name: "aws-secretsmanager-secret-missing-description",
         description: "Checks that Secrets Manager Secrets have a description.",
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(aws.secretsmanager.Secret, (secret, args, reportViolation) => {
+        validateResource: validateResourceOfType(Secret, (secret, args, reportViolation) => {
             if (!secret.description) {
                 reportViolation("Secrets Manager Secrets should have a description.");
             } else {

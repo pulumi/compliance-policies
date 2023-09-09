@@ -65,44 +65,4 @@ fi
 
 echo "$VALUES_STRING" >> $CSV_FILE
 
-
 exit
-
-if [ -z "$LOG_FILES" ]; then
-    # no policies were installed. so values should be 0.
-    NPM_DURATION_MS=0
-    REIFY_DURATION_MS=0
-else
-    NPM_DURATION_MS="$(cat $LOG_FILE | grep 'timing npm Completed' | awk '{print $NF}' | sed 's/ms//;')"
-    REIFY_DURATION_MS="$(cat $LOG_FILE | grep 'timing reify Completed' | awk '{print $NF}' | sed 's/ms//;')"
-fi
-
-
-
-# find timings for the premium-policies packages and add them together
-for POLICY_PACKAGE in $PREMIUM_POLICIES_PACKAGES; do
-    REIFY_PACKAGE_TIME_MS="$(cat $LOG_FILE | grep "timing reifyNode:node_modules/@pulumi-premium-policies/${POLICY_PACKAGE} .*Completed" | awk '{print $NF}' | sed 's/ms//;')"
-    if [ -z "$REIFY_PACKAGE_TIME_MS" ]; then
-        REIFY_PACKAGE_TIME_MS=0
-    fi
-
-    HEADERS_STRING="$HEADERS_STRING,$POLICY_PACKAGE"
-    VALUES_STRING="$VALUES_STRING,$REIFY_PACKAGE_TIME_MS"
-done
-
-# find timings for the providers packages
-for PROVIDER_PACKAGE in $PULUMI_RESOURCE_PROVIDERS; do
-    REIFY_PACKAGE_TIME_MS="$(cat $LOG_FILE | grep "timing reifyNode:node_modules/@pulumi/${PROVIDER_PACKAGE} .*Completed" | awk '{print $NF}' | sed 's/ms//;')"
-    if [ -z "$REIFY_PACKAGE_TIME_MS" ]; then
-        REIFY_PACKAGE_TIME_MS=0
-    fi
-
-    HEADERS_STRING="$HEADERS_STRING,$PROVIDER_PACKAGE"
-    VALUES_STRING="$VALUES_STRING,$REIFY_PACKAGE_TIME_MS"
-done
-
-if [ ! -f "$CSV_FILE" ]; then
-    echo "$HEADERS_STRING" > $CSV_FILE
-fi
-
-echo "$VALUES_STRING" >> $CSV_FILE

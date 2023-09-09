@@ -38,7 +38,7 @@ test-1-3: clean-npm-logs clean-npm-cache
 
 test-1-4: clean-npm-logs clean-npm-cache
 	@for i in $(shell /usr/bin/seq 1 10); do \
-		/usr/bin/time --format "%e" pulumi up --policy-pack ../packs/single-premium-policies/single/ --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
+		/usr/bin/time --format "%e" pulumi up --policy-pack ../packs/all-premium-policies/single/ --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 		pulumi destroy --yes --skip-preview; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv

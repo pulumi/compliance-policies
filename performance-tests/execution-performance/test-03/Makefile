@@ -32,8 +32,7 @@ test-3-1: clean-npm-logs
 	@$(MAKE) -s disable-all-policies
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -43,8 +42,7 @@ test-3-2: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/aws-premium-policies-typescript-single latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -57,8 +55,7 @@ test-3-3: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/kubernetes-premium-policies-typescript-single latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -68,8 +65,7 @@ test-3-4: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/all-premium-policies-typescript-single latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -79,8 +75,7 @@ test-3-5: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/aws-premium-policies-typescript-all latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -93,8 +88,7 @@ test-3-6: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/kubernetes-premium-policies-typescript-all latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"
@@ -104,8 +98,7 @@ test-3-7: clean-npm-logs
 	@pulumi policy enable $(PULUMI_ORG)/all-premium-policies-typescript-all latest --policy-group $(POLICY_GROUP)
 	@for i in $(shell /usr/bin/seq 1 10); do \
 		$(MAKE) -s delete-installed-policies clean-npm-cache clean-npm-logs; \
-		/usr/bin/time --format "%e" pulumi up --yes --skip-preview 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
-		pulumi destroy --yes --skip-preview; \
+		/usr/bin/time --format "%e" pulumi pre 2>&1 | tail -n 1 | ../convert-time.sh | bash -x ../process-npm-logs.sh $@.csv; \
 	done
 	@cat $@.csv | sed 's/,/\t/g;' > $@.tsv
 	@code -r $@.tsv || echo "vscode not installed"

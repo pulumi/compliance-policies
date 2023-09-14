@@ -16,10 +16,10 @@
     ],
     "dependencies": {
         "@pulumi-premium-policies/policy-manager": "^0.0.4",
-        "@pulumi/aws": "^6.0.4",
+        "@pulumi/aws": "^6.1.0",
         "@pulumi/aws-native": "^0.75.0",
         "@pulumi/policy": "^1.7.0",
-        "@pulumi/pulumi": "^3.80.0"
+        "@pulumi/pulumi": "^3.82.1"
     },
     "devDependencies": {
         "@pulumi-premium-policies/unit-test-helpers": "^0.0.16",

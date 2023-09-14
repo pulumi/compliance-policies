@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Repository, RepositoryEncryptionType } from "@pulumi/aws-native/ecr";
+import { Repository } from "@pulumi/aws-native/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -37,10 +37,10 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
             if (repo.encryptionConfiguration) {
-                if (repo.encryptionConfiguration.encryptionType !== RepositoryEncryptionType.Kms) {
+                if (repo.encryptionConfiguration.encryptionType !== "KMS") {
                     reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
                 }
-                if (repo.encryptionConfiguration.encryptionType === RepositoryEncryptionType.Kms && !repo.encryptionConfiguration.kmsKey) {
+                if (repo.encryptionConfiguration.encryptionType === "KMS" && !repo.encryptionConfiguration.kmsKey) {
                     reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");
                 }
             }

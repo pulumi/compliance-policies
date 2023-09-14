@@ -40,7 +40,7 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
                     if (
                         serverSideEncryptionConfiguration.serverSideEncryptionByDefault &&
-                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm === BucketServerSideEncryptionByDefaultSseAlgorithm.Awskms &&
+                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm === "aws:kms" &&
                         !serverSideEncryptionConfiguration.serverSideEncryptionByDefault.kmsMasterKeyId
                     ) {
                         reportViolation("S3 Buckets Server-Side Encryption (SSE) should use a Customer-managed KMS key.");

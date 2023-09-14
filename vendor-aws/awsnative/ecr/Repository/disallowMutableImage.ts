@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Repository, RepositoryImageTagMutability } from "@pulumi/aws-native/ecr";
+import { Repository } from "@pulumi/aws-native/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -36,7 +36,7 @@ export const disallowMutableImage: ResourceValidationPolicy = policyManager.regi
         description: "Checks that ECR Repositories have immutable images enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
-            if (repo.imageTagMutability !== RepositoryImageTagMutability.Immutable) {
+            if (repo.imageTagMutability !== "IMMUTABLE") {
                 reportViolation("ECR repositories should enable immutable images.");
             }
         }),

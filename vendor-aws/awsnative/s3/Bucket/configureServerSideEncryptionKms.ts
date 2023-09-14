@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Bucket } from "@pulumi/aws-native/s3";
+import { Bucket, BucketServerSideEncryptionByDefaultSseAlgorithm } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -40,7 +40,7 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = policy
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
                     if (
                         !serverSideEncryptionConfiguration.serverSideEncryptionByDefault ||
-                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm !== awsnative.s3.BucketServerSideEncryptionByDefaultSseAlgorithm.Awskms
+                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm !== BucketServerSideEncryptionByDefaultSseAlgorithm.Awskms
                     ) {
                         reportViolation("S3 Buckets Server-Side Encryption (SSE) should use AWS KMS.");
                     }

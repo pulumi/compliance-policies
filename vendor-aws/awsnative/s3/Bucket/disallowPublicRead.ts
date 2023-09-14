@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Bucket } from "@pulumi/aws-native/s3";
+import { Bucket, BucketAccessControl } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -38,9 +38,9 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.accessControl) {
                 if (
-                    bucket.accessControl === awsnative.s3.BucketAccessControl.PublicRead ||
-                    bucket.accessControl === awsnative.s3.BucketAccessControl.PublicReadWrite ||
-                    bucket.accessControl === awsnative.s3.BucketAccessControl.AuthenticatedRead
+                    bucket.accessControl === BucketAccessControl.PublicRead ||
+                    bucket.accessControl === BucketAccessControl.PublicReadWrite ||
+                    bucket.accessControl === BucketAccessControl.AuthenticatedRead
                 ) {
                     reportViolation("S3 Buckets ACLs should not be set to 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.");
                 }

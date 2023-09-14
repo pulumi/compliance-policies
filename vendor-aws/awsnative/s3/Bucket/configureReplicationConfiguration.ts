@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Bucket } from "@pulumi/aws-native/s3";
+import { Bucket, BucketReplicationRuleStatus } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
@@ -38,7 +38,7 @@ export const configureReplicationConfiguration: ResourceValidationPolicy = polic
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.replicationConfiguration && bucket.replicationConfiguration.rules) {
                 bucket.replicationConfiguration.rules.forEach((rule) => {
-                    if (rule.status !== awsnative.s3.BucketReplicationRuleStatus.Enabled) {
+                    if (rule.status !== BucketReplicationRuleStatus.Enabled) {
                         reportViolation("S3 Buckets replication should be configured and enabled.");
                     }
                 });

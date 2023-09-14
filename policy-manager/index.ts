@@ -215,10 +215,16 @@ export class PolicyManager {
     }
 
     /**
-     * When running the policy selector, it's important that the function returns a given
-     * policy only once so the Pulumi service doesn't complain about duplicated policies.
-     * This function, allows to reset the policy filter and start _fresh_ again so
-     * invoking `filterPolicies()` will consider all registered policies again.
+     * When executing the policy selector, it's crucial for the function to return each policy
+     * exactly once. This ensures that the Pulumi service doesn't return an error related to
+     * duplicated policies when a policy pack is published.
+     *
+     * The purpose of this function is to reset the policy filter, enabling a fresh start.
+     * Consequently, when you invoke `selectPolicies()`, it will take into account all the
+     * registered policies including the ones previously selected. This may add previously
+     * selected policies to your policy pack.
+     *
+     * This function for unit tests purpose and most users/developers shouldn't use it.
      */
     public resetPolicySelector(): void {
         this.remainingPolicies = [...this.allPolicies];
@@ -226,12 +232,13 @@ export class PolicyManager {
     }
 
     /**
-     * This function returns an individual policy info by providing its
-     * name as an argument. If the policy is found, then it is returned. If the
-     * requested policy doesn't exists, then `undefined` is returned instead.
+     * This function returns a resource policy information by providing the policy
+     * name.
      *
-     * **Note**: The returned policy is not removed from the pool of available.
-     * if you want to select an individual policy, then you should be using
+     * This function for unit tests purpose and most users/developers shouldn't use it.
+     *
+     * **Note**: The returned policy is not removed from the pool of available policies.
+     * If you want to select an individual policy, then you should be using
      * `selectPolicyByName()` instead.
      *
      * @param name The policy name to search for and return.
@@ -259,11 +266,12 @@ export class PolicyManager {
     /**
      * This function searches for a policy based on the provided `name`. If the
      * policy is found, then it is removed from the pool of available policies
-     * and is returned. If not found, the `undefined` is returned.
+     * and the policy is returned. If not found, the `undefined` is returned.
      *
      * @param name The policy name to search for and return.
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns A `ResourceValidationPolicy` policy that matched the supplied `name` or `undefined` if the policy wasn't found in the pool of `remainingPolicies`.
+     * @see `selectPolicies()` and `setPolicyEnforcementLevel()`
      */
     public selectPolicyByName(name: string, enforcementLevel?: string): policy.ResourceValidationPolicy | undefined {
         if(!name) {
@@ -487,7 +495,7 @@ export class PolicyManager {
     }
 
     /**
-     * This function `setPolicyEnforcementLevel` sets a policy `enforcementLevel` for the provided `ResourceValidationPolicy` policy and returns it.
+     * This function `setPolicyEnforcementLevel()` sets a policy `enforcementLevel` for the provided `ResourceValidationPolicy` policy and returns it.
      * This function is typically used when cherry-picking individual policies as part of creating a policy-pack.
      *
      * @param pol A `ResourceValidationPolicy` policy for which you want to change its `enforcementLevel`.
@@ -518,9 +526,27 @@ export class PolicyManager {
     }
 
     /**
-     * Register a new policy so the policy can be aggregated into group of policies.
+     * Takes an array of policies and set the desired enforcement level on each policies.
+     *
+     * @param policies An array of policies.
+     * @param enforcementLevel The desired enforcement level for those policies.
+     * @returns The modified array of policies.
+     */
+    public setPoliciesEnforcementLevel(policies: policy.ResourceValidationPolicy[], enforcementLevel: string): policy.ResourceValidationPolicy[] {
+        for (let x = 0; x < policies.length; x++) {
+            policies[x] = this.setPolicyEnforcementLevel(policies[x], enforcementLevel);
+        }
+        return policies;
+    }
+
+    /**
+     * Register a new policy into the pool of policies. The policy name must be
+     * unique to the pool of policies already registered or an exception is thrown.
+     *
+     * This function is used if you are authoring your own premium policies.
      *
      * @param args An object containing the policy to register as well as its additional attributes.
+     * @returns a `ResourceValidationPolicy` object.
      */
     public registerPolicy(args: RegisterPolicyArgs): policy.ResourceValidationPolicy {
 
@@ -603,6 +629,8 @@ export class PolicyManager {
      * This function is used by policy module to register information about themselves.
      * This can be later used to display statistics about included packages as part of
      * a policy-pack.
+     *
+     * This function is to be used if you are authoring your own premium policies.
      *
      * @param name Name of the policy module as stored in `package.json`
      * @param version The module version as stored in `package.json`

@@ -16,7 +16,7 @@ If you're not yet familiar with Policy as Code, read more about it [here](https:
 
 Authoring a Policy Pack with Pulumi Premium Policies is very easy. Pulumi Premium Policies come with
 a [Policy Manager](http://FIXME) to help you quickly build policy packs by simply selecting policies
-of interest or changing the enforcement level of your choosen policies.
+of interest or changing the enforcement level of your chosen policies.
 
 There are 2 main ways to author a new Policy Pack as shown below. The methods described below can be
 used side-by-side with each other if you desire so.
@@ -33,7 +33,7 @@ Policies are selected using any of the 5 metadata fields.
 * `services` holds the service name to which the policy belong to. For example `s3` is for Amazon
   Web Services Simple Storage Service (S3).
 * `severities` for the policy severity. Valid values are `low`, `medium`, `high` and `critical`.
-* `topics` a set of keyworks pertaining to the policy. For example `encryption`, `cost`, `backup`...
+* `topics` a set of keywords pertaining to the policy. For example `encryption`, `cost`, `backup`...
 * `frameworks` holds information about the policy and the compliance frameworks it belongs to. For
   example `pcidss` for the PCI-DSS framework
 
@@ -65,11 +65,11 @@ policyManager.displaySelectionStats({
 ```
 
 ✅ Policy selection doesn't require any `import` statement other than Policy Manager. Policy Manager
-automatically finds and load policy packages as plugins. Simply make sure your `package.json`
+automatically finds and loads policy packages as plugins. Simply make sure your `package.json`
 contains the correct policy packages you wish to load and use.
 
-To assist in policy selection visbility and traceability, Policy Manager has the ability to display
-selectionstatistics when calling `policyManager.displaySelectionStats()`. Each times your policies
+To assist in policy selection visibility  and traceability, Policy Manager has the ability to display
+selection statistics when calling `policyManager.displaySelectionStats()`. Each time your policies
 are evaluated as part of a stack preview or stack update, statistics will also be displayed and
 recorded in the Pulumi Cloud Service as part of your Pulumi app output.
 
@@ -82,7 +82,7 @@ To allow Premium Policy cherry-picking, you need to `import` the policy package 
 
 It's recommended to use `policyManager.setPoliciesEnforcementLevel()` or `policyManager.setPolicyEnforcementLevel()`
 when cherry-picking Premium Policies so your Policy Pack statistics are accurate. Not doing so may
-lead to duplicated policy selection as well as inacurrate Policy Pack statistics.
+lead to duplicate policy selection as well as inaccurate Policy Pack statistics.
 
 ```ts
 import { PolicyPack } from "@pulumi/policy";
@@ -109,7 +109,7 @@ policyManager.displaySelectionStats({
 ```
 
 ✅ Pulumi Premium Policies are structured the same way the provider services and resources are structured,
-making them easy to navigate. Consider using a modern IDE to leverage code completion, linting and embeded
+making them easy to navigate. Consider using a modern IDE to leverage code completion, linting and embedded
 code documentation.
 
 ### Mixed authoring
@@ -148,7 +148,7 @@ policyManager.displaySelectionStats({
 
 ### Policy Pack Statistics
 
-To assist in policy selection visbility and traceability, Policy Manager has the ability to display
+To assist in policy selection visibility and traceability, Policy Manager has the ability to display
 selection statistics when calling `policyManager.displaySelectionStats()`. Each times your policies
 are evaluated as part of a stack preview or stack update, statistics will also be displayed and
 recorded in the Pulumi Cloud Service as part of your Pulumi app output.
@@ -157,7 +157,7 @@ This feature allows your organization to track the policies evaluated during a s
 as well as the total number of policies selected, and the Pulumi Premium Policies packages versions
 used in your Policy Pack.
 
-To display statictics about your Policy Packs and the Premium Policies in use, simply add the following
+To display statistics about your Policy Packs and the Premium Policies in use, simply add the following
 statement at the bottom of your Policy Pack.
 
 See [Policy Manager](http://FIXME) documentation for more details.
@@ -189,7 +189,7 @@ export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxx"
 npm install "@pulumi-premium-policies/kubernetes-policies" --save
 ```
 
-For a complete list of available Premium Policy packages, please refrence to our reference
+For a complete list of available Premium Policy packages, please reference to our reference
 [documentation](http://FIXME).
 
 If NPM returns a `HTTP 403 - Access Denied`, then either the provided Pulumi Access Token is invalid,
@@ -207,10 +207,11 @@ for more details.
 
 ## Performance
 
-Pulumi Premium Policies have been designed from the ground up to be efficient from the start. However
-like any software, we recommend Policy Pack Authors to be mindful how they implement their Policy Packs.
+Pulumi Premium Policies have been designed from the ground up to be efficient from the start. However,
+like any software, we recommend Policy Pack Authors to be mindful of how they implement their Policy
+Packs.
 
-Pulumi recommends to avoid installing policy packages for vendor you don't use. Doing so will reduce
+Pulumi recommends avoiding installing policy packages for vendors you don't use. Doing so will reduce
 memory usage and will make the execution of your Pulumi app faster.
 
 Pulumi recommends loading Premium Policies for only services and resources you intend to use. This will

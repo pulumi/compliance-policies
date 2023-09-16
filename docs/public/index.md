@@ -28,10 +28,6 @@ and use policies based on areas of focus.
 
 Policies are selected using any of the 5 metadata fields.
 
-!!! Important
-
-    Metadata values are case insensitive
-
 * `vendor` holds the vendor's name to which the policy belong to. For example `aws` is for Amazon
   Web Services.
 * `services` holds the service name to which the policy belong to. For example `s3` is for Amazon
@@ -45,28 +41,28 @@ The example below shows how to select policies for AWS that are related to the E
 for which the policy severity is rated either medium, high or critical, and where the policies are
 related to encryption and to the PCI-DSS framework.
 
-    ```ts
-    import { PolicyPack } from "@pulumi/policy";
-    import { policyManager } from "@pulumi-premium-policies/policy-manager";
+```ts
+import { PolicyPack } from "@pulumi/policy";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
-    new PolicyPack("aws-premium-policies-typescript", {
-        policies:[
-            ...policyManager.selectPolicies({
-                vendors: ["aws"],
-                services: ["ec2", "s3"],
-                severities: ["medium", "high", "critical"],
-                topics: ["encryption"],
-                frameworks: ["pcidss"],
-            }, "mandatory" ),
-        ],
-    });
+new PolicyPack("aws-premium-policies-typescript", {
+    policies:[
+        ...policyManager.selectPolicies({
+            vendors: ["aws"],
+            services: ["ec2", "s3"],
+            severities: ["medium", "high", "critical"],
+            topics: ["encryption"],
+            frameworks: ["pcidss"],
+        }, "mandatory" ),
+    ],
+});
 
-    policyManager.displaySelectionStats({
-        displayGeneralStats: true,
-        displayModuleInformation: true,
-        displaySelectedPolicyNames: true,
-    });
-    ```
+policyManager.displaySelectionStats({
+    displayGeneralStats: true,
+    displayModuleInformation: true,
+    displaySelectedPolicyNames: true,
+});
+```
 
 ✅ Policy selection doesn't require any `import` statement other than Policy Manager. Policy Manager
 automatically finds and load policy packages as plugins. Simply make sure your `package.json`
@@ -88,29 +84,29 @@ It's recommended to use `policyManager.setPoliciesEnforcementLevel()` or `policy
 when cherry-picking Premium Policies so your Policy Pack statistics are accurate. Not doing so may
 lead to duplicated policy selection as well as inacurrate Policy Pack statistics.
 
-    ```ts
-    import { PolicyPack } from "@pulumi/policy";
-    import { policyManager } from "@pulumi-premium-policies/policy-manager";
-    import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
+```ts
+import { PolicyPack } from "@pulumi/policy";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
 
-    new PolicyPack("aws-premium-policies-typescript", {
-        policies:[
-            ...policyManager.setPoliciesEnforcementLevel([
-                awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
-                awsPolicies.awsnative.ec2.Volume.disallowUnencryptedVolume
-            ], "mandatory"),
-            ...policyManager.setPoliciesEnforcementLevel([
-                awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
-            ], "advisory"),
-        ],
-    });
+new PolicyPack("aws-premium-policies-typescript", {
+    policies:[
+        ...policyManager.setPoliciesEnforcementLevel([
+            awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
+            awsPolicies.awsnative.ec2.Volume.disallowUnencryptedVolume
+        ], "mandatory"),
+        ...policyManager.setPoliciesEnforcementLevel([
+            awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
+        ], "advisory"),
+    ],
+});
 
-    policyManager.displaySelectionStats({
-        displayGeneralStats: true,
-        displayModuleInformation: true,
-        displaySelectedPolicyNames: true,
-    });
-    ```
+policyManager.displaySelectionStats({
+    displayGeneralStats: true,
+    displayModuleInformation: true,
+    displaySelectedPolicyNames: true,
+});
+```
 
 ✅ Pulumi Premium Policies are structured the same way the provider services and resources are structured,
 making them easy to navigate. Consider using a modern IDE to leverage code completion, linting and embeded
@@ -120,35 +116,35 @@ code documentation.
 
 Premium Policy selection and cherry picking methods can be combined together.
 
-    ```ts
-    import { PolicyPack } from "@pulumi/policy";
-    import { policyManager } from "@pulumi-premium-policies/policy-manager";
-    import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
-    import * as k8sPolicies from "@pulumi-premium-policies/kubernetes-policies";
+```ts
+import { PolicyPack } from "@pulumi/policy";
+import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
+import * as k8sPolicies from "@pulumi-premium-policies/kubernetes-policies";
 
-    new PolicyPack("aws-premium-policies-typescript", {
-        policies:[
-            ...policyManager.selectPolicies({
-                vendors: ["aws"],
-                services: ["ec2", "s3"],
-                severities: ["medium", "high", "critical"],
-            }, "mandatory" ),
-            ...policyManager.selectPolicies({
-                vendors: ["kubernetes"],
-                severities: ["high", "critical"],
-            }, "mandatory"),
-            ...policyManager.setPoliciesEnforcementLevel([
-                awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
-                awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
-            ], "advisory"),
-        ],
-    });
-    policyManager.displaySelectionStats({
-        displayGeneralStats: true,
-        displayModuleInformation: true,
-        displaySelectedPolicyNames: true,
-    });
-    ```
+new PolicyPack("aws-premium-policies-typescript", {
+    policies:[
+        ...policyManager.selectPolicies({
+            vendors: ["aws"],
+            services: ["ec2", "s3"],
+            severities: ["medium", "high", "critical"],
+        }, "mandatory" ),
+        ...policyManager.selectPolicies({
+            vendors: ["kubernetes"],
+            severities: ["high", "critical"],
+        }, "mandatory"),
+        ...policyManager.setPoliciesEnforcementLevel([
+            awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
+            awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
+        ], "advisory"),
+    ],
+});
+policyManager.displaySelectionStats({
+    displayGeneralStats: true,
+    displayModuleInformation: true,
+    displaySelectedPolicyNames: true,
+});
+```
 
 ### Policy Pack Statistics
 
@@ -166,13 +162,13 @@ statement at the bottom of your Policy Pack.
 
 See [Policy Manager](http://FIXME) documentation for more details.
 
-    ```ts
-    policyManager.displaySelectionStats({
-        displayGeneralStats: true,
-        displayModuleInformation: true,
-        displaySelectedPolicyNames: true,
-    });
-    ```
+```ts
+policyManager.displaySelectionStats({
+    displayGeneralStats: true,
+    displayModuleInformation: true,
+    displaySelectedPolicyNames: true,
+});
+```
 
 ### Additional Premium Policy Packages
 
@@ -188,10 +184,10 @@ operation is not required.
 
 You may add additional Premium Policies packages with the following the commands:
 
-    ```bash
-    export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxx"
-    npm install "@pulumi-premium-policies/kubernetes-policies" --save
-    ```
+```bash
+export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxx"
+npm install "@pulumi-premium-policies/kubernetes-policies" --save
+```
 
 For a complete list of available Premium Policy packages, please refrence to our reference
 [documentation](http://FIXME).

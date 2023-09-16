@@ -189,7 +189,7 @@ export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxx"
 npm install "@pulumi-premium-policies/kubernetes-policies" --save
 ```
 
-For a complete list of available Premium Policy packages, please reference to our reference
+For a complete list of available Premium Policy packages, please refer to our reference
 [documentation](http://FIXME).
 
 If NPM returns a `HTTP 403 - Access Denied`, then either the provided Pulumi Access Token is invalid,

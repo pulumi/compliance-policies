@@ -28,9 +28,9 @@ and use policies based on areas of focus.
 
 Policies are selected using any of the 5 metadata fields.
 
-* `vendor` holds the vendor's name to which the policy belong to. For example `aws` is for Amazon
+* `vendor` holds the vendor's name to which the policy belongs to. For example `aws` is for Amazon
   Web Services.
-* `services` holds the service name to which the policy belong to. For example `s3` is for Amazon
+* `services` holds the service name to which the policy belongs to. For example `s3` is for Amazon
   Web Services Simple Storage Service (S3).
 * `severities` for the policy severity. Valid values are `low`, `medium`, `high` and `critical`.
 * `topics` a set of keywords pertaining to the policy. For example `encryption`, `cost`, `backup`...

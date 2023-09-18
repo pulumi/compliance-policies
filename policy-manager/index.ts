@@ -25,14 +25,39 @@ import { loadPlugins } from "./plugin";
 
 export { loadPlugins } from "./plugin";
 
+/**
+ * Represents the arguments for selecting policies.
+ */
 export interface FilterPolicyArgs {
+    /**
+     * An array of vendor names to select policies by.
+     */
     vendors?: string[];
+
+    /**
+     * An array of service names to select policies by.
+     */
     services?: string[];
+
+    /**
+     * An array of compliance framework names to select policies by.
+     */
     frameworks?: string[];
+
+    /**
+     * An array of severity levels to select policies by.
+     */
     severities?: string[];
+
+    /**
+     * An array of topics to select policies by.
+     */
     topics?: string[];
 };
 
+/**
+ * Represents the arguments for displaying policy selection statistics.
+ */
 export interface DisplaySelectionStatsArgs {
     /**
      * If set to `true`, displays general statistics about the number of registered policies, how many have been selected and how many remain in the pool.
@@ -46,28 +71,75 @@ export interface DisplaySelectionStatsArgs {
      * If `true` then shows the name of the policies that have been included in the policy pack at runtime and the associated enforcement level.
      */
     displaySelectedPolicyNames?: boolean;
-}
+};
 
+/**
+ * Metadata associated with a policy.
+ */
 export interface PolicyMetadata {
+    /**
+     * An array of vendor names associated with the policy.
+     */
     vendors?: string[];
+    /**
+     * An array of service names associated with the policy.
+     */
     services?: string[];
+    /**
+     * An array of compliance framework names associated with the policy.
+     */
     frameworks?: string[];
+    /**
+     * The severity level of the policy.
+     */
     severity?: string;
+    /**
+     * An array of topics related to the policy.
+     */
     topics?: string[];
 };
 
+/**
+ * Represents the arguments for registering a policy.
+ */
 export interface RegisterPolicyArgs extends PolicyMetadata {
+    /**
+     * The resource validation policy to be associated with the registered policy.
+     */
     resourceValidationPolicy: policy.ResourceValidationPolicy;
 };
 
+/**
+ * Represents information about a policy.
+ */
 export interface PolicyInfo {
+    /**
+     * The name of the policy.
+     */
     policyName: string;
+
+    /**
+     * The resource validation policy associated with the policy.
+     */
     resourceValidationPolicy: policy.ResourceValidationPolicy;
+
+    /**
+     * Metadata associated with the policy.
+     */
     policyMetadata: PolicyMetadata;
 };
 
+/**
+ * Represents information about a policy package.
+ */
 export interface ModuleInfo {
+    /**
+     * The name of the policy package.
+     */
     name: string;
+    /**
+     * The version of the policy package.
+     */
     version: string;
 };
 
@@ -96,6 +168,9 @@ export interface PolicyManagerStats {
     registeredModules: ModuleInfo[];
 }
 
+/**
+ * Class to manage policies.
+ */
 export class PolicyManager {
 
     /**
@@ -162,8 +237,6 @@ export class PolicyManager {
      * @returns Returns a populated `PolicyManagerStats`.
      */
     public getSelectionStats(): PolicyManagerStats {
-        const selectedPolicyNames: string[] = [];
-
         return {
             policyCount: this.allPolicies.length,
             remainingPolicyCount: this.remainingPolicies.length,
@@ -510,6 +583,8 @@ export class PolicyManager {
          * the policy code cannot be serialized. So instead, we manually
          * assign each value and set the enforcementLevel last.
          */
+        // FIXME: Discard policies that have already been selected.
+        // FIXME: Remove the listed policies from the pool of available ones
         const p: policy.ResourceValidationPolicy = {
             name: pol.name,
             description: pol.description,
@@ -645,6 +720,11 @@ export class PolicyManager {
     }
 };
 
+/**
+ * An instance of the `PolicyManager` class.
+ *
+ * Use this instance to manipulate (register, select...) policies.
+ */
 export const policyManager: PolicyManager = new PolicyManager();
 
 /**

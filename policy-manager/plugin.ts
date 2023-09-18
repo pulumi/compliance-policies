@@ -26,7 +26,14 @@ const findup = require("findup-sync");
 const micromatch = require("micromatch");
 
 /**
- * This function dynamically loads modules that are present in the `package.json` which names are matching the `globPatterns`.
+ *  `loadPlugins()` loads NPM policy packages that are present in the `package.json` which
+ *  names are matching the `globPatterns`.
+ *
+ * this function is typically used when you've authored a policy package and you want to
+ * load and register the policies it contains.
+ *
+ * A common pattern example is `["@pulumi-premium-policies/*-policies"]` for Pulumi Premium
+ * Policies.
  *
  * @param globPatterns An array of patterns as used by `micromatch`.
  * @returns No value is returned. Exceptions are thrown on error with a descriptive message.

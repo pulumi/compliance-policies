@@ -5,10 +5,10 @@ exclusively for our Business Critical customers, Premium Policies take your infr
 management to the next level.
 
 With a comprehensive coverage of AWS, Azure, Google, and Kubernetes, our Premium Policies provide
-an enhanced level of control and governance over your cloud resources. Currently available for
-JavaScript and TypeScript, with plans to expand to other languages in the future,Pulumi Premium
-Policies empower you to enforce best practices, security standards, cost control and compliance
-requirements seamlessly within your infrastructure-as-code workflows.
+an enhanced level of control and governance over your cloud resources. Although Premium Policies
+are currently available in JavaScript and TypeScript, they can be used with Pulumi stacks written
+in any language. Pulumi Premium Policies empower you to enforce best practices, security standards,
+cost control and compliance requirements seamlessly within your infrastructure-as-code workflows.
 
 If you're not yet familiar with Policy as Code, read more about it [here](https://www.pulumi.com/docs/using-pulumi/crossguard/).
 
@@ -26,16 +26,27 @@ used side-by-side with each other if you desire so.
 Pulumi Premium Policies have been enriched with additional metadata allowing authors to quickly select
 and use policies based on areas of focus.
 
-Policies are selected using any of the 5 metadata fields.
+Policies have 5 metadata fields:
 
-* `vendor` holds the vendor's name to which the policy belongs to. For example `aws` is for Amazon
-  Web Services.
-* `services` holds the service name to which the policy belongs to. For example `s3` is for Amazon
-  Web Services Simple Storage Service (S3).
-* `severities` for the policy severity. Valid values are `low`, `medium`, `high` and `critical`.
-* `topics` a set of keywords pertaining to the policy. For example `encryption`, `cost`, `backup`...
-* `frameworks` holds information about the policy and the compliance frameworks it belongs to. For
-  example `pcidss` for the PCI-DSS framework
+The `vendor` field holds the vendor's name to which the policy belongs to. For example `aws` is for
+Amazon Web Services. If a vendor has more than one Pulumi provider (ie, AWS Classic and AWS Native),
+then policies are grouped under the same vendor name. This is done so organizations have a complete
+control over resource creation regardless of the Pulumi provider used.
+
+The `services` field holds the service name to which the policy belongs to. For example `s3` is for
+Amazon Web Services Simple Storage Service (S3), or `containerserice` is for Azure Container Service.
+
+The `severity` field describes the policy severity across 4 severity levels, from `low`, `medium`,
+`high` to `critical` . As some policies address more sensitive issues, this field highlights the
+security risks associated.
+
+The `topics` field contains a set of keywords pertaining to the policy. For example `encryption`,
+`cost`, `backup`, `availability` and so on. It allows organizations to select policies based on area
+of focus.
+
+Finally, `frameworks` holds information about the policy and the compliance frameworks it belongs to.
+For example `pcidss` for the PCI-DSS framework. It enables organizations to quickly select policies
+based on a compliance framework they wish to adhere.
 
 The example below shows how to select policies for AWS that are related to the EC2 and S3 service and
 for which the policy severity is rated either medium, high or critical, and where the policies are
@@ -84,6 +95,14 @@ It's recommended to use `policyManager.setPoliciesEnforcementLevel()` or `policy
 when cherry-picking Premium Policies so your Policy Pack statistics are accurate. Not doing so may
 lead to duplicate policy selection as well as inaccurate Policy Pack statistics.
 
+In this example, first the user is manually selecting policies for disabling HTTP traffic on CloudFront
+distributions and ensuring encrypted volumes for EBS using the `mandatory` enforcement level.
+In the second statement, the user is selecting policies to ensure modern TLS encryption is used on
+CloudFront distributions but with an enforcement level of `advisory`.
+
+It's worth noting in the example below that policies need to be individually selected for both classic
+and native providers.
+
 ```ts
 import { PolicyPack } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
@@ -92,11 +111,14 @@ import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
 new PolicyPack("aws-premium-policies-typescript", {
     policies:[
         ...policyManager.setPoliciesEnforcementLevel([
-            awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
-            awsPolicies.awsnative.ec2.Volume.disallowUnencryptedVolume
+            awsPolicies.aws.cloudfront.Distribution.disallowUnencryptedTraffic,
+            awsPolicies.awsnative.cloudfront.Distribution.disallowUnencryptedTraffic
+            awsPolicies.awsnative.ec2.Volume.disallowUnencryptedVolume,
+            awsPolicies.aws.ebs.Volume.disallowUnencryptedVolume,
         ], "mandatory"),
         ...policyManager.setPoliciesEnforcementLevel([
-            awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
+            awsPolicies.aws.cloudfront.Distribution.configureSecureTls,
+            awsPolicies.awsnative.cloudfront.Distribution.configureSecureTls,
         ], "advisory"),
     ],
 });
@@ -199,7 +221,7 @@ Contact our [sales team](https://www.pulumi.com/pricing/) to learn more about ou
 
 ## Policy Pack Execution
 
-Policy Packs using Pulumi Premium Policies bear no differences to vaniall Policy Packs. It's possible
+Policy Packs using Pulumi Premium Policies bear no differences to vanvanilla Policy Packs. It's possible
 to run Policy packs locally or have them enforced across your Pulumi Organization.
 
 Please refer to our [documentation](https://www.pulumi.com/docs/using-pulumi/crossguard/configuration/)

@@ -344,7 +344,6 @@ export class PolicyManager {
      * @param name The policy name to search for and return.
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns A `ResourceValidationPolicy` policy that matched the supplied `name` or `undefined` if the policy wasn't found in the pool of `remainingPolicies`.
-     * @see `selectPolicies()` and `setPolicyEnforcementLevel()`
      */
     public selectPolicyByName(name: string, enforcementLevel?: string): policy.ResourceValidationPolicy | undefined {
         if(!name) {
@@ -620,51 +619,6 @@ export class PolicyManager {
         });
 
         return results;
-    }
-
-    /**
-     * This function `setPolicyEnforcementLevel()` sets a policy `enforcementLevel` for the provided `ResourceValidationPolicy` policy and returns it.
-     * This function is typically used when cherry-picking individual policies as part of creating a policy-pack.
-     *
-     * @param pol A `ResourceValidationPolicy` policy for which you want to change its `enforcementLevel`.
-     * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
-     * @returns A ResourceValidationPolicy policy with the desired `enforcementLevel` set.
-     */
-    public setPolicyEnforcementLevel(pol: policy.ResourceValidationPolicy, enforcementLevel: string): policy.ResourceValidationPolicy {
-        /*
-         * We need to deep clone the entire policy to avoid changing
-         * the enforcement level set by the policy developer. However,
-         * It's not possible to use `structuredClone()` to clone because
-         * the policy code cannot be serialized. So instead, we manually
-         * assign each value and set the enforcementLevel last.
-         */
-        const p: policy.ResourceValidationPolicy = {
-            name: pol.name,
-            description: pol.description,
-            configSchema: pol.configSchema,
-            validateResource: pol.validateResource,
-            enforcementLevel: pol.enforcementLevel,
-        };
-
-        if (enforcementLevel === "advisory" || enforcementLevel === "mandatory" || enforcementLevel === "disabled") {
-            pol.enforcementLevel = enforcementLevel;
-        }
-
-        return p;
-    }
-
-    /**
-     * Takes an array of policies and set the desired enforcement level on each policies.
-     *
-     * @param policies An array of policies.
-     * @param enforcementLevel The desired enforcement level for those policies.
-     * @returns The modified array of policies.
-     */
-    public setPoliciesEnforcementLevel(policies: policy.ResourceValidationPolicy[], enforcementLevel: string): policy.ResourceValidationPolicy[] {
-        for (let x = 0; x < policies.length; x++) {
-            policies[x] = this.setPolicyEnforcementLevel(policies[x], enforcementLevel);
-        }
-        return policies;
     }
 
     /**

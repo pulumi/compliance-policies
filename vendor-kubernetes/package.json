@@ -14,13 +14,13 @@
         "kubernetes"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "^0.0.4",
-        "@pulumi/kubernetes": "^4.1.1",
+        "@pulumi-premium-policies/policy-manager": "^0.0.7",
+        "@pulumi/kubernetes": "^4.2.0",
         "@pulumi/policy": "^1.7.0",
-        "@pulumi/pulumi": "^3.80.0"
+        "@pulumi/pulumi": "^3.84.0"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.16",
+        "@pulumi-premium-policies/unit-test-helpers": "^0.0.18",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

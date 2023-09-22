@@ -405,7 +405,7 @@ export class PolicyManager {
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */
-    public selectPolicies(args: FilterPolicyArgs, enforcementLevel?: string): policy.ResourceValidationPolicy[] {
+    public selectPolicies(args: FilterPolicyArgs | policy.ResourceValidationPolicy[], enforcementLevel?: string): policy.ResourceValidationPolicy[] {
 
         const results: policy.ResourceValidationPolicy[] = [];
         /*
@@ -583,8 +583,6 @@ export class PolicyManager {
          * the policy code cannot be serialized. So instead, we manually
          * assign each value and set the enforcementLevel last.
          */
-        // FIXME: Discard policies that have already been selected.
-        // FIXME: Remove the listed policies from the pool of available ones
         const p: policy.ResourceValidationPolicy = {
             name: pol.name,
             description: pol.description,

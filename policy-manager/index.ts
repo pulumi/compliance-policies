@@ -393,6 +393,28 @@ export class PolicyManager {
     }
 
     /**
+     * Takes an array of policy names and set the desired enforcement level on each policy.
+     * If a provided policy name has alread been selected, then the matching policy is not
+     * returned as part of the result.
+     *
+     * @param names An array of policy names.
+     * @param enforcementLevel The desired enforcement level for those policies.
+     * @returns An array of policies.
+     */
+    public selectPoliciesByName(names: string[], enforcementLevel: string): policy.ResourceValidationPolicy[] {
+        const policies: policy.ResourceValidationPolicy[] = [];
+        for (let x = 0; x < names.length; x++) {
+            const result = this.selectPolicyByName(names[x], enforcementLevel);
+            if (!result) {
+                continue;
+            }
+            policies.push(result);
+        }
+        return policies;
+    }
+
+
+    /**
      * Select policies based on criterias provided as arguments. The selectiopn filter only
      * returns policies that match selection criterias. Effectively, this function performs
      * an `or` operation within each selection criteria, and an `and` operation between

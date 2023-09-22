@@ -68,7 +68,7 @@ export interface DisplaySelectionStatsArgs {
      */
     displayModuleInformation?: boolean;
     /**
-     * If `true` then shows the name of the policies that have been included in the policy pack at runtime and the associated enforcement level.
+     * If `true` then shows the name of the policies that have been included in the Policy Pack at runtime and the associated enforcement level.
      */
     displaySelectedPolicyNames?: boolean;
 };
@@ -290,12 +290,12 @@ export class PolicyManager {
     /**
      * When executing the policy selector, it's crucial for the function to return each policy
      * exactly once. This ensures that the Pulumi service doesn't return an error related to
-     * duplicated policies when a policy pack is published.
+     * duplicated policies when a Policy Pack is published.
      *
      * The purpose of this function is to reset the policy filter, enabling a fresh start.
      * Consequently, when you invoke `selectPolicies()`, it will take into account all the
      * registered policies including the ones previously selected. This may add previously
-     * selected policies to your policy pack.
+     * selected policies to your Policy Pack.
      *
      * This function for unit tests purpose and most users/developers shouldn't use it.
      */
@@ -380,7 +380,7 @@ export class PolicyManager {
             /*
              * We also take the opportunity to capture the policy name and
              * store it if the user wants to know which policies have been
-             * used to create their policy pack.
+             * used to create their Policy Pack.
              */
             this.selectedPolicies.push(pol);
 
@@ -559,7 +559,7 @@ export class PolicyManager {
             /*
              * We also take the opportunity to capture the policy name and
              * store it if the user wants to know which policies have been
-             * used to create their policy pack.
+             * used to create their Policy Pack.
              */
             this.selectedPolicies.push(pol);
         });
@@ -618,7 +618,7 @@ export class PolicyManager {
      * Register a new policy into the pool of policies. The policy name must be
      * unique to the pool of policies already registered or an exception is thrown.
      *
-     * This function is used if you are authoring your own premium policies.
+     * This function is used if you are authoring your own Premium Policies.
      *
      * @param args An object containing the policy to register as well as its additional attributes.
      * @returns a `ResourceValidationPolicy` object.
@@ -705,7 +705,7 @@ export class PolicyManager {
      * This can be later used to display statistics about included packages as part of
      * a policy-pack.
      *
-     * This function is to be used if you are authoring your own premium policies.
+     * This function is to be used if you are authoring your own Premium Policies.
      *
      * @param name Name of the policy module as stored in `package.json`
      * @param version The module version as stored in `package.json`

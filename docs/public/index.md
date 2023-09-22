@@ -176,9 +176,10 @@ selecting individual policies.
 
 To allow Premium Policy cherry-picking, you need to `import` the policy package in your Policy Pack code.
 
-It's recommended to use `policyManager.setPoliciesEnforcementLevel()` or `policyManager.setPolicyEnforcementLevel()`
-when cherry-picking Premium Policies so your Policy Pack statistics are accurate. Not doing so may
-lead to duplicate policy selection as well as inaccurate Policy Pack statistics.
+It is recommended to use `policyManager.selectPolicies()` when cherry-picking Premium Policies so duplicated
+policies are removed and your Policy Pack statistics are accurate. Not doing so may lead to duplicate
+policy selection, the inability to publish your Policy Pack in your Pulumi organization as well as inaccurate
+Policy Pack statistics.
 
 In this example, first the user is manually selecting policies for disabling HTTP traffic on CloudFront
 distributions and ensuring encrypted volumes for EBS using the `mandatory` enforcement level.
@@ -195,13 +196,13 @@ import * as awsPolicies from "@pulumi-premium-policies/aws-policies";
 
 new PolicyPack("aws-premium-policies-typescript", {
     policies:[
-        ...policyManager.setPoliciesEnforcementLevel([
+        ...policyManager.selectPolicies([
             awsPolicies.aws.cloudfront.Distribution.disallowUnencryptedTraffic,
             awsPolicies.awsnative.cloudfront.Distribution.disallowUnencryptedTraffic
             awsPolicies.awsnative.ec2.Volume.disallowUnencryptedVolume,
             awsPolicies.aws.ebs.Volume.disallowUnencryptedVolume,
         ], "mandatory"),
-        ...policyManager.setPoliciesEnforcementLevel([
+        ...policyManager.selectPolicies([
             awsPolicies.aws.cloudfront.Distribution.configureSecureTls,
             awsPolicies.awsnative.cloudfront.Distribution.configureSecureTls,
         ], "advisory"),
@@ -240,7 +241,7 @@ new PolicyPack("aws-premium-policies-typescript", {
             vendors: ["kubernetes"],
             severities: ["high", "critical"],
         }, "mandatory"),
-        ...policyManager.setPoliciesEnforcementLevel([
+        ...policyManager.selectPolicies([
             awsPolicies.aws.alb.LoadBalancer.configureAccessLogging,
             awsPolicies.aws.alb.LoadBalancer.enableAccessLogging,
         ], "advisory"),
@@ -272,10 +273,20 @@ See [Manual installation](#manual-installation) for more details.
 ```ts
 policyManager.displaySelectionStats({
     displayGeneralStats: true,
-    displayModuleInformation: true,
     displaySelectedPolicyNames: true,
+    displayModuleInformation: true,
 });
 ```
+
+Setting `displayGeneralStats` to `true` will display general statistics about the number of available
+policies across all installed policy packages, how many were selected by your Policy Pack and the remaining
+number of (unselected) policies.
+
+Setting `displaySelectedPolicyNames` to `true` will dump all the policy names that were selected by your
+Policy Pack. This will help you track policy usage over time and when performing any audit.
+
+Finally, setting `displayModuleInformation` to `true` will display the names and versions of your installed
+policy packages.
 
 ### Additional Premium Policy Packages
 

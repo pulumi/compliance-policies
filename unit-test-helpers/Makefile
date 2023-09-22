@@ -20,6 +20,9 @@ build:: lint
 lint::
 	@yarn run lint
 
+upgrade::
+	@yarn upgrade @pulumi-premium-policies/policy-manager@latest --save
+
 publish:
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1

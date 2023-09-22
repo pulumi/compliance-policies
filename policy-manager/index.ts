@@ -394,14 +394,20 @@ export class PolicyManager {
     }
 
     /**
-     * Select policies based on criterias provided as arguments. The filter only returns policies
-     * that match selection criterias. Effectively, this function performs an `or` operation
-     * within each selection criteria, and an `and` operation between selection criterias.
+     * Select policies based on criterias provided as arguments. The selectiopn filter only
+     * returns policies that match selection criterias. Effectively, this function performs
+     * an `or` operation within each selection criteria, and an `and` operation between
+     * selection criterias.
+     *
+     * You may also provide an array of cherry-picked polcies. The function takes care of
+     * removing duplicates as well as ignoring already selected policies from previous calls.
      *
      * Note: Criterias are all case-insensitive.
-     * Note: Call `resetPolicyfilter()` to reset the filter and consider all policies again.
+     * Note: Call `resetPolicyfilter()` to reset the selection filter and consider all
+     * policies again.
      *
-     * @param args A bag of options containing the selection criterias.
+     * @param args A bag of options containing the selection criterias, or an array of
+     * cherry-picked policies.
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */
@@ -413,113 +419,162 @@ export class PolicyManager {
          * variables but on the same array.
          */
         let matches: PolicyInfo[] = [...this.remainingPolicies];
+        // let matches: PolicyInfo[] = [];
 
-        if (args.vendors && args.vendors.length > 0 && matches.length > 0) {
-            let tmpMatches: PolicyInfo[] = [];
-            for(let x = 0; x < args.vendors.length; x++) {
-                const vendorName = args.vendors[x].toLowerCase();
-                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
-                    if (!this.vendors[vendorName]) {
+        if (typeof args === "object" && ("vendors" in args || "services" in args || "frameworks" in args || "severities" in args || "topics" in args) ) {
+            /*
+             * We have a `FilterPolicyArgs` type
+             */
+            if (args.vendors && args.vendors.length > 0 && matches.length > 0) {
+                let tmpMatches: PolicyInfo[] = [];
+                for(let x = 0; x < args.vendors.length; x++) {
+                    const vendorName = args.vendors[x].toLowerCase();
+                    tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                        if (!this.vendors[vendorName]) {
+                            return false;
+                        }
+                        const findResult = this.vendors[vendorName].find((vendorPolicy) => {
+                            return vendorPolicy.policyName === candidatePolicy.policyName;
+                        });
+                        if (findResult) {
+                            return true;
+                        }
                         return false;
-                    }
-                    const findResult = this.vendors[vendorName].find((vendorPolicy) => {
-                        return vendorPolicy.policyName === candidatePolicy.policyName;
-                    });
-                    if (findResult) {
-                        return true;
-                    }
-                    return false;
+                    }));
+                }
+                matches = tmpMatches;
+            }
+
+            if (args.services && args.services.length > 0 && matches.length > 0) {
+                let tmpMatches: PolicyInfo[] = [];
+                for(let x = 0; x < args.services.length; x++) {
+                    const serviceName = args.services[x].toLowerCase();
+                    tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                        if (!this.services[serviceName]) {
+                            return false;
+                        }
+                        const findResult = this.services[serviceName].find((servicePolicy) => {
+                            return servicePolicy.policyName === candidatePolicy.policyName;
+                        });
+                        if (findResult) {
+                            return true;
+                        }
+                        return false;
+                    }));
+                }
+                matches = tmpMatches;
+            }
+
+            if (args.frameworks && args.frameworks.length > 0 && matches.length > 0) {
+                let tmpMatches: PolicyInfo[] = [];
+                for(let x = 0; x < args.frameworks.length; x++) {
+                    const frameworkName = args.frameworks[x].toLowerCase();
+                    tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                        if (!this.frameworks[frameworkName]) {
+                            return false;
+                        }
+                        const findResult = this.frameworks[frameworkName].find((frameworkPolicy) => {
+                            return frameworkPolicy.policyName === candidatePolicy.policyName;
+                        });
+                        if (findResult) {
+                            return true;
+                        }
+                        return false;
+                    }));
+                }
+                matches = tmpMatches;
+            }
+
+            if (args.topics && args.topics.length > 0 && matches.length > 0) {
+                let tmpMatches: PolicyInfo[] = [];
+                for(let x = 0; x < args.topics.length; x++) {
+                    const topicName = args.topics[x].toLowerCase();
+                    tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                        if (!this.topics[topicName]) {
+                            return false;
+                        }
+                        const findResult = this.topics[topicName].find((topicPolicy) => {
+                            return topicPolicy.policyName === candidatePolicy.policyName;
+                        });
+                        if (findResult) {
+                            return true;
+                        }
+                        return false;
+                    }));
+                }
+                matches = tmpMatches;
+            }
+
+            if (args.severities && args.severities.length > 0 && matches.length > 0) {
+                let tmpMatches: PolicyInfo[] = [];
+                for(let x = 0; x < args.severities.length; x++) {
+                    const severityName = args.severities[x].toLowerCase();
+                    tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                        if (!this.severities[severityName]) {
+                            return false;
+                        }
+                        const findResult = this.severities[severityName].find((severityPolicy) => {
+                            return severityPolicy.policyName === candidatePolicy.policyName;
+                        });
+                        if (findResult) {
+                            return true;
+                        }
+                        return false;
+                    }));
+
+                }
+                matches = tmpMatches;
+            }
+
+            if ((!args.vendors || args.vendors.length <= 0) &&
+                (!args.services || args.services.length <= 0) &&
+                (!args.frameworks || args.frameworks.length <= 0) &&
+                (!args.topics || args.topics.length <= 0) &&
+                (!args.severities || args.severities.length <= 0)) {
+                /**
+                 * no selection criteria were supplied, so we need to
+                 * return an empty selection.
+                 */
+                matches = [];
+            }
+
+        } else if (typeof args === "object" && "length" in args ) {
+            /*
+             * We have an `array` type
+             */
+            let tmpMatches: PolicyInfo[] = [];
+            for (let x = 0; x < args.length; x++) {
+                const policyName = args[x].name;
+                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
+                    return candidatePolicy.policyName === policyName;
                 }));
             }
-            matches = tmpMatches;
-        }
 
-        if (args.services && args.services.length > 0 && matches.length > 0) {
-            let tmpMatches: PolicyInfo[] = [];
-            for(let x = 0; x < args.services.length; x++) {
-                const serviceName = args.services[x].toLowerCase();
-                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
-                    if (!this.services[serviceName]) {
-                        return false;
-                    }
-                    const findResult = this.services[serviceName].find((servicePolicy) => {
-                        return servicePolicy.policyName === candidatePolicy.policyName;
-                    });
-                    if (findResult) {
-                        return true;
-                    }
-                    return false;
-                }));
-            }
-            matches = tmpMatches;
-        }
+            /*
+             * As we now have all the user supplied policies that were still available
+             * in the remaining pool, we need to remove any duplicates.
+             */
+            tmpMatches = tmpMatches.filter((value, index, self) => {
+                return index === self.findIndex((obj) => (
+                    obj.policyName === value.policyName
+                ));
+            });
 
-        if (args.frameworks && args.frameworks.length > 0 && matches.length > 0) {
-            let tmpMatches: PolicyInfo[] = [];
-            for(let x = 0; x < args.frameworks.length; x++) {
-                const frameworkName = args.frameworks[x].toLowerCase();
-                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
-                    if (!this.frameworks[frameworkName]) {
-                        return false;
-                    }
-                    const findResult = this.frameworks[frameworkName].find((frameworkPolicy) => {
-                        return frameworkPolicy.policyName === candidatePolicy.policyName;
-                    });
-                    if (findResult) {
-                        return true;
-                    }
-                    return false;
-                }));
-            }
             matches = tmpMatches;
-        }
 
-        if (args.topics && args.topics.length > 0 && matches.length > 0) {
-            let tmpMatches: PolicyInfo[] = [];
-            for(let x = 0; x < args.topics.length; x++) {
-                const topicName = args.topics[x].toLowerCase();
-                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
-                    if (!this.topics[topicName]) {
-                        return false;
-                    }
-                    const findResult = this.topics[topicName].find((topicPolicy) => {
-                        return topicPolicy.policyName === candidatePolicy.policyName;
-                    });
-                    if (findResult) {
-                        return true;
-                    }
-                    return false;
-                }));
-            }
-            matches = tmpMatches;
-        }
-
-        if (args.severities && args.severities.length > 0 && matches.length > 0) {
-            let tmpMatches: PolicyInfo[] = [];
-            for(let x = 0; x < args.severities.length; x++) {
-                const severityName = args.severities[x].toLowerCase();
-                tmpMatches = tmpMatches.concat(matches.filter((candidatePolicy) => {
-                    if (!this.severities[severityName]) {
-                        return false;
-                    }
-                    const findResult = this.severities[severityName].find((severityPolicy) => {
-                        return severityPolicy.policyName === candidatePolicy.policyName;
-                    });
-                    if (findResult) {
-                        return true;
-                    }
-                    return false;
-                }));
-
-            }
-            matches = tmpMatches;
+        } else {
+            /**
+             * We can't be 100% sure of the type, so we assume we got an empty
+             * `FilterPolicyArgs` and simply return no selection.
+             */
+            matches = [];
         }
 
         /*
          * At this point, `matches` contains only the polcies that have matches
-         * the user submitted criterias. We should remove them from the
-         * `this.remainingPolicies[]` to avoid duplicates when calling the next
-         * `filterPolicies()`.
+         * the user submitted criterias or their cherry-picking selection. We
+         * should remove them from the `this.remainingPolicies[]` to avoid
+         * duplicates when calling the next `filterPolicies()`.
          */
         matches.forEach((match) => {
             const matchIndex = this.remainingPolicies.findIndex((candidate) => {
@@ -624,7 +679,7 @@ export class PolicyManager {
     public registerPolicy(args: RegisterPolicyArgs): policy.ResourceValidationPolicy {
 
         if (this.allNames.includes(args.resourceValidationPolicy.name)) {
-            throw `Another policy with the name '${args.resourceValidationPolicy.name}' already exists. Either register the policy only once, or ensure policy names are unique.`;
+            throw new Error(`Another policy with the name '${args.resourceValidationPolicy.name}' already exists. Either register the policy only once, or ensure policy names are unique.`);
         }
 
         this.allNames.push(args.resourceValidationPolicy.name);

@@ -1,7 +1,7 @@
 # Pulumi Premium Policies
 
 Welcome to Pulumi Premium Policies, the latest addition to our Policy as Code offering. Designed
-exclusively for our Business Critical customers, Premium Policies take your infrastructure
+exclusively for our Business Critical and select customers, Premium Policies take your infrastructure
 management to the next level.
 
 With a comprehensive coverage of AWS, Azure, Google, and Kubernetes, our Premium Policies provide
@@ -11,6 +11,91 @@ in any language. Pulumi Premium Policies empower you to enforce best practices, 
 cost control and compliance requirements seamlessly within your infrastructure-as-code workflows.
 
 If you're not yet familiar with Policy as Code, read more about it [here](https://www.pulumi.com/docs/using-pulumi/crossguard/).
+
+## Installation
+
+Pulumi Premium Policies are already integrated with the Pulumi CLI. When you run [`pulumi policy new`](https://www.pulumi.com/docs/cli/commands/pulumi_policy_new/),
+you are presented with a series of Premium Policies flavored Policy Packs such as `aws-premium-policies-typescript`,
+`aws-iso27001-premium-policies-typescript` and `azure-iso27001-premium-policies-typescript` along with
+many others.
+
+Upon selecting one of those pre-built Policy Packs, the Pulumi CLI takes care of downloading and installing
+the required dependencies in your local environment.
+
+Alternatively, a steps-by-step wizard is available in the Pulumi Cloud Console with all the required
+instructions.
+
+### Manual installation
+
+While the Pulumi CLI offers great convenience around the initial installation of the Premium Policies
+packages, some users may prefer to do a manual installation instead.
+
+Pulumi Premium Policies packages are located in a private NPM artifact repository. To gain access, users
+need to configure their environment accordingly.
+
+First, the Policy Pack needs to contain a `.npmrc` file with the content shown below. This file instructs
+NPM where packages are located and how authentication needs to be performed on the registry.
+
+```
+@pulumi-premium-policies:registry=https://premium-policies.beta.pulumi-ce.team/
+//premium-policies.beta.pulumi-ce.team/:_authToken=${PULUMI_ACCESS_TOKEN}
+//premium-policies.beta.pulumi-ce.team/:always-auth=true
+```
+
+FIXME The URL above is only valid until Pulumi Premium Policies are released on 10/10/2023.
+
+Second, the file above references the environment variable `PULUMI_ACCESS_TOKEN`. You should then set
+your local environment with a proper value using a Personal Access Token, an Organization Token or
+a Team Token.
+
+```sh
+export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
+⛔ Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk to your organization.
+
+The last step consists of installing the Premium Policies packages. Note that `@pulumi-premium-policies/policy-manager`
+is always required and should be explicitly present in your `package.json`.
+
+Supported packages are:
+
+* `@pulumi-premium-policies/policy-manager` (Required) Policy Manager is used to manage Premium Policies.
+* `@pulumi-premium-policies/aws-policies` Set of Premium Policies for Amazon Web Services, for both
+  AWS Native and AWS Classic providers.
+* `@pulumi-premium-policies/azure-policies` Set of Premium Policies for Microsoft Azure, for both Azure
+  Native and Azure Classic providers.
+* `@pulumi-premium-policies/google-policies` Set of Premium Policies for Google Cloud Platform, for
+  both Google Native and GCP providers.
+* `@pulumi-premium-policies/kubernetes-policies` Set of Premium Policies for Kubernetes.
+
+### Policy packages upgrade
+
+Pulumi regularly publishes new policies, enhancements and bug fixes to its Premium Policies packages
+and framework.
+
+You should regularly update to the latest versions as you already do with the Pulumi providers and other
+SDKs.
+
+To check for newer versions, simply run `npm outdated`. If some packages are outdated, they will be listed
+as shown below.
+
+```
+Package                                  Current  Wanted  Latest  Location                                              Depended by
+@pulumi-premium-policies/aws-policies      0.0.8   0.0.8  0.0.15  node_modules/@pulumi-premium-policies/aws-policies    premium-policies
+@pulumi-premium-policies/policy-manager    0.0.3   0.0.3   0.0.6  node_modules/@pulumi-premium-policies/policy-manager  premium-policies
+```
+
+Then install the latest versions
+
+```sh
+npm install @pulumi-premium-policies/aws-policies@0.0.15 @pulumi-premium-policies/policy-manager@0.0.6 --save
+```
+
+⚠️ Always upgrade Policy Manager and other Policy Packages at the same time to ensure Premium Policies
+are correctly registered with the Policy Manager.
+
+Once your Policy Pack contains the latest versions, test it locally and finally publish a new version
+of your Policy Pack into your Pulumi organization.
 
 ## Authoring a Policy Pack with Pulumi Premium Policies
 
@@ -182,7 +267,7 @@ used in your Policy Pack.
 To display statistics about your Policy Packs and the Premium Policies in use, simply add the following
 statement at the bottom of your Policy Pack.
 
-See [Policy Manager](http://FIXME) documentation for more details.
+See [Manual installation](#manual-installation) for more details.
 
 ```ts
 policyManager.displaySelectionStats({
@@ -221,8 +306,11 @@ Contact our [sales team](https://www.pulumi.com/pricing/) to learn more about ou
 
 ## Policy Pack Execution
 
-Policy Packs using Pulumi Premium Policies bear no differences to vanvanilla Policy Packs. It's possible
+Policy Packs using Pulumi Premium Policies bear no differences to vanilla Policy Packs. It's possible
 to run Policy packs locally or have them enforced across your Pulumi Organization.
+
+If a Policy Pack needs to be installed at a time of a preview or an update, the Pulumi CLI will transparently
+take care of those steps on behalf of the user.
 
 Please refer to our [documentation](https://www.pulumi.com/docs/using-pulumi/crossguard/configuration/)
 for more details.
@@ -244,3 +332,40 @@ but at the expense of a slightly slower execution and larger memory footprint.
 
 Pulumi also recommends upgrading your Pulumi Premium Policy packages regularly. Many Policies are added
 and updated on a regular basis giving you better Infrastructure as Code guardrails.
+
+## Troubleshooting and support
+
+### Getting HTTP 403 when installing Pulumi Premium Policies
+
+* Your Pulumi organization needs to have access to Policy-as-Code, a feature available to Business
+  Critical customers.
+* Your Policy Pack may be missing its `.npmrc`, or its content is incorrect.
+* The value for `PULUMI_ACCESS_TOKEN` is incorrect, or your token doesn't belong to a Pulumi organization
+  that has access to Policy-as-Code.
+
+To resolve this, follow the steps described in the [manual installation](#manual-installation) documentation.
+
+### Policy Pack is empty
+
+At times, your Policy Pack may appear to be empty (ie, no policy is evaluated). There are 2 main reasons
+for this to happen.
+
+First, an incomplete upgrade was performed and some Premium Policies packages aren't on the latest version.
+
+To address this issue, upgrade both the Policy Manager and the Premium Policies packages to the latest
+version as described in the [Policy package upgrade documentation](#policy-packages-upgrade) above.
+
+Second, at times the `node_modules` may reference NPM packages incorrectly. Remove the `node_modules`
+directory and reinstall all your NPM packages.
+
+## Support & feature request
+
+Additional support is available through our usual channels.
+
+We encourage you to contact us via your dedicated Slack channel and ask questions directly there where
+possible.
+
+You may also open a new support ticket using our support center portal available at <https://support.pulumi.com/hc/en-us>.
+
+If you wish to report a bug or request a new feature (like a new policy), open a new public issue at
+<https://github.com/pulumi/premium-policies-requests/issues/new/choose>

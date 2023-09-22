@@ -9,8 +9,8 @@
         "tsconfig.json"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/aws-policies": "^0.0.8",
-        "@pulumi-premium-policies/policy-manager": "^0.0.3",
+        "@pulumi-premium-policies/<%~ it.vendor %>-policies": "^0",
+        "@pulumi-premium-policies/policy-manager": "^0",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.0.0"
     },

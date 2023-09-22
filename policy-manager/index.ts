@@ -413,7 +413,6 @@ export class PolicyManager {
         return policies;
     }
 
-
     /**
      * Select policies based on criterias provided as arguments. The selectiopn filter only
      * returns policies that match selection criterias. Effectively, this function performs

@@ -23,12 +23,17 @@ Upon selecting one of those pre-built Policy Packs, the Pulumi CLI takes care of
 the required dependencies in your local environment.
 
 Alternatively, a steps-by-step wizard is available in the Pulumi Cloud Console with all the required
-instructions.
+instructions for you to follow.
+
+When your Policy Pack is ready, you may evaluate it locally, or publish it to your Pulumi Organization.
+See below for [more details](#policy-pack-enforcement).
 
 ### Manual installation
 
 While the Pulumi CLI offers great convenience around the initial installation of the Premium Policies
-packages, some users may prefer to do a manual installation instead.
+packages, some users may prefer to do a manual installation instead. For example, you wish to add the
+Pulumi Premium Policies to your own existing Policy Pack or you would like to install additional Premium
+Policy packages.
 
 Pulumi Premium Policies packages are located in a private NPM artifact repository. To gain access, users
 need to configure their environment accordingly.
@@ -52,14 +57,21 @@ a Team Token.
 export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-⛔ Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk to your organization.
+⛔ Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk for your account
+and to your organization.
 
 The last step consists of installing the Premium Policies packages. Note that `@pulumi-premium-policies/policy-manager`
 is always required and should be explicitly present in your `package.json`.
 
-Supported packages are:
+Here is an example on how to install the Policy Manager and the Premium Policies for AWS.
 
-* `@pulumi-premium-policies/policy-manager` (Required) Policy Manager is used to manage Premium Policies.
+```bash
+npm install @pulumi-premium-policies/policy-manager @pulumi-premium-policies/aws-policies ... --save
+```
+
+Supported Premium Policy packages are:
+
+* `@pulumi-premium-policies/policy-manager` (**Required**) Policy Manager is used to manage Premium Policies.
 * `@pulumi-premium-policies/aws-policies` Set of Premium Policies for Amazon Web Services, for both
   AWS Native and AWS Classic providers.
 * `@pulumi-premium-policies/azure-policies` Set of Premium Policies for Microsoft Azure, for both Azure
@@ -315,7 +327,7 @@ or the Token doesn't belong to a Pulumi Organization that has subscribed to the 
 
 Contact our [sales team](https://www.pulumi.com/pricing/) to learn more about our Business Critical plan.
 
-## Policy Pack Execution
+## Policy Pack enforcement
 
 Policy Packs using Pulumi Premium Policies bear no differences to vanilla Policy Packs. It's possible
 to run Policy packs locally or have them enforced across your Pulumi Organization.
@@ -323,8 +335,21 @@ to run Policy packs locally or have them enforced across your Pulumi Organizatio
 If a Policy Pack needs to be installed at a time of a preview or an update, the Pulumi CLI will transparently
 take care of those steps on behalf of the user.
 
-Please refer to our [documentation](https://www.pulumi.com/docs/using-pulumi/crossguard/configuration/)
-for more details.
+Before enforcing your Policy Pack, you may evaluate it locally using `pulumi preview --policy-pack <path-to-policy-pack-directory>`.
+For additional details, please refer to our [documentation](https://www.pulumi.com/docs/using-pulumi/crossguard/get-started/#running-locally).
+
+When your Policy Pack is ready, you should publish it in your Pulumi Organization with the aim to enforce
+it. To publish your Policy Pack, run `pulumi policy publish <org-name>`.
+
+```
+Obtaining policy metadata from policy plugin
+Compressing policy pack
+Uploading policy pack to Pulumi service
+Publishing "my-policy-pack" - version 1.0.0 to "myorg"
+Published as version 1.0.0
+```
+
+Additional details are available in our [documentation](https://www.pulumi.com/docs/using-pulumi/crossguard/get-started/#enforcing-a-policy-pack).
 
 ## Performance
 

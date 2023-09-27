@@ -1,4 +1,17 @@
-# Pulumi Premium Policies
+---
+title_tag: "Premium Policies | CrossGuard"
+meta_desc: This page contains the documentation for Pulumi Premium Policies.
+title: Premium Policies
+h1: Premium Policies
+weight: 3
+meta_image: /images/docs/meta-images/docs-meta.png
+menu:
+  usingpulumi:
+    parent: crossguard
+    identifier: crossguard-premium-policies
+aliases:
+- /docs/guides/crossguard/premium-policies/
+---
 
 Welcome to Pulumi Premium Policies, the latest addition to our Policy as Code offering. Designed
 exclusively for our Business Critical and select customers, Premium Policies take your infrastructure
@@ -10,11 +23,11 @@ are currently available in JavaScript and TypeScript, they can be used with Pulu
 in any language. Pulumi Premium Policies empower you to enforce best practices, security standards,
 cost control and compliance requirements seamlessly within your infrastructure-as-code workflows.
 
-If you're not yet familiar with Policy as Code, read more about it [here](https://www.pulumi.com/docs/using-pulumi/crossguard/).
+If you're not yet familiar with Policy as Code, read more about it [here](..).
 
 ## Installation
 
-Pulumi Premium Policies are already integrated with the Pulumi CLI. When you run [`pulumi policy new`](https://www.pulumi.com/docs/cli/commands/pulumi_policy_new/),
+Pulumi Premium Policies are already integrated with the Pulumi CLI. When you run [`pulumi policy new`](/docs/cli/commands/pulumi_policy_new/),
 you are presented with a series of Premium Policies flavored Policy Packs such as `aws-premium-policies-typescript`,
 `aws-iso27001-premium-policies-typescript` and `azure-iso27001-premium-policies-typescript` along with
 many others.
@@ -57,8 +70,10 @@ a Team Token.
 export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-⛔ Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk for your account
+{{% notes type="warning" %}}
+Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk for your account
 and to your organization.
+{{% /notes %}}
 
 The last step consists of installing the Premium Policies packages. Note that `@pulumi-premium-policies/policy-manager`
 is always required and should be explicitly present in your `package.json`.
@@ -103,8 +118,10 @@ Then install the latest versions
 npm install @pulumi-premium-policies/aws-policies@0.0.15 @pulumi-premium-policies/policy-manager@0.0.6 --save
 ```
 
-⚠️ Always upgrade Policy Manager and other Policy Packages at the same time to ensure Premium Policies
+{{% notes type="warning" %}}
+Always upgrade Policy Manager and other Policy Packages at the same time to ensure Premium Policies
 are correctly registered with the Policy Manager.
+{{% /notes %}}
 
 Once your Policy Pack contains the latest versions, test it locally and finally publish a new version
 of your Policy Pack into your Pulumi organization.
@@ -172,9 +189,11 @@ policyManager.displaySelectionStats({
 });
 ```
 
-✅ Policy selection doesn't require any `import` statement other than Policy Manager. Policy Manager
+{{% notes type="info" %}}
+Policy selection doesn't require any `import` statement other than Policy Manager. Policy Manager
 automatically finds and loads policy packages as plugins. Simply make sure your `package.json`
 contains the correct policy packages you wish to load and use.
+{{% /notes %}}
 
 To assist in policy selection visibility  and traceability, Policy Manager has the ability to display
 selection statistics when calling `policyManager.displaySelectionStats()`. Each time your policies
@@ -228,9 +247,11 @@ policyManager.displaySelectionStats({
 });
 ```
 
-✅ Pulumi Premium Policies are structured the same way the provider services and resources are structured,
+{{% notes type="info" %}}
+Pulumi Premium Policies are structured the same way the provider services and resources are structured,
 making them easy to navigate. Consider using a modern IDE to leverage code completion, linting and embedded
 code documentation.
+{{% /notes %}}
 
 ### Mixed authoring
 

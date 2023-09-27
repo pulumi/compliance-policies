@@ -28,7 +28,6 @@ import * as babeltypes from "@babel/types";
 import * as eta from "eta";
 import * as prettier from "prettier";
 import { ResourceBuilder } from "./resourceBuilder";
-import { sys } from "typescript";
 
 // type SchemaMap = Map<string, Map<string, Map<string, string>>>;
 

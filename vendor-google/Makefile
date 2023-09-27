@@ -45,9 +45,9 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources for gcp: "
+	@echo -n "Number of policies for gcp: "
 	@find $$PWD/gcp -type f | grep -v index.ts | wc -l
-	@echo -n "Number of resources for google-native: "
+	@echo -n "Number of policies for google-native: "
 	@find $$PWD/googlenative -type f | grep -v index.ts | wc -l
 
 test::

@@ -45,9 +45,9 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources for azure: "
+	@echo -n "Number of policies for azure: "
 	@find $$PWD/azure -type f | grep -v index.ts | wc -l
-	@echo -n "Number of resources for azure-native: "
+	@echo -n "Number of policies for azure-native: "
 	@find $$PWD/azurenative -type f | grep -v index.ts | wc -l
 
 test::

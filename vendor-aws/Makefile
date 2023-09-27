@@ -45,9 +45,9 @@ publish:
 	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
-	@echo -n "Number of resources for aws: "
+	@echo -n "Number of policies for aws: "
 	@find $$PWD/aws -type f  | grep -v index.ts | wc -l
-	@echo -n "Number of resources for aws-native: "
+	@echo -n "Number of policies for aws-native: "
 	@find $$PWD/awsnative -type f  | grep -v index.ts | wc -l
 
 test::

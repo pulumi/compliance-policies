@@ -53,7 +53,7 @@ export interface FilterPolicyArgs {
      * An array of topics to select policies by.
      */
     topics?: string[];
-};
+}
 
 /**
  * Represents the arguments for displaying policy selection statistics.
@@ -71,7 +71,7 @@ export interface DisplaySelectionStatsArgs {
      * If `true` then shows the name of the policies that have been included in the Policy Pack at runtime and the associated enforcement level.
      */
     displaySelectedPolicyNames?: boolean;
-};
+}
 
 /**
  * Metadata associated with a policy.
@@ -97,7 +97,7 @@ export interface PolicyMetadata {
      * An array of topics related to the policy.
      */
     topics?: string[];
-};
+}
 
 /**
  * Represents the arguments for registering a policy.
@@ -107,7 +107,7 @@ export interface RegisterPolicyArgs extends PolicyMetadata {
      * The resource validation policy to be associated with the registered policy.
      */
     resourceValidationPolicy: policy.ResourceValidationPolicy;
-};
+}
 
 /**
  * Represents information about a policy.
@@ -127,7 +127,7 @@ export interface PolicyInfo {
      * Metadata associated with the policy.
      */
     policyMetadata: PolicyMetadata;
-};
+}
 
 /**
  * Represents information about a policy package.
@@ -141,7 +141,7 @@ export interface ModuleInfo {
      * The version of the policy package.
      */
     version: string;
-};
+}
 
 export interface PolicyManagerStats {
     /**
@@ -746,7 +746,7 @@ export class PolicyManager {
         });
         return version;
     }
-};
+}
 
 /**
  * An instance of the `PolicyManager` class.

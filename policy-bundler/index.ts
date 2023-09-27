@@ -370,7 +370,7 @@ function getPolicyCode(policyFile: string): PolicyCode {
     const policyImports: string[] = [];
 
     if (!policyFileParseResults) {
-        console.log(`policyFile: Unable to parse ${policyFile}`);
+        throw new Error(`policyFile: Unable to parse ${policyFile}`);
     }
 
     traverse(policyFileParseResults, {

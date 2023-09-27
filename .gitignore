@@ -1,5 +1,6 @@
 node_modules
 bin
+tmp
 *.tgz
 **/package-lock.json
 **/yarn.lock

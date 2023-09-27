@@ -1,0 +1,29 @@
+<%
+    const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+%>
+<% if (it.wantServiceHeading) { %>## <%~ it.service %>
+
+<% } else { %><% } -%>
+<% if (it.wantResourceHeading) { %>### <%~ it.resource %>
+
+<% } else { %><% } -%>
+#### <%~ it.name %>
+
+Policy name: `<%~ it.name %>`
+
+Code path: `<%~ it.codepath %>`
+
+<%~ it.description %>
+
+Service: <%~ it.service.charAt(0).toUpperCase() + it.service.slice(1) %>
+
+Resource: <%~ it.resource %>
+
+Associated metadata for this policy:
+<% it.tags.forEach(function(tag) { if (tag.name === "severity") { %>
+<%~ capitalizeFirstLetter(tag.name) %>: <span style='background-color: <%~ it.colors[tag.value] %>;'><%~ tag.value %></span>
+<% } else if (tag.name === "link" ) { %>
+<%~ capitalizeFirstLetter(tag.name) %>: <<%~ tag.value %>>
+<% } else {%>
+<%~ capitalizeFirstLetter(tag.name) %>: <%~ tag.value %>
+<% }}); %>

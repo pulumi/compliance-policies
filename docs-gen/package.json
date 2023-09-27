@@ -1,0 +1,36 @@
+{
+    "name": "@pulumi/docs-gen",
+    "version": "${VERSION}",
+    "license": "Apache-2.0",
+    "homepage": "https://www.pulumi.com",
+    "repository": "https://github.com/pulumi/premium-policies",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/pulumi"
+    },
+    "dependencies": {
+        "@babel/cli": "^7.22.15",
+        "@babel/core": "^7.22.20",
+        "@babel/parser": "^7.23.0",
+        "@babel/plugin-transform-class-properties": "^7.22.5",
+        "@babel/plugin-transform-object-rest-spread": "^7.22.15",
+        "@babel/preset-env": "^7.22.20",
+        "@babel/preset-typescript": "^7.22.15",
+        "@babel/traverse": "^7.23.0",
+        "@babel/types": "^7.23.0",
+        "commander": "^11.0.0",
+        "eta": "^3.1.1",
+        "ts-node": "^10.9.1"
+    },
+    "devDependencies": {
+        "@types/babel__traverse": "^7.20.2",
+        "@types/node": "^20.6.3",
+        "typescript": "^5.2.2"
+    },
+    "scripts": {
+        "policy-manager": "ts-node index.ts policy-manager --source-directory ../policy-manager --destination-file ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/api-policy-manager.md",
+        "aws": "ts-node index.ts provider --vendor-name aws --vendor-directory ../vendor-aws/ --providers aws,awsnative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
+        "azure": "ts-node index.ts provider --vendor-name azure --vendor-directory ../vendor-azure/ --providers azure,azurenative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
+        "google": "ts-node index.ts provider --vendor-name google --vendor-directory ../vendor-google/ --providers gcp,googlenative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
+        "kubernetes": "ts-node index.ts provider --vendor-name kubernetes --vendor-directory ../vendor-kubernetes/ --providers kubernetes --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/"
+    }
+}

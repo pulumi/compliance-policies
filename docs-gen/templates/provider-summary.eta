@@ -1,0 +1,21 @@
+<%
+    const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+%>---
+title_tag: "Premium Policies (<%~ capitalizeFirstLetter(it.provider) %>) | CrossGuard"
+meta_desc: This page contains the list of Premium Policies for <%~ capitalizeFirstLetter(it.provider) %>.
+title: <%~ capitalizeFirstLetter(it.provider) %> Policies
+h1: List of Premium Policies for <%~ capitalizeFirstLetter(it.provider) %>
+weight: 2
+meta_image: /images/docs/meta-images/docs-meta.png
+menu:
+  usingpulumi:
+    parent: crossguard-premium-policies
+    identifier: crossguard-premium-policies-<%~ it.provider %>
+aliases:
+- /docs/guides/crossguard/premium-policies-<%~ it.provider %>/
+---
+There's a total of <%~ it.policyCount %> Premium Policies for the <%~ capitalizeFirstLetter(it.provider) %> provider.
+
+All those policies are available in the `@pulumi-premium-policies/<%~ it.provider %>-policies` package.
+
+Please refer to our [Documentation](../premium-policies/#manual-installation) for more details.

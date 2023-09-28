@@ -250,6 +250,7 @@ export class PolicyManager {
      * This function `displaySelectionStats()` displays general statistics about policies
      * that have been returned by `selectPolicies()` and how many remain in the pool.
      * Additional information about registered policy modules are displayed too.
+     *
      * @returns No value is returned.
      */
     public displaySelectionStats(args: DisplaySelectionStatsArgs): void {
@@ -426,8 +427,7 @@ export class PolicyManager {
      * Note: Call `resetPolicyfilter()` to reset the selection filter and consider all
      * policies again.
      *
-     * @param args A bag of options containing the selection criterias, or an array of
-     * cherry-picked policies.
+     * @param args A bag of options containing the selection criterias, or an array of cherry-picked policies.
      * @param enforcementLevel The desired policy enforcement Level. Valid values are `advisory`, `mandatory` and `disabled`.
      * @returns An array of ResourceValidationPolicy policies that matched with the selection criterias.
      */

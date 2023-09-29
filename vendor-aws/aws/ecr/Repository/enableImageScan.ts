@@ -45,5 +45,5 @@ export const enableImageScan: ResourceValidationPolicy = policyManager.registerP
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
-    frameworks: ["soc2", "pcidss", "iso27001"],
+    frameworks: ["pcidss", "iso27001"],
 });

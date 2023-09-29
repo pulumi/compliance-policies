@@ -18,32 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { LoadBalancer } from "@pulumi/aws/alb";
+import { UserPolicyAttachment } from "@pulumi/aws/iam";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that ALB loadbalancers have access logging enabled.
+ * Ensure IAM Users Receive Permissions Only Through Groups.
  *
- * @severity medium
- * @frameworks iso27001, pcidss
- * @topics logging, network
- * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
+ * @severity high
+ * @frameworks cis
+ * @topics container, vulnerability
+ * @link https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html
  */
-export const enableAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
+export const onlyPermissionsViaGroups: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-alb-loadbalancer-enable-access-logging",
-        description: "Checks that ALB loadbalancers have access logging enabled.",
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
-            if (!loadBalancer.accessLogs) {
-                reportViolation("ALB LoadBalancers should have access logging enabled.");
-            }
+        name: "aws-iam-user-policy-attachment-only-attachment-through-groups",
+        description: "Ensure IAM Users Receive Permissions Only Through Groups.",
+        enforcementLevel: "mandatory",
+        validateResource: validateResourceOfType(UserPolicyAttachment, (policyAttachment, args, reportViolation) => {
+            // Report violation when this resource is used at all.
+            reportViolation("Users should receive permissions via Group membership.");
         }),
     },
     vendors: ["aws"],
-    services: ["alb"],
-    severity: "medium",
-    topics: ["network", "logging"],
-    frameworks: ["pcidss", "iso27001"],
+    services: ["iam"],
+    severity: "high",
+    topics: ["vulnerability"],
+    frameworks: ["cis"],
 });

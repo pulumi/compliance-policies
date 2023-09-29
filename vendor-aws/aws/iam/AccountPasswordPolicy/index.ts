@@ -18,21 +18,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export * as alb from "./alb";
-export * as apigateway from "./apigateway";
-export * as apigatewayv2 from "./apigatewayv2";
-export * as appflow from "./appflow";
-export * as athena from "./athena";
-export * as cloudfront from "./cloudfront";
-export * as ebs from "./ebs";
-export * as ec2 from "./ec2";
-export * as ecr from "./ecr";
-export * as efs from "./efs";
-export * as eks from "./eks";
-export * as elb from "./elb";
-export * as iam from "./iam";
-export * as kms from "./kms";
-export * as lambda from "./lambda";
-export * as rds from "./rds";
-export * as s3 from "./s3";
-export * as secretsmanager from "./secretsmanager";
+export { minimumPasswordLength } from "./minimumPasswordLength";
+export { passwordReusePrevention } from "./passwordReusePrevention";

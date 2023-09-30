@@ -13,11 +13,7 @@ aliases:
 - /docs/guides/crossguard/premium-policies/
 ---
 
-Welcome to Pulumi Premium Policies, the latest addition to our Policy as Code offering. Designed
-exclusively for our Business Critical and select customers, Premium Policies take your infrastructure
-management to the next level.
-
-With a comprehensive coverage of AWS, Azure, Google, and Kubernetes, our Premium Policies provide
+Pulumi Premium Policies, with a comprehensive coverage of AWS, Azure, Google, and Kubernetes, provide
 an enhanced level of control and governance over your cloud resources. Although Premium Policies
 are currently available in JavaScript and TypeScript, they can be used with Pulumi stacks written
 in any language. Pulumi Premium Policies empower you to enforce best practices, security standards,
@@ -41,42 +37,9 @@ instructions for you to follow.
 When your Policy Pack is ready, you may evaluate it locally, or publish it to your Pulumi Organization.
 See below for [more details](#policy-pack-enforcement).
 
-### Manual installation
-
-While the Pulumi CLI offers great convenience around the initial installation of the Premium Policies
-packages, some users may prefer to do a manual installation instead. For example, you wish to add the
-Pulumi Premium Policies to your own existing Policy Pack or you would like to install additional Premium
-Policy packages.
-
-Pulumi Premium Policies packages are located in a private NPM artifact repository. To gain access, users
-need to configure their environment accordingly.
-
-First, the Policy Pack needs to contain a `.npmrc` file with the content shown below. This file instructs
-NPM where packages are located and how authentication needs to be performed on the registry.
-
-```
-@pulumi-premium-policies:registry=https://premium-policies.beta.pulumi-ce.team/
-//premium-policies.beta.pulumi-ce.team/:_authToken=${PULUMI_ACCESS_TOKEN}
-//premium-policies.beta.pulumi-ce.team/:always-auth=true
-```
-
-FIXME The URL above is only valid until Pulumi Premium Policies are released on 10/10/2023.
-
-Second, the file above references the environment variable `PULUMI_ACCESS_TOKEN`. You should then set
-your local environment with a proper value using a Personal Access Token, an Organization Token or
-a Team Token.
-
-```sh
-export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
-{{% notes type="warning" %}}
-Do not save the Pulumi Access Token directly into the `.npmrc`. This is a security risk for your account
-and to your organization.
-{{% /notes %}}
-
-The last step consists of installing the Premium Policies packages. Note that `@pulumi-premium-policies/policy-manager`
-is always required and should be explicitly present in your `package.json`.
+If you're starting from an existing Policy Pack, you simply need to install the Premium Policies packages.
+Note that `@pulumi-premium-policies/policy-manager` is always required and should be explicitly present in
+your `package.json`.
 
 Here is an example on how to install the Policy Manager and the Premium Policies for AWS.
 
@@ -119,8 +82,8 @@ npm install @pulumi-premium-policies/aws-policies@0.0.15 @pulumi-premium-policie
 ```
 
 {{% notes type="warning" %}}
-Always upgrade Policy Manager and other Policy Packages at the same time to ensure Premium Policies
-are correctly registered with the Policy Manager.
+Always upgrade Policy Manager and other Premium Policy Packages at the same time to ensure Premium
+Policies are correctly registered with the Policy Manager.
 {{% /notes %}}
 
 Once your Policy Pack contains the latest versions, test it locally and finally publish a new version
@@ -129,8 +92,8 @@ of your Policy Pack into your Pulumi organization.
 ## Authoring a Policy Pack with Pulumi Premium Policies
 
 Authoring a Policy Pack with Pulumi Premium Policies is very easy. Pulumi Premium Policies come with
-a [Policy Manager](http://FIXME) to help you quickly build policy packs by simply selecting policies
-of interest or changing the enforcement level of your chosen policies.
+a [Policy Manager](../api-policy-manager/) to help you quickly build policy packs by simply selecting
+policies of interest or changing the enforcement level of your chosen policies.
 
 There are 2 main ways to author a new Policy Pack as shown below. The methods described below can be
 used side-by-side with each other if you desire so.
@@ -301,8 +264,6 @@ used in your Policy Pack.
 To display statistics about your Policy Packs and the Premium Policies in use, simply add the following
 statement at the bottom of your Policy Pack.
 
-See [Manual installation](#manual-installation) for more details.
-
 ```ts
 policyManager.displaySelectionStats({
     displayGeneralStats: true,
@@ -339,14 +300,6 @@ You may add additional Premium Policies packages with the following the commands
 export PULUMI_ACCESS_TOKEN="pul-xxxxxxxxxxxxxxxxxxx"
 npm install "@pulumi-premium-policies/kubernetes-policies" --save
 ```
-
-For a complete list of available Premium Policy packages, please refer to our reference
-[documentation](http://FIXME).
-
-If NPM returns a `HTTP 403 - Access Denied`, then either the provided Pulumi Access Token is invalid,
-or the Token doesn't belong to a Pulumi Organization that has subscribed to the Business Critical Plan.
-
-Contact our [sales team](https://www.pulumi.com/pricing/) to learn more about our Business Critical plan.
 
 ## Policy Pack enforcement
 
@@ -391,16 +344,6 @@ Pulumi also recommends upgrading your Pulumi Premium Policy packages regularly. 
 and updated on a regular basis giving you better Infrastructure as Code guardrails.
 
 ## Troubleshooting and support
-
-### Getting HTTP 403 when installing Pulumi Premium Policies
-
-* Your Pulumi organization needs to have access to Policy-as-Code, a feature available to Business
-  Critical customers.
-* Your Policy Pack may be missing its `.npmrc`, or its content is incorrect.
-* The value for `PULUMI_ACCESS_TOKEN` is incorrect, or your token doesn't belong to a Pulumi organization
-  that has access to Policy-as-Code.
-
-To resolve this, follow the steps described in the [manual installation](#manual-installation) documentation.
 
 ### Policy Pack is empty
 

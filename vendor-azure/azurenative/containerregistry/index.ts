@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as v20160627preview from "./v20160627preview";
-export * as v20180201preview from "./v20180201preview";
 export * as v20190601preview from "./v20190601preview";
 export * as v20230101preview from "./v20230101preview";
 export * as v20230601preview from "./v20230601preview";

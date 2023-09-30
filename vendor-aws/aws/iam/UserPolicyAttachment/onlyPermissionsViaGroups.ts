@@ -18,32 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { Repository } from "@pulumi/aws/ecr";
+import { UserPolicyAttachment } from "@pulumi/aws/iam";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi-premium-policies/policy-manager";
 
 /**
- * Checks that ECR repositories have 'scan-on-push' enabled.
+ * Ensure IAM Users Receive Permissions Only Through Groups.
  *
  * @severity high
- * @frameworks iso27001, pcidss, soc2
+ * @frameworks cis
  * @topics container, vulnerability
- * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
+ * @link https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html
  */
-export const enableImageScan: ResourceValidationPolicy = policyManager.registerPolicy({
+export const onlyPermissionsViaGroups: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ecr-repository-enable-image-scan",
-        description: "Checks that ECR repositories have 'scan-on-push' enabled.",
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
-            if (repo.imageScanningConfiguration && !repo.imageScanningConfiguration.scanOnPush) {
-                reportViolation("ECR Repositories should enable 'scan-on-push'.");
-            }
+        name: "aws-iam-user-policy-attachment-only-attachment-through-groups",
+        description: "Ensure IAM Users Receive Permissions Only Through Groups.",
+        enforcementLevel: "mandatory",
+        validateResource: validateResourceOfType(UserPolicyAttachment, (policyAttachment, args, reportViolation) => {
+            // Report violation when this resource is used at all.
+            reportViolation("Users should receive permissions via Group membership.");
         }),
     },
     vendors: ["aws"],
-    services: ["ecr"],
+    services: ["iam"],
     severity: "high",
-    topics: ["container", "vulnerability"],
-    frameworks: ["pcidss", "iso27001"],
+    topics: ["vulnerability"],
+    frameworks: ["cis"],
 });

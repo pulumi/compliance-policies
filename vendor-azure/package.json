@@ -15,14 +15,14 @@
         "azure"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "^0.0.7",
+        "@pulumi-premium-policies/policy-manager": "^0.0.8",
         "@pulumi/azure": "^5.49.0",
         "@pulumi/azure-native": "^2.8.0",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.84.0"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.18",
+        "@pulumi-premium-policies/unit-test-helpers": "^0.0.19",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

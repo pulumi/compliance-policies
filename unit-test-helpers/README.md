@@ -9,21 +9,6 @@ reliability and maintainability.
 
 ## Building and publishing process
 
-### Requirements
-
-To build `@pulumi-premium-policies/unit-test-helpers`, you will need to have access to the
-Premium Policy package repository and set a valid `CODEARTIFACT_AUTH_SOCKET`.
-
-```bash
-# sh, bash, or zsh
-export CODEARTIFACT_AUTH_TOKEN="$(aws --region ap-southeast-2 codeartifact get-authorization-token --domain pulumi-policy-as-code --query authorizationToken --output text)"
-```
-
-```fish
-# fish
-set -gx CODEARTIFACT_AUTH_TOKEN (aws --region ap-southeast-2 codeartifact get-authorization-token --domain pulumi-policy-as-code --query authorizationToken --output text)
-```
-
 ### Code linting
 
 Check the code passes linting validation.

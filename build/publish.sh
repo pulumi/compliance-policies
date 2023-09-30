@@ -24,6 +24,5 @@ if [[ "$(jq -r .version package.json)" != *-* ]]; then
 fi
 
 # Now, perform the publish.
-# npm publish --access public -tag ${NPM_TAG}
-npm publish -tag ${NPM_TAG}
+npm publish --access public -tag ${NPM_TAG}
 npm info 2>/dev/null

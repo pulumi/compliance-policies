@@ -6,19 +6,19 @@ VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME)
 
 .PHONY: lint run runaws runazure runkubernetes rungoogle
 
-lint::
+lint:: prepare
 	@yarn run lint
 
-run:: runaws runazure runkubernetes
+run:: runaws runazure runkubernetes rungoogle
 
-runaws:: lint
+runaws:: prepare lint
 	@yarn run updatedocs --directory ../vendor-aws --providers aws,awsnative
 
-runazure:: lint
+runazure:: prepare lint
 	@yarn run updatedocs --directory ../vendor-azure --providers azure,azurenative
 
-runkubernetes:: lint
+runkubernetes:: prepare lint
 	@yarn run updatedocs --directory ../vendor-kubernetes --providers kubernetes
 
-rungoogle:: lint
+rungoogle:: prepare lint
 	@yarn run updatedocs --directory ../vendor-google --providers gcp,googlenative

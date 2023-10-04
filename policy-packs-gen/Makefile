@@ -6,7 +6,7 @@ VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME)
 
 .PHONY: build lint
 
-build:: lint
+build:: prepare lint
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
@@ -15,19 +15,19 @@ build:: lint
 	@sed -e 's/\$${VERSION}/$(VERSION)/g' < package.json > bin/package.json
 	@cp ../README.md ../LICENSE bin/
 
-lint::
+lint:: prepare
 	@yarn run lint
 
-genaws:: lint
+genaws:: prepare lint
 	@yarn run gen-aws
 
-genazure:: lint
+genazure:: prepare lint
 	@yarn run gen-azure
 
-gengoogle:: lint
+gengoogle:: prepare lint
 	@yarn run gen-google
 
-genkubernetes:: lint
+genkubernetes:: prepare lint
 	@yarn run gen-kubernetes
 
 all:: lint genaws genazure gengoogle genkubernetes

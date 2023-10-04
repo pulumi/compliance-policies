@@ -18,7 +18,7 @@ MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || e
 
 .PHONY: build lint publish test fasttest sequentialtest fastsequentialtest docfix $(TARGETS)
 
-build::
+build:: prepare
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
@@ -31,10 +31,10 @@ build::
 docfix::
 	@make -C ../policy-docs-sync/ rungoogle
 
-lint::
+lint:: prepare
 	@yarn run lint
 
-lintfix::
+lintfix:: prepare
 	@yarn run lintfix
 
 publish:
@@ -49,13 +49,15 @@ stats:
 	@echo -n "Number of policies for google-native: "
 	@find $$PWD/googlenative -type f | grep -v index.ts | wc -l
 
+# runs sequential tests in parallel.
 test::
 	@$(MAKE) -j $(MAKEJOBS) sequentialtest
 
+# runs limited tests in parallel.
 fasttest::
 	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
-upgrade::
+upgrade:: prepare
 	@yarn upgrade @pulumi-premium-policies/unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
@@ -68,5 +70,5 @@ sequentialtest: $(TARGETS)
 fastsequentialtest: $(FAST_TARGETS)
 
 # Note that $(TARGETS) includes $(FAST_TARGETS)
-$(TARGETS):
+$(TARGETS): prepare
 	@yarn run targettedtest "tests/$@/**/*.spec.ts"

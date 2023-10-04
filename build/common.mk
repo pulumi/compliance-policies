@@ -109,7 +109,7 @@ PULUMI_NODE_MODULES := $(PULUMI_ROOT)/node_modules
 GO_TEST_FAST = go test -short -v -count=1 -cover -timeout 2h -parallel ${TESTPARALLELISM}
 GO_TEST = go test -v -count=1 -cover -timeout 2h -parallel ${TESTPARALLELISM}
 
-.PHONY: default all ensure only_build only_test only_test_fast build lint install test_all core
+.PHONY: default all ensure prepare only_build only_test only_test_fast build lint install test_all core
 
 # ensure that `default` is the target that is run when no arguments are passed to make
 default::
@@ -145,6 +145,11 @@ ensure::
 	$(call STEP_MESSAGE)
 	@if [ -e 'Gopkg.toml' ]; then echo "dep ensure -v"; dep ensure -v; fi
 	@if [ -e 'package.json' ]; then echo "yarn install"; yarn install; fi
+
+prepare::
+	$(call STEP_MESSAGE)
+	@test -d "node_modules" || echo "yarn install"
+	@test -d "node_modules" || yarn install
 
 build::
 	$(call STEP_MESSAGE)

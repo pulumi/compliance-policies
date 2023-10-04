@@ -6,7 +6,7 @@ VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME)
 
 .PHONY: build lint publish
 
-build:: lint
+build:: prepare lint
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."
 	@test ! -z "$(VERSION)" || exit 1
 	@rm -rf bin/
@@ -17,7 +17,7 @@ build:: lint
 	@node ../build/reversion.js bin/version.js $(VERSION)
 	@node ../build/reversion.js bin/version.d.ts $(VERSION)
 
-lint::
+lint:: prepare
 	@yarn run lint
 
 publish:

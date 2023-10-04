@@ -1,0 +1,21 @@
+name: Release Policy Manager package
+
+on:
+  push:
+    tags:
+      - policy-manager-*
+
+jobs:
+  policy-manager:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Build Pulumi Policy Manager
+        run: |
+          cd policy-manager
+          make build publish

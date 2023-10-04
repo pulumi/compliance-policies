@@ -5,16 +5,17 @@
 set -o nounset -o errexit -o pipefail
 
 usage() {
-    echo "Usage: get-version.sh [ --tagprefix tag ] [ --commitish git_commitish ]"
+    echo "Usage: get-version.sh [ --tagprefix tag ] [ --commitish git_commitish ] [ --nextversion | --next ]"
     exit 2
 }
 
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 COMMITISH="HEAD"
 DIRTY_TAG=""
+NEXT_VERSION=0
 
 SHORTOPTS="h"
-LONGOPTS="tagprefix:,commitish:,help"
+LONGOPTS="tagprefix:,commitish:,help,nextversion,next"
 OPTS=$(getopt  --name="$0" --options=$SHORTOPTS --longoptions=$LONGOPTS -- "$@")
 VALID_ARGUMENTS=$# # Returns the count of arguments that are in short or long options
 
@@ -36,6 +37,10 @@ while /bin/true; do
             ;;
         -h | --help)
             usage
+            ;;
+        --next | --nextversion)
+            NEXT_VERSION=1
+            shift 1
             ;;
         --)
             shift;
@@ -95,4 +100,4 @@ PATCH=$(cut -d. -f3 <<< "${TAG}")
 # itself, not the date it was authored (so it will change when someone
 # rebases a PR into master, for example).
 # echo -n "${MAJOR}.${MINOR}.$((${PATCH}+1))-dev.$(git show -s --format='%ct+g%h' ${COMMITISH})"
-echo "${MAJOR}.${MINOR}.$((${PATCH}+1))${DIRTY_TAG:++$DIRTY_TAG}"
+echo "${MAJOR}.${MINOR}.$((${PATCH}+${NEXT_VERSION}))${DIRTY_TAG:++$DIRTY_TAG}"

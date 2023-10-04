@@ -5,6 +5,9 @@ on:
     tags:
       - policy-manager-*
 
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
   policy-manager:
     runs-on: ubuntu-latest

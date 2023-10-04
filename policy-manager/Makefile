@@ -3,6 +3,7 @@ NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
+NEXT_VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME) --next)
 
 .PHONY: build lint publish
 
@@ -20,8 +21,12 @@ build:: prepare lint
 lint:: prepare
 	@yarn run lint
 
+tag:
+	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."
+	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || exit 1
+	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
+
 publish:
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
 	@/bin/bash ../build/publish.sh
-	@git tag "$(PROJECT_NAME)-$(VERSION)"

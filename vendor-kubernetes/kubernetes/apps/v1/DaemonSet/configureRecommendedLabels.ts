@@ -14,7 +14,7 @@
 
 import { DaemonSet } from "@pulumi/kubernetes/apps/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that Kubernetes DaemonSets have the recommended labels.

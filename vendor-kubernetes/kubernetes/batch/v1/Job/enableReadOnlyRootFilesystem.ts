@@ -14,7 +14,7 @@
 
 import { Job } from "@pulumi/kubernetes/batch/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that Kubernetes Jobs run pods with a read-only filesystem.

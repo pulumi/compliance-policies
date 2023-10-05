@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "mocha";
-import { assertPolicyManagerVersion } from "@pulumi-premium-policies/unit-test-helpers";
+import { assertPolicyManagerVersion } from "@pulumi/unit-test-helpers";
 import { policyManagerVersion } from "../../..";
 
 describe("version", function() {

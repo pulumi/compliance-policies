@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 const packageJson = require("./package.json");
 
 export const version = policyManager.registerPolicyModule(packageJson.name, packageJson.version);

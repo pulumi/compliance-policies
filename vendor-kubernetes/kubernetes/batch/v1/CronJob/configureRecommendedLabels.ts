@@ -14,7 +14,7 @@
 
 import { CronJob } from "@pulumi/kubernetes/batch/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that Kubernetes CronJobs have the recommended labels.

@@ -14,7 +14,7 @@
 
 import { Service } from "@pulumi/kubernetes/core/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that Kubernetes Services do not use a LoadBalancer as service type.

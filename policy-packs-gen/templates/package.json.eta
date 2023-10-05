@@ -2,7 +2,6 @@
     "name": "<%~ it.vendor %>-<%~ it.framework %>-premium-policies-typescript",
     "version": "0.0.1",
     "files": [
-        ".npmrc",
         "index.ts",
         "package.json",
         "PulumiPolicy.yaml",

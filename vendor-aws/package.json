@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi-premium-policies/aws-policies",
+    "name": "@pulumi/aws-policies",
     "version": "${VERSION}",
     "license": "Apache-2.0",
     "homepage": "https://www.pulumi.com",
@@ -15,14 +15,14 @@
         "aws"
     ],
     "dependencies": {
-        "@pulumi-premium-policies/policy-manager": "^0.0.8",
+        "@pulumi/policy-manager": "^0.0.9",
         "@pulumi/aws": "^6.2.0",
         "@pulumi/aws-native": "^0.77.0",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.84.0"
     },
     "devDependencies": {
-        "@pulumi-premium-policies/unit-test-helpers": "^0.0.19",
+        "@pulumi/unit-test-helpers": "^0.0.20",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

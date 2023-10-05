@@ -1,8 +1,9 @@
 PROJECT_NAME := aws-policies
-NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
+NODE_MODULE_NAME := @pulumi/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
+NEXT_VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME) --next)
 
 # List all services in each provider directory, but search search path is excluded from the results.
 # The command hasn't been tested in MacOS
@@ -37,11 +38,16 @@ lint:: prepare
 lintfix:: prepare
 	@yarn run lintfix
 
+tag:
+	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."
+	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || exit 1
+	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
+	@echo 'You should now run `git push && git push --tags` to trigger a new release'
+
 publish:
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
 	@/bin/bash ../build/publish.sh
-	@git tag "$(PROJECT_NAME)-$(VERSION)"
 
 stats:
 	@echo -n "Number of policies for aws: "
@@ -58,7 +64,7 @@ fasttest::
 	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
 upgrade::
-	@yarn upgrade @pulumi-premium-policies/unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
+	@yarn upgrade @pulumi/unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are

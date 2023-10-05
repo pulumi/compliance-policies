@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
 import { SensitivityLabel } from "@pulumi/azure-native/sql/v20221101preview";
 
 /**

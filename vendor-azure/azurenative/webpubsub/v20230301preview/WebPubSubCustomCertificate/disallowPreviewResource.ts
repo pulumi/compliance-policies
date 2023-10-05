@@ -16,7 +16,7 @@
  * Default imports for a policy.
  */
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 import { WebPubSubCustomCertificate } from "@pulumi/azure-native/webpubsub/v20230301preview";
 
 /**

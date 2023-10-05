@@ -16,7 +16,7 @@
  * Default imports for a policy.
  */
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 import { IntegrationAccountPartner } from "@pulumi/azure-native/logic/v20150801preview";
 
 /**

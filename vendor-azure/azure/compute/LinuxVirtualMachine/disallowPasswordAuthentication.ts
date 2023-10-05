@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 import { LinuxVirtualMachine } from "@pulumi/azure/compute";
 
 /**

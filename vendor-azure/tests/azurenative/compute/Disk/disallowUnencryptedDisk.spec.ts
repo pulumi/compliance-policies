@@ -22,7 +22,7 @@ import {
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
-} from "@pulumi-premium-policies/unit-test-helpers";
+} from "@pulumi/unit-test-helpers";
 import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";

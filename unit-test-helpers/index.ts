@@ -18,7 +18,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as parser from "@babel/parser";
 import * as parserTypes from "@babel/types";
-import * as policymanager from "@pulumi-premium-policies/policy-manager";
+import * as policymanager from "@pulumi/policy-manager";
 import { ResourceValidationArgs, StackValidationArgs, StackValidationPolicy, PolicyResource, ResourceValidationPolicy } from "@pulumi/policy";
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as assert from "assert";

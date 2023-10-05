@@ -13,7 +13,7 @@
 // limitations under the License.
 
 export * from "./version";
-export { version as policyManagerVersion } from "@pulumi-premium-policies/policy-manager";
+export { version as policyManagerVersion } from "@pulumi/policy-manager";
 
 export * as gcp from "./gcp";
 export * as googlenative from "./googlenative";

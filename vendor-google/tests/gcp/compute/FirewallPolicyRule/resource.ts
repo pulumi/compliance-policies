@@ -15,7 +15,7 @@
 import * as gcp from "@pulumi/gcp";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import * as enums from "../../enums";
-import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.

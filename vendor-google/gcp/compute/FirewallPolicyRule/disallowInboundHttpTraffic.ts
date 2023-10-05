@@ -14,7 +14,7 @@
 
 import { FirewallPolicyRule } from "@pulumi/gcp/compute/firewallPolicyRule";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that Firewall Policy Rules do not allow inbound HTTP traffic.

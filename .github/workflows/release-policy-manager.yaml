@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          registry-url: https://registry.npmjs.org
+          always-auth: true
 
       - name: Build Pulumi Policy Manager
         run: |

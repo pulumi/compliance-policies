@@ -1,5 +1,5 @@
 PROJECT_NAME := unit-test-helpers
-NODE_MODULE_NAME := @pulumi-premium-policies/$(PROJECT_NAME)
+NODE_MODULE_NAME := @pulumi/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))

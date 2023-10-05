@@ -1,3 +1,0 @@
-@pulumi-premium-policies:registry=https://premium-policies.beta.pulumi-ce.team/
-//premium-policies.beta.pulumi-ce.team/:_authToken=${PULUMI_ACCESS_TOKEN}
-//premium-policies.beta.pulumi-ce.team/:always-auth=true

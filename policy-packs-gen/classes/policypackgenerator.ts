@@ -76,7 +76,6 @@ export class PolicyPackGenerator {
             }
 
             this.createPolicyPackDir(policyPackDir);
-            this.genNpmrc(policyPackDir);
             this.genPulumiPolicyYaml(policyPackDir, args.vendor);
             this.genTsconfigJson(policyPackDir);
             this.genPackageJson(policyPackDir, args.vendor, framework);
@@ -110,27 +109,6 @@ export class PolicyPackGenerator {
         fs.mkdirSync(policyPackDir, {
             recursive: true,
         });
-    }
-
-    /**
-     * Generate a valid .npmrc and saves it `policyPackDir`.
-     *
-     * @param policyPackDir The policy pack destination folder.
-     */
-    private genNpmrc(policyPackDir: string) {
-
-        const etaFile: string = ".npmrc.eta";
-        const destFile: string = ".npmrc";
-
-        const eta = this.getEtaEngine();
-
-        const templateArgs = {};
-
-        const fileContent: string = eta.render(etaFile, templateArgs);
-
-        const fileHandle = fs.openSync(`${policyPackDir}/${destFile}`, "w", 0o640);
-        fs.appendFileSync(fileHandle, fileContent);
-        fs.closeSync(fileHandle);
     }
 
     /**

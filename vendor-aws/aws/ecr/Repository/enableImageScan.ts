@@ -14,7 +14,7 @@
 
 import { Repository } from "@pulumi/aws/ecr";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that ECR repositories have 'scan-on-push' enabled.

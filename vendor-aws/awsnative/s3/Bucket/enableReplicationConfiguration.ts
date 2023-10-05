@@ -14,7 +14,7 @@
 
 import { Bucket } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that S3 Bucket have cross-region replication enabled.

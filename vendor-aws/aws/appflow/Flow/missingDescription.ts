@@ -14,7 +14,7 @@
 
 import { Flow } from "@pulumi/aws/appflow";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that AppFlow Flows have a description.

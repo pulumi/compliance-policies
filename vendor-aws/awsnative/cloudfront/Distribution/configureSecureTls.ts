@@ -14,7 +14,7 @@
 
 import { Distribution } from "@pulumi/aws-native/cloudfront";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that CloudFront distributions uses secure/modern TLS encryption.

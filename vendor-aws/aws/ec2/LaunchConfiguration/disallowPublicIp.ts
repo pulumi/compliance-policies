@@ -14,7 +14,7 @@
 
 import { LaunchConfiguration } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that EC2 Launch Configurations do not have a public IP address.

@@ -14,7 +14,7 @@
 
 import { FileSystem } from "@pulumi/aws/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that EFS File Systems do not have an unencrypted file system.

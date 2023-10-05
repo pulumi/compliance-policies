@@ -14,7 +14,7 @@
 
 import { FileSystem } from "@pulumi/aws-native/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that EFS File system doesn't use single availability zone.

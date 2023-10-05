@@ -14,7 +14,7 @@
 
 import { DomainName } from "@pulumi/aws/apigatewayv2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that any ApiGatewayV2 Domain Name Configuration is enabled.

@@ -14,7 +14,7 @@
 
 import { Volume } from "@pulumi/aws/ebs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that encrypted EBS volumes use a customer-managed KMS key.

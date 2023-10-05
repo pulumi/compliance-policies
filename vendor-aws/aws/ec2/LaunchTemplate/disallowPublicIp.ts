@@ -14,7 +14,7 @@
 
 import { LaunchTemplate } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager, valToBoolean } from "@pulumi-premium-policies/policy-manager";
+import { policyManager, valToBoolean } from "@pulumi/policy-manager";
 
 /**
  * Checks that EC2 Launch Templates do not have public IP addresses.

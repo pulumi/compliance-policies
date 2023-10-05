@@ -14,7 +14,7 @@
 
 import * as awsnative from "@pulumi/aws-native";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { createResourceValidationArgs } from "@pulumi-premium-policies/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.

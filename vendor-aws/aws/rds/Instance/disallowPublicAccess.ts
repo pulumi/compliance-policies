@@ -14,7 +14,7 @@
 
 import { Instance } from "@pulumi/aws/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that RDS Instance public access is not enabled.

@@ -14,7 +14,7 @@
 
 import { Cluster } from "@pulumi/aws/eks";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that EKS Clusters API Endpoint are not publicly accessible.

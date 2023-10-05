@@ -14,7 +14,7 @@
 
 import { LoadBalancer } from "@pulumi/aws/elb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.

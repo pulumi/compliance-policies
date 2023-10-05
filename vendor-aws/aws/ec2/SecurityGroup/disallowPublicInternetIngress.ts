@@ -14,7 +14,7 @@
 
 import { SecurityGroup } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that EC2 Security Groups do not allow ingress traffic from the Internet.

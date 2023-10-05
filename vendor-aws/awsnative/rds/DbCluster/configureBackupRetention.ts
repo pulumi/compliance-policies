@@ -14,7 +14,7 @@
 
 import { DbCluster } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Checks that RDS DB Cluster backup retention policy is configured.

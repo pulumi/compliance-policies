@@ -14,7 +14,7 @@
 
 import { Bucket } from "@pulumi/aws-native/s3";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi-premium-policies/policy-manager";
+import { policyManager } from "@pulumi/policy-manager";
 
 /**
  * Check that S3 Bucket Server-Side Encryption (SSE) is enabled.

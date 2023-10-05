@@ -1,0 +1,27 @@
+name: Release AWS Policies package
+
+on:
+  push:
+    tags:
+      - aws-policies-*
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  aws-policies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
+          always-auth: true
+
+      - name: Build AWS Policies
+        run: |
+          cd vendor-aws
+          make build publish

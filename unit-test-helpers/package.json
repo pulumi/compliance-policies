@@ -1,5 +1,5 @@
 {
-    "name": "@pulumi-premium-policies/unit-test-helpers",
+    "name": "@pulumi/unit-test-helpers",
     "version": "${VERSION}",
     "license": "Apache-2.0",
     "homepage": "https://www.pulumi.com",
@@ -17,7 +17,7 @@
     "dependencies": {
         "@babel/parser": "^7.20.7",
         "@babel/types": "^7.20.7",
-        "@pulumi-premium-policies/policy-manager": "^0.0.8",
+        "@pulumi/policy-manager": "^0.0.9",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.0.0",
         "@types/mocha": "^10.0.1",

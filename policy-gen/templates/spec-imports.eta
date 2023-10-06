@@ -13,4 +13,4 @@ import {
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
-} from "@pulumi-premium-policies/unit-test-helpers";
+} from "@pulumi/compliance-policies-unit-test-helpers";

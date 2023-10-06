@@ -89,7 +89,7 @@ const genericImports: GenericImports = {
         "ResourceValidationPolicy",
         "validateResourceOfType",
     ],
-    "@pulumi-premium-policies/policy-manager": [
+    "@pulumi/compliance-policy-manager": [
         "policyManager",
     ],
 };
@@ -528,7 +528,7 @@ function updateSourceCode(resourceType: string, source: Source): Source {
  */
 function isProviderImport(importStatement: string): boolean {
 
-    const r1 = new RegExp(/from ["'](@pulumi\/policy|@pulumi-premium-policies\/.*)/, "m").exec(importStatement);
+    const r1 = new RegExp(/from ["'](@pulumi\/policy|@pulumi\/.*-compliance-policies)/, "m").exec(importStatement);
     if (r1 && r1[0]) {
         return false;
     }

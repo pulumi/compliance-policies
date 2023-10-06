@@ -14,7 +14,7 @@
 
 import * as kubernetes from "@pulumi/kubernetes";
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.

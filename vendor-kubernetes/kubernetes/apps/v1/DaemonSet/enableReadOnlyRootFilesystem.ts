@@ -14,7 +14,7 @@
 
 import { DaemonSet } from "@pulumi/kubernetes/apps/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that Kubernetes DaemonSets run pods with a read-only filesystem.

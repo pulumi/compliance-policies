@@ -14,7 +14,7 @@
 
 import { Deployment } from "@pulumi/kubernetes/apps/v1";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that Kubernetes Deployments have at least three replicas.

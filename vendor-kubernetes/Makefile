@@ -1,5 +1,4 @@
 PROJECT_NAME := kubernetes-policies
-NODE_MODULE_NAME := @pulumi/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
@@ -62,7 +61,7 @@ fasttest::
 	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
 upgrade:: prepare
-	@yarn upgrade @pulumi/unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
+	@yarn upgrade @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are

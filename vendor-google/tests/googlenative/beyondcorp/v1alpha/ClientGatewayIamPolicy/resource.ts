@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ClientGatewayIamPolicy } from "@pulumi/google-native/beyondcorp/v1alpha";
 
 /**

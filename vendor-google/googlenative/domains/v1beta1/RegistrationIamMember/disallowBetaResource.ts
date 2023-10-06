@@ -16,7 +16,7 @@
  * Default imports for a policy.
  */
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 import { RegistrationIamMember } from "@pulumi/google-native/domains/v1beta1";
 
 /**

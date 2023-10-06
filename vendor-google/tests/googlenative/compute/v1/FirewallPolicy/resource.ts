@@ -15,7 +15,7 @@
 import * as googlenative from "@pulumi/google-native";
 import { ResourceValidationArgs } from "@pulumi/policy";
 import * as enums from "../../../enums";
-import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
  * Create a `ResourceValidationArgs` to be process by the unit test.

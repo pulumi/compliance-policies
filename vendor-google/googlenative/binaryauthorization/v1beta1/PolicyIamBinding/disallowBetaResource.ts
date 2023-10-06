@@ -16,7 +16,7 @@
  * Default imports for a policy.
  */
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 import { PolicyIamBinding } from "@pulumi/google-native/binaryauthorization/v1beta1";
 
 /**

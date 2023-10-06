@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
-import { createResourceValidationArgs } from "@pulumi/unit-test-helpers";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Page } from "@pulumi/google-native/dialogflow/v3beta1";
 
 /**

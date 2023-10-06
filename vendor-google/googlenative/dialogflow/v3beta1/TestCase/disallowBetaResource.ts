@@ -16,7 +16,7 @@
  * Default imports for a policy.
  */
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 import { TestCase } from "@pulumi/google-native/dialogflow/v3beta1";
 
 /**

@@ -18,7 +18,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as parser from "@babel/parser";
 import * as parserTypes from "@babel/types";
-import * as policymanager from "@pulumi/policy-manager";
+import * as policymanager from "@pulumi/compliance-policy-manager";
 import { ResourceValidationArgs, StackValidationArgs, StackValidationPolicy, PolicyResource, ResourceValidationPolicy } from "@pulumi/policy";
 import { Resource, Unwrap } from "@pulumi/pulumi";
 import * as assert from "assert";
@@ -283,7 +283,7 @@ export function assertResourcePolicyIsRegistered(policy: ResourceValidationPolic
  */
 export function assertResourcePolicyName(policy: ResourceValidationPolicy, name: string) {
     /**
-     * Check the policy name follows the Premium Policies expected pattern.
+     * Check the policy name follows the Compliance Policies expected pattern.
      */
     const localRE = /([a-z]{1}[\da-z\-]+[\da-z]{1})/g;
     /**

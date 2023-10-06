@@ -1,5 +1,4 @@
 PROJECT_NAME := unit-test-helpers
-NODE_MODULE_NAME := @pulumi/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
@@ -22,7 +21,7 @@ lint:: prepare
 	@yarn run lint
 
 upgrade:: prepare
-	@yarn upgrade @pulumi/policy-manager@latest --save
+	@yarn upgrade @pulumi/compliance-policy-manager@latest --save
 
 tag:
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."

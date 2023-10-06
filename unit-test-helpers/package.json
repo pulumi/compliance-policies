@@ -1,9 +1,12 @@
 {
-    "name": "@pulumi/unit-test-helpers",
+    "name": "@pulumi/compliance-policies-unit-test-helpers",
     "version": "${VERSION}",
     "license": "Apache-2.0",
     "homepage": "https://www.pulumi.com",
-    "repository": "https://github.com/pulumi/premium-policies",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pulumi/compliance-policies.git"
+    },
     "keywords": [
         "pulumi",
         "policy",
@@ -17,7 +20,7 @@
     "dependencies": {
         "@babel/parser": "^7.20.7",
         "@babel/types": "^7.20.7",
-        "@pulumi/policy-manager": "^0.0.9",
+        "@pulumi/compliance-policy-manager": "^0.1.0",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.0.0",
         "@types/mocha": "^10.0.1",

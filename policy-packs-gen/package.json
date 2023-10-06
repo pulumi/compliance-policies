@@ -47,9 +47,9 @@
     "scripts": {
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
         "build": "tsc",
-        "gen-aws": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-aws --vendor-name aws --providers-directories aws,awsnative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
-        "gen-azure": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-azure --vendor-name azure --providers-directories azure,azurenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
-        "gen-google": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-google --vendor-name google --providers-directories gcp,googlenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
-        "gen-kubernetes": "ts-node index.ts run --vendor-directory /home/aureq/work/github.com/pulumi/premium-policies/vendor-kubernetes --vendor-name kubernetes --providers-directories kubernetes --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite"
+        "gen-aws": "ts-node index.ts run --vendor-directory ../vendor-aws --vendor-name aws --providers-directories aws,awsnative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-azure": "ts-node index.ts run --vendor-directory ../vendor-azure --vendor-name azure --providers-directories azure,azurenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-google": "ts-node index.ts run --vendor-directory ../vendor-google --vendor-name google --providers-directories gcp,googlenative --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite",
+        "gen-kubernetes": "ts-node index.ts run --vendor-directory ../vendor-kubernetes --vendor-name kubernetes --providers-directories kubernetes --templates-directory /home/aureq/work/github.com/pulumi/templates-policy --overwrite"
     }
 }

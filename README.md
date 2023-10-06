@@ -1,4 +1,4 @@
-# Pulumi Policies
+# Pulumi Compliance Policies
 
-This repository contains a growing set of Premium Policies to validate your infrastructure using
+This repository contains a growing set of Compliance Policies to validate your infrastructure using
 Policy-as-Code.

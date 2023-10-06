@@ -323,7 +323,7 @@ function cmd_vendor(vendorName: string, vendorDir: string, providers: string[], 
             previousResource = policyJsDoc.resource;
         } /** end for (inputFiles) */
 
-        fs.writeFileSync(`${destinationDir}/premium-policies-${provider}.md`, providerMarkdown, {
+        fs.writeFileSync(`${destinationDir}/compliance-ready-policies-${provider}.md`, providerMarkdown, {
             flag: "w+"
         });
     }

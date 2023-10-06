@@ -67,7 +67,7 @@ export class PolicyPackGenerator {
         for (let x = 0; x < args.frameworks.length; x++) {
             const framework: string = args.frameworks[x];
 
-            const policyPackName: string = `${args.vendor}-${framework}-premium-policies-typescript`;
+            const policyPackName: string = `${args.vendor}-${framework}-compliance-policies-typescript`;
             const policyPackDir: string = path.resolve(`${args.destinationDir}/${policyPackName}`);
 
             if (!args.overwrite && fs.existsSync(policyPackDir)) {

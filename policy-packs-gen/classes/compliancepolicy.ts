@@ -25,16 +25,16 @@ export interface PolicyMetadata {
     frameworksString?: string;
 };
 
-export interface PremiumPolicyArgs {
+export interface CompliancePolicyArgs {
     /**
      * Full path to a policy file.
      */
     policyFile: string;
 };
 
-export class PremiumPolicy {
+export class CompliancePolicy {
 
-    private args: PremiumPolicyArgs;
+    private args: CompliancePolicyArgs;
 
     public readonly vendors: string[];
     public readonly services: string[];
@@ -42,7 +42,7 @@ export class PremiumPolicy {
     public readonly topics: string[];
     public readonly frameworks: string[];
 
-    constructor(args: PremiumPolicyArgs) {
+    constructor(args: CompliancePolicyArgs) {
         this.args = args;
 
         if (!fs.existsSync(this.args.policyFile)) {

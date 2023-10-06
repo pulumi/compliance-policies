@@ -1,7 +1,7 @@
 import { PolicyPack } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
-new PolicyPack("<%~ it.vendor %>-<%~ it.framework %>-premium-policies-typescript", {
+new PolicyPack("<%~ it.vendor %>-<%~ it.framework %>-compliance-ready-policies-typescript", {
     policies:[
         ...policyManager.selectPolicies({
             vendors: ["<%~ it.vendor %>"],

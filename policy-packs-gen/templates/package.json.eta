@@ -1,5 +1,5 @@
 {
-    "name": "<%~ it.vendor %>-<%~ it.framework %>-premium-policies-typescript",
+    "name": "<%~ it.vendor %>-<%~ it.framework %>-compliance-ready-policies-typescript",
     "version": "0.0.1",
     "files": [
         "index.ts",
@@ -8,8 +8,8 @@
         "tsconfig.json"
     ],
     "dependencies": {
-        "@pulumi/<%~ it.vendor %>-policies": "^0",
-        "@pulumi/policy-manager": "^0",
+        "@pulumi/<%~ it.vendor %>-compliance-policies": "^0",
+        "@pulumi/compliance-policy-manager": "^0",
         "@pulumi/policy": "^1.7.0",
         "@pulumi/pulumi": "^3.0.0"
     },

@@ -1,2 +1,2 @@
-description: A minimal Policy Pack for <%~ it.vendor %> using Pulumi Premium Policies and TypeScript.
+description: A minimal Policy Pack for <%~ it.vendor %> using Pulumi Compliance Ready Policies and TypeScript.
 runtime: nodejs

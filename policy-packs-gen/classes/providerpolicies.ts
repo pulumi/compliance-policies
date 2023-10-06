@@ -14,7 +14,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as premiumPolicy from "./premiumpolicy";
+import * as compliancePolicy from "./compliancepolicy";
 
 export interface ProviderPoliciesArgs {
     /**
@@ -38,7 +38,7 @@ export class ProviderPolicies {
     public readonly frameworks: string[];
 
     /*
-     * pulumi policy new (aws|azure|google|kubernetes)-premium-policies-(pcidss|iso27001|cis)
+     * pulumi policy new (aws|azure|google|kubernetes)-compliance-policies-(pcidss|iso27001|cis)
      */
 
     /**
@@ -61,12 +61,12 @@ export class ProviderPolicies {
         }
         const policyFiles: string[] = this.findFilesByExtension(dirPath, ".ts");
 
-        const premiumPolicies: premiumPolicy.PremiumPolicy[] = [];
+        const compliancePolicies: compliancePolicy.CompliancePolicy[] = [];
         for (let x = 0; x < policyFiles.length; x++) {
-            const p: premiumPolicy.PremiumPolicy = new premiumPolicy.PremiumPolicy({
+            const p: compliancePolicy.CompliancePolicy = new compliancePolicy.CompliancePolicy({
                 policyFile: policyFiles[x],
             });
-            premiumPolicies.push(p);
+            compliancePolicies.push(p);
 
             if (p.vendors && p.vendors.length > 0) {
                 vendors.push(...p.vendors);

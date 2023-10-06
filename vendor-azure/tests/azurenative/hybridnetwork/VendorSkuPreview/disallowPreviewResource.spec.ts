@@ -25,7 +25,7 @@ import {
     assertResourcePolicyEnforcementLevel,
     assertResourcePolicyDescription,
     assertCodeQuality,
-} from "@pulumi/unit-test-helpers";
+} from "@pulumi/compliance-policies-unit-test-helpers";
 import * as policies from "../../../../index";
 import { getResourceValidationArgs } from "./resource";
 

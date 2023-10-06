@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 import { Disk } from "@pulumi/azure-native/compute/disk";
 
 /**

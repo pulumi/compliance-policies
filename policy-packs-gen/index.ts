@@ -107,7 +107,7 @@ function cmd_version() {
 commander.program
     .command("run")
     .description("Run the program")
-    .requiredOption("--vendor-directory <vendorPath>", "A directory containing a vendor's policies. (`/path/to/premium-policies/vendor-something`)")
+    .requiredOption("--vendor-directory <vendorPath>", "A directory containing a vendor's policies. (`/path/to/compliance-policies/vendor-X`)")
     .requiredOption("--vendor-name <vendorName>", "Name of the vendor. (`aws`, or `azure`)")
     .requiredOption("--providers-directories <providerDir>,...", "A coma separated list of providers to process within the vendorPath. (`aws,awsnative`, `kubernetes`)")
     .requiredOption("--templates-directory <templatesPath>", "Path where to save the generated Policy packs. (`/path/to/templates-policy`)")

@@ -789,5 +789,5 @@ export function valToBoolean(val: boolean | string | undefined): boolean | undef
     // values don't match.
     // This is done to ensure that only a single policy-manager exists
     // and all policies are registered in that unique instance.
-    loadPlugins(["@pulumi-premium-policies/*-policies"]);
+    loadPlugins(["@pulumi/*-compliance-policies"]);
 })();

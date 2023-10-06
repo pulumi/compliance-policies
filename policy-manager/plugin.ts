@@ -26,7 +26,7 @@ const micromatch = require("micromatch");
  * this function is typically used when you've authored a policy package and you want to
  * load and register the policies it contains.
  *
- * A common pattern example is `["@pulumi-premium-policies/*-policies"]` for Pulumi Premium
+ * A common pattern example is `["@pulumi/*-compliance-policies"]` for Pulumi Premium
  * Policies.
  *
  * @param globPatterns An array of patterns as used by `micromatch`.
@@ -92,7 +92,7 @@ export function loadPlugins(globPatterns: Array<string>) {
             }
 
             if (version !== m.policyManagerVersion) {
-                throw new Error(`The upstreasm version of '@pulumi-premium-policies/policy-manager' is ${version} but '${packageName}' depends on @pulumi-premium-policies/policy-manager ${m.policyManagerVersion}.\nThis will likely create issues and you should use upgrade this package version so the same @pulumi-premium-policies/policy-manager version is used everywhere.`);
+                throw new Error(`The upstreasm version of '@pulumi/compliance-policy-manager' is ${version} but '${packageName}' depends on @pulumi/compliance-policy-manager ${m.policyManagerVersion}.\nThis will likely create issues and you should use upgrade this package version so the same @pulumi/compliance-policy-manager version is used everywhere.`);
             }
         }
     }

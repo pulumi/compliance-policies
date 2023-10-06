@@ -26,7 +26,7 @@ const micromatch = require("micromatch");
  * this function is typically used when you've authored a policy package and you want to
  * load and register the policies it contains.
  *
- * A common pattern example is `["@pulumi/*-compliance-policies"]` for Pulumi Premium
+ * A common pattern example is `["@pulumi/*-compliance-policies"]` for Pulumi Compliance
  * Policies.
  *
  * @param globPatterns An array of patterns as used by `micromatch`.

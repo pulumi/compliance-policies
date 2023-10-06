@@ -640,7 +640,7 @@ export class PolicyManager {
      * Register a new policy into the pool of policies. The policy name must be
      * unique to the pool of policies already registered or an exception is thrown.
      *
-     * This function is used if you are authoring your own Premium Policies.
+     * This function is used if you are authoring your own Compliance Policies.
      *
      * @param args An object containing the policy to register as well as its additional attributes.
      * @returns a `ResourceValidationPolicy` object.
@@ -727,7 +727,7 @@ export class PolicyManager {
      * This can be later used to display statistics about included packages as part of
      * a policy-pack.
      *
-     * This function is to be used if you are authoring your own Premium Policies.
+     * This function is to be used if you are authoring your own Compliance Policies.
      *
      * @param name Name of the policy module as stored in `package.json`
      * @param version The module version as stored in `package.json`

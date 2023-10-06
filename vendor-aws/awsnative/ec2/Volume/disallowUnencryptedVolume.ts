@@ -14,7 +14,7 @@
 
 import { Volume } from "@pulumi/aws-native/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that EBS volumes are encrypted.

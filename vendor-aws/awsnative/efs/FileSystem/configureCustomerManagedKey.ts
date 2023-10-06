@@ -14,7 +14,7 @@
 
 import { FileSystem } from "@pulumi/aws-native/efs";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Check that encrypted EFS File system uses a customer-managed KMS key.

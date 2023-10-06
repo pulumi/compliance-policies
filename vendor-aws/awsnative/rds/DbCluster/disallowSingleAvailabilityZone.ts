@@ -14,7 +14,7 @@
 
 import { DbCluster } from "@pulumi/aws-native/rds";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Check that RDS DB Cluster doesn't use single availability zone.

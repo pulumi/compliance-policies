@@ -14,7 +14,7 @@
 
 import { UserPolicyAttachment } from "@pulumi/aws/iam";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Ensure IAM Users Receive Permissions Only Through Groups.

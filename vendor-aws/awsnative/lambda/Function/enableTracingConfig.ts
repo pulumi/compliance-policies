@@ -14,7 +14,7 @@
 
 import { Function } from "@pulumi/aws-native/lambda";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that Lambda functions have tracing enabled.

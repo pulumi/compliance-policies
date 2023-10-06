@@ -14,7 +14,7 @@
 
 import { Key } from "@pulumi/aws-native/kms";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that KMS Keys have a description.

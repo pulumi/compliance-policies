@@ -14,7 +14,7 @@
 
 import { Secret } from "@pulumi/aws/secretsmanager";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that Secrets Manager Secrets have a description.

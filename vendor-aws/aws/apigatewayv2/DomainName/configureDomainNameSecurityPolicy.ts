@@ -14,7 +14,7 @@
 
 import { DomainName } from "@pulumi/aws/apigatewayv2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that any ApiGatewayV2 Domain Name Security Policy uses secure/modern TLS encryption.

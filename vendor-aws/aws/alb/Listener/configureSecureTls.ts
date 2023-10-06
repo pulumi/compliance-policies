@@ -14,7 +14,7 @@
 
 import { Listener } from "@pulumi/aws/alb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that ALB Load Balancers uses secure/modern TLS encryption.

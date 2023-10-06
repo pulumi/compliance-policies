@@ -14,7 +14,7 @@
 
 import { LoadBalancer } from "@pulumi/aws/alb";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
-import { policyManager } from "@pulumi/policy-manager";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
  * Checks that ALB loadbalancers have access logging configured and enabled.

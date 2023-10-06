@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import "mocha";
-import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "@pulumi/unit-test-helpers";
-import { policyManager } from "@pulumi/policy-manager";
+import { assertHasRegisteredPolicies, assertHasRemainingPolicies, assertHasAllRemainingPolicies, assertExpectedRemainingPolicyCount, assertNoDoubleSelection, assertSelectionEnforcementLevel } from "@pulumi/compliance-policies-unit-test-helpers";
+import { policyManager } from "@pulumi/compliance-policy-manager";
 
 describe("policyManager.general", function() {
 

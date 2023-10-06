@@ -13,7 +13,7 @@
 // limitations under the License.
 
 export * from "./version";
-export { version as policyManagerVersion } from "@pulumi/policy-manager";
+export { version as policyManagerVersion } from "@pulumi/compliance-policy-manager";
 
 export * as aws from "./aws";
 export * as awsnative from "./awsnative";

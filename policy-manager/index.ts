@@ -271,6 +271,18 @@ export class PolicyManager {
             if (args.displayGeneralStats || args.displayModuleInformation) {
                 message += "---\n";
             }
+            /**
+             * Sort policies by name so the output is consistent.
+             */
+            stats.selectedPolicies.sort((policyA, policyB) => {
+                if (policyA.name < policyB.name) {
+                    return -1;
+                }
+                if (policyA > policyB) {
+                    return 1;
+                }
+                return 0;
+            });
             message += "Selected policies:\n";
             for (let x = 0; x < stats.selectedPolicies.length; x++) {
                 message += `  ${stats.selectedPolicies[x].name}: enforcementLevel: ${stats.selectedPolicies[x].enforcementLevel}\n`;

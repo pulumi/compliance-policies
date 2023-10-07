@@ -584,6 +584,23 @@ export class PolicyManager {
             matches = [];
         }
 
+        /**
+         * Right now, `matches` contains all the selected policies but we need
+         * to remove any duplciates from it before returning the result to the
+         * user.
+         * Note: don't user `.forEach()` and `.splice()` otherwise you'll get
+         * an unpredictable result.
+         */
+        const matchSeen: {[key: string]: boolean} = {};
+
+        matches = matches.filter((m) => {
+            if (!matchSeen[m.policyName]) {
+                matchSeen[m.policyName] = true;
+                return true;
+            }
+            return false;
+        });
+
         /*
          * At this point, `matches` contains only the polcies that have matches
          * the user submitted criterias or their cherry-picking selection. We

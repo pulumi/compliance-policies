@@ -12,5 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as compute from "./compute";
-export * as storage from "./storage";
+export * as Bucket from "./Bucket";

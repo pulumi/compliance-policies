@@ -39,7 +39,7 @@
         "eslint": "^8.28.0",
         "eslint-plugin-header": "^3.1.1",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jsdoc": "^40.1.0",
+        "eslint-plugin-jsdoc": "^46.9.1",
         "eslint-plugin-mocha": "^10.1.0",
         "mocha": "^10.2.0"
     },
@@ -48,8 +48,8 @@
         "build": "tsc",
         "runkubernetes": "ts-node index.ts run --provider kubernetes --version 4.1.1 --directory ../vendor-kubernetes/",
         "dryrunkubernetes": "ts-node index.ts run --dryrun --provider kubernetes --version 4.1.1 --directory ../vendor-kubernetes/",
-        "runazurenative": "ts-node index.ts run --provider azure-native --version 2.9.0 --directory ../vendor-azure/ --max 500",
-        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azure-native --version 2.9.0 --directory ../vendor-azure/ --max 500",
+        "runazurenative": "ts-node index.ts run --provider azure-native --version 2.21.2 --directory ../vendor-azure/ --max 500",
+        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azure-native --version 2.21.2 --directory ../vendor-azure/ --max 500",
         "rungooglenative": "ts-node index.ts run --provider google-native --version 0.31.1 --directory ../vendor-google/ --max 500",
         "dryrungooglenative": "ts-node index.ts run --dryrun --provider google-native --version 0.31.1 --directory ../vendor-google/ --max 500"
     }

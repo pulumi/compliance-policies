@@ -11,6 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-export * as v20211201preview from "./v20211201preview";
-export * as v20231001preview from "./v20231001preview";
+export * as AmlFilesystem from "./AmlFilesystem";
+export * as Cache from "./Cache";
+export * as StorageTarget from "./StorageTarget";

@@ -12,5 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as v20211201preview from "./v20211201preview";
-export * as v20231001preview from "./v20231001preview";
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
+import { Package } from "@pulumi/azure-native/testbase/v20231101preview";
+
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(Package, {
+        applicationName: "",
+        resourceGroupName: "",
+        testBaseAccountName: "",
+        version: "",
+    });
+}

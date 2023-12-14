@@ -11,6 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-export * as v20211201preview from "./v20211201preview";
-export * as v20231001preview from "./v20231001preview";
+export * as ActionRequest from "./ActionRequest";
+export * as Credential from "./Credential";
+export * as CustomImage from "./CustomImage";
+export * as CustomerEvent from "./CustomerEvent";
+export * as DraftPackage from "./DraftPackage";
+export * as FavoriteProcess from "./FavoriteProcess";
+export * as ImageDefinition from "./ImageDefinition";
+export * as Package from "./Package";
+export * as TestBaseAccount from "./TestBaseAccount";

@@ -11,6 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-export * as v20211201preview from "./v20211201preview";
-export * as v20231001preview from "./v20231001preview";
+export * as ACSSBackupConnection from "./ACSSBackupConnection";
+export * as Connector from "./Connector";
+export * as Monitor from "./Monitor";
+export * as ProviderInstance from "./ProviderInstance";
+export * as SAPApplicationServerInstance from "./SAPApplicationServerInstance";
+export * as SAPCentralInstance from "./SAPCentralInstance";
+export * as SAPDatabaseInstance from "./SAPDatabaseInstance";
+export * as SAPVirtualInstance from "./SAPVirtualInstance";
+export * as SapLandscapeMonitor from "./SapLandscapeMonitor";

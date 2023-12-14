@@ -69,3 +69,9 @@ export * as SqlVulnerabilityAssessmentRuleBaseline from "./SqlVulnerabilityAsses
 export * as SqlVulnerabilityAssessmentsSetting from "./SqlVulnerabilityAssessmentsSetting";
 export * as StartStopManagedInstanceSchedule from "./StartStopManagedInstanceSchedule";
 export * as SyncAgent from "./SyncAgent";
+export * as SyncGroup from "./SyncGroup";
+export * as SyncMember from "./SyncMember";
+export * as TransparentDataEncryption from "./TransparentDataEncryption";
+export * as VirtualNetworkRule from "./VirtualNetworkRule";
+export * as WorkloadClassifier from "./WorkloadClassifier";
+export * as WorkloadGroup from "./WorkloadGroup";

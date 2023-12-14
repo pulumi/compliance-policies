@@ -15,7 +15,6 @@
 export * as v20170801preview from "./v20170801preview";
 export * as v20190101preview from "./v20190101preview";
 export * as v20200101preview from "./v20200101preview";
-export * as v20210115preview from "./v20210115preview";
 export * as v20210701preview from "./v20210701preview";
 export * as v20210801preview from "./v20210801preview";
 export * as v20220101preview from "./v20220101preview";
@@ -25,3 +24,4 @@ export * as v20230101preview from "./v20230101preview";
 export * as v20230201preview from "./v20230201preview";
 export * as v20230301preview from "./v20230301preview";
 export * as v20230901preview from "./v20230901preview";
+export * as v20231001preview from "./v20231001preview";

@@ -15,3 +15,8 @@
 export * as DnssecConfig from "./DnssecConfig";
 export * as RecordSet from "./RecordSet";
 export * as Zone from "./Zone";
+export * as NetworkSecurityPerimeter from "./NetworkSecurityPerimeter";
+export * as NspAccessRule from "./NspAccessRule";
+export * as NspAssociation from "./NspAssociation";
+export * as NspLink from "./NspLink";
+export * as NspProfile from "./NspProfile";

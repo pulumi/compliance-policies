@@ -63,7 +63,7 @@ fasttest::
 	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
 upgrade::
-	@yarn upgrade @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
+	@yarn upgrade @pulumi/policy@latest @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
 
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are

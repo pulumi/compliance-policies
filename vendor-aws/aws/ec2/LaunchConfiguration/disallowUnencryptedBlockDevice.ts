@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that EC2 Launch Configurations do not have unencrypted block devices.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
  */
@@ -41,5 +41,5 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyMa
     services: ["ec2"],
     severity: "high",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

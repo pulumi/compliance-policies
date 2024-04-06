@@ -35,7 +35,7 @@ describe("aws.lambda.Permission.configureSourceArn", function() {
             services: ["lambda"],
             severity: "critical",
             topics: ["permissions", "security"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

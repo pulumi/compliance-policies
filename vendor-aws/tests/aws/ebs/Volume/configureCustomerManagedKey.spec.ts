@@ -35,7 +35,7 @@ describe("aws.ebs.Volume.configureCustomerManagedKey", function() {
             services: ["ebs"],
             severity: "low",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

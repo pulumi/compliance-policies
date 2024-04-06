@@ -21,7 +21,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  *
  * @severity high
  * @frameworks cis
- * @topics container, vulnerability
+ * @topics vulnerability
  * @link https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html
  */
 export const onlyPermissionsViaGroups: ResourceValidationPolicy = policyManager.registerPolicy({

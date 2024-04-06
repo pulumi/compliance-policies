@@ -35,7 +35,7 @@ describe("aws.apigateway.DomainName.configureSecurityPolicy", function() {
             services: ["apigateway"],
             severity: "high",
             topics: ["network", "encryption"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that any ApiGatewayV2 Domain Name Configuration is enabled.
  *
  * @severity high
- * @frameworks none
+ * @frameworks hitrust, iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-custom-domain-tls-version.html
  */
@@ -39,4 +39,5 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policyMan
     services: ["apigatewayv2"],
     severity: "high",
     topics: ["network"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that Athena Workgroups use a customer-managed-key.
  *
  * @severity low
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
@@ -52,5 +52,5 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     services: ["athena"],
     severity: "low",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

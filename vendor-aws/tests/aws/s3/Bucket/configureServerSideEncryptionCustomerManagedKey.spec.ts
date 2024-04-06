@@ -35,7 +35,7 @@ describe("aws.s3.Bucket.configureServerSideEncryptionCustomerManagedKey", functi
             services: ["s3"],
             severity: "low",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

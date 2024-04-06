@@ -35,6 +35,7 @@ describe("aws.apigatewayv2.DomainName.enableDomainNameConfiguration", function()
             services: ["apigatewayv2"],
             severity: "high",
             topics: ["network"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

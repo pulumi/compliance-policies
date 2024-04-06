@@ -35,6 +35,7 @@ describe("aws.ec2.SecurityGroup.disallowPublicInternetIngress", function() {
             services: ["ec2"],
             severity: "critical",
             topics: ["network"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

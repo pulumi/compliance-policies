@@ -35,7 +35,7 @@ describe("aws.elb.LoadBalancer.configureAccessLogging", function() {
             services: ["elb"],
             severity: "medium",
             topics: ["network", "logging"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

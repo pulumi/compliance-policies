@@ -35,7 +35,7 @@ describe("aws.ecr.Repository.disallowMutableImage", function() {
             services: ["ecr"],
             severity: "high",
             topics: ["container"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

@@ -35,7 +35,7 @@ describe("awsnative.ecr.Repository.enableImageScan", function() {
             services: ["ecr"],
             severity: "high",
             topics: ["container", "vulnerability"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that EC2 Security Groups do not allow inbound HTTP traffic.
  *
  * @severity critical
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, network
  * @link https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
  */
@@ -46,5 +46,5 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
     services: ["ec2"],
     severity: "critical",
     topics: ["network", "encryption"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

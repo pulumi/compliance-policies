@@ -35,6 +35,7 @@ describe("aws.elb.LoadBalancer.enableHealthCheck", function() {
             services: ["elb"],
             severity: "high",
             topics: ["network", "availability"],
+            frameworks: ["hitrust"],
         });
     });
 

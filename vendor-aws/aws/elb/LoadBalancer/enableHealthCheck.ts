@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that ELB Load Balancers have a health check enabled.
  *
  * @severity high
- * @frameworks none
+ * @frameworks hitrust
  * @topics availability, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
  */
@@ -39,4 +39,5 @@ export const enableHealthCheck: ResourceValidationPolicy = policyManager.registe
     services: ["elb"],
     severity: "high",
     topics: ["network", "availability"],
+    frameworks: ["hitrust"],
 });

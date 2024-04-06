@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that RDS DB Clusters backup retention policy is enabled.
  *
  * @severity medium
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics backup, resilience
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention
  */
@@ -39,5 +39,5 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
     services: ["rds"],
     severity: "medium",
     topics: ["backup", "resilience"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

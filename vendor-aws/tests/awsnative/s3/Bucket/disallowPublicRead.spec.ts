@@ -36,7 +36,7 @@ describe("awsnative.s3.Bucket.disallowPublicRead", function() {
             services: ["s3"],
             severity: "critical",
             topics: ["storage", "security"],
-            frameworks: ["cis", "pcidss", "iso27001"],
+            frameworks: ["cis", "pcidss", "hitrust", "iso27001"],
         });
     });
 

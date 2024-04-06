@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that RDS DB Cluster doesn't use single availability zone.
  *
  * @severity high
- * @frameworks none
+ * @frameworks hitrust
  * @topics availability
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html
  */
@@ -39,4 +39,5 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
     services: ["rds"],
     severity: "high",
     topics: ["availability"],
+    frameworks: ["hitrust"],
 });

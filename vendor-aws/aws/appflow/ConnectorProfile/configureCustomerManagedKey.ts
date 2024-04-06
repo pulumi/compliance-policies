@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that AppFlow ConnectorProfile uses a customer-managed KMS key.
  *
  * @severity low
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html#encryption-transit
  */
@@ -39,5 +39,5 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     services: ["appflow"],
     severity: "low",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

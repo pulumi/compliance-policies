@@ -35,7 +35,7 @@ describe("awsnative.rds.DbInstance.enableBackupRetention", function() {
             services: ["rds"],
             severity: "medium",
             topics: ["backup", "resilience"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

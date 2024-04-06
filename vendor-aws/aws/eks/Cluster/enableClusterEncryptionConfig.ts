@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that EKS Cluster Encryption Config is enabled.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, kubernetes
  * @link https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/
  */
@@ -39,5 +39,5 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyMan
     services: ["eks"],
     severity: "high",
     topics: ["encryption", "kubernetes"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

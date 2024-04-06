@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that CloudFront distributions uses secure/modern TLS encryption.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, network
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
  */
@@ -39,5 +39,5 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
     services: ["cloudfront"],
     severity: "high",
     topics: ["network", "encryption"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

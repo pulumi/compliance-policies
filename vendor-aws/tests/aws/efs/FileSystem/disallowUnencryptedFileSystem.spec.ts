@@ -35,7 +35,7 @@ describe("aws.efs.FileSystem.disallowUnencryptedFileSystem", function() {
             services: ["efs"],
             severity: "high",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

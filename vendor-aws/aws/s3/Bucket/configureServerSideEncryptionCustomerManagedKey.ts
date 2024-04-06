@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.
  *
  * @severity low
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html
  */
@@ -39,5 +39,5 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
     services: ["s3"],
     severity: "low",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

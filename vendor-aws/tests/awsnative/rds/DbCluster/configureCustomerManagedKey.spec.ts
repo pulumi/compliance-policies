@@ -35,7 +35,7 @@ describe("awsnative.rds.DbCluster.configureCustomerManagedKey", function() {
             services: ["rds"],
             severity: "low",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

@@ -35,7 +35,7 @@ describe("aws.cloudfront.Distribution.disallowUnencryptedTraffic", function() {
             services: ["cloudfront"],
             severity: "critical",
             topics: ["network"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

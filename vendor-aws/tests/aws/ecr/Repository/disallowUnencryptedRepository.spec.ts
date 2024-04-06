@@ -35,7 +35,7 @@ describe("aws.ecr.Repository.disallowUnencryptedRepository", function() {
             services: ["ecr"],
             severity: "high",
             topics: ["container", "encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

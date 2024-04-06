@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that EC2 Security Groups do not allow ingress traffic from the Internet.
  *
  * @severity critical
- * @frameworks none
+ * @frameworks hitrust, iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html
  */
@@ -44,4 +44,5 @@ export const disallowPublicInternetIngress: ResourceValidationPolicy = policyMan
     services: ["ec2"],
     severity: "critical",
     topics: ["network"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

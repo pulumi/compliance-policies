@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that lambda function permissions have a source arn specified.
  *
  * @severity critical
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics permissions, security
  * @link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
  */
@@ -39,5 +39,5 @@ export const configureSourceArn: ResourceValidationPolicy = policyManager.regist
     services: ["lambda"],
     severity: "critical",
     topics: ["permissions", "security"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

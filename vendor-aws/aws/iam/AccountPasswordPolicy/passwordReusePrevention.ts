@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Ensure IAM password policy prevents password reuse.
  *
  * @severity high
- * @frameworks cis
+ * @frameworks cis, hitrust
  * @topics vulnerability
  * @link https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html
  */
@@ -39,5 +39,5 @@ export const passwordReusePrevention: ResourceValidationPolicy = policyManager.r
     services: ["iam"],
     severity: "high",
     topics: ["vulnerability"],
-    frameworks: ["cis"],
+    frameworks: ["cis", "hitrust"],
 });

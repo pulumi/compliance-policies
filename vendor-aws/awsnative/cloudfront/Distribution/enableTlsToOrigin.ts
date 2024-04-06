@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that CloudFront distributions communicate with custom origins using TLS encryption.
  *
  * @severity critical
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, network
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-cloudfront-to-s3-origin.html
  */
@@ -41,5 +41,5 @@ export const enableTlsToOrigin: ResourceValidationPolicy = policyManager.registe
     services: ["cloudfront"],
     severity: "critical",
     topics: ["network", "encryption"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

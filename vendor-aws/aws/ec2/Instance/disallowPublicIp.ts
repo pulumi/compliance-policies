@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that EC2 instances do not have a public IP address.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics network
  * @link none
  */
@@ -39,5 +39,5 @@ export const disallowPublicIp: ResourceValidationPolicy = policyManager.register
     services: ["ec2"],
     severity: "high",
     topics: ["network"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

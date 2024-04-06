@@ -35,7 +35,7 @@ describe("awsnative.rds.DbCluster.disallowUnencryptedStorage", function() {
             services: ["rds"],
             severity: "high",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

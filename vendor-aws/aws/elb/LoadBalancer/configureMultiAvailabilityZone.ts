@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that ELB Load Balancers uses more than one availability zone.
  *
  * @severity high
- * @frameworks none
+ * @frameworks hitrust
  * @topics availability, network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-disable-az.html
  */
@@ -39,4 +39,5 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policyMa
     services: ["elb"],
     severity: "high",
     topics: ["network", "availability"],
+    frameworks: ["hitrust"],
 });

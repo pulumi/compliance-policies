@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.
  *
  * @severity critical
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics network
  * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-https-load-balancers.html
  */
@@ -41,5 +41,5 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
     services: ["elb"],
     severity: "critical",
     topics: ["network"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

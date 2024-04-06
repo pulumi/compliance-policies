@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that ECR repositories have 'scan-on-push' configured.
  *
  * @severity high
- * @frameworks iso27001, pcidss, soc2
+ * @frameworks hitrust, iso27001, pcidss
  * @topics container, vulnerability
  * @link https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html
  */
@@ -39,5 +39,5 @@ export const configureImageScan: ResourceValidationPolicy = policyManager.regist
     services: ["ecr"],
     severity: "high",
     topics: ["container", "vulnerability"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that RDS DB Instance storage is encrypted.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html
  */
@@ -39,5 +39,5 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManage
     services: ["rds"],
     severity: "high",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that Athena Workgroups enforce their configuration to their clients.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
@@ -42,5 +42,5 @@ export const enforceConfiguration: ResourceValidationPolicy = policyManager.regi
     services: ["athena"],
     severity: "high",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

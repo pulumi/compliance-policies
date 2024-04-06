@@ -35,6 +35,7 @@ describe("aws.rds.Cluster.disallowSingleAvailabilityZone", function() {
             services: ["rds"],
             severity: "high",
             topics: ["availability"],
+            frameworks: ["hitrust"],
         });
     });
 

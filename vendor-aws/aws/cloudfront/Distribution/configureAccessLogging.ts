@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that any CloudFront distributions have access logging configured.
  *
  * @severity medium
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics logging, network
  * @link https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
  */
@@ -39,5 +39,5 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     services: ["cloudfront"],
     severity: "medium",
     topics: ["network", "logging"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

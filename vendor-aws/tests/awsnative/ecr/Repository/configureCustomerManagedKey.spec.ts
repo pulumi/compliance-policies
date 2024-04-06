@@ -35,7 +35,7 @@ describe("awsnative.ecr.Repository.configureCustomerManagedKey", function() {
             services: ["ecr"],
             severity: "low",
             topics: ["container", "encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

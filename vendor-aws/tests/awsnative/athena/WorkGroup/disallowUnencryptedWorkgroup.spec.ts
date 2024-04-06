@@ -35,7 +35,7 @@ describe("awsnative.athena.WorkGroup.disallowUnencryptedWorkgroup", function() {
             services: ["athena"],
             severity: "high",
             topics: ["encryption", "storage"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

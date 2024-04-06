@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Check that S3 Buckets Server-Side Encryption (SSE) uses AWS KMS.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
  */
@@ -32,10 +32,7 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = policy
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.bucketEncryption && bucket.bucketEncryption.serverSideEncryptionConfiguration) {
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
-                    if (
-                        !serverSideEncryptionConfiguration.serverSideEncryptionByDefault ||
-                        serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm !== "aws:kms"
-                    ) {
+                    if (!serverSideEncryptionConfiguration.serverSideEncryptionByDefault || serverSideEncryptionConfiguration.serverSideEncryptionByDefault.sseAlgorithm !== "aws:kms") {
                         reportViolation("S3 Buckets Server-Side Encryption (SSE) should use AWS KMS.");
                     }
                 });
@@ -46,5 +43,5 @@ export const configureServerSideEncryptionKms: ResourceValidationPolicy = policy
     services: ["s3"],
     severity: "high",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

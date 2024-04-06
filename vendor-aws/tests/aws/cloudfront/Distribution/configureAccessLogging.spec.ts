@@ -35,7 +35,7 @@ describe("aws.cloudfront.Distribution.configureAccessLogging", function() {
             services: ["cloudfront"],
             severity: "medium",
             topics: ["network", "logging"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

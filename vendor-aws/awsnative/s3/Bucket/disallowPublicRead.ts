@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that S3 Bucket ACLs don't allow 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.
  *
  * @severity critical
- * @frameworks cis, iso27001, pcidss
+ * @frameworks cis, hitrust, iso27001, pcidss
  * @topics security, storage
  * @link https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
  */
@@ -31,11 +31,7 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
             if (bucket.accessControl) {
-                if (
-                    bucket.accessControl === "PublicRead" ||
-                    bucket.accessControl === "PublicReadWrite" ||
-                    bucket.accessControl === "AuthenticatedRead"
-                ) {
+                if (bucket.accessControl === "PublicRead" || bucket.accessControl === "PublicReadWrite" || bucket.accessControl === "AuthenticatedRead") {
                     reportViolation("S3 Buckets ACLs should not be set to 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.");
                 }
             }
@@ -45,5 +41,5 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
     services: ["s3"],
     severity: "critical",
     topics: ["storage", "security"],
-    frameworks: ["cis", "pcidss", "iso27001"],
+    frameworks: ["cis", "pcidss", "hitrust", "iso27001"],
 });

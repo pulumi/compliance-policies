@@ -20,7 +20,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * Checks that Athena Workgroups are encrypted.
  *
  * @severity high
- * @frameworks iso27001, pcidss
+ * @frameworks hitrust, iso27001, pcidss
  * @topics encryption, storage
  * @link https://docs.aws.amazon.com/athena/latest/ug/workgroups-procedure.html
  */
@@ -46,5 +46,5 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyMana
     services: ["athena"],
     severity: "high",
     topics: ["encryption", "storage"],
-    frameworks: ["pcidss", "iso27001"],
+    frameworks: ["pcidss", "hitrust", "iso27001"],
 });

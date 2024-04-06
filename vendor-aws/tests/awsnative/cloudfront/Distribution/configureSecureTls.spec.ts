@@ -35,7 +35,7 @@ describe("awsnative.cloudfront.Distribution.configureSecureTls", function() {
             services: ["cloudfront"],
             severity: "high",
             topics: ["network", "encryption"],
-            frameworks: ["pcidss", "iso27001"],
+            frameworks: ["pcidss", "hitrust", "iso27001"],
         });
     });
 

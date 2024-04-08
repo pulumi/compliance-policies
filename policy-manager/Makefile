@@ -30,3 +30,6 @@ publish:
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
 	@/bin/bash ../build/publish.sh
+
+upgrade::
+	@yarn upgrade $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save

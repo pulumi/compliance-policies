@@ -10,7 +10,7 @@
     "dependencies": {
         "@pulumi/<%~ it.vendor %>-compliance-policies": "^0",
         "@pulumi/compliance-policy-manager": "^0",
-        "@pulumi/policy": "^1.7.0",
+        "@pulumi/policy": "^1.10.0",
         "@pulumi/pulumi": "^3.0.0"
     },
     "devDependencies": {

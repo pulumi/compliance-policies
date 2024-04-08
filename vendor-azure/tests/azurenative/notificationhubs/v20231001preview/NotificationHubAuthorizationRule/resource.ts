@@ -23,6 +23,7 @@ import { NotificationHubAuthorizationRule } from "@pulumi/azure-native/notificat
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(NotificationHubAuthorizationRule, {
+        rights: [""],
         namespaceName: "",
         notificationHubName: "",
         resourceGroupName: "",

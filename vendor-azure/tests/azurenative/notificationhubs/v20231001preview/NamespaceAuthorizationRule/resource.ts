@@ -23,6 +23,7 @@ import { NamespaceAuthorizationRule } from "@pulumi/azure-native/notificationhub
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(NamespaceAuthorizationRule, {
+        rights: [""],
         namespaceName: "",
         resourceGroupName: "",
     });

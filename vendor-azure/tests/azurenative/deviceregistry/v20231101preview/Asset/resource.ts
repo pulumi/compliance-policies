@@ -23,7 +23,11 @@ import { Asset } from "@pulumi/azure-native/deviceregistry/v20231101preview";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(Asset, {
-        extendedLocation: {},
+        assetEndpointProfileUri: "",
+        extendedLocation: {
+            name: "",
+            type: "",
+        },
         resourceGroupName: "",
     });
 }

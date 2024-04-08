@@ -21,7 +21,7 @@ lint:: prepare
 	@yarn run lint
 
 upgrade:: prepare
-	@yarn upgrade @pulumi/compliance-policy-manager@latest --save
+	@yarn upgrade @pulumi/compliance-policy-manager@latest @pulumi/policy@latest --save
 
 tag:
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."

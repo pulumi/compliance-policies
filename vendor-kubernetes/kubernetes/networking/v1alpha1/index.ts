@@ -18,3 +18,6 @@ export * as ClusterCIDRPatch from "./ClusterCIDRPatch";
 export * as IPAddress from "./IPAddress";
 export * as IPAddressList from "./IPAddressList";
 export * as IPAddressPatch from "./IPAddressPatch";
+export * as ServiceCIDR from "./ServiceCIDR";
+export * as ServiceCIDRList from "./ServiceCIDRList";
+export * as ServiceCIDRPatch from "./ServiceCIDRPatch";

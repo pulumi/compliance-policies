@@ -12,9 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as VolumeAttachment from "./VolumeAttachment";
-export * as VolumeAttachmentList from "./VolumeAttachmentList";
-export * as VolumeAttachmentPatch from "./VolumeAttachmentPatch";
-export * as VolumeAttributesClass from "./VolumeAttributesClass";
-export * as VolumeAttributesClassList from "./VolumeAttributesClassList";
-export * as VolumeAttributesClassPatch from "./VolumeAttributesClassPatch";
+import { ResourceValidationArgs } from "@pulumi/policy";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
+import { ServiceCIDRPatch } from "@pulumi/kubernetes/networking/v1alpha1";
+
+/**
+ * Create a `ResourceValidationArgs` to be process by the unit test.
+ *
+ * @returns A `ResourceValidationArgs`.
+ */
+export function getResourceValidationArgs(): ResourceValidationArgs {
+    return createResourceValidationArgs(ServiceCIDRPatch, {});
+}

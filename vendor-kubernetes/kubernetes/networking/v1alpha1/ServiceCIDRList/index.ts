@@ -11,10 +11,4 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-export * as VolumeAttachment from "./VolumeAttachment";
-export * as VolumeAttachmentList from "./VolumeAttachmentList";
-export * as VolumeAttachmentPatch from "./VolumeAttachmentPatch";
-export * as VolumeAttributesClass from "./VolumeAttributesClass";
-export * as VolumeAttributesClassList from "./VolumeAttributesClassList";
-export * as VolumeAttributesClassPatch from "./VolumeAttributesClassPatch";
+export { disallowAlphaResource } from "./disallowAlphaResource";

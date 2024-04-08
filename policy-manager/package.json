@@ -17,13 +17,13 @@
         "infrastructure-as-code"
     ],
     "dependencies": {
-        "@pulumi/policy": "^1.7.0",
+        "@pulumi/policy": "^1.10.0",
         "findup-sync": "^5.0.0",
         "micromatch": "^4.0.5"
     },
     "devDependencies": {
-        "@types/findup-sync": "^4.0.2",
-        "@types/node": "18",
+        "@types/findup-sync": "^4.0.5",
+        "@types/node": "20",
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
         "eslint": "^8.28.0",

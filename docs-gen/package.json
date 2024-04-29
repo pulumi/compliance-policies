@@ -8,29 +8,29 @@
         "url": "git+https://github.com/pulumi/compliance-policies.git"
     },
     "dependencies": {
-        "@babel/cli": "^7.23.0",
-        "@babel/core": "^7.23.0",
-        "@babel/parser": "^7.23.0",
-        "@babel/plugin-transform-class-properties": "^7.22.5",
-        "@babel/plugin-transform-object-rest-spread": "^7.22.15",
-        "@babel/preset-env": "^7.22.20",
-        "@babel/preset-typescript": "^7.23.0",
-        "@babel/traverse": "^7.23.0",
-        "@babel/types": "^7.23.0",
-        "commander": "^11.0.0",
-        "eta": "^3.1.1",
-        "ts-node": "^10.9.1"
+        "@babel/cli": "^7.24.1",
+        "@babel/core": "^7.24.4",
+        "@babel/parser": "^7.24.4",
+        "@babel/plugin-transform-class-properties": "^7.24.1",
+        "@babel/plugin-transform-object-rest-spread": "^7.24.1",
+        "@babel/preset-env": "^7.24.4",
+        "@babel/preset-typescript": "^7.24.1",
+        "@babel/traverse": "^7.24.1",
+        "@babel/types": "^7.24.0",
+        "commander": "^12.0.0",
+        "eta": "^3.4.0",
+        "ts-node": "^10.9.2"
     },
     "devDependencies": {
         "@types/babel__traverse": "^7.20.2",
-        "@types/node": "^20.6.3",
-        "typescript": "^5.2.2"
+        "@types/node": "^20.12.7",
+        "typescript": "^5.4.5"
     },
     "scripts": {
-        "policy-manager": "ts-node index.ts policy-manager --source-directory ../policy-manager --destination-file ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/api-policy-manager.md",
-        "aws": "ts-node index.ts provider --vendor-name aws --vendor-directory ../vendor-aws/ --providers aws,awsnative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
-        "azure": "ts-node index.ts provider --vendor-name azure --vendor-directory ../vendor-azure/ --providers azure,azurenative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
-        "google": "ts-node index.ts provider --vendor-name google --vendor-directory ../vendor-google/ --providers gcp,googlenative --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/",
-        "kubernetes": "ts-node index.ts provider --vendor-name kubernetes --vendor-directory ../vendor-kubernetes/ --providers kubernetes --destination-dir ../../pulumi-hugo-private/themes/default/content/docs/using-pulumi/crossguard/"
+        "policy-manager": "ts-node index.ts policy-manager --source-directory ../policy-manager --destination-file ../../pulumi-hugo/themes/default/content/docs/using-pulumi/crossguard/api-policy-manager.md",
+        "aws": "ts-node index.ts provider --vendor-name aws --vendor-directory ../vendor-aws/ --providers aws,awsnative --destination-dir ../../pulumi-hugo/themes/default/content/docs/using-pulumi/crossguard/",
+        "azure": "ts-node index.ts provider --vendor-name azure --vendor-directory ../vendor-azure/ --providers azure,azurenative --destination-dir ../../pulumi-hugo/themes/default/content/docs/using-pulumi/crossguard/",
+        "google": "ts-node index.ts provider --vendor-name google --vendor-directory ../vendor-google/ --providers gcp,googlenative --destination-dir ../../pulumi-hugo/themes/default/content/docs/using-pulumi/crossguard/",
+        "kubernetes": "ts-node index.ts provider --vendor-name kubernetes --vendor-directory ../vendor-kubernetes/ --providers kubernetes --destination-dir ../../pulumi-hugo/themes/default/content/docs/using-pulumi/crossguard/"
     }
 }

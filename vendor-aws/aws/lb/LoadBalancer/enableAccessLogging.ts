@@ -17,7 +17,7 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
- * Checks that loadbalancers have access logging enabled.
+ * Checks that Load Balancers have access logging enabled.
  *
  * @severity medium
  * @frameworks iso27001, pcidss
@@ -26,7 +26,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  */
 export const enableAccessLogging: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-lb-enable-access-logging",
+        name: "aws-lb-loadbalancer-enable-access-logging",
         description: "Checks that Load Balancers have access logging enabled.",
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {

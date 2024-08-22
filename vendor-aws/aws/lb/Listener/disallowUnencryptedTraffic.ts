@@ -17,7 +17,7 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
- * Check that ALB Load Balancers do not allow unencrypted (HTTP) traffic.
+ * Check that Load Balancers do not allow unencrypted (HTTP) traffic.
  *
  * @severity critical
  * @frameworks iso27001, pcidss

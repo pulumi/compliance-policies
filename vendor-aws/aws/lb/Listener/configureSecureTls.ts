@@ -17,7 +17,7 @@ import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy
 import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
- * Checks that ALB Load Balancers uses secure/modern TLS encryption.
+ * Checks that Load Balancers uses secure/modern TLS encryption.
  *
  * @severity high
  * @frameworks iso27001, pcidss

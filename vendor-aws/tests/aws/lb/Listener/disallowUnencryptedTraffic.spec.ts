@@ -32,7 +32,7 @@ describe("aws.lb.Listener.disallowUnencryptedTraffic", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
-            services: ["llb"],
+            services: ["lb"],
             severity: "critical",
             topics: ["network"],
             frameworks: ["pcidss", "iso27001"],

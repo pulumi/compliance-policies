@@ -24,3 +24,8 @@ export * as MembershipIamMember from "./MembershipIamMember";
 export * as MembershipIamPolicy from "./MembershipIamPolicy";
 export * as Namespace from "./Namespace";
 export * as Scope from "./Scope";
+export * as MembershipRbacRoleBinding from "./MembershipRbacRoleBinding";
+export * as ScopeIamBinding from "./ScopeIamBinding";
+export * as ScopeIamMember from "./ScopeIamMember";
+export * as ScopeIamPolicy from "./ScopeIamPolicy";
+export * as ScopeRbacRoleBinding from "./ScopeRbacRoleBinding";

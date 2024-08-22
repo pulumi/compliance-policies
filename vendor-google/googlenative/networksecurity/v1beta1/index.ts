@@ -33,3 +33,7 @@ export * as ServerTlsPolicyIamMember from "./ServerTlsPolicyIamMember";
 export * as ServerTlsPolicyIamPolicy from "./ServerTlsPolicyIamPolicy";
 export * as TlsInspectionPolicy from "./TlsInspectionPolicy";
 export * as UrlList from "./UrlList";
+export * as FirewallEndpoint from "./FirewallEndpoint";
+export * as FirewallEndpointAssociation from "./FirewallEndpointAssociation";
+export * as SecurityProfile from "./SecurityProfile";
+export * as SecurityProfileGroup from "./SecurityProfileGroup";

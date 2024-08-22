@@ -13,3 +13,7 @@
 // limitations under the License.
 
 export * as Document from "./Document";
+export * as Conversation from "./Conversation";
+export * as DataStore from "./DataStore";
+export * as Engine from "./Engine";
+export * as Schema from "./Schema";

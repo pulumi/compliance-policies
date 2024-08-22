@@ -18,3 +18,4 @@ export * as SfdcChannel from "./SfdcChannel";
 export * as SfdcInstance from "./SfdcInstance";
 export * as TemplatesVersion from "./TemplatesVersion";
 export * as Version from "./Version";
+export * as TestCase from "./TestCase";

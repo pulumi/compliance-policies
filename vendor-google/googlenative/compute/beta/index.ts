@@ -158,3 +158,5 @@ export * as TargetVpnGateway from "./TargetVpnGateway";
 export * as UrlMap from "./UrlMap";
 export * as VpnGateway from "./VpnGateway";
 export * as VpnTunnel from "./VpnTunnel";
+export * as FutureReservation from "./FutureReservation";
+export * as InstanceGroupManagerResizeRequest from "./InstanceGroupManagerResizeRequest";

@@ -22,5 +22,7 @@ import { Repository } from "@pulumi/google-native/artifactregistry/v1beta1";
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(Repository, {});
+    return createResourceValidationArgs(Repository, {
+        repositoryId: "",
+    });
 }

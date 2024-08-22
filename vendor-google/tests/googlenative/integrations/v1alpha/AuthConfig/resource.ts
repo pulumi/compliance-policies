@@ -23,6 +23,7 @@ import { AuthConfig } from "@pulumi/google-native/integrations/v1alpha";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(AuthConfig, {
+        displayName: "",
         productId: "",
     });
 }

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 export * as App from "./App";
-export * as Application from "./Application";
 export * as AuthorizedCertificate from "./AuthorizedCertificate";
 export * as DomainMapping from "./DomainMapping";
 export * as IngressRule from "./IngressRule";

@@ -18,11 +18,11 @@
         "azure"
     ],
     "dependencies": {
-        "@pulumi/azure": "^5.80.0",
-        "@pulumi/azure-native": "^2.45.0",
+        "@pulumi/azure": "^5.89.0",
+        "@pulumi/azure-native": "^2.62.0",
         "@pulumi/compliance-policy-manager": "^0.1.3",
-        "@pulumi/policy": "^1.11.0",
-        "@pulumi/pulumi": "^3.120.0"
+        "@pulumi/policy": "^1.12.0",
+        "@pulumi/pulumi": "^3.133.0"
     },
     "devDependencies": {
         "@pulumi/compliance-policies-unit-test-helpers": "^0.1.3",

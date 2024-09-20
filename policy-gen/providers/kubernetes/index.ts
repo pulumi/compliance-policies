@@ -79,6 +79,7 @@ export class KubernetesProvider extends Provider {
         "scheduling": "scheduling.k8s.io",
         "settings": "settings.k8s.io",
         "storage": "storage.k8s.io",
+        "storagemigration": "storagemigration.k8s.io",
     };
 
     constructor(args: KubernetesProviderArgs) {

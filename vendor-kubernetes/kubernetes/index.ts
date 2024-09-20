@@ -34,3 +34,4 @@ export * as coordination from "./coordination";
 export * as discovery from "./discovery";
 export * as events from "./events";
 export * as extensions from "./extensions";
+export * as storagemigration from "./storagemigration";

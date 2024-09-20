@@ -22,5 +22,7 @@ import { ValidatingAdmissionPolicyList } from "@pulumi/kubernetes/admissionregis
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(ValidatingAdmissionPolicyList, {});
+    return createResourceValidationArgs(ValidatingAdmissionPolicyList, {
+        items: [],
+    });
 }

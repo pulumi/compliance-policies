@@ -140,6 +140,7 @@ export class GoogleNativeProvider extends Provider {
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
             if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
+                console.log(`warning: reached maximum number of generated policies in this run. max=${this.args.maxPolicyCount}`);
                 return;
             }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
@@ -228,6 +229,7 @@ export class GoogleNativeProvider extends Provider {
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
             if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
+                console.error(`warning: reached maximum number of generated policies in this run. max=${this.args.maxPolicyCount}`);
                 return;
             }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);

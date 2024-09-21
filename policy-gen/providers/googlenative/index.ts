@@ -42,6 +42,15 @@ export interface GoogleNativeProviderArgs {
 
 export class GoogleNativeProvider extends Provider {
 
+    /**
+     * Contains a list of Google Native services for which this generator should ignore.
+     *
+     * 🔥 Values in this list should be lower case.
+     */
+    private readonly servicesIgnoreList: string[] = [
+        "iap", // see https://github.com/pulumi/pulumi-google-native/issues/919
+    ];
+
     constructor(args: GoogleNativeProviderArgs) {
 
         const providerArgs: ProviderArgs = {
@@ -80,13 +89,18 @@ export class GoogleNativeProvider extends Provider {
             filename: resourceFilename,
         });
 
+        /*
+         * Find existing polcies and check if an existing resource is present.
+         * If there's no such resource, then delete the (obsolete) policy file.
+         */
         const sourceFiles: string[] = this.findFilesByExtension(`${this.directory}/${this.schemaName}`, ".ts").sort();
         for(let x = 0; x < sourceFiles.length; x++) {
             const sourceFile: string = sourceFiles[x].replace(`${this.directory}/`, "");
 
             const schemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile);
             const altschemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile, true);
-            if (!this.isSchemaResource(schemaResourceName) && !this.isSchemaResource(altschemaResourceName)) {
+            const serviceName: string = this.getServiceName(schemaResourceName);
+            if ((!this.isSchemaResource(schemaResourceName) && !this.isSchemaResource(altschemaResourceName)) || this.servicesIgnoreList.includes(serviceName.toLowerCase()) ) {
                 const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
 
                 this.deleteSourceFile(sourceFile, policyVariableName);
@@ -103,6 +117,10 @@ export class GoogleNativeProvider extends Provider {
             const schemaResourceName = this.getSchemaResourceName(rawSchemaResourceName);
 
             const serviceName: string = this.capitalizeFirstLetter(this.getServiceName(schemaResourceName));
+
+            if (this.servicesIgnoreList.includes(serviceName.toLowerCase())) {
+                continue;
+            }
 
             const policyTemplateArgs = {
                 serviceName: serviceName,
@@ -169,13 +187,18 @@ export class GoogleNativeProvider extends Provider {
             filename: resourceFilename,
         });
 
+        /*
+         * Find existing polcies and check if an existing resource is present.
+         * If there's no such resource, then delete the (obsolete) policy file.
+         */
         const sourceFiles: string[] = this.findFilesByExtension(`${this.directory}/${this.schemaName}`, ".ts").sort();
         for(let x = 0; x < sourceFiles.length; x++) {
             const sourceFile: string = sourceFiles[x].replace(`${this.directory}/`, "");
 
             const schemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile);
             const altschemaResourceName: string = this.getSchemaResourceNameFromPath(sourceFile, true);
-            if (!this.isSchemaResource(schemaResourceName) && !this.isSchemaResource(altschemaResourceName)) {
+            const serviceName: string = this.getServiceName(schemaResourceName);
+            if ((!this.isSchemaResource(schemaResourceName) && !this.isSchemaResource(altschemaResourceName)) || this.servicesIgnoreList.includes(serviceName.toLowerCase()) ) {
                 const specFile: string = this.getPolicySpecFile(schemaResourceName, policyVariableName);
 
                 this.deleteSourceFile(sourceFile, policyVariableName);
@@ -192,6 +215,10 @@ export class GoogleNativeProvider extends Provider {
             const schemaResourceName = this.getSchemaResourceName(rawSchemaResourceName);
 
             const serviceName: string = this.capitalizeFirstLetter(this.getServiceName(schemaResourceName));
+
+            if (this.servicesIgnoreList.includes(serviceName.toLowerCase())) {
+                continue;
+            }
 
             const policyTemplateArgs = {
                 serviceName: serviceName,

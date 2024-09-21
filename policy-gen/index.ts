@@ -95,7 +95,7 @@ commander.program
     .requiredOption("--provider <providers>", "The desired Pulumi provider to generate policies for.")
     .requiredOption("--version <version>", "The provider version to process.")
     .requiredOption("--directory <vendor-directory>", "Path to the vendor's directory to save the generated polcies.")
-    .option("--dry-run", "Generate all the policies and unit tests but doesn't save anything locally.")
+    .option("--dryrun", "Generate all the policies and unit tests but doesn't save anything locally.")
     .option("--max <number>", "The maximum number of policies to generate.", "25")
     .action((options) => {
         const name: string = (options.provider as string);

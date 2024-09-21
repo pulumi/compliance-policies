@@ -31,7 +31,7 @@ dryrunkubernetes:: prepare lint
 		PROVIDER_NAME="kubernetes" \
 		PROVIDER_DIRECTORY="../vendor-kubernetes/" \
 		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/kubernetes" | gsub("\\^"; "")' ../vendor-kubernetes/package.json)" \
-		DRY_RUN="--dry-run" \
+		DRY_RUN="--dryrun" \
 		yarn run genpolicies
 
 runazurenative:: prepare lint
@@ -46,7 +46,7 @@ dryrunazurenative:: prepare lint
 		PROVIDER_NAME="azure-native" \
 		PROVIDER_DIRECTORY="../vendor-azure/" \
 		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/azure-native" | gsub("\\^"; "")' ../vendor-azure/package.json)" \
-		DRY_RUN="--dry-run" \
+		DRY_RUN="--dryrun" \
 		yarn run genpolicies
 
 rungooglenative:: prepare lint
@@ -61,5 +61,5 @@ dryrungooglenative:: prepare lint
 		PROVIDER_NAME="google-native" \
 		PROVIDER_DIRECTORY="../vendor-google/" \
 		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/google-native" | gsub("\\^"; "")' ../vendor-google/package.json)" \
-		DRY_RUN="--dry-run" \
+		DRY_RUN="--dryrun" \
 		yarn run genpolicies

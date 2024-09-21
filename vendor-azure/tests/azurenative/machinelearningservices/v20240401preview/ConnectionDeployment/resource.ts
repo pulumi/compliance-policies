@@ -26,7 +26,6 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         connectionName: "",
         properties: {
             model: {},
-            type: "Azure.ContentSafety",
         },
         resourceGroupName: "",
         workspaceName: "",

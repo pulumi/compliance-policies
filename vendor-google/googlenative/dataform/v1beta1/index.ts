@@ -24,3 +24,6 @@ export * as RepositoryWorkspaceIamPolicy from "./RepositoryWorkspaceIamPolicy";
 export * as WorkflowConfig from "./WorkflowConfig";
 export * as WorkflowInvocation from "./WorkflowInvocation";
 export * as Workspace from "./Workspace";
+export * as CollectionIamBinding from "./CollectionIamBinding";
+export * as CollectionIamMember from "./CollectionIamMember";
+export * as CollectionIamPolicy from "./CollectionIamPolicy";

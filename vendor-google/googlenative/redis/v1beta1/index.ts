@@ -13,3 +13,4 @@
 // limitations under the License.
 
 export * as Instance from "./Instance";
+export * as Cluster from "./Cluster";

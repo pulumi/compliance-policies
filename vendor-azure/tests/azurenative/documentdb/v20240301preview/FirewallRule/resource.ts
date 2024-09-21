@@ -23,9 +23,7 @@ import { FirewallRule } from "@pulumi/azure-native/documentdb/v20240301preview";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(FirewallRule, {
-        endIpAddress: "",
         mongoClusterName: "",
         resourceGroupName: "",
-        startIpAddress: "",
     });
 }

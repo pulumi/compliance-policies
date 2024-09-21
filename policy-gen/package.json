@@ -46,11 +46,6 @@
     "scripts": {
         "lint": "eslint --max-warnings=0 -c .eslintrc.js --ext .ts .",
         "build": "tsc",
-        "runkubernetes": "ts-node index.ts run --provider kubernetes --version 4.1.1 --directory ../vendor-kubernetes/",
-        "dryrunkubernetes": "ts-node index.ts run --dryrun --provider kubernetes --version 4.1.1 --directory ../vendor-kubernetes/",
-        "runazurenative": "ts-node index.ts run --provider azure-native --version 2.21.2 --directory ../vendor-azure/ --max 500",
-        "dryrunazurenative": "ts-node index.ts run --dryrun --provider azure-native --version 2.21.2 --directory ../vendor-azure/ --max 500",
-        "rungooglenative": "ts-node index.ts run --provider google-native --version 0.31.1 --directory ../vendor-google/ --max 500",
-        "dryrungooglenative": "ts-node index.ts run --dryrun --provider google-native --version 0.31.1 --directory ../vendor-google/ --max 500"
+        "genpolicies": "ts-node index.ts run ${DRY_RUN} --max ${MAX_POLICIES} --provider ${PROVIDER_NAME} --version ${PROVIDER_VERSION} --directory ${PROVIDER_DIRECTORY}"
     }
 }

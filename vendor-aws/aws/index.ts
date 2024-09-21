@@ -26,6 +26,7 @@ export * as eks from "./eks";
 export * as elb from "./elb";
 export * as iam from "./iam";
 export * as kms from "./kms";
+export * as lb from "./lb";
 export * as lambda from "./lambda";
 export * as rds from "./rds";
 export * as s3 from "./s3";

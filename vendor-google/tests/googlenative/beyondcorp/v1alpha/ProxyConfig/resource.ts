@@ -28,7 +28,7 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         routingInfo: {
             pacUri: "",
         },
-        tenantId: "",
+        partnerTenantId: "",
         transportInfo: {
             serverCaCertPem: "",
         },

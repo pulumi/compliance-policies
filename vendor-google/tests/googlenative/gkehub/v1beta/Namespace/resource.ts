@@ -23,7 +23,8 @@ import { Namespace } from "@pulumi/google-native/gkehub/v1beta";
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(Namespace, {
-        namespaceId: "",
         scope: "",
+        scopeId: "",
+        scopeNamespaceId: "",
     });
 }

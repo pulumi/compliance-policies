@@ -79,6 +79,7 @@ export class KubernetesProvider extends Provider {
         "scheduling": "scheduling.k8s.io",
         "settings": "settings.k8s.io",
         "storage": "storage.k8s.io",
+        "storagemigration": "storagemigration.k8s.io",
     };
 
     constructor(args: KubernetesProviderArgs) {
@@ -178,6 +179,7 @@ export class KubernetesProvider extends Provider {
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
             if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
+                console.error(`warning: reached maximum number of generated policies in this run. max=${this.args.maxPolicyCount}`);
                 return;
             }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
@@ -258,7 +260,10 @@ export class KubernetesProvider extends Provider {
             const specSourceCode = eta.render(specTemplateFunction, specTemplateArgs);
             const resourceSourceCode = eta.render(resourceTemplateFunction, resourceTemplateArgs);
 
-            this.saveSourceFile(sourceFile, policySourceCode, policyVariableName);
+            if (!this.saveSourceFile(sourceFile, policySourceCode, policyVariableName)) {
+                console.error(`warning: reached maximum number of generated policies in this run. max=${this.args.maxPolicyCount}`);
+                return;
+            }
             this.saveSpecFile(specFile, specSourceCode, resourceFile, resourceSourceCode);
         }
     }

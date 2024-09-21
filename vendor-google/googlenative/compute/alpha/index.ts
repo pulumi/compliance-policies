@@ -174,3 +174,7 @@ export * as UrlMap from "./UrlMap";
 export * as VpnGateway from "./VpnGateway";
 export * as VpnTunnel from "./VpnTunnel";
 export * as ZoneQueuedResource from "./ZoneQueuedResource";
+export * as RegionSnapshot from "./RegionSnapshot";
+export * as RegionSnapshotIamBinding from "./RegionSnapshotIamBinding";
+export * as RegionSnapshotIamMember from "./RegionSnapshotIamMember";
+export * as RegionSnapshotIamPolicy from "./RegionSnapshotIamPolicy";

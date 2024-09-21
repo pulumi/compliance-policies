@@ -27,3 +27,6 @@ export * as StorageClassPatch from "./StorageClassPatch";
 export * as VolumeAttachment from "./VolumeAttachment";
 export * as VolumeAttachmentList from "./VolumeAttachmentList";
 export * as VolumeAttachmentPatch from "./VolumeAttachmentPatch";
+export * as VolumeAttributesClass from "./VolumeAttributesClass";
+export * as VolumeAttributesClassList from "./VolumeAttributesClassList";
+export * as VolumeAttributesClassPatch from "./VolumeAttributesClassPatch";

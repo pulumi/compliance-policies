@@ -23,7 +23,7 @@ import { GroupQuotaSubscription } from "@pulumi/azure-native/quota/v20230601prev
  */
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(GroupQuotaSubscription, {
+        managementGroupId: "",
         groupQuotaName: "",
-        mgId: "",
     });
 }

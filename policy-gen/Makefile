@@ -3,6 +3,7 @@ NODE_MODULE_NAME := @pulumi/$(PROJECT_NAME)
 include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
+MAX_POLICIES := "500"
 
 .PHONY: build lint
 
@@ -19,19 +20,46 @@ lint:: prepare
 	@yarn run lint
 
 runkubernetes:: prepare lint
-	@yarn run runkubernetes
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="kubernetes" \
+		PROVIDER_DIRECTORY="../vendor-kubernetes/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/kubernetes" | gsub("\\^"; "")' ../vendor-kubernetes/package.json)" \
+		yarn run genpolicies
 
 dryrunkubernetes:: prepare lint
-	@yarn run dryrunkubernetes
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="kubernetes" \
+		PROVIDER_DIRECTORY="../vendor-kubernetes/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/kubernetes" | gsub("\\^"; "")' ../vendor-kubernetes/package.json)" \
+		DRY_RUN="--dry-run" \
+		yarn run genpolicies
 
 runazurenative:: prepare lint
-	@yarn run runazurenative
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="azure-native" \
+		PROVIDER_DIRECTORY="../vendor-azure/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/azure-native" | gsub("\\^"; "")' ../vendor-azure/package.json)" \
+		yarn run genpolicies
 
 dryrunazurenative:: prepare lint
-	@yarn run dryrunazurenative
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="azure-native" \
+		PROVIDER_DIRECTORY="../vendor-azure/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/azure-native" | gsub("\\^"; "")' ../vendor-azure/package.json)" \
+		DRY_RUN="--dry-run" \
+		yarn run genpolicies
 
 rungooglenative:: prepare lint
-	@yarn run rungooglenative
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="google-native" \
+		PROVIDER_DIRECTORY="../vendor-google/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/google-native" | gsub("\\^"; "")' ../vendor-google/package.json)" \
+		yarn run genpolicies
 
 dryrungooglenative:: prepare lint
-	@yarn run dryrungooglenative
+	@MAX_POLICIES=$(MAX_POLICIES) \
+		PROVIDER_NAME="google-native" \
+		PROVIDER_DIRECTORY="../vendor-google/" \
+		PROVIDER_VERSION="$(shell jq -r '.dependencies."@pulumi/google-native" | gsub("\\^"; "")' ../vendor-google/package.json)" \
+		DRY_RUN="--dry-run" \
+		yarn run genpolicies

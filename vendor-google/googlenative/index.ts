@@ -93,3 +93,6 @@ export * as vpcaccess from "./vpcaccess";
 export * as workflowexecutions from "./workflowexecutions";
 export * as workflows from "./workflows";
 export * as workstations from "./workstations";
+export * as alloydb from "./alloydb";
+export * as aiplatform from "./aiplatform";
+export * as iap from "./iap";

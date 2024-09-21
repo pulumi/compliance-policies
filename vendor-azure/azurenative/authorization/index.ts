@@ -20,3 +20,4 @@ export * as v20211201preview from "./v20211201preview";
 export * as v20220701preview from "./v20220701preview";
 export * as v20220801preview from "./v20220801preview";
 export * as v20220501preview from "./v20220501preview";
+export * as v20240201preview from "./v20240201preview";

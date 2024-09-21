@@ -17,3 +17,4 @@ export * as Domain from "./Domain";
 export * as Release from "./Release";
 export * as Site from "./Site";
 export * as Version from "./Version";
+export * as CustomDomain from "./CustomDomain";

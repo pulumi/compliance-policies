@@ -24,7 +24,6 @@ import { PrivateEndpointConnection } from "@pulumi/azure-native/documentdb/v2024
 export function getResourceValidationArgs(): ResourceValidationArgs {
     return createResourceValidationArgs(PrivateEndpointConnection, {
         mongoClusterName: "",
-        privateLinkServiceConnectionState: {},
         resourceGroupName: "",
     });
 }

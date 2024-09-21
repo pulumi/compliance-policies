@@ -12,3 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 export * as v20240401preview from "./v20240401preview";
+export * as v20240601preview from "./v20240601preview";

@@ -48,8 +48,9 @@ const empytOptions = {
  */
 export function createResourceValidationArgs<TResource extends Resource, TArgs>(
     resourceClass: { new(name: string, args: TArgs, ...rest: any[]): TResource }, // eslint-disable-line @typescript-eslint/no-shadow
-    args: Unwrap<NonNullable<TArgs>>,
+    args: Record<string, any>,
     config?: Record<string, any>,
+    resourceName?: string,
 ): ResourceValidationArgs {
     const type = (<any>resourceClass).__pulumiType;
     if (typeof type !== "string") {
@@ -60,7 +61,7 @@ export function createResourceValidationArgs<TResource extends Resource, TArgs>(
         type: type as string,
         props: args,
         urn: "unknown",
-        name: "unknown",
+        name: resourceName || "unknown",
         opts: empytOptions,
         isType: (cls) => isTypeOf(type, resourceClass),
         asType: (cls) => isTypeOf(type, cls) ? <any>args : undefined,
@@ -86,6 +87,7 @@ export function createStackValidationArgs<TResource extends Resource, TArgs>(
     resourceClass: { new(name: string, args: TArgs, ...rest: any[]): TResource },
     props: any,
     config?: Record<string, any>,
+    resourceName?: string,
 ): StackValidationArgs {
     const type = (<any>resourceClass).__pulumiType;
     if (typeof type !== "string") {
@@ -96,7 +98,7 @@ export function createStackValidationArgs<TResource extends Resource, TArgs>(
         type: type as string,
         props: props,
         urn: "unknown",
-        name: "unknown",
+        name: resourceName || "unknown",
         opts: empytOptions,
         dependencies: [],
         propertyDependencies: {},

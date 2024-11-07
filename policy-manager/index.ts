@@ -137,6 +137,9 @@ export interface ModuleInfo {
     version: string;
 }
 
+/**
+ * This interface represents general Compliance policy usage information.
+ */
 export interface PolicyManagerStats {
     /**
      * The value of `policyCount` represents the total number of registered policies.
@@ -161,6 +164,24 @@ export interface PolicyManagerStats {
      */
     registeredModules: ModuleInfo[];
 }
+
+/**
+ * The matching TypeScript `interface` for `PolicyManager.policyConfigSchema` used to retrieve the policy configuration.
+ */
+export interface PolicyConfigSchemaArgs {
+    /**
+     * An array of string containing resource names or regular expressions used to determine if a resource should be excluded from the policy evaluation.
+     */
+    excludeFor?: string[];
+    /**
+     * An array of string containing resource names or regular expressions used to determine if a resource must be included from the policy evaluation.
+     */
+    includeFor?: string[];
+    /**
+     * When set to `true`, perform case-insensitive searches. `false` makes the searches case-sensitive.
+     */
+    ignoreCase: boolean;
+};
 
 /**
  * Class to manage policies.
@@ -222,6 +243,103 @@ export class PolicyManager {
      * An array containing the list of registered modules.
      */
     private registeredModules: ModuleInfo[] = [];
+
+    /**
+     * A Pulumi managed policy configuration schema. This policy schema, when associated
+     * to a policy, offers a basic policy configuration scheme, which in turn can be
+     * leveraged inside the policy itself.
+     *
+     * See `shouldEvalPolicy()` for more information.
+     */
+    public readonly policyConfigSchema: policy.PolicyConfigSchema = {
+        properties: {
+            includeFor: {
+                type: "array",
+                description: "A list of resource names or regular expressions for resources that must be included from this policy evaluation.",
+            },
+            excludeFor: {
+                type: "array",
+                description: "A list of resource names or regular expressions for resources that should be excluded from this policy evaluation.",
+            },
+            ignoreCase: {
+                type: "boolean",
+                description: "Case-insensitive search.",
+                default: false,
+            },
+        },
+    };
+
+    /**
+     * This function determines if a policy should be evaluated for the given resource based on the
+     * Policy configuration. The user supplied list of matching names provided via the Policy
+     * Configuration is checked against the resource name.
+     *
+     * This function checks first for explicit inclusions, then for explicit exclusions and finally
+     * returns `true` if no matches occured.
+     *
+     * Note: This functon is primarily intented to be used within a policy.
+     *
+     * @param args The argument `ResourceValidationArgs` provided during the policy evaluation.
+     * @returns `true` if the policy should be evaluated for the given resource, `false` otherwise.
+     */
+    public shouldEvalPolicy(args: policy.ResourceValidationArgs): boolean {
+
+        const polConfig = args.getConfig<PolicyConfigSchemaArgs>();
+
+        if (polConfig.includeFor && polConfig.includeFor.length > 0) {
+            for (let i = 0; i < polConfig.includeFor.length; i++) {
+                const expression = polConfig.includeFor[i];
+
+                // received and empty element, nothing to do.
+                if (expression.length < 1) {
+                    continue;
+                }
+
+                let flag = undefined;
+                if (polConfig.ignoreCase) {
+                    flag = "i";
+                }
+
+                try {
+                    const re = new RegExp(expression, flag);
+                    const result = re.exec(args.name);
+                    if (result !== null) {
+                        return true;
+                    }
+
+                } catch(e) {
+                    console.error(`Error evaluating regular expression ${e}`);
+                    console.error(`Regular expression: '${expression}'`);
+                }
+            }
+        }
+
+        if (polConfig.excludeFor && polConfig.excludeFor.length > 0) {
+            for (let i = 0; i < polConfig.excludeFor.length; i++) {
+                const expression = polConfig.excludeFor[i];
+
+                // received and empty element, nothing to do.
+                if (expression.length < 1) {
+                    continue;
+                }
+
+                try {
+                    const re = new RegExp(expression, polConfig.ignoreCase ? "i" : undefined);
+                    const result = re.exec(args.name);
+
+                    if (result !== null) {
+                        return false;
+                    }
+
+                } catch(e) {
+                    console.error(`Error evaluating regular expression ${e}`);
+                    console.error(`Regular expression: '${expression}'`);
+                }
+            }
+        }
+
+        return true;
+    }
 
     /**
      * The function `getSelectionStats()` returns statistics about the number of registered

@@ -14,6 +14,7 @@
 
 import * as aws from "@pulumi/aws";
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
@@ -22,7 +23,7 @@ import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-t
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(aws.ec2.SecurityGroup, {
         description: "This is a description for aws.ec2.SecurityGroup.",
         vpcId: enums.ec2.vpcId,
@@ -40,5 +41,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             ipv6CidrBlocks: [enums.ec2.ipv6CidrBlock],
             description: "Egress rule #1",
         }],
-    });
+    }, policyconfig, resourceName);
 }

@@ -14,6 +14,7 @@
 
 import * as aws from "@pulumi/aws";
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
@@ -22,7 +23,7 @@ import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-t
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(aws.apigateway.DomainName, {
         domainName: "api.example.com",
         endpointConfiguration: {
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         securityPolicy: "TLS_1_2",
         certificateArn: enums.acm.certificateArn,
-    });
+    }, policyconfig, resourceName);
 }

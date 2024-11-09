@@ -14,6 +14,7 @@
 
 import * as awsnative from "@pulumi/aws-native";
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
@@ -21,10 +22,10 @@ import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-t
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(awsnative.kms.Key, {
         keyPolicy: undefined, // TODO: add a proper key policy
         description: "This is a description for this KMS key.",
         enableKeyRotation: true,
-    });
+    }, policyconfig, resourceName);
 }

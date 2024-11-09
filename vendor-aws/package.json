@@ -18,14 +18,14 @@
         "aws"
     ],
     "dependencies": {
-        "@pulumi/aws": "^6.52.0",
-        "@pulumi/aws-native": "^0.123.0",
-        "@pulumi/compliance-policy-manager": "^0.1.4",
-        "@pulumi/policy": "^1.12.0",
-        "@pulumi/pulumi": "^3.133.0"
+        "@pulumi/aws": "^6.58.0",
+        "@pulumi/aws-native": "^1.6.0",
+        "@pulumi/compliance-policy-manager": "^0.1.5",
+        "@pulumi/policy": "^1.13.0",
+        "@pulumi/pulumi": "^3.138.0"
     },
     "devDependencies": {
-        "@pulumi/compliance-policies-unit-test-helpers": "^0.1.4",
+        "@pulumi/compliance-policies-unit-test-helpers": "^0.1.5",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

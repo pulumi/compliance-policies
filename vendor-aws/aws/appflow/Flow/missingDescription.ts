@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-appflow-flow-missing-description",
         description: "Checks that AppFlow Flows have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Flow, (flow, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!flow.description) {
                 reportViolation("AppFlow Flow should have a description.");
             }

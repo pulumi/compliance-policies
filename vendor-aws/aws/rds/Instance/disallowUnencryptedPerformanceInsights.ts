@@ -28,8 +28,13 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
     resourceValidationPolicy: {
         name: "aws-rds-instance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Instance performance insights is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (instance.performanceInsightsEnabled && !instance.performanceInsightsKmsKeyId) {
                 reportViolation("RDS Instances performance insights should be encrypted.");
             }

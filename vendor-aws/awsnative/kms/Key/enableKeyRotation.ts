@@ -28,8 +28,13 @@ export const enableKeyRotation: ResourceValidationPolicy = policyManager.registe
     resourceValidationPolicy: {
         name: "awsnative-kms-key-enable-key-rotation",
         description: "Checks that KMS Keys have key rotation enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Key, (key, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!key.enableKeyRotation) {
                 reportViolation("KMS Keys should have key rotation enabled.");
             }

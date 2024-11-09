@@ -28,8 +28,13 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-stage-configure-access-logging",
         description: "Checks that any ApiGatewayV2 Stages have access logging configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Stage, (stage, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (stage.accessLogSettings && (!stage.accessLogSettings.destinationArn || !stage.accessLogSettings.format)) {
                 reportViolation("API Gateway V2 stages should have access logging configured.");
             }

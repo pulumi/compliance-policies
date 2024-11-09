@@ -28,8 +28,13 @@ export const disallowPublicIp: ResourceValidationPolicy = policyManager.register
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-disallow-public-ip",
         description: "Checks that EC2 Launch Templates do not have public IP addresses.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LaunchTemplate, (launchTemplate, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (launchTemplate.networkInterfaces) {
                 launchTemplate.networkInterfaces.forEach((iface) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257

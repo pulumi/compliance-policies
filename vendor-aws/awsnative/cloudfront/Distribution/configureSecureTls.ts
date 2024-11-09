@@ -28,8 +28,13 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls",
         description: "Checks that CloudFront distributions uses secure/modern TLS encryption.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (distribution.distributionConfig.viewerCertificate && distribution.distributionConfig.viewerCertificate.minimumProtocolVersion?.toLowerCase() !== "TLSv1.2_2021".toLowerCase()) {
                 reportViolation("CloudFront distributions should use secure/modern TLS encryption.");
             }

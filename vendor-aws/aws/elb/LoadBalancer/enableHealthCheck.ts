@@ -28,8 +28,13 @@ export const enableHealthCheck: ResourceValidationPolicy = policyManager.registe
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-enable-health-check",
         description: "Check that ELB Load Balancers have a health check enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!loadBalancer.healthCheck) {
                 reportViolation("ELB Load Balancers should have health checks enabled.");
             }

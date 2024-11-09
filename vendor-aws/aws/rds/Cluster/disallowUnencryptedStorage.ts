@@ -28,8 +28,13 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "aws-rds-cluster-disallow-unencrypted-storage",
         description: "Checks that RDS Clusters storage is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!cluster.storageEncrypted) {
                 reportViolation("RDS Cluster storage should be encrypted.");
             }

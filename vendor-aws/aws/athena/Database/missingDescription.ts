@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-athena-database-missing-description",
         description: "Checks that Athena Databases have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!database.comment) {
                 reportViolation("Athena Databases should have a description.");
             }

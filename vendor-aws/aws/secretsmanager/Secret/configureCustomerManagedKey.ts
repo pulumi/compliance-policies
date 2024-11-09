@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-secretsmanager-secret-configure-customer-managed-key",
         description: "Check that Secrets Manager Secrets use a customer-manager KMS key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Secret, (secret, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!secret.kmsKeyId) {
                 reportViolation("Secrets Manager Secrets should be encrypted using a customer-managed KMS key.");
             }

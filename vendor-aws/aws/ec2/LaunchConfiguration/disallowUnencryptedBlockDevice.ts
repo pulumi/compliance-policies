@@ -28,8 +28,13 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "aws-ec2-launchconfiguration-disallow-unencrypted-block-device",
         description: "Checks that EC2 Launch Configurations do not have unencrypted block devices.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LaunchConfiguration, (launchConfiguration, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             launchConfiguration.ebsBlockDevices?.forEach((device) => {
                 if (!device.encrypted) {
                     reportViolation("EC2 Launch Configurations should not have an unencypted block device.");

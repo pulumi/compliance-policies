@@ -28,8 +28,13 @@ export const minimumPasswordLength: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "aws-iam-password-policy-minimum-password-length",
         description: "Ensure IAM password policy requires minimum length of 14 or greater.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "mandatory",
         validateResource: validateResourceOfType(AccountPasswordPolicy, (policy, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!policy.minimumPasswordLength || policy.minimumPasswordLength < 14) {
                 reportViolation("Passwords should be minimal 14 characters long.");
             }

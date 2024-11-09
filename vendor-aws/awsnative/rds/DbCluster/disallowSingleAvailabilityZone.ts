@@ -28,8 +28,13 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "awsnative-rds-dbcluster-disallow-single-availability-zone",
         description: "Check that RDS DB Cluster doesn't use single availability zone.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DbCluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
                 reportViolation("RDS DB Clusters should use more than one availability zone.");
             }

@@ -28,8 +28,13 @@ export const disallowUnencryptedBlockDevice: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-disallow-unencrypted-block-device",
         description: "Checks that EC2 Launch Templates do not have unencrypted block device.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LaunchTemplate, (lt, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (lt.blockDeviceMappings) {
                 lt.blockDeviceMappings.forEach((blockDevice) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257

@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-missing-description",
         description: "Checks that Athena WorkGroups have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkGroup, (workgroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!workgroup.description) {
                 reportViolation("Athena WorkGroups should have a description.");
             }

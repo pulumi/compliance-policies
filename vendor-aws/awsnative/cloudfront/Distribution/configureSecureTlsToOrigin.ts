@@ -28,8 +28,13 @@ export const configureSecureTlsToOrigin: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-configure-secure-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS 1.2 encryption only.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             distribution.distributionConfig.origins?.forEach((origin) => {
                 origin.customOriginConfig?.originSslProtocols?.forEach((sslProtocol) => {
                     if (sslProtocol.toLowerCase() !== "TLSv1.2".toLowerCase()) {

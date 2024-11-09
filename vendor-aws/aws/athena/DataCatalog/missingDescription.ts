@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-athena-datacatalog-missing-description",
         description: "Checks that Athena DataCatalogs have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataCatalog, (dataCatalog, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!dataCatalog.description) {
                 reportViolation("Athena DataCatalogs should have a description.");
             }

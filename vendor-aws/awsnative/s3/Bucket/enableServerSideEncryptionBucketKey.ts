@@ -28,8 +28,13 @@ export const enableServerSideEncryptionBucketKey: ResourceValidationPolicy = pol
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-enable-server-side-encryption-bucket-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a Bucket key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (bucket.bucketEncryption && bucket.bucketEncryption.serverSideEncryptionConfiguration) {
                 bucket.bucketEncryption.serverSideEncryptionConfiguration.forEach((serverSideEncryptionConfiguration) => {
                     if (!serverSideEncryptionConfiguration.bucketKeyEnabled) {

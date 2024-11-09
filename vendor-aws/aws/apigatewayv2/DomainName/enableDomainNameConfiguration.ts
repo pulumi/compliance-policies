@@ -28,8 +28,13 @@ export const enableDomainNameConfiguration: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "aws-apigatewayv2-domainname-enable-domain-name-configuration",
         description: "Checks that any ApiGatewayV2 Domain Name Configuration is enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DomainName, (domainName, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!domainName.domainNameConfiguration) {
                 reportViolation("API GatewayV2 Domain Name Configuration should be enabled.");
             }

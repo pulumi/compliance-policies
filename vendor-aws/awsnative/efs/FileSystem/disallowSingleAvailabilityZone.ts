@@ -28,8 +28,13 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "awsnative-efs-filesystem-disallow-single-availability-zone",
         description: "Check that EFS File system doesn't use single availability zone.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (fileSystem.availabilityZoneName) {
                 reportViolation("EFS File Systems should use more than one availability zone.");
             }

@@ -28,8 +28,13 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-disallow-unencrypted-traffic",
         description: "Checks that CloudFront distributions only allow encypted ingress traffic.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (distribution.distributionConfig.defaultCacheBehavior.viewerProtocolPolicy.toLowerCase() === "allow-all") {
                 reportViolation("CloudFront distributions should not allow unencrypted traffic.");
             }

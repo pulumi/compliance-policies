@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-ec2-launchtemplate-configure-customer-managed-key",
         description: "Check that encrypted EBS volume uses a customer-managed KMS key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LaunchTemplate, (lt, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (lt.blockDeviceMappings) {
                 lt.blockDeviceMappings.forEach((blockDevice) => {
                     // see https://github.com/pulumi/pulumi-aws/issues/2257

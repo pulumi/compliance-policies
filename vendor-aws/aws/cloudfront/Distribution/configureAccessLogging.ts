@@ -28,8 +28,13 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "aws-cloudfront-distribution-configure-access-logging",
         description: "Checks that any CloudFront distributions have access logging configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (distribution.loggingConfig && !distribution.loggingConfig.bucket) {
                 reportViolation("CloudFront Distributions should have access logging configured.");
             }

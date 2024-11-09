@@ -28,8 +28,13 @@ export const disallowUnencryptedRepository: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "aws-ecr-repository-disallow-unencrypted-repository",
         description: "Checks that ECR Repositories are encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (repo.encryptionConfigurations === undefined) {
                 reportViolation("ECR repositories should be encrypted.");
             }

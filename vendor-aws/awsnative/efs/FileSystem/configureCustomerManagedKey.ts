@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "awsnative-efs-filesystem-configure-customer-managed-key",
         description: "Check that encrypted EFS File system uses a customer-managed KMS key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (fileSystem.encrypted && !fileSystem.kmsKeyId) {
                 reportViolation("An EFS File System should be encrypted using a customer-managed KMS key.");
             }

@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-athena-workgroup-configure-customer-managed-key",
         description: "Checks that Athena Workgroups use a customer-managed-key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Workgroup, (workgroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (
                 workgroup.configuration &&
                 workgroup.configuration.resultConfiguration &&

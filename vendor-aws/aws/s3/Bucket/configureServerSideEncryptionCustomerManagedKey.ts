@@ -28,8 +28,13 @@ export const configureServerSideEncryptionCustomerManagedKey: ResourceValidation
     resourceValidationPolicy: {
         name: "aws-s3-bucket-configure-server-side-encryption-customer-managed-key",
         description: "Check that S3 Buckets Server-Side Encryption (SSE) is using a customer-managed KMS Key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (bucket.serverSideEncryptionConfiguration && !bucket.serverSideEncryptionConfiguration.rule.applyServerSideEncryptionByDefault.kmsMasterKeyId) {
                 reportViolation("S3 Buckets Server-Side Encryption (SSE) should use a Customer-managed KMS key.");
             }

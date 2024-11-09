@@ -28,8 +28,13 @@ export const configureAccessLogging: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "aws-alb-loadbalancer-configure-access-logging",
         description: "Checks that ALB loadbalancers have access logging configured and enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (loadBalancer.accessLogs && (!loadBalancer.accessLogs.enabled || !loadBalancer.accessLogs.bucket)) {
                 reportViolation("ALB LoadBalancers should have access logging configured and enabled.");
             }

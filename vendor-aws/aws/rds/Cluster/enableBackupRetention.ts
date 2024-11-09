@@ -28,8 +28,13 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "aws-rds-cluster-enable-backup-retention",
         description: "Checks that RDS Clusters backup retention policy is enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!cluster.backupRetentionPeriod) {
                 reportViolation("RDS Clusters backup retention should be enabled.");
             }

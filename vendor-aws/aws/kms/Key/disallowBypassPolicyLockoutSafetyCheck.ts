@@ -28,8 +28,13 @@ export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = 
     resourceValidationPolicy: {
         name: "aws-kms-key-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that KMS Keys do not bypass the key policy lockout safety check.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Key, (key, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (key.bypassPolicyLockoutSafetyCheck) {
                 reportViolation("KMS Keys should not bypass the key policy lockout safety check.");
             }

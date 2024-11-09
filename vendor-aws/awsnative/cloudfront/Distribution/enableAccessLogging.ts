@@ -28,8 +28,13 @@ export const enableAccessLogging: ResourceValidationPolicy = policyManager.regis
     resourceValidationPolicy: {
         name: "awsnative-cloudfront-distribution-enable-access-logging",
         description: "Checks that any CloudFront distributions have access logging enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!distribution.distributionConfig.logging) {
                 reportViolation("CloudFront Distributions should have logging enabled.");
             }

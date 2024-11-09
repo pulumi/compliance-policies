@@ -28,8 +28,13 @@ export const configureMultiAvailabilityZone: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-configure-multi-availability-zone",
         description: "Check that ELB Load Balancers uses more than one availability zone.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!loadBalancer.availabilityZones || loadBalancer.availabilityZones.length < 2) {
                 reportViolation("ELB Load Balancers should use more than one availability zone.");
             }

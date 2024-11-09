@@ -28,8 +28,13 @@ export const disallowPublicRead: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-disallow-public-read",
         description: "Checks that S3 Bucket ACLs don't allow 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (bucket.accessControl) {
                 if (bucket.accessControl === "PublicRead" || bucket.accessControl === "PublicReadWrite" || bucket.accessControl === "AuthenticatedRead") {
                     reportViolation("S3 Buckets ACLs should not be set to 'PublicRead', 'PublicReadWrite' or 'AuthenticatedRead'.");

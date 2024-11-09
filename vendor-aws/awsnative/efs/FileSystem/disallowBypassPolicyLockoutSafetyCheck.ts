@@ -28,8 +28,13 @@ export const disallowBypassPolicyLockoutSafetyCheck: ResourceValidationPolicy = 
     resourceValidationPolicy: {
         name: "awsnative-efs-filesystem-disallow-bypass-policy-lockout-safety-check",
         description: "Checks that EFS File systems do not bypass the File System policy lockout safety check.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (fileSystem.bypassPolicyLockoutSafetyCheck) {
                 reportViolation("EFS File Systems should not bypass the file system policy lockout safety check.");
             }

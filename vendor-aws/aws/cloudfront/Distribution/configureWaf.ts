@@ -28,8 +28,13 @@ export const configureWaf: ResourceValidationPolicy = policyManager.registerPoli
     resourceValidationPolicy: {
         name: "aws-cloudfront-distribution-configure-waf",
         description: "Checks that any CloudFront distribution has a WAF ACL associated.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!distribution.webAclId) {
                 reportViolation("CloudFront Distributions should have a WAF ACL associated.");
             }

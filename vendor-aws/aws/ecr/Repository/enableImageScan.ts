@@ -28,8 +28,13 @@ export const enableImageScan: ResourceValidationPolicy = policyManager.registerP
     resourceValidationPolicy: {
         name: "aws-ecr-repository-enable-image-scan",
         description: "Checks that ECR repositories have 'scan-on-push' enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (repo.imageScanningConfiguration && !repo.imageScanningConfiguration.scanOnPush) {
                 reportViolation("ECR Repositories should enable 'scan-on-push'.");
             }

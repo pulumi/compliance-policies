@@ -28,8 +28,13 @@ export const disallowUnencryptedWorkgroup: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "aws-athena-workgroup-disallow-unencrypted-workgroup",
         description: "Checks that Athena Workgroups are encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Workgroup, (workgroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!workgroup.configuration || !workgroup.configuration.resultConfiguration || !workgroup.configuration.resultConfiguration.encryptionConfiguration) {
                 reportViolation("Athena Workgroups should be encrypted.");
             }

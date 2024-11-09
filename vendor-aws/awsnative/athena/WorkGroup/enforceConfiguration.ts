@@ -28,8 +28,13 @@ export const enforceConfiguration: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "awsnative-athena-workgroup-enforce-configuration",
         description: "Checks that Athena Workgroups enforce their configuration to their clients.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkGroup, (workgroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (workgroup.workGroupConfiguration && !workgroup.workGroupConfiguration.enforceWorkGroupConfiguration) {
                 reportViolation("Athena Workgroups Configurations should enforce their configuration to their clients.");
             }

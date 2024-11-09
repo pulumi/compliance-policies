@@ -28,8 +28,13 @@ export const configureReplicationConfiguration: ResourceValidationPolicy = polic
     resourceValidationPolicy: {
         name: "awsnative-s3-bucket-configure-replication-configuration",
         description: "Checks that S3 Bucket have cross-region replication configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (bucket.replicationConfiguration && bucket.replicationConfiguration.rules) {
                 bucket.replicationConfiguration.rules.forEach((rule) => {
                     if (rule.status !== "Enabled") {

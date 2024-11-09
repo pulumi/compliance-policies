@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-rds-cluster-configure-customer-managed-key",
         description: "Checks that RDS Clusters storage uses a customer-managed KMS key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (cluster.storageEncrypted && !cluster.kmsKeyId) {
                 reportViolation("RDS Cluster storage should be encrypted using a customer-managed key.");
             }

@@ -28,8 +28,13 @@ export const passwordReusePrevention: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "aws-iam-password-policy-prevent-reuse",
         description: "Ensure IAM password policy prevents password reuse.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "mandatory",
         validateResource: validateResourceOfType(AccountPasswordPolicy, (policy, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!policy.passwordReusePrevention || policy.passwordReusePrevention === 24) {
                 reportViolation("Previous 24 passwords can't be reused.");
             }

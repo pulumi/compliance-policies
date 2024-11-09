@@ -28,8 +28,13 @@ export const disallowMutableImage: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-disallow-mutable-image",
         description: "Checks that ECR Repositories have immutable images enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (repo.imageTagMutability !== "IMMUTABLE") {
                 reportViolation("ECR repositories should enable immutable images.");
             }

@@ -28,8 +28,13 @@ export const disallowUnencryptedPerformanceInsights: ResourceValidationPolicy = 
     resourceValidationPolicy: {
         name: "aws-rds-clusterinstance-disallow-unencrypted-performance-insights",
         description: "Checks that RDS Cluster Instances performance insights is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterInstance, (clusterInstance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (clusterInstance.performanceInsightsEnabled && !clusterInstance.performanceInsightsKmsKeyId) {
                 reportViolation("RDS Cluster Instances should have performance insights encrypted.");
             }

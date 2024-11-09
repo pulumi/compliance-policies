@@ -28,8 +28,13 @@ export const disallowApiEndpointPublicAccess: ResourceValidationPolicy = policyM
     resourceValidationPolicy: {
         name: "aws-eks-cluster-disallow-api-endpoint-public-access",
         description: "Check that EKS Clusters API Endpoint are not publicly accessible.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (cluster.vpcConfig.endpointPublicAccess === undefined || cluster.vpcConfig.endpointPublicAccess === true) {
                 /**
                  * We need to check `publicAccessCidrs` for any `0.0.0.0/0`.

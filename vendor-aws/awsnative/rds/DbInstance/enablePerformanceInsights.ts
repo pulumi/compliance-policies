@@ -28,8 +28,13 @@ export const enablePerformanceInsights: ResourceValidationPolicy = policyManager
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-enable-performance-insights",
         description: "Checks that RDS DB Instances have performance insights enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DbInstance, (dbInstance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!dbInstance.enablePerformanceInsights) {
                 reportViolation("RDS DB Instances should have performance insights enabled.");
             }

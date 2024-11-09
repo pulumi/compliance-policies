@@ -28,8 +28,13 @@ export const disallowUnencryptedFileSystem: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "awsnative-efs-filesystem-disallow-unencrypted-file-system",
         description: "Checks that EFS File Systems do not have an unencrypted file system.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FileSystem, (fileSystem, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!fileSystem.encrypted) {
                 reportViolation("EFS File systems should not have an unencypted file system.");
             }

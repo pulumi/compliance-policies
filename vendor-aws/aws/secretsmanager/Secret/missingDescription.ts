@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-secretsmanager-secret-missing-description",
         description: "Checks that Secrets Manager Secrets have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Secret, (secret, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!secret.description) {
                 reportViolation("Secrets Manager Secrets should have a description.");
             } else {

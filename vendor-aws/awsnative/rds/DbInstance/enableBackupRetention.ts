@@ -28,8 +28,13 @@ export const enableBackupRetention: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-enable-backup-retention",
         description: "Checks that RDS DB Instances backup retention policy is enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DbInstance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!instance.backupRetentionPeriod) {
                 reportViolation("RDS DB Instances backup retention should be enabled.");
             }

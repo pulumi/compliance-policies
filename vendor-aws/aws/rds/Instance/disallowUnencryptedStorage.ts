@@ -28,8 +28,13 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "aws-rds-instance-disallow-unencrypted-storage",
         description: "Checks that RDS instance storage is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!instance.storageEncrypted) {
                 reportViolation("RDS Instance storage should be encrypted.");
             }

@@ -28,8 +28,13 @@ export const disallowSingleAvailabilityZone: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "aws-rds-cluster-disallow-single-availability-zone",
         description: "Check that RDS Cluster doesn't use single availability zone.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (cluster.availabilityZones && cluster.availabilityZones.length < 2) {
                 reportViolation("RDS Clusters should use more than one availability zone.");
             }

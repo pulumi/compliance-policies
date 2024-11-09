@@ -28,8 +28,13 @@ export const enableServerSideEncryption: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "aws-s3-bucket-enable-server-side-encryption",
         description: "Check that S3 Bucket Server-Side Encryption (SSE) is enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!bucket.serverSideEncryptionConfiguration) {
                 reportViolation("S3 Buckets Server-Side Encryption (SSE) should be enabled.");
             }

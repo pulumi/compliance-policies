@@ -28,8 +28,13 @@ export const disallowUnencryptedTraffic: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "aws-elb-loadbalancer-disallow-unencrypted-traffic",
         description: "Check that ELB Load Balancers do not allow unencrypted (HTTP) traffic.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadBalancer, (loadBalancer, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             loadBalancer.listeners.forEach((listener) => {
                 if (listener.lbProtocol.toLowerCase() === "http") {
                     reportViolation("ELB Load Balancers should now allow unencrypted (HTTP) traffic.");

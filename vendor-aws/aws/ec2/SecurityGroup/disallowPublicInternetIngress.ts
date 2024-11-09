@@ -28,8 +28,13 @@ export const disallowPublicInternetIngress: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-disallow-public-internet-ingress",
         description: "Check that EC2 Security Groups do not allow ingress traffic from the Internet.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(SecurityGroup, (securityGroup, _, reportViolation) => {
+        validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (securityGroup.ingress) {
                 if (securityGroup.ingress.some((ingressRule) => ingressRule.cidrBlocks?.includes("0.0.0.0/0"))) {
                     reportViolation("EC2 Security Groups should not permit ingress traffic from the public internet (0.0.0.0/0).");

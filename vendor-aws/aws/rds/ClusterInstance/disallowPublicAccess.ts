@@ -28,8 +28,13 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "aws-rds-clusterinstance-disallow-public-access",
         description: "Checks that RDS Cluster Instances public access is not enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterInstance, (clusterInstance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (clusterInstance.publiclyAccessible) {
                 reportViolation("RDS Cluster Instances public access should not be enabled.");
             }

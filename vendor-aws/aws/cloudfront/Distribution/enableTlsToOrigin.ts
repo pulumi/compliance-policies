@@ -28,8 +28,13 @@ export const enableTlsToOrigin: ResourceValidationPolicy = policyManager.registe
     resourceValidationPolicy: {
         name: "aws-cloudfront-distribution-enable-tls-to-origin",
         description: "Checks that CloudFront distributions communicate with custom origins using TLS encryption.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Distribution, (distribution, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             distribution.origins.forEach((origin) => {
                 if (origin.customOriginConfig && origin.customOriginConfig.originProtocolPolicy.toLowerCase() !== "https-only") {
                     reportViolation("CloudFront Distributions should use TLS encryption to communicate with custom origins.");

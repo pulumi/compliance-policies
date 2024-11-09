@@ -28,8 +28,13 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-alb-listener-configure-secure-tls",
         description: "Checks that ALB Load Balancers uses secure/modern TLS encryption.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Listener, (listener, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if ((listener.port && listener.port === 443) || (listener.protocol && listener.protocol === "HTTPS")) {
                 if (!listener.sslPolicy || !listener.sslPolicy.includes("ELBSecurityPolicy-FS-1-2")) {
                     reportViolation("ALB Load Balancers should use secure/modern TLS encryption with forward secrecy.");

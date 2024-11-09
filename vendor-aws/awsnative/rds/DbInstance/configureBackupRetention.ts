@@ -28,8 +28,13 @@ export const configureBackupRetention: ResourceValidationPolicy = policyManager.
     resourceValidationPolicy: {
         name: "awsnative-rds-dbinstance-configure-backup-retention",
         description: "Checks that RDS DB Instances backup retention policy is adequate.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DbInstance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             /**
              * 3 (three) days should be the minimum in order to have full weekend coverage.
              */

@@ -28,8 +28,13 @@ export const missingDescription: ResourceValidationPolicy = policyManager.regist
     resourceValidationPolicy: {
         name: "aws-athena-namedquery-missing-description",
         description: "Checks that Athena NamedQueries have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NamedQuery, (namedQuery, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!namedQuery.description) {
                 reportViolation("Athena NamedQueries should have a description.");
             }

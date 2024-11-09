@@ -28,8 +28,13 @@ export const disallowUnencryptedVolume: ResourceValidationPolicy = policyManager
     resourceValidationPolicy: {
         name: "awsnative-ec2-volume-disallow-unencrypted-volume",
         description: "Checks that EBS volumes are encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Volume, (v, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!v.encrypted) {
                 reportViolation("An EBS volume is currently not encrypted.");
             }

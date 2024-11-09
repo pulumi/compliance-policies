@@ -28,8 +28,13 @@ export const disallowUnencryptedStorage: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "awsnative-rds-dbcluster-disallow-unencrypted-storage",
         description: "Checks that RDS DB Cluster storage is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DbCluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!cluster.storageEncrypted) {
                 reportViolation("RDS DB Cluster storage should be encrypted.");
             }

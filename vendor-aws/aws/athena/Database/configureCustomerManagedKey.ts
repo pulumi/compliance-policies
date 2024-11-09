@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-athena-database-configure-customer-managed-key",
         description: "Checks that Athena Databases storage uses a customer-managed-key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (database.encryptionConfiguration && database.encryptionConfiguration.encryptionOption !== "SSE_KMS") {
                 reportViolation("Athena Databases should be encrypted using a customer-managed key.");
             }

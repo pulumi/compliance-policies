@@ -28,8 +28,13 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-disallow-inbound-http-traffic",
         description: "Check that EC2 Security Groups do not allow inbound HTTP traffic.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (securityGroup.ingress) {
                 securityGroup.ingress.forEach((ingress) => {
                     if (ingress.protocol.toLowerCase() === "tcp" && (ingress.fromPort === 80 || ingress.toPort === 80)) {

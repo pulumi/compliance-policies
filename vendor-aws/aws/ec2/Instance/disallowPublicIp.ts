@@ -28,8 +28,13 @@ export const disallowPublicIp: ResourceValidationPolicy = policyManager.register
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-public-ip",
         description: "Checks that EC2 instances do not have a public IP address.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (instance.associatePublicIpAddress === undefined || instance.associatePublicIpAddress === true) {
                 reportViolation("EC2 Instances should not have a public IP address.");
             }

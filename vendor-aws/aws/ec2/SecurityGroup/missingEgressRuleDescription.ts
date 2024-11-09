@@ -28,8 +28,13 @@ export const missingEgressRuleDescription: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-missing-egress-rule-description",
         description: "Checks that all Egress Security Groups rules have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (securityGroup.egress) {
                 securityGroup.egress.forEach((ingress) => {
                     if (!ingress.description) {

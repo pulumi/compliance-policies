@@ -28,8 +28,13 @@ export const disallowUnencryptedRootBlockDevice: ResourceValidationPolicy = poli
     resourceValidationPolicy: {
         name: "aws-ec2-instance-disallow-unencrypted-root-block-device",
         description: "Checks that EC2 instances does not have unencrypted root volumes.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (instance.rootBlockDevice && !instance.rootBlockDevice.encrypted) {
                 reportViolation("EC2 instances should not have an unencypted root block device.");
             }

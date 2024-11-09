@@ -28,8 +28,13 @@ export const disallowUnencryptedDatabase: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "aws-athena-database-disallow-unencrypted-database",
         description: "Checks that Athena Databases storage is encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Database, (database, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!database.encryptionConfiguration) {
                 reportViolation("Athena Databases should be encrypted.");
             }

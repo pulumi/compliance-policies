@@ -28,8 +28,13 @@ export const enableClusterEncryptionConfig: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "awsnative-eks-cluster-enable-cluster-encryption-config",
         description: "Check that EKS Cluster Encryption Config is enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (cluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!cluster.encryptionConfig || cluster.encryptionConfig.length < 1) {
                 reportViolation("EKS Cluster Encryption Configuration should be enabled.");
             }

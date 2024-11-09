@@ -28,8 +28,13 @@ export const configureTracingConfig: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "aws-lambda-function-configure-tracing-config",
         description: "Checks that Lambda functions have tracing configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Function, (f, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (f.tracingConfig && f.tracingConfig.mode !== "Active") {
                 reportViolation("Lambda functions should have tracing configured.");
             }

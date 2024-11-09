@@ -28,8 +28,13 @@ export const configureCustomerManagedKey: ResourceValidationPolicy = policyManag
     resourceValidationPolicy: {
         name: "awsnative-ecr-repository-configure-customer-managed-key",
         description: "Checks that ECR repositories use a customer-managed KMS key.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Repository, (repo, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (repo.encryptionConfiguration) {
                 if (repo.encryptionConfiguration.encryptionType !== "KMS") {
                     reportViolation("ECR repositories should be encrypted using a customer-managed KMS key.");

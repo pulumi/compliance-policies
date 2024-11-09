@@ -28,8 +28,13 @@ export const missingIngressRuleDescription: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "aws-ec2-securitygroup-missing-ingress-rule-description",
         description: "Checks that all Ingress Security Groups rules have a description.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecurityGroup, (securityGroup, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (securityGroup.ingress) {
                 securityGroup.ingress.forEach((ingress) => {
                     if (!ingress.description) {

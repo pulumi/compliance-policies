@@ -28,8 +28,13 @@ export const disallowPublicAccess: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "aws-rds-instance-disallow-public-access",
         description: "Checks that RDS Instance public access is not enabled.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (instance, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (instance.publiclyAccessible === true) {
                 reportViolation("RDS Instances public access should not be enabled.");
             }

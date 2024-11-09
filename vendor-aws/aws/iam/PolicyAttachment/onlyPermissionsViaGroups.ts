@@ -28,8 +28,13 @@ export const onlyPermissionsViaGroups: ResourceValidationPolicy = policyManager.
     resourceValidationPolicy: {
         name: "aws-iam-policy-attachment-only-attachment-through-groups",
         description: "Ensure IAM Users Receive Permissions Only Through Groups.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "mandatory",
         validateResource: validateResourceOfType(PolicyAttachment, (policyAttachment, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (policyAttachment.users && policyAttachment.users.length > 0) {
                 reportViolation("Users should receive permissions via Group membership.");
             }

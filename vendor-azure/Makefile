@@ -54,8 +54,14 @@ stats:
 	@echo -n "Number of policies for azure-native: "
 	@find $$PWD/azurenative -type f | grep -v index.ts | wc -l
 
+# @p/pulumi and @p/policy usually don't introduce breaking changes
+# so they get upgraded first and we leave minor upgrade to take place.
+# for the providers (especially azure native) breaking changes may be
+# introduce, you we force an exact match to avoid issues down the line.
+# we do the same for the unit test helper and policy manager.
 upgrade::
-	@yarn upgrade @pulumi/policy@latest @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
+	@yarn upgrade $(shell cat package.json | jq '.dependencies | to_entries[] | select(.value | contains("^")) | .key + "@latest" ') --save
+	@yarn upgrade @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq '.dependencies | to_entries[] | select(.value | contains("^") | not ) | .key + "@latest" ') --exact --save
 
 # runs sequential tests in parallel.
 test::

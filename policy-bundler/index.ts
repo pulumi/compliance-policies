@@ -84,6 +84,11 @@ const apiVersionPatterns: RegExp[] = [
     /(v\d{1}((alpha|beta)\d?)|(v\d{1})|(alpha)|(beta))/,    // google (`v1alpha1`, `v1beta`, `v2`, `alpha`, `beta`)
 ];
 
+// eslint-disable-next-line jsdoc/no-restricted-syntax
+/**
+ * A list of imports for each module that should be found in the
+ * policy file.
+ */
 const genericImports: GenericImports = {
     "@pulumi/policy": [
         "ResourceValidationPolicy",

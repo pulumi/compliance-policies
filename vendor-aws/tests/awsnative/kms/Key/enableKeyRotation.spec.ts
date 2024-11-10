@@ -50,6 +50,26 @@ describe("awsnative.kms.Key.enableKeyRotation", function() {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.enableKeyRotation = undefined;
+        await assertHasResourceViolation(policy, args, { message: "KMS Keys should have key rotation enabled." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.enableKeyRotation = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

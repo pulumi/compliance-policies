@@ -51,6 +51,26 @@ describe("awsnative.ecr.Repository.disallowMutableImage", function() {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.imageTagMutability = undefined;
+        await assertHasResourceViolation(policy, args, { message: "ECR repositories should enable immutable images." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.imageTagMutability = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

@@ -51,6 +51,26 @@ describe("aws.appflow.ConnectorProfile.configureCustomerManagedKey", function() 
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.kmsArn = undefined;
+        await assertHasResourceViolation(policy, args, { message: "AppFlow Connector Profiles should be encrypted using a customer-managed KMS key." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.kmsArn = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

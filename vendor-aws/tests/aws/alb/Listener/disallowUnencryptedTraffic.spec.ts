@@ -51,6 +51,26 @@ describe("aws.alb.Listener.disallowUnencryptedTraffic", function() {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.protocol = "HTTP";
+        await assertHasResourceViolation(policy, args, { message: "ALB Load Balancers should now allow unencrypted (HTTP) traffic." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.protocol = "HTTP";
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

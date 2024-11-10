@@ -60,6 +60,26 @@ describe("aws.lb.Listener.configureSecureTls", function() {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

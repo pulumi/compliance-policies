@@ -51,6 +51,26 @@ describe("awsnative.athena.WorkGroup.configureCustomerManagedKey", function() {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration.encryptionOption = "SSE_S3";
+        await assertHasResourceViolation(policy, args, { message: "Athena Workgroups Configuration Updates should be encrypted using a customer-managed key." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.workGroupConfigurationUpdates.resultConfigurationUpdates.encryptionConfiguration.encryptionOption = "SSE_S3";
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

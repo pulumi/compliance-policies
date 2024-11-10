@@ -51,6 +51,26 @@ describe("aws.apigatewayv2.DomainName.configureDomainNameSecurityPolicy", functi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.domainNameConfiguration.securityPolicy = "TLS_1_0";
+        await assertHasResourceViolation(policy, args, { message: "API GatewayV2 Domain Name Security Policy should use secure/modern TLS encryption." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.domainNameConfiguration.securityPolicy = "TLS_1_0";
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

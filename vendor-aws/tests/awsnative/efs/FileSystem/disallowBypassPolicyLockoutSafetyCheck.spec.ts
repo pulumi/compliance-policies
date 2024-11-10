@@ -50,6 +50,26 @@ describe("awsnative.efs.FileSystem.disallowBypassPolicyLockoutSafetyCheck", func
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.bypassPolicyLockoutSafetyCheck = true;
+        await assertHasResourceViolation(policy, args, { message: "EFS File Systems should not bypass the file system policy lockout safety check." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.bypassPolicyLockoutSafetyCheck = true;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

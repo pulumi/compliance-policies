@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { RegistryDataVersion } from "@pulumi/azure-native/machinelearningservices/v20230601preview";
 
@@ -21,7 +22,7 @@ import { RegistryDataVersion } from "@pulumi/azure-native/machinelearningservice
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(RegistryDataVersion, {
         dataVersionBaseProperties: {
             dataType: "mltable",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         name: "",
         registryName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

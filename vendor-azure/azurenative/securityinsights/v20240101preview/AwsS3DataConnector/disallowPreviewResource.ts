@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20240101preview-awss3dataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20240101preview.AwsS3DataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AwsS3DataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AwsS3DataConnector shouldn't use an unstable API (securityinsights.v20240101preview.AwsS3DataConnector). A compatible replacement can be found at 'securityinsights.AwsS3DataConnector'."
             );

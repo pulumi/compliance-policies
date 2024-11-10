@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cloudngfw-v20240119preview-fqdnlistlocalrulestack-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cloudngfw.v20240119preview.FqdnListLocalRulestack).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FqdnListLocalRulestack, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FqdnListLocalRulestack shouldn't use an unstable API (cloudngfw.v20240119preview.FqdnListLocalRulestack). A compatible replacement can be found at 'cloudngfw.FqdnListLocalRulestack'."
             );

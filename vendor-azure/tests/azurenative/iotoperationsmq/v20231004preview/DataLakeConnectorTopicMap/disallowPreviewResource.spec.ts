@@ -61,11 +61,26 @@ describe("azurenative.iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DataLakeConnectorTopicMap shouldn't use an unstable API (iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap). A compatible replacement can be found at 'iotoperationsmq.DataLakeConnectorTopicMap'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure DataLakeConnectorTopicMap shouldn't use an unstable API (iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap). A compatible replacement can be found at 'iotoperationsmq.DataLakeConnectorTopicMap'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DataLakeConnectorTopicMap shouldn't use an unstable API (iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap). A compatible replacement can be found at 'iotoperationsmq.DataLakeConnectorTopicMap'." });
     });
 });

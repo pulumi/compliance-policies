@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-healthdataaiservices-v20240228preview-deidservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (healthdataaiservices.v20240228preview.DeidService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DeidService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DeidService shouldn't use an unstable API (healthdataaiservices.v20240228preview.DeidService). A compatible replacement can be found at 'healthdataaiservices.DeidService'."
             );

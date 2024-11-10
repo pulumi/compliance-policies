@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-workloads-v20231001preview-saplandscapemonitor-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (workloads.v20231001preview.SapLandscapeMonitor).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SapLandscapeMonitor, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SapLandscapeMonitor shouldn't use an unstable API (workloads.v20231001preview.SapLandscapeMonitor). A compatible replacement can be found at 'workloads.SapLandscapeMonitor'."
             );

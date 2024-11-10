@@ -61,11 +61,26 @@ describe("azurenative.documentdb.v20240515preview.ThroughputPoolAccount.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ThroughputPoolAccount shouldn't use an unstable API (documentdb.v20240515preview.ThroughputPoolAccount). A compatible replacement can be found at 'documentdb.ThroughputPoolAccount'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ThroughputPoolAccount shouldn't use an unstable API (documentdb.v20240515preview.ThroughputPoolAccount). A compatible replacement can be found at 'documentdb.ThroughputPoolAccount'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ThroughputPoolAccount shouldn't use an unstable API (documentdb.v20240515preview.ThroughputPoolAccount). A compatible replacement can be found at 'documentdb.ThroughputPoolAccount'." });
     });
 });

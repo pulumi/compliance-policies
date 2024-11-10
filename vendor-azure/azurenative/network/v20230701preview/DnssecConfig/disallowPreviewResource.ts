@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20230701preview-dnssecconfig-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20230701preview.DnssecConfig).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DnssecConfig, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DnssecConfig shouldn't use an unstable API (network.v20230701preview.DnssecConfig).");
         }),
     },

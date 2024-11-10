@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databasewatcher-v20230901preview-watcher-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databasewatcher.v20230901preview.Watcher).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Watcher, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Watcher shouldn't use an unstable API (databasewatcher.v20230901preview.Watcher). A compatible replacement can be found at 'databasewatcher.Watcher'.");
         }),
     },

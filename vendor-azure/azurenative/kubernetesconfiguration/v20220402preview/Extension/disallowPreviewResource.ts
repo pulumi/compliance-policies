@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetesconfiguration-v20220402preview-extension-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetesconfiguration.v20220402preview.Extension).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Extension, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Extension shouldn't use an unstable API (kubernetesconfiguration.v20220402preview.Extension). A compatible replacement can be found at 'kubernetesconfiguration.Extension'."
             );

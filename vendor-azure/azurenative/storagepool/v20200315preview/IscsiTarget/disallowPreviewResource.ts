@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-storagepool-v20200315preview-iscsitarget-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (storagepool.v20200315preview.IscsiTarget).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IscsiTarget, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IscsiTarget shouldn't use an unstable API (storagepool.v20200315preview.IscsiTarget). A compatible replacement can be found at 'storagepool.IscsiTarget'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-offazurespringboot-v20240401preview-springbootserver-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (offazurespringboot.v20240401preview.Springbootserver).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Springbootserver, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Springbootserver shouldn't use an unstable API (offazurespringboot.v20240401preview.Springbootserver). A compatible replacement can be found at 'offazurespringboot.Springbootserver'."
             );

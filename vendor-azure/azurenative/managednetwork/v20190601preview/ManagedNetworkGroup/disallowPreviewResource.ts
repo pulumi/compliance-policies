@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetwork-v20190601preview-managednetworkgroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetwork.v20190601preview.ManagedNetworkGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedNetworkGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedNetworkGroup shouldn't use an unstable API (managednetwork.v20190601preview.ManagedNetworkGroup). A compatible replacement can be found at 'managednetwork.ManagedNetworkGroup'."
             );

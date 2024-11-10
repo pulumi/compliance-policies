@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210601preview-integrationruntime-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210601preview.IntegrationRuntime).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IntegrationRuntime, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure IntegrationRuntime shouldn't use an unstable API (synapse.v20210601preview.IntegrationRuntime). A compatible replacement can be found at 'synapse.IntegrationRuntime'."
             );

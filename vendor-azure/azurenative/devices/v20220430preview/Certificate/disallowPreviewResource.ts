@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devices-v20220430preview-certificate-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devices.v20220430preview.Certificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Certificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Certificate shouldn't use an unstable API (devices.v20220430preview.Certificate). A compatible replacement can be found at 'devices.Certificate'.");
         }),
     },

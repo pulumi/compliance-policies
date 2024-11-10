@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-networkcloud-v20240601preview-rack-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (networkcloud.v20240601preview.Rack).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Rack, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Rack shouldn't use an unstable API (networkcloud.v20240601preview.Rack). A compatible replacement can be found at 'networkcloud.Rack'.");
         }),
     },

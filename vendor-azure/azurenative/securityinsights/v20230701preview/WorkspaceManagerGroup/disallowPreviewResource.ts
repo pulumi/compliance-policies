@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20230701preview-workspacemanagergroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20230701preview.WorkspaceManagerGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkspaceManagerGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WorkspaceManagerGroup shouldn't use an unstable API (securityinsights.v20230701preview.WorkspaceManagerGroup). A compatible replacement can be found at 'securityinsights.WorkspaceManagerGroup'."
             );

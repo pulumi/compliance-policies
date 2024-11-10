@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210601preview-kustopoolprincipalassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210601preview.KustoPoolPrincipalAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KustoPoolPrincipalAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure KustoPoolPrincipalAssignment shouldn't use an unstable API (synapse.v20210601preview.KustoPoolPrincipalAssignment). A compatible replacement can be found at 'synapse.KustoPoolPrincipalAssignment'."
             );

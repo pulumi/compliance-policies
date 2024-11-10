@@ -61,6 +61,24 @@ describe("azurenative.costmanagement.v20190301preview.CloudConnector.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CloudConnector shouldn't use an unstable API (costmanagement.v20190301preview.CloudConnector). A compatible replacement can be found at 'costmanagement.CloudConnector'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure CloudConnector shouldn't use an unstable API (costmanagement.v20190301preview.CloudConnector). A compatible replacement can be found at 'costmanagement.CloudConnector'." });

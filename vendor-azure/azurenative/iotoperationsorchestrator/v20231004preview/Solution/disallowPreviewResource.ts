@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsorchestrator-v20231004preview-solution-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsorchestrator.v20231004preview.Solution).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Solution, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Solution shouldn't use an unstable API (iotoperationsorchestrator.v20231004preview.Solution). A compatible replacement can be found at 'iotoperationsorchestrator.Solution'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-syntex-v20220915preview-documentprocessor-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (syntex.v20220915preview.DocumentProcessor).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DocumentProcessor, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DocumentProcessor shouldn't use an unstable API (syntex.v20220915preview.DocumentProcessor). A compatible replacement can be found at 'syntex.DocumentProcessor'.");
         }),
     },

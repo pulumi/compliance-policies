@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20210201preview-nsplink-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20210201preview.NspLink).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NspLink, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure NspLink shouldn't use an unstable API (network.v20210201preview.NspLink).");
         }),
     },

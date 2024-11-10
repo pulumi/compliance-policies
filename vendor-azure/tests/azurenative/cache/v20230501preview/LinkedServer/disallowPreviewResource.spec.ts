@@ -61,10 +61,26 @@ describe("azurenative.cache.v20230501preview.LinkedServer.disallowPreviewResourc
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LinkedServer shouldn't use an unstable API (cache.v20230501preview.LinkedServer). A compatible replacement can be found at 'cache.LinkedServer'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure LinkedServer shouldn't use an unstable API (cache.v20230501preview.LinkedServer). A compatible replacement can be found at 'cache.LinkedServer'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LinkedServer shouldn't use an unstable API (cache.v20230501preview.LinkedServer). A compatible replacement can be found at 'cache.LinkedServer'." });
     });
 });

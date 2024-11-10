@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20220401preview-endpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20220401preview.Endpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Endpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Endpoint shouldn't use an unstable API (network.v20220401preview.Endpoint). A compatible replacement can be found at 'network.Endpoint'.");
         }),
     },

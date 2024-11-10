@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scvmm-v20220521preview-machineextension-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scvmm.v20220521preview.MachineExtension).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachineExtension, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MachineExtension shouldn't use an unstable API (scvmm.v20220521preview.MachineExtension). A compatible replacement can be found at 'scvmm.MachineExtension'.");
         }),
     },

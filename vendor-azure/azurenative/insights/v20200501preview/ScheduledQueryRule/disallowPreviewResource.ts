@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20200501preview-scheduledqueryrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20200501preview.ScheduledQueryRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScheduledQueryRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ScheduledQueryRule shouldn't use an unstable API (insights.v20200501preview.ScheduledQueryRule). A compatible replacement can be found at 'insights.ScheduledQueryRule'."
             );

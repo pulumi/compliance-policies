@@ -61,6 +61,24 @@ describe("azurenative.intune.v20150114preview.AndroidMAMPolicyByName.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AndroidMAMPolicyByName shouldn't use an unstable API (intune.v20150114preview.AndroidMAMPolicyByName). A compatible replacement can be found at 'intune.AndroidMAMPolicyByName'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure AndroidMAMPolicyByName shouldn't use an unstable API (intune.v20150114preview.AndroidMAMPolicyByName). A compatible replacement can be found at 'intune.AndroidMAMPolicyByName'." });

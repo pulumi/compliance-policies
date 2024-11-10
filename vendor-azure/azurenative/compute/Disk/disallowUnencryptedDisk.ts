@@ -28,8 +28,13 @@ export const disallowUnencryptedDisk: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-compute-disk-disallow-unencrypted-disk",
         description: "Checks that Disks are encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Disk, (disk, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (disk.encryptionSettingsCollection) {
                 if (!disk.encryptionSettingsCollection.enabled) {
                     reportViolation("A Disk is currently not encrypted.");

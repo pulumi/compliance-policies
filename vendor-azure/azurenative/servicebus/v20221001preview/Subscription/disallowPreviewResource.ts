@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicebus-v20221001preview-subscription-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicebus.v20221001preview.Subscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Subscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Subscription shouldn't use an unstable API (servicebus.v20221001preview.Subscription). A compatible replacement can be found at 'servicebus.Subscription'.");
         }),
     },

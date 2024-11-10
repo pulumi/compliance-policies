@@ -61,6 +61,24 @@ describe("azurenative.kusto.v20180907preview.EventHubConnection.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure EventHubConnection shouldn't use an unstable API (kusto.v20180907preview.EventHubConnection). A compatible replacement can be found at 'kusto.EventHubConnection'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure EventHubConnection shouldn't use an unstable API (kusto.v20180907preview.EventHubConnection). A compatible replacement can be found at 'kusto.EventHubConnection'." });

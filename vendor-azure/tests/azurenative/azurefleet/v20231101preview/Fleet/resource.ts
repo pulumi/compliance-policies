@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Fleet } from "@pulumi/azure-native/azurefleet/v20231101preview";
 
@@ -21,7 +22,7 @@ import { Fleet } from "@pulumi/azure-native/azurefleet/v20231101preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Fleet, {
         computeProfile: {
             baseVirtualMachineProfile: {},
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 name: "",
             },
         ],
-    });
+    }, policyconfig, resourceName);
 }

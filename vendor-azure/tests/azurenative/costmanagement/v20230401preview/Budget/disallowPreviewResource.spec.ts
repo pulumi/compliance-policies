@@ -61,10 +61,26 @@ describe("azurenative.costmanagement.v20230401preview.Budget.disallowPreviewReso
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Budget shouldn't use an unstable API (costmanagement.v20230401preview.Budget). A compatible replacement can be found at 'costmanagement.Budget'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Budget shouldn't use an unstable API (costmanagement.v20230401preview.Budget). A compatible replacement can be found at 'costmanagement.Budget'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Budget shouldn't use an unstable API (costmanagement.v20230401preview.Budget). A compatible replacement can be found at 'costmanagement.Budget'." });
     });
 });

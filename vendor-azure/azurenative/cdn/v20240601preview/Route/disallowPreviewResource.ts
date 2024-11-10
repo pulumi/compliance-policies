@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20240601preview-route-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20240601preview.Route).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Route, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Route shouldn't use an unstable API (cdn.v20240601preview.Route). A compatible replacement can be found at 'cdn.Route'.");
         }),
     },

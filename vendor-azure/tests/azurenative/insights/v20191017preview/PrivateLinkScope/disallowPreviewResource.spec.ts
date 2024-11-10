@@ -61,6 +61,24 @@ describe("azurenative.insights.v20191017preview.PrivateLinkScope.disallowPreview
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateLinkScope shouldn't use an unstable API (insights.v20191017preview.PrivateLinkScope). A compatible replacement can be found at 'insights.PrivateLinkScope'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure PrivateLinkScope shouldn't use an unstable API (insights.v20191017preview.PrivateLinkScope). A compatible replacement can be found at 'insights.PrivateLinkScope'." });

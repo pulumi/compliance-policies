@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20210301preview-aatpdataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20210301preview.AATPDataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AATPDataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AATPDataConnector shouldn't use an unstable API (securityinsights.v20210301preview.AATPDataConnector). A compatible replacement can be found at 'securityinsights.AATPDataConnector'."
             );

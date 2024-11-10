@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerregistry-v20190601preview-taskrun-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20190601preview.TaskRun).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TaskRun, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure TaskRun shouldn't use an unstable API (containerregistry.v20190601preview.TaskRun). A compatible replacement can be found at 'containerregistry.TaskRun'.");
         }),
     },

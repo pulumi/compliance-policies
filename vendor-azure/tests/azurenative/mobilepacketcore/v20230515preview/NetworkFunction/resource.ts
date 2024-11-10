@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { NetworkFunction } from "@pulumi/azure-native/mobilepacketcore/v20230515preview";
 
@@ -21,11 +22,11 @@ import { NetworkFunction } from "@pulumi/azure-native/mobilepacketcore/v20230515
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(NetworkFunction, {
         networkFunctionAdministrativeState: "",
         networkFunctionType: "",
         resourceGroupName: "",
         sku: "",
-    });
+    }, policyconfig, resourceName);
 }

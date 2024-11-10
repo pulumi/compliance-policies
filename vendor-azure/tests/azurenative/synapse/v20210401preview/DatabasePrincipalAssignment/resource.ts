@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DatabasePrincipalAssignment } from "@pulumi/azure-native/synapse/v20210401preview";
 
@@ -21,7 +22,7 @@ import { DatabasePrincipalAssignment } from "@pulumi/azure-native/synapse/v20210
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DatabasePrincipalAssignment, {
         databaseName: "",
         kustoPoolName: "",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         role: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

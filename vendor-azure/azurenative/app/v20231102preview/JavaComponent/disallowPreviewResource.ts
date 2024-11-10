@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20231102preview-javacomponent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20231102preview.JavaComponent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(JavaComponent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure JavaComponent shouldn't use an unstable API (app.v20231102preview.JavaComponent). A compatible replacement can be found at 'app.JavaComponent'.");
         }),
     },

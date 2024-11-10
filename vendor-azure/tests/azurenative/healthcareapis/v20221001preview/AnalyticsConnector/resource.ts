@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AnalyticsConnector } from "@pulumi/azure-native/healthcareapis/v20221001preview";
 
@@ -21,7 +22,7 @@ import { AnalyticsConnector } from "@pulumi/azure-native/healthcareapis/v2022100
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AnalyticsConnector, {
         resourceGroupName: "",
         dataDestinationConfiguration: {
@@ -37,5 +38,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             url:"",
         },
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-workloads-v20231001preview-acssbackupconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (workloads.v20231001preview.ACSSBackupConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ACSSBackupConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ACSSBackupConnection shouldn't use an unstable API (workloads.v20231001preview.ACSSBackupConnection). A compatible replacement can be found at 'workloads.ACSSBackupConnection'."
             );

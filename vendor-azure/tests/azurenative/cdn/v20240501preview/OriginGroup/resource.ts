@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { OriginGroup } from "@pulumi/azure-native/cdn/v20240501preview";
 
@@ -21,11 +22,11 @@ import { OriginGroup } from "@pulumi/azure-native/cdn/v20240501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(OriginGroup, {
         endpointName: "",
         origins: [{}],
         profileName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

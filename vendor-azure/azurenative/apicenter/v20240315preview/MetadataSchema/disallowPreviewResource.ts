@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apicenter-v20240315preview-metadataschema-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apicenter.v20240315preview.MetadataSchema).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MetadataSchema, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MetadataSchema shouldn't use an unstable API (apicenter.v20240315preview.MetadataSchema). A compatible replacement can be found at 'apicenter.MetadataSchema'.");
         }),
     },

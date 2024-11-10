@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerregistry-v20190601preview-agentpool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20190601preview.AgentPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AgentPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AgentPool shouldn't use an unstable API (containerregistry.v20190601preview.AgentPool). A compatible replacement can be found at 'containerregistry.AgentPool'.");
         }),
     },

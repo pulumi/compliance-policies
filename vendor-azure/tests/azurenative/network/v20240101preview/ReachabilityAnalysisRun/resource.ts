@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ReachabilityAnalysisRun } from "@pulumi/azure-native/network/v20240101preview";
 
@@ -21,7 +22,7 @@ import { ReachabilityAnalysisRun } from "@pulumi/azure-native/network/v20240101p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ReachabilityAnalysisRun, {
         networkManagerName: "",
         properties: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

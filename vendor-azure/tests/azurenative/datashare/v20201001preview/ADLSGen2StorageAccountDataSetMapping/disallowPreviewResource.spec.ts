@@ -61,6 +61,24 @@ describe("azurenative.datashare.v20201001preview.ADLSGen2StorageAccountDataSetMa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ADLSGen2StorageAccountDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.ADLSGen2StorageAccountDataSetMapping). A compatible replacement can be found at 'datashare.ADLSGen2StorageAccountDataSetMapping'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure ADLSGen2StorageAccountDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.ADLSGen2StorageAccountDataSetMapping). A compatible replacement can be found at 'datashare.ADLSGen2StorageAccountDataSetMapping'." });

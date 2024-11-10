@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20240601preview-afdorigin-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20240601preview.AFDOrigin).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AFDOrigin, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AFDOrigin shouldn't use an unstable API (cdn.v20240601preview.AFDOrigin). A compatible replacement can be found at 'cdn.AFDOrigin'.");
         }),
     },

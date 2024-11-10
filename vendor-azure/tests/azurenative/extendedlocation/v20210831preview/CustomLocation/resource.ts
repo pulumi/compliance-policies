@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CustomLocation } from "@pulumi/azure-native/extendedlocation/v20210831preview";
 
@@ -21,8 +22,8 @@ import { CustomLocation } from "@pulumi/azure-native/extendedlocation/v20210831p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CustomLocation, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

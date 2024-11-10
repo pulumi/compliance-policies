@@ -61,10 +61,26 @@ describe("azurenative.cdn.v20230701preview.RuleSet.disallowPreviewResource", fun
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure RuleSet shouldn't use an unstable API (cdn.v20230701preview.RuleSet). A compatible replacement can be found at 'cdn.RuleSet'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure RuleSet shouldn't use an unstable API (cdn.v20230701preview.RuleSet). A compatible replacement can be found at 'cdn.RuleSet'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure RuleSet shouldn't use an unstable API (cdn.v20230701preview.RuleSet). A compatible replacement can be found at 'cdn.RuleSet'." });
     });
 });

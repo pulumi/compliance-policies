@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-confidentialledger-v20230628preview-managedccf-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (confidentialledger.v20230628preview.ManagedCCF).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedCCF, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedCCF shouldn't use an unstable API (confidentialledger.v20230628preview.ManagedCCF). A compatible replacement can be found at 'confidentialledger.ManagedCCF'."
             );

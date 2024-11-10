@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetesruntime-v20231001preview-service-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetesruntime.v20231001preview.Service).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Service, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Service shouldn't use an unstable API (kubernetesruntime.v20231001preview.Service). A compatible replacement can be found at 'kubernetesruntime.Service'.");
         }),
     },

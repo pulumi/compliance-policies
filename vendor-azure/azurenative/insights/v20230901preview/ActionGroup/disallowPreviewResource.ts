@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20230901preview-actiongroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20230901preview.ActionGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ActionGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ActionGroup shouldn't use an unstable API (insights.v20230901preview.ActionGroup). A compatible replacement can be found at 'insights.ActionGroup'.");
         }),
     },

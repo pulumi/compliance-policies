@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devcenter-v20240701preview-encryptionset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devcenter.v20240701preview.EncryptionSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EncryptionSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EncryptionSet shouldn't use an unstable API (devcenter.v20240701preview.EncryptionSet). A compatible replacement can be found at 'devcenter.EncryptionSet'.");
         }),
     },

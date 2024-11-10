@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dataprotection-v20230601preview-dppresourceguardproxy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dataprotection.v20230601preview.DppResourceGuardProxy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DppResourceGuardProxy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DppResourceGuardProxy shouldn't use an unstable API (dataprotection.v20230601preview.DppResourceGuardProxy). A compatible replacement can be found at 'dataprotection.DppResourceGuardProxy'."
             );

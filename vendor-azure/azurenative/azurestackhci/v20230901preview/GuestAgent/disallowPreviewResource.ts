@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20230901preview-guestagent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20230901preview.GuestAgent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GuestAgent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure GuestAgent shouldn't use an unstable API (azurestackhci.v20230901preview.GuestAgent).");
         }),
     },

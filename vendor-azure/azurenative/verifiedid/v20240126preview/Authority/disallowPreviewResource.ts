@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-verifiedid-v20240126preview-authority-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (verifiedid.v20240126preview.Authority).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Authority, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Authority shouldn't use an unstable API (verifiedid.v20240126preview.Authority). A compatible replacement can be found at 'verifiedid.Authority'.");
         }),
     },

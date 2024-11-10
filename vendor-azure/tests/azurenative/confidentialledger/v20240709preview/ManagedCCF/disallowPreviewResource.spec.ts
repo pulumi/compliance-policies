@@ -61,10 +61,26 @@ describe("azurenative.confidentialledger.v20240709preview.ManagedCCF.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedCCF shouldn't use an unstable API (confidentialledger.v20240709preview.ManagedCCF). A compatible replacement can be found at 'confidentialledger.ManagedCCF'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ManagedCCF shouldn't use an unstable API (confidentialledger.v20240709preview.ManagedCCF). A compatible replacement can be found at 'confidentialledger.ManagedCCF'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedCCF shouldn't use an unstable API (confidentialledger.v20240709preview.ManagedCCF). A compatible replacement can be found at 'confidentialledger.ManagedCCF'." });
     });
 });

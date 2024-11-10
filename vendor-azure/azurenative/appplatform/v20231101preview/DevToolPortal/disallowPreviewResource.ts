@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20231101preview-devtoolportal-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20231101preview.DevToolPortal).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DevToolPortal, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DevToolPortal shouldn't use an unstable API (appplatform.v20231101preview.DevToolPortal). A compatible replacement can be found at 'appplatform.DevToolPortal'.");
         }),
     },

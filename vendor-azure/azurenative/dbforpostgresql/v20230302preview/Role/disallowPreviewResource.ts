@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbforpostgresql-v20230302preview-role-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbforpostgresql.v20230302preview.Role).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Role, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Role shouldn't use an unstable API (dbforpostgresql.v20230302preview.Role). A compatible replacement can be found at 'dbforpostgresql.Role'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbformariadb-v20180601preview-configuration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbformariadb.v20180601preview.Configuration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Configuration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Configuration shouldn't use an unstable API (dbformariadb.v20180601preview.Configuration). A compatible replacement can be found at 'dbformariadb.Configuration'.");
         }),
     },

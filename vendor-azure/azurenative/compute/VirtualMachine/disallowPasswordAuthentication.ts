@@ -28,8 +28,13 @@ export const disallowPasswordAuthentication: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "azurenative-compute-virtualmachine-disallow-password-authentication",
         description: "Authentication to Linux machines should require SSH keys.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualMachine, (virtualmachine, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (virtualmachine.osProfile) {
                 if (virtualmachine.osProfile.linuxConfiguration) {
                     if (!virtualmachine.osProfile.linuxConfiguration.disablePasswordAuthentication) {

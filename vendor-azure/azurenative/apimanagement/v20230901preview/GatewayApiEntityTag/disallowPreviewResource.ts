@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apimanagement-v20230901preview-gatewayapientitytag-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20230901preview.GatewayApiEntityTag).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GatewayApiEntityTag, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GatewayApiEntityTag shouldn't use an unstable API (apimanagement.v20230901preview.GatewayApiEntityTag). A compatible replacement can be found at 'apimanagement.GatewayApiEntityTag'."
             );

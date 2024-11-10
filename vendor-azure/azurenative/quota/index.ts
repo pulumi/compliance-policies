@@ -13,3 +13,4 @@
 // limitations under the License.
 
 export * as v20230601preview from "./v20230601preview";
+export * as v20241015preview from "./v20241015preview";

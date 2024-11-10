@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestack-v20200601preview-customersubscription-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.CustomerSubscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomerSubscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CustomerSubscription shouldn't use an unstable API (azurestack.v20200601preview.CustomerSubscription). A compatible replacement can be found at 'azurestack.CustomerSubscription'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managedidentity-v20230731preview-federatedidentitycredential-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managedidentity.v20230731preview.FederatedIdentityCredential).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FederatedIdentityCredential, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FederatedIdentityCredential shouldn't use an unstable API (managedidentity.v20230731preview.FederatedIdentityCredential). A compatible replacement can be found at 'managedidentity.FederatedIdentityCredential'."
             );

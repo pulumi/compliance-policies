@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20230901preview-logicalnetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20230901preview.LogicalNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LogicalNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure LogicalNetwork shouldn't use an unstable API (azurestackhci.v20230901preview.LogicalNetwork). A compatible replacement can be found at 'azurestackhci.LogicalNetwork'."
             );

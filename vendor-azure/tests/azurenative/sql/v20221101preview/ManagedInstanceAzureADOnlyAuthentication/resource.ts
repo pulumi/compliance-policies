@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedInstanceAzureADOnlyAuthentication } from "@pulumi/azure-native/sql/v20221101preview";
 
@@ -21,10 +22,10 @@ import { ManagedInstanceAzureADOnlyAuthentication } from "@pulumi/azure-native/s
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedInstanceAzureADOnlyAuthentication, {
         azureADOnlyAuthentication: false,
         managedInstanceName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

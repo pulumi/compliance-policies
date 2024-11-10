@@ -61,10 +61,26 @@ describe("azurenative.scom.v20230707preview.ManagedGateway.disallowPreviewResour
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedGateway shouldn't use an unstable API (scom.v20230707preview.ManagedGateway). A compatible replacement can be found at 'scom.ManagedGateway'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ManagedGateway shouldn't use an unstable API (scom.v20230707preview.ManagedGateway). A compatible replacement can be found at 'scom.ManagedGateway'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedGateway shouldn't use an unstable API (scom.v20230707preview.ManagedGateway). A compatible replacement can be found at 'scom.ManagedGateway'." });
     });
 });

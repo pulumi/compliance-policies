@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IoTDataConnector } from "@pulumi/azure-native/securityinsights/v20230901preview";
 
@@ -21,10 +22,10 @@ import { IoTDataConnector } from "@pulumi/azure-native/securityinsights/v2023090
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IoTDataConnector, {
         kind: "IOT",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

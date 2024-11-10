@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcontainerservice-v20220501preview-provisionedcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcontainerservice.v20220501preview.ProvisionedCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProvisionedCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ProvisionedCluster shouldn't use an unstable API (hybridcontainerservice.v20220501preview.ProvisionedCluster). A compatible replacement can be found at 'hybridcontainerservice.ProvisionedCluster'."
             );

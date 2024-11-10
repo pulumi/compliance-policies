@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IotHubDataConnection } from "@pulumi/azure-native/synapse/v20210601preview";
 
@@ -21,7 +22,7 @@ import { IotHubDataConnection } from "@pulumi/azure-native/synapse/v20210601prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IotHubDataConnection, {
         consumerGroup: "",
         databaseName: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         sharedAccessPolicyName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-connectedvmwarevsphere-v20220715preview-virtualnetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20220715preview.VirtualNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VirtualNetwork shouldn't use an unstable API (connectedvmwarevsphere.v20220715preview.VirtualNetwork). A compatible replacement can be found at 'connectedvmwarevsphere.VirtualNetwork'."
             );

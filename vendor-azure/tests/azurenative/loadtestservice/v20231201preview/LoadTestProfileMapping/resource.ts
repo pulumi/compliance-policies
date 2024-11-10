@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { LoadTestProfileMapping } from "@pulumi/azure-native/loadtestservice/v20231201preview";
 
@@ -21,8 +22,8 @@ import { LoadTestProfileMapping } from "@pulumi/azure-native/loadtestservice/v20
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(LoadTestProfileMapping, {
         resourceUri: "",
-    });
+    }, policyconfig, resourceName);
 }

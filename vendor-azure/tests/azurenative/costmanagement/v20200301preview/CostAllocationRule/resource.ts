@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CostAllocationRule } from "@pulumi/azure-native/costmanagement/v20200301preview";
 
@@ -21,8 +22,8 @@ import { CostAllocationRule } from "@pulumi/azure-native/costmanagement/v2020030
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CostAllocationRule, {
         billingAccountId: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { TiTaxiiDataConnector } from "@pulumi/azure-native/securityinsights/v20210301preview";
 
@@ -21,7 +22,7 @@ import { TiTaxiiDataConnector } from "@pulumi/azure-native/securityinsights/v202
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(TiTaxiiDataConnector, {
         resourceGroupName: "",
         dataTypes: {
@@ -34,5 +35,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         pollingFrequency: "",
         tenantId: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

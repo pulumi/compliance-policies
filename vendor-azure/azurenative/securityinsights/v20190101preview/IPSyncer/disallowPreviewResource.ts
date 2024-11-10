@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20190101preview-ipsyncer-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20190101preview.IPSyncer).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IPSyncer, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IPSyncer shouldn't use an unstable API (securityinsights.v20190101preview.IPSyncer). A compatible replacement can be found at 'securityinsights.IPSyncer'.");
         }),
     },

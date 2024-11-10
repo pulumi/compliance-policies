@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-networkcloud-v20231001preview-baremetalmachine-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (networkcloud.v20231001preview.BareMetalMachine).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BareMetalMachine, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BareMetalMachine shouldn't use an unstable API (networkcloud.v20231001preview.BareMetalMachine). A compatible replacement can be found at 'networkcloud.BareMetalMachine'."
             );

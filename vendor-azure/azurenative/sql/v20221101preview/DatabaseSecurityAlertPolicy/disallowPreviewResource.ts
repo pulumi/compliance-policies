@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20221101preview-databasesecurityalertpolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20221101preview.DatabaseSecurityAlertPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseSecurityAlertPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DatabaseSecurityAlertPolicy shouldn't use an unstable API (sql.v20221101preview.DatabaseSecurityAlertPolicy). A compatible replacement can be found at 'sql.DatabaseSecurityAlertPolicy'."
             );

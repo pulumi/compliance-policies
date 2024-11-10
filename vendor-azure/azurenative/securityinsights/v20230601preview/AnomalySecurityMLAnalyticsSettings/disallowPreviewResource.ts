@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20230601preview-anomalysecuritymlanalyticssettings-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20230601preview.AnomalySecurityMLAnalyticsSettings).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AnomalySecurityMLAnalyticsSettings, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AnomalySecurityMLAnalyticsSettings shouldn't use an unstable API (securityinsights.v20230601preview.AnomalySecurityMLAnalyticsSettings). A compatible replacement can be found at 'securityinsights.AnomalySecurityMLAnalyticsSettings'."
             );

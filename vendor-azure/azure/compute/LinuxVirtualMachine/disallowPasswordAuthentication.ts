@@ -28,8 +28,13 @@ export const disallowPasswordAuthentication: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "azure-compute-linuxvirtualmachine-disallow-password-authentication",
         description: "Authentication to Linux machines should require SSH keys.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LinuxVirtualMachine, (virtualmachine, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!virtualmachine.disablePasswordAuthentication) {
                 reportViolation("Authentication to Linux machines should require SSH keys.");
             }

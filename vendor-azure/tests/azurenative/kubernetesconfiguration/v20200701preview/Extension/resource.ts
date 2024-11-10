@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Extension } from "@pulumi/azure-native/kubernetesconfiguration/v20200701preview";
 
@@ -21,11 +22,11 @@ import { Extension } from "@pulumi/azure-native/kubernetesconfiguration/v2020070
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Extension, {
         resourceGroupName: "",
         clusterName: "",
         clusterResourceName: "",
         clusterRp: "",
-    });
+    }, policyconfig, resourceName);
 }

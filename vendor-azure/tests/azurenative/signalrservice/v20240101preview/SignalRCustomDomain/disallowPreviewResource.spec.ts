@@ -61,11 +61,26 @@ describe("azurenative.signalrservice.v20240101preview.SignalRCustomDomain.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SignalRCustomDomain shouldn't use an unstable API (signalrservice.v20240101preview.SignalRCustomDomain). A compatible replacement can be found at 'signalrservice.SignalRCustomDomain'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure SignalRCustomDomain shouldn't use an unstable API (signalrservice.v20240101preview.SignalRCustomDomain). A compatible replacement can be found at 'signalrservice.SignalRCustomDomain'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SignalRCustomDomain shouldn't use an unstable API (signalrservice.v20240101preview.SignalRCustomDomain). A compatible replacement can be found at 'signalrservice.SignalRCustomDomain'." });
     });
 });

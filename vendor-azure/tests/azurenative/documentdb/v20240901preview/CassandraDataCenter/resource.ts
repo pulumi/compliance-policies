@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CassandraDataCenter } from "@pulumi/azure-native/documentdb/v20240901preview";
 
@@ -21,9 +22,9 @@ import { CassandraDataCenter } from "@pulumi/azure-native/documentdb/v20240901pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CassandraDataCenter, {
         clusterName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

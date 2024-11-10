@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicefabricmesh-v20180901preview-network-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicefabricmesh.v20180901preview.Network).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Network, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Network shouldn't use an unstable API (servicefabricmesh.v20180901preview.Network). A compatible replacement can be found at 'servicefabricmesh.Network'.");
         }),
     },

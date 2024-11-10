@@ -61,10 +61,26 @@ describe("azurenative.appplatform.v20230701preview.ConfigServer.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ConfigServer shouldn't use an unstable API (appplatform.v20230701preview.ConfigServer). A compatible replacement can be found at 'appplatform.ConfigServer'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ConfigServer shouldn't use an unstable API (appplatform.v20230701preview.ConfigServer). A compatible replacement can be found at 'appplatform.ConfigServer'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ConfigServer shouldn't use an unstable API (appplatform.v20230701preview.ConfigServer). A compatible replacement can be found at 'appplatform.ConfigServer'." });
     });
 });

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Server } from "@pulumi/azure-native/dbforpostgresql/v20171201preview";
 
@@ -21,7 +22,7 @@ import { Server } from "@pulumi/azure-native/dbforpostgresql/v20171201preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Server, {
         resourceGroupName: "",
         properties: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             administratorLoginPassword: "",
             createMode: "Default",
         },
-    });
+    }, policyconfig, resourceName);
 }

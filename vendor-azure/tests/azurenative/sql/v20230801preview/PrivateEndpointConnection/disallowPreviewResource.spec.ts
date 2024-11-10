@@ -61,11 +61,26 @@ describe("azurenative.sql.v20230801preview.PrivateEndpointConnection.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateEndpointConnection shouldn't use an unstable API (sql.v20230801preview.PrivateEndpointConnection). A compatible replacement can be found at 'sql.PrivateEndpointConnection'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure PrivateEndpointConnection shouldn't use an unstable API (sql.v20230801preview.PrivateEndpointConnection). A compatible replacement can be found at 'sql.PrivateEndpointConnection'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateEndpointConnection shouldn't use an unstable API (sql.v20230801preview.PrivateEndpointConnection). A compatible replacement can be found at 'sql.PrivateEndpointConnection'." });
     });
 });

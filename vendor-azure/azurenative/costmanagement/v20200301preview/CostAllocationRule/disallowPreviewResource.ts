@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-costmanagement-v20200301preview-costallocationrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20200301preview.CostAllocationRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CostAllocationRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CostAllocationRule shouldn't use an unstable API (costmanagement.v20200301preview.CostAllocationRule). A compatible replacement can be found at 'costmanagement.CostAllocationRule'."
             );

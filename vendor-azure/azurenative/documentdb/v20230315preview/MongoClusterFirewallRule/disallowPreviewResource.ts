@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20230315preview-mongoclusterfirewallrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20230315preview.MongoClusterFirewallRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MongoClusterFirewallRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MongoClusterFirewallRule shouldn't use an unstable API (documentdb.v20230315preview.MongoClusterFirewallRule). A compatible replacement can be found at 'documentdb.MongoClusterFirewallRule'."
             );

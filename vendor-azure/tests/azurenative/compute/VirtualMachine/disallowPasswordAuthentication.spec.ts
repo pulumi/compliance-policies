@@ -60,6 +60,26 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
+        await assertHasResourceViolation(policy, args, { message: "Authentication to Linux machines should require SSH keys." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -68,8 +88,6 @@ describe("azurenative.compute.VirtualMachine.disallowPasswordAuthentication", fu
     it("#2", async function () {
         const args = getResourceValidationArgs();
         args.props.osProfile.linuxConfiguration.disablePasswordAuthentication = false;
-        await assertHasResourceViolation(policy, args, {
-            message: "Authentication to Linux machines should require SSH keys.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Authentication to Linux machines should require SSH keys." });
     });
 });

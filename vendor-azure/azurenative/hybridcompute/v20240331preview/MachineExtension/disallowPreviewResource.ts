@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcompute-v20240331preview-machineextension-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcompute.v20240331preview.MachineExtension).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachineExtension, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MachineExtension shouldn't use an unstable API (hybridcompute.v20240331preview.MachineExtension). A compatible replacement can be found at 'hybridcompute.MachineExtension'."
             );

@@ -61,10 +61,26 @@ describe("azurenative.recoveryservices.v20240430preview.ProtectedItem.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProtectedItem shouldn't use an unstable API (recoveryservices.v20240430preview.ProtectedItem). A compatible replacement can be found at 'recoveryservices.ProtectedItem'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ProtectedItem shouldn't use an unstable API (recoveryservices.v20240430preview.ProtectedItem). A compatible replacement can be found at 'recoveryservices.ProtectedItem'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProtectedItem shouldn't use an unstable API (recoveryservices.v20240430preview.ProtectedItem). A compatible replacement can be found at 'recoveryservices.ProtectedItem'." });
     });
 });

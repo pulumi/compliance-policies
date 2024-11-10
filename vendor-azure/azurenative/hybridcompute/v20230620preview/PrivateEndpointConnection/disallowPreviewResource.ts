@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcompute-v20230620preview-privateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcompute.v20230620preview.PrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateEndpointConnection shouldn't use an unstable API (hybridcompute.v20230620preview.PrivateEndpointConnection). A compatible replacement can be found at 'hybridcompute.PrivateEndpointConnection'."
             );

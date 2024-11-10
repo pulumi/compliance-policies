@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-redhatopenshift-v20230701preview-machinepool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (redhatopenshift.v20230701preview.MachinePool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachinePool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MachinePool shouldn't use an unstable API (redhatopenshift.v20230701preview.MachinePool). A compatible replacement can be found at 'redhatopenshift.MachinePool'.");
         }),
     },

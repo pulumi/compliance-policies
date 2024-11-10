@@ -61,11 +61,26 @@ describe("azurenative.hybridcontainerservice.v20231115preview.VirtualNetworkRetr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualNetworkRetrieve shouldn't use an unstable API (hybridcontainerservice.v20231115preview.VirtualNetworkRetrieve). A compatible replacement can be found at 'hybridcontainerservice.VirtualNetworkRetrieve'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure VirtualNetworkRetrieve shouldn't use an unstable API (hybridcontainerservice.v20231115preview.VirtualNetworkRetrieve). A compatible replacement can be found at 'hybridcontainerservice.VirtualNetworkRetrieve'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualNetworkRetrieve shouldn't use an unstable API (hybridcontainerservice.v20231115preview.VirtualNetworkRetrieve). A compatible replacement can be found at 'hybridcontainerservice.VirtualNetworkRetrieve'." });
     });
 });

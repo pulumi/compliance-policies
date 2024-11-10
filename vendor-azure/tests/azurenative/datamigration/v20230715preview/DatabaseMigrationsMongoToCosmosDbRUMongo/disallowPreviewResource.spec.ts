@@ -61,11 +61,26 @@ describe("azurenative.datamigration.v20230715preview.DatabaseMigrationsMongoToCo
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DatabaseMigrationsMongoToCosmosDbRUMongo shouldn't use an unstable API (datamigration.v20230715preview.DatabaseMigrationsMongoToCosmosDbRUMongo). A compatible replacement can be found at 'datamigration.DatabaseMigrationsMongoToCosmosDbRUMongo'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure DatabaseMigrationsMongoToCosmosDbRUMongo shouldn't use an unstable API (datamigration.v20230715preview.DatabaseMigrationsMongoToCosmosDbRUMongo). A compatible replacement can be found at 'datamigration.DatabaseMigrationsMongoToCosmosDbRUMongo'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DatabaseMigrationsMongoToCosmosDbRUMongo shouldn't use an unstable API (datamigration.v20230715preview.DatabaseMigrationsMongoToCosmosDbRUMongo). A compatible replacement can be found at 'datamigration.DatabaseMigrationsMongoToCosmosDbRUMongo'." });
     });
 });

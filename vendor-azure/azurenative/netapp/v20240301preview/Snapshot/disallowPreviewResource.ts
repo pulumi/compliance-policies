@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-netapp-v20240301preview-snapshot-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (netapp.v20240301preview.Snapshot).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Snapshot, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Snapshot shouldn't use an unstable API (netapp.v20240301preview.Snapshot). A compatible replacement can be found at 'netapp.Snapshot'.");
         }),
     },

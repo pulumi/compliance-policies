@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devcenter-v20240601preview-attachednetworkbydevcenter-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devcenter.v20240601preview.AttachedNetworkByDevCenter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AttachedNetworkByDevCenter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AttachedNetworkByDevCenter shouldn't use an unstable API (devcenter.v20240601preview.AttachedNetworkByDevCenter). A compatible replacement can be found at 'devcenter.AttachedNetworkByDevCenter'."
             );

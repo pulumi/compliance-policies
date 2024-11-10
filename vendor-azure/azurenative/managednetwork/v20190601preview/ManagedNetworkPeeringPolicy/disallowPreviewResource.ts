@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetwork-v20190601preview-managednetworkpeeringpolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetwork.v20190601preview.ManagedNetworkPeeringPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedNetworkPeeringPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedNetworkPeeringPolicy shouldn't use an unstable API (managednetwork.v20190601preview.ManagedNetworkPeeringPolicy). A compatible replacement can be found at 'managednetwork.ManagedNetworkPeeringPolicy'."
             );

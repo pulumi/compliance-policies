@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Gen1Environment } from "@pulumi/azure-native/timeseriesinsights/v20210630preview";
 
@@ -21,7 +22,7 @@ import { Gen1Environment } from "@pulumi/azure-native/timeseriesinsights/v202106
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Gen1Environment, {
         dataRetentionTime: "",
         kind: "Gen1",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             capacity: 1,
             name: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

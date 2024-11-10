@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Firewall } from "@pulumi/azure-native/cloudngfw/v20240119preview";
 
@@ -21,7 +22,7 @@ import { Firewall } from "@pulumi/azure-native/cloudngfw/v20240119preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Firewall, {
         dnsSettings: {},
         marketplaceDetails: {
@@ -38,5 +39,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             planId: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

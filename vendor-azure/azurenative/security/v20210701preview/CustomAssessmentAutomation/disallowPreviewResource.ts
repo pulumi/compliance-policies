@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20210701preview-customassessmentautomation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20210701preview.CustomAssessmentAutomation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomAssessmentAutomation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CustomAssessmentAutomation shouldn't use an unstable API (security.v20210701preview.CustomAssessmentAutomation). A compatible replacement can be found at 'security.CustomAssessmentAutomation'."
             );

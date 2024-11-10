@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20240101preview-buildpackbinding-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20240101preview.BuildpackBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BuildpackBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BuildpackBinding shouldn't use an unstable API (appplatform.v20240101preview.BuildpackBinding). A compatible replacement can be found at 'appplatform.BuildpackBinding'."
             );

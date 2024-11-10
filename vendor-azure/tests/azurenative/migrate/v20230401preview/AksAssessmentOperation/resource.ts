@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AksAssessmentOperation } from "@pulumi/azure-native/migrate/v20230401preview";
 
@@ -21,7 +22,7 @@ import { AksAssessmentOperation } from "@pulumi/azure-native/migrate/v20230401pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AksAssessmentOperation, {
         projectName: "",
         resourceGroupName: "",
@@ -36,5 +37,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             savingsOptions: "",
             sizingCriteria: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

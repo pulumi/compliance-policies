@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-signalrservice-v20240101preview-signalrcustomcertificate-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (signalrservice.v20240101preview.SignalRCustomCertificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SignalRCustomCertificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SignalRCustomCertificate shouldn't use an unstable API (signalrservice.v20240101preview.SignalRCustomCertificate). A compatible replacement can be found at 'signalrservice.SignalRCustomCertificate'."
             );

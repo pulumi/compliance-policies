@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20230701preview-profile-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20230701preview.Profile).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Profile, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Profile shouldn't use an unstable API (cdn.v20230701preview.Profile). A compatible replacement can be found at 'cdn.Profile'.");
         }),
     },

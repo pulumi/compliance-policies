@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ServerAzureADAdministrator } from "@pulumi/azure-native/sql/v20230501preview";
 
@@ -21,12 +22,12 @@ import { ServerAzureADAdministrator } from "@pulumi/azure-native/sql/v20230501pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ServerAzureADAdministrator, {
         administratorType: "",
         login: "",
         resourceGroupName: "",
         serverName: "",
         sid: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20230801preview-featurestoreentityversion-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20230801preview.FeaturestoreEntityVersion).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FeaturestoreEntityVersion, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FeaturestoreEntityVersion shouldn't use an unstable API (machinelearningservices.v20230801preview.FeaturestoreEntityVersion). A compatible replacement can be found at 'machinelearningservices.FeaturestoreEntityVersion'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurefleet-v20231101preview-fleet-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurefleet.v20231101preview.Fleet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Fleet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Fleet shouldn't use an unstable API (azurefleet.v20231101preview.Fleet). A compatible replacement can be found at 'azurefleet.Fleet'.");
         }),
     },

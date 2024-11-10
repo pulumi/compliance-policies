@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azureactivedirectory-v20190101preview-b2ctenant-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20190101preview.B2CTenant).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(B2CTenant, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure B2CTenant shouldn't use an unstable API (azureactivedirectory.v20190101preview.B2CTenant). A compatible replacement can be found at 'azureactivedirectory.B2CTenant'."
             );

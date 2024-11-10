@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20231201preview-mlbehavioranalyticsalertrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20231201preview.MLBehaviorAnalyticsAlertRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MLBehaviorAnalyticsAlertRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MLBehaviorAnalyticsAlertRule shouldn't use an unstable API (securityinsights.v20231201preview.MLBehaviorAnalyticsAlertRule). A compatible replacement can be found at 'securityinsights.MLBehaviorAnalyticsAlertRule'."
             );

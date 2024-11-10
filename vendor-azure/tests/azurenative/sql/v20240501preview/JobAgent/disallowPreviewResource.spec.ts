@@ -61,10 +61,26 @@ describe("azurenative.sql.v20240501preview.JobAgent.disallowPreviewResource", fu
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobAgent shouldn't use an unstable API (sql.v20240501preview.JobAgent). A compatible replacement can be found at 'sql.JobAgent'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure JobAgent shouldn't use an unstable API (sql.v20240501preview.JobAgent). A compatible replacement can be found at 'sql.JobAgent'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobAgent shouldn't use an unstable API (sql.v20240501preview.JobAgent). A compatible replacement can be found at 'sql.JobAgent'." });
     });
 });

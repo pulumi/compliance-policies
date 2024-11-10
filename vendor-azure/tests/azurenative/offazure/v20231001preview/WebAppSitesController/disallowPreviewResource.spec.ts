@@ -61,11 +61,26 @@ describe("azurenative.offazure.v20231001preview.WebAppSitesController.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WebAppSitesController shouldn't use an unstable API (offazure.v20231001preview.WebAppSitesController). A compatible replacement can be found at 'offazure.WebAppSitesController'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure WebAppSitesController shouldn't use an unstable API (offazure.v20231001preview.WebAppSitesController). A compatible replacement can be found at 'offazure.WebAppSitesController'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WebAppSitesController shouldn't use an unstable API (offazure.v20231001preview.WebAppSitesController). A compatible replacement can be found at 'offazure.WebAppSitesController'." });
     });
 });

@@ -61,11 +61,26 @@ describe("azurenative.sql.v20170301preview.BackupLongTermRetentionPolicy.disallo
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BackupLongTermRetentionPolicy shouldn't use an unstable API (sql.v20170301preview.BackupLongTermRetentionPolicy). A compatible replacement can be found at 'sql.BackupLongTermRetentionPolicy'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure BackupLongTermRetentionPolicy shouldn't use an unstable API (sql.v20170301preview.BackupLongTermRetentionPolicy). A compatible replacement can be found at 'sql.BackupLongTermRetentionPolicy'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BackupLongTermRetentionPolicy shouldn't use an unstable API (sql.v20170301preview.BackupLongTermRetentionPolicy). A compatible replacement can be found at 'sql.BackupLongTermRetentionPolicy'." });
     });
 });

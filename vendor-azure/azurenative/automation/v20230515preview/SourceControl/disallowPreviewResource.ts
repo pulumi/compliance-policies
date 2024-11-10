@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-automation-v20230515preview-sourcecontrol-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (automation.v20230515preview.SourceControl).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SourceControl, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure SourceControl shouldn't use an unstable API (automation.v20230515preview.SourceControl). A compatible replacement can be found at 'automation.SourceControl'.");
         }),
     },

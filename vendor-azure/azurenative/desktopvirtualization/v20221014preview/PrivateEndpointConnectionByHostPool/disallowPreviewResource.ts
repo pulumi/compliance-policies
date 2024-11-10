@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-desktopvirtualization-v20221014preview-privateendpointconnectionbyhostpool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (desktopvirtualization.v20221014preview.PrivateEndpointConnectionByHostPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateEndpointConnectionByHostPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateEndpointConnectionByHostPool shouldn't use an unstable API (desktopvirtualization.v20221014preview.PrivateEndpointConnectionByHostPool). A compatible replacement can be found at 'desktopvirtualization.PrivateEndpointConnectionByHostPool'."
             );

@@ -61,10 +61,26 @@ describe("azurenative.insights.v20230901preview.ActionGroup.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ActionGroup shouldn't use an unstable API (insights.v20230901preview.ActionGroup). A compatible replacement can be found at 'insights.ActionGroup'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ActionGroup shouldn't use an unstable API (insights.v20230901preview.ActionGroup). A compatible replacement can be found at 'insights.ActionGroup'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ActionGroup shouldn't use an unstable API (insights.v20230901preview.ActionGroup). A compatible replacement can be found at 'insights.ActionGroup'." });
     });
 });

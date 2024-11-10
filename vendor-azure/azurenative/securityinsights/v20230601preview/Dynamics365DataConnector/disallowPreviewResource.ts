@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20230601preview-dynamics365dataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20230601preview.Dynamics365DataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Dynamics365DataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Dynamics365DataConnector shouldn't use an unstable API (securityinsights.v20230601preview.Dynamics365DataConnector). A compatible replacement can be found at 'securityinsights.Dynamics365DataConnector'."
             );

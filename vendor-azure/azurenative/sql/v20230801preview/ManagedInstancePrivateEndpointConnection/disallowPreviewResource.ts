@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230801preview-managedinstanceprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230801preview.ManagedInstancePrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedInstancePrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedInstancePrivateEndpointConnection shouldn't use an unstable API (sql.v20230801preview.ManagedInstancePrivateEndpointConnection). A compatible replacement can be found at 'sql.ManagedInstancePrivateEndpointConnection'."
             );

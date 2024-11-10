@@ -61,11 +61,26 @@ describe("azurenative.maintenance.v20230901preview.MaintenanceConfiguration.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MaintenanceConfiguration shouldn't use an unstable API (maintenance.v20230901preview.MaintenanceConfiguration). A compatible replacement can be found at 'maintenance.MaintenanceConfiguration'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure MaintenanceConfiguration shouldn't use an unstable API (maintenance.v20230901preview.MaintenanceConfiguration). A compatible replacement can be found at 'maintenance.MaintenanceConfiguration'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MaintenanceConfiguration shouldn't use an unstable API (maintenance.v20230901preview.MaintenanceConfiguration). A compatible replacement can be found at 'maintenance.MaintenanceConfiguration'." });
     });
 });

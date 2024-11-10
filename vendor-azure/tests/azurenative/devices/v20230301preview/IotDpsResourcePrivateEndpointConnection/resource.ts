@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IotDpsResourcePrivateEndpointConnection } from "@pulumi/azure-native/devices/v20230301preview";
 
@@ -21,7 +22,7 @@ import { IotDpsResourcePrivateEndpointConnection } from "@pulumi/azure-native/de
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IotDpsResourcePrivateEndpointConnection, {
         resourceGroupName: "",
         resourceName: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 status: "",
             },
         },
-    });
+    }, policyconfig, resourceName);
 }

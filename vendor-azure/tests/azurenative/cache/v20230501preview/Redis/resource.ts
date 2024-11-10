@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Redis } from "@pulumi/azure-native/cache/v20230501preview";
 
@@ -21,7 +22,7 @@ import { Redis } from "@pulumi/azure-native/cache/v20230501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Redis, {
         resourceGroupName: "",
         sku: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             family: "",
             name: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

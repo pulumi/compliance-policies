@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedClusterService } from "@pulumi/azure-native/servicefabric/v20240601preview";
 
@@ -21,10 +22,10 @@ import { ManagedClusterService } from "@pulumi/azure-native/servicefabric/v20240
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedClusterService, {
         applicationName: "",
         clusterName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

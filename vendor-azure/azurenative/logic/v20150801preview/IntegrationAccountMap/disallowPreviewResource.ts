@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-logic-v20150801preview-integrationaccountmap-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (logic.v20150801preview.IntegrationAccountMap).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IntegrationAccountMap, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure IntegrationAccountMap shouldn't use an unstable API (logic.v20150801preview.IntegrationAccountMap). A compatible replacement can be found at 'logic.IntegrationAccountMap'."
             );

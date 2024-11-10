@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20240201preview-marketplacegalleryimage-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20240201preview.MarketplaceGalleryImage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MarketplaceGalleryImage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MarketplaceGalleryImage shouldn't use an unstable API (azurestackhci.v20240201preview.MarketplaceGalleryImage). A compatible replacement can be found at 'azurestackhci.MarketplaceGalleryImage'."
             );

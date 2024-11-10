@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-quota-v20230601preview-groupquota-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (quota.v20230601preview.GroupQuota).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GroupQuota, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure GroupQuota shouldn't use an unstable API (quota.v20230601preview.GroupQuota). A compatible replacement can be found at 'quota.GroupQuota'.");
         }),
     },

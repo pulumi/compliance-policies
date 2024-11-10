@@ -61,10 +61,26 @@ describe("azurenative.videoanalyzer.v20211101preview.LivePipeline.disallowPrevie
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LivePipeline shouldn't use an unstable API (videoanalyzer.v20211101preview.LivePipeline). A compatible replacement can be found at 'videoanalyzer.LivePipeline'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure LivePipeline shouldn't use an unstable API (videoanalyzer.v20211101preview.LivePipeline). A compatible replacement can be found at 'videoanalyzer.LivePipeline'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LivePipeline shouldn't use an unstable API (videoanalyzer.v20211101preview.LivePipeline). A compatible replacement can be found at 'videoanalyzer.LivePipeline'." });
     });
 });

@@ -61,10 +61,26 @@ describe("azurenative.apicenter.v20240315preview.Deployment.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Deployment shouldn't use an unstable API (apicenter.v20240315preview.Deployment). A compatible replacement can be found at 'apicenter.Deployment'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Deployment shouldn't use an unstable API (apicenter.v20240315preview.Deployment). A compatible replacement can be found at 'apicenter.Deployment'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Deployment shouldn't use an unstable API (apicenter.v20240315preview.Deployment). A compatible replacement can be found at 'apicenter.Deployment'." });
     });
 });

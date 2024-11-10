@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cache-v20230801preview-database-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cache.v20230801preview.Database).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Database, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Database shouldn't use an unstable API (cache.v20230801preview.Database). A compatible replacement can be found at 'cache.Database'.");
         }),
     },

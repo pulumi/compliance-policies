@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apimanagement-v20220901preview-tagoperationlink-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20220901preview.TagOperationLink).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TagOperationLink, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TagOperationLink shouldn't use an unstable API (apimanagement.v20220901preview.TagOperationLink). A compatible replacement can be found at 'apimanagement.TagOperationLink'."
             );

@@ -61,6 +61,24 @@ describe("azurenative.blueprint.v20181101preview.Blueprint.disallowPreviewResour
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Blueprint shouldn't use an unstable API (blueprint.v20181101preview.Blueprint). A compatible replacement can be found at 'blueprint.Blueprint'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Blueprint shouldn't use an unstable API (blueprint.v20181101preview.Blueprint). A compatible replacement can be found at 'blueprint.Blueprint'." });

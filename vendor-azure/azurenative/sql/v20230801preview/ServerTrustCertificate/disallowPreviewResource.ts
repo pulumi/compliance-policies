@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230801preview-servertrustcertificate-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230801preview.ServerTrustCertificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServerTrustCertificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ServerTrustCertificate shouldn't use an unstable API (sql.v20230801preview.ServerTrustCertificate). A compatible replacement can be found at 'sql.ServerTrustCertificate'."
             );

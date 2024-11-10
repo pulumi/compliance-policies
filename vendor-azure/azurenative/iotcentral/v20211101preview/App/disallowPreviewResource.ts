@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotcentral-v20211101preview-app-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotcentral.v20211101preview.App).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(App, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure App shouldn't use an unstable API (iotcentral.v20211101preview.App). A compatible replacement can be found at 'iotcentral.App'.");
         }),
     },

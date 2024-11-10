@@ -28,8 +28,13 @@ export const disallowUnencryptedManagedDisk: ResourceValidationPolicy = policyMa
     resourceValidationPolicy: {
         name: "azure-compute-manageddisk-disallow-unencrypted-managed-disk",
         description: "Checks that Disks are encrypted.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedDisk, (disk, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (disk.encryptionSettings === undefined) {
                 reportViolation("A Disk is currently not encrypted.");
             }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-keyvault-v20240401preview-managedhsm-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (keyvault.v20240401preview.ManagedHsm).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedHsm, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ManagedHsm shouldn't use an unstable API (keyvault.v20240401preview.ManagedHsm). A compatible replacement can be found at 'keyvault.ManagedHsm'.");
         }),
     },

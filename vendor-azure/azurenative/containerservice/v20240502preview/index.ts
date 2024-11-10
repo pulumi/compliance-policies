@@ -19,3 +19,8 @@ export * as ManagedClusterSnapshot from "./ManagedClusterSnapshot";
 export * as PrivateEndpointConnection from "./PrivateEndpointConnection";
 export * as Snapshot from "./Snapshot";
 export * as TrustedAccessRoleBinding from "./TrustedAccessRoleBinding";
+export * as AutoUpgradeProfile from "./AutoUpgradeProfile";
+export * as Fleet from "./Fleet";
+export * as FleetMember from "./FleetMember";
+export * as FleetUpdateStrategy from "./FleetUpdateStrategy";
+export * as UpdateRun from "./UpdateRun";

@@ -61,10 +61,26 @@ describe("azurenative.azurestackhci.v20230701preview.GalleryImage.disallowPrevie
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GalleryImage shouldn't use an unstable API (azurestackhci.v20230701preview.GalleryImage). A compatible replacement can be found at 'azurestackhci.GalleryImage'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure GalleryImage shouldn't use an unstable API (azurestackhci.v20230701preview.GalleryImage). A compatible replacement can be found at 'azurestackhci.GalleryImage'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GalleryImage shouldn't use an unstable API (azurestackhci.v20230701preview.GalleryImage). A compatible replacement can be found at 'azurestackhci.GalleryImage'." });
     });
 });

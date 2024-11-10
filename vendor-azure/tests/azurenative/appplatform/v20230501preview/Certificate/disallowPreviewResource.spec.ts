@@ -61,10 +61,26 @@ describe("azurenative.appplatform.v20230501preview.Certificate.disallowPreviewRe
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (appplatform.v20230501preview.Certificate). A compatible replacement can be found at 'appplatform.Certificate'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Certificate shouldn't use an unstable API (appplatform.v20230501preview.Certificate). A compatible replacement can be found at 'appplatform.Certificate'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (appplatform.v20230501preview.Certificate). A compatible replacement can be found at 'appplatform.Certificate'." });
     });
 });

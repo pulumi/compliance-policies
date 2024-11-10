@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-desktopvirtualization-v20240306preview-msixpackage-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (desktopvirtualization.v20240306preview.MSIXPackage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MSIXPackage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MSIXPackage shouldn't use an unstable API (desktopvirtualization.v20240306preview.MSIXPackage). A compatible replacement can be found at 'desktopvirtualization.MSIXPackage'."
             );

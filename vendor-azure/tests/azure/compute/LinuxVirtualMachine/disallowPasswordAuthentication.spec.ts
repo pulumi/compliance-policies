@@ -60,6 +60,26 @@ describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", fun
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.disablePasswordAuthentication = false;
+        await assertHasResourceViolation(policy, args, { message: "Authentication to Linux machines should require SSH keys." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.disablePasswordAuthentication = false;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -68,8 +88,6 @@ describe("azure.compute.LinuxVirtualMachine.disallowPasswordAuthentication", fun
     it("#2", async function () {
         const args = getResourceValidationArgs();
         args.props.disablePasswordAuthentication = false;
-        await assertHasResourceViolation(policy, args, {
-            message: "Authentication to Linux machines should require SSH keys.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Authentication to Linux machines should require SSH keys." });
     });
 });

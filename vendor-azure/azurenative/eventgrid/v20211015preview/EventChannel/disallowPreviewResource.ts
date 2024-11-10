@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventgrid-v20211015preview-eventchannel-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventgrid.v20211015preview.EventChannel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EventChannel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EventChannel shouldn't use an unstable API (eventgrid.v20211015preview.EventChannel). A compatible replacement can be found at 'eventgrid.EventChannel'.");
         }),
     },

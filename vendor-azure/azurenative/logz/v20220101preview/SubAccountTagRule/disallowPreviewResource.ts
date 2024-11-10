@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-logz-v20220101preview-subaccounttagrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (logz.v20220101preview.SubAccountTagRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SubAccountTagRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure SubAccountTagRule shouldn't use an unstable API (logz.v20220101preview.SubAccountTagRule). A compatible replacement can be found at 'logz.SubAccountTagRule'.");
         }),
     },

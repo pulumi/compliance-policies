@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20210501preview-userrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20210501preview.UserRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(UserRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure UserRule shouldn't use an unstable API (network.v20210501preview.UserRule). A compatible replacement can be found at 'network.UserRule'.");
         }),
     },

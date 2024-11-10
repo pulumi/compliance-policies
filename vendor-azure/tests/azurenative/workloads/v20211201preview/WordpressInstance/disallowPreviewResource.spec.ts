@@ -61,10 +61,26 @@ describe("azurenative.workloads.v20211201preview.WordpressInstance.disallowPrevi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WordpressInstance shouldn't use an unstable API (workloads.v20211201preview.WordpressInstance). A compatible replacement can be found at 'workloads.WordpressInstance'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure WordpressInstance shouldn't use an unstable API (workloads.v20211201preview.WordpressInstance). A compatible replacement can be found at 'workloads.WordpressInstance'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WordpressInstance shouldn't use an unstable API (workloads.v20211201preview.WordpressInstance). A compatible replacement can be found at 'workloads.WordpressInstance'." });
     });
 });

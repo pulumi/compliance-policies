@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-webpubsub-v20240801preview-webpubsubprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (webpubsub.v20240801preview.WebPubSubPrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebPubSubPrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WebPubSubPrivateEndpointConnection shouldn't use an unstable API (webpubsub.v20240801preview.WebPubSubPrivateEndpointConnection). A compatible replacement can be found at 'webpubsub.WebPubSubPrivateEndpointConnection'."
             );

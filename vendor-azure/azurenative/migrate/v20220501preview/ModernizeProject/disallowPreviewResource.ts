@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-migrate-v20220501preview-modernizeproject-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (migrate.v20220501preview.ModernizeProject).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ModernizeProject, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ModernizeProject shouldn't use an unstable API (migrate.v20220501preview.ModernizeProject).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbforpostgresql-v20171201preview-serversecurityalertpolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbforpostgresql.v20171201preview.ServerSecurityAlertPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServerSecurityAlertPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ServerSecurityAlertPolicy shouldn't use an unstable API (dbforpostgresql.v20171201preview.ServerSecurityAlertPolicy). A compatible replacement can be found at 'dbforpostgresql.ServerSecurityAlertPolicy'."
             );

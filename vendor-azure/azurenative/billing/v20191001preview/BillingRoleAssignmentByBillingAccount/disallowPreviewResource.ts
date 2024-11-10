@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-billing-v20191001preview-billingroleassignmentbybillingaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (billing.v20191001preview.BillingRoleAssignmentByBillingAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BillingRoleAssignmentByBillingAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BillingRoleAssignmentByBillingAccount shouldn't use an unstable API (billing.v20191001preview.BillingRoleAssignmentByBillingAccount). A compatible replacement can be found at 'billing.BillingRoleAssignmentByBillingAccount'."
             );

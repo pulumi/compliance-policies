@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SkusNestedResourceTypeThird } from "@pulumi/azure-native/providerhub/v20210901preview";
 
@@ -21,12 +22,12 @@ import { SkusNestedResourceTypeThird } from "@pulumi/azure-native/providerhub/v2
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SkusNestedResourceTypeThird, {
         nestedResourceTypeFirst: "",
         nestedResourceTypeSecond: "",
         nestedResourceTypeThird: "",
         providerNamespace: "",
         resourceType: "",
-    });
+    }, policyconfig, resourceName);
 }

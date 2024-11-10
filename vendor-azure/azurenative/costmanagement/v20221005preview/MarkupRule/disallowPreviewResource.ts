@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-costmanagement-v20221005preview-markuprule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20221005preview.MarkupRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MarkupRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MarkupRule shouldn't use an unstable API (costmanagement.v20221005preview.MarkupRule).");
         }),
     },

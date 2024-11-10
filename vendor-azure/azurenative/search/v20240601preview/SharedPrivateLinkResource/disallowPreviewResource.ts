@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-search-v20240601preview-sharedprivatelinkresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (search.v20240601preview.SharedPrivateLinkResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SharedPrivateLinkResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SharedPrivateLinkResource shouldn't use an unstable API (search.v20240601preview.SharedPrivateLinkResource). A compatible replacement can be found at 'search.SharedPrivateLinkResource'."
             );

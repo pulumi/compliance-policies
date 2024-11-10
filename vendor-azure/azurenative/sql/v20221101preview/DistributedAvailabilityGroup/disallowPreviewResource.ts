@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20221101preview-distributedavailabilitygroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20221101preview.DistributedAvailabilityGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DistributedAvailabilityGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DistributedAvailabilityGroup shouldn't use an unstable API (sql.v20221101preview.DistributedAvailabilityGroup). A compatible replacement can be found at 'sql.DistributedAvailabilityGroup'."
             );

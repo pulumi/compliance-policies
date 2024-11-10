@@ -61,11 +61,26 @@ describe("azurenative.hardwaresecuritymodules.v20240630preview.CloudHsmCluster.d
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CloudHsmCluster shouldn't use an unstable API (hardwaresecuritymodules.v20240630preview.CloudHsmCluster). A compatible replacement can be found at 'hardwaresecuritymodules.CloudHsmCluster'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure CloudHsmCluster shouldn't use an unstable API (hardwaresecuritymodules.v20240630preview.CloudHsmCluster). A compatible replacement can be found at 'hardwaresecuritymodules.CloudHsmCluster'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CloudHsmCluster shouldn't use an unstable API (hardwaresecuritymodules.v20240630preview.CloudHsmCluster). A compatible replacement can be found at 'hardwaresecuritymodules.CloudHsmCluster'." });
     });
 });

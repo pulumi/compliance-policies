@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20240501preview-keygroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20240501preview.KeyGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KeyGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure KeyGroup shouldn't use an unstable API (cdn.v20240501preview.KeyGroup). A compatible replacement can be found at 'cdn.KeyGroup'.");
         }),
     },

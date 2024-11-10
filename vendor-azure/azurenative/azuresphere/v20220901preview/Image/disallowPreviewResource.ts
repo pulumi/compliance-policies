@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azuresphere-v20220901preview-image-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azuresphere.v20220901preview.Image).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Image, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Image shouldn't use an unstable API (azuresphere.v20220901preview.Image). A compatible replacement can be found at 'azuresphere.Image'.");
         }),
     },

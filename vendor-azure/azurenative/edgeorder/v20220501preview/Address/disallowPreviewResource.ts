@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-edgeorder-v20220501preview-address-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (edgeorder.v20220501preview.Address).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Address, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Address shouldn't use an unstable API (edgeorder.v20220501preview.Address). A compatible replacement can be found at 'edgeorder.Address'.");
         }),
     },

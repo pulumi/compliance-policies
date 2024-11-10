@@ -61,6 +61,24 @@ describe("azurenative.logz.v20220101preview.SubAccount.disallowPreviewResource",
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SubAccount shouldn't use an unstable API (logz.v20220101preview.SubAccount). A compatible replacement can be found at 'logz.SubAccount'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure SubAccount shouldn't use an unstable API (logz.v20220101preview.SubAccount). A compatible replacement can be found at 'logz.SubAccount'." });

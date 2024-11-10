@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventgrid-v20240601preview-clientgroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventgrid.v20240601preview.ClientGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClientGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ClientGroup shouldn't use an unstable API (eventgrid.v20240601preview.ClientGroup). A compatible replacement can be found at 'eventgrid.ClientGroup'.");
         }),
     },

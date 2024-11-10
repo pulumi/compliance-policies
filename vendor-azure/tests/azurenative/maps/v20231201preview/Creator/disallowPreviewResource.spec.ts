@@ -61,10 +61,26 @@ describe("azurenative.maps.v20231201preview.Creator.disallowPreviewResource", fu
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Creator shouldn't use an unstable API (maps.v20231201preview.Creator). A compatible replacement can be found at 'maps.Creator'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Creator shouldn't use an unstable API (maps.v20231201preview.Creator). A compatible replacement can be found at 'maps.Creator'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Creator shouldn't use an unstable API (maps.v20231201preview.Creator). A compatible replacement can be found at 'maps.Creator'." });
     });
 });

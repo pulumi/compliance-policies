@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20221201preview-defenderforstorage-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20221201preview.DefenderForStorage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DefenderForStorage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DefenderForStorage shouldn't use an unstable API (security.v20221201preview.DefenderForStorage). A compatible replacement can be found at 'security.DefenderForStorage'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20221101preview-virtualnetworkrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20221101preview.VirtualNetworkRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualNetworkRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure VirtualNetworkRule shouldn't use an unstable API (sql.v20221101preview.VirtualNetworkRule). A compatible replacement can be found at 'sql.VirtualNetworkRule'.");
         }),
     },

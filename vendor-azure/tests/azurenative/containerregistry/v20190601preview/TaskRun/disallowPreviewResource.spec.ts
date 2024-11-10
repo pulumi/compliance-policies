@@ -61,6 +61,24 @@ describe("azurenative.containerregistry.v20190601preview.TaskRun.disallowPreview
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure TaskRun shouldn't use an unstable API (containerregistry.v20190601preview.TaskRun). A compatible replacement can be found at 'containerregistry.TaskRun'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure TaskRun shouldn't use an unstable API (containerregistry.v20190601preview.TaskRun). A compatible replacement can be found at 'containerregistry.TaskRun'." });

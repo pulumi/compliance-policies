@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-professionalservice-v20230701preview-professionalservicesubscriptionlevel-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (professionalservice.v20230701preview.ProfessionalServiceSubscriptionLevel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProfessionalServiceSubscriptionLevel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ProfessionalServiceSubscriptionLevel shouldn't use an unstable API (professionalservice.v20230701preview.ProfessionalServiceSubscriptionLevel). A compatible replacement can be found at 'professionalservice.ProfessionalServiceSubscriptionLevel'."
             );

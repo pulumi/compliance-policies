@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventhub-v20230101preview-consumergroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventhub.v20230101preview.ConsumerGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConsumerGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ConsumerGroup shouldn't use an unstable API (eventhub.v20230101preview.ConsumerGroup). A compatible replacement can be found at 'eventhub.ConsumerGroup'.");
         }),
     },

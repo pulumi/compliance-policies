@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsmq-v20231004preview-broker-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsmq.v20231004preview.Broker).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Broker, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Broker shouldn't use an unstable API (iotoperationsmq.v20231004preview.Broker). A compatible replacement can be found at 'iotoperationsmq.Broker'.");
         }),
     },

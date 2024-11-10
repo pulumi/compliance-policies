@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicebus-v20220101preview-topic-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicebus.v20220101preview.Topic).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Topic, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Topic shouldn't use an unstable API (servicebus.v20220101preview.Topic). A compatible replacement can be found at 'servicebus.Topic'.");
         }),
     },

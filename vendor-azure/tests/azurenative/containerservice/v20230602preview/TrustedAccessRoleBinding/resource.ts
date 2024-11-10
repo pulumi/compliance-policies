@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { TrustedAccessRoleBinding } from "@pulumi/azure-native/containerservice/v20230602preview";
 
@@ -21,11 +22,11 @@ import { TrustedAccessRoleBinding } from "@pulumi/azure-native/containerservice/
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(TrustedAccessRoleBinding, {
         resourceGroupName: "",
         resourceName: "",
         roles: [""],
         sourceResourceId: "",
-    });
+    }, policyconfig, resourceName);
 }

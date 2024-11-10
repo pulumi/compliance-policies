@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilenetwork-v20220401preview-mobilenetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilenetwork.v20220401preview.MobileNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MobileNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MobileNetwork shouldn't use an unstable API (mobilenetwork.v20220401preview.MobileNetwork). A compatible replacement can be found at 'mobilenetwork.MobileNetwork'."
             );

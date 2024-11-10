@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scvmm-v20220521preview-vmmserver-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scvmm.v20220521preview.VmmServer).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VmmServer, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure VmmServer shouldn't use an unstable API (scvmm.v20220521preview.VmmServer). A compatible replacement can be found at 'scvmm.VmmServer'.");
         }),
     },

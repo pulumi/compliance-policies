@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-portal-v20200901preview-tenantconfiguration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (portal.v20200901preview.TenantConfiguration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TenantConfiguration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TenantConfiguration shouldn't use an unstable API (portal.v20200901preview.TenantConfiguration). A compatible replacement can be found at 'portal.TenantConfiguration'."
             );

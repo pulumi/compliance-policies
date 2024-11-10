@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-intune-v20150114preview-androidmampolicybyname-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (intune.v20150114preview.AndroidMAMPolicyByName).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AndroidMAMPolicyByName, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AndroidMAMPolicyByName shouldn't use an unstable API (intune.v20150114preview.AndroidMAMPolicyByName). A compatible replacement can be found at 'intune.AndroidMAMPolicyByName'."
             );

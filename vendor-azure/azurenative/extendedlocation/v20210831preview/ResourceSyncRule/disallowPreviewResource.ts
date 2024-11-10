@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-extendedlocation-v20210831preview-resourcesyncrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (extendedlocation.v20210831preview.ResourceSyncRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourceSyncRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ResourceSyncRule shouldn't use an unstable API (extendedlocation.v20210831preview.ResourceSyncRule). A compatible replacement can be found at 'extendedlocation.ResourceSyncRule'."
             );

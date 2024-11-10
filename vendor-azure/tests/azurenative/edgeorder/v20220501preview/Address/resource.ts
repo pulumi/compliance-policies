@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Address } from "@pulumi/azure-native/edgeorder/v20220501preview";
 
@@ -21,7 +22,7 @@ import { Address } from "@pulumi/azure-native/edgeorder/v20220501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Address, {
         resourceGroupName: "",
         contactDetails: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             emailList: [""],
             phone: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

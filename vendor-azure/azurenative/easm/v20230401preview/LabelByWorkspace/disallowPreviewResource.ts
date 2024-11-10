@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-easm-v20230401preview-labelbyworkspace-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (easm.v20230401preview.LabelByWorkspace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LabelByWorkspace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LabelByWorkspace shouldn't use an unstable API (easm.v20230401preview.LabelByWorkspace). A compatible replacement can be found at 'easm.LabelByWorkspace'.");
         }),
     },

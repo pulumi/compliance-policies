@@ -61,10 +61,26 @@ describe("azurenative.datamigration.v20230715preview.Task.disallowPreviewResourc
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Task shouldn't use an unstable API (datamigration.v20230715preview.Task). A compatible replacement can be found at 'datamigration.Task'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Task shouldn't use an unstable API (datamigration.v20230715preview.Task). A compatible replacement can be found at 'datamigration.Task'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Task shouldn't use an unstable API (datamigration.v20230715preview.Task). A compatible replacement can be found at 'datamigration.Task'." });
     });
 });

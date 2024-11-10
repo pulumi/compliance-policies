@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetworkfabric-v20230201preview-ipextendedcommunity-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetworkfabric.v20230201preview.IpExtendedCommunity).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IpExtendedCommunity, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure IpExtendedCommunity shouldn't use an unstable API (managednetworkfabric.v20230201preview.IpExtendedCommunity). A compatible replacement can be found at 'managednetworkfabric.IpExtendedCommunity'."
             );

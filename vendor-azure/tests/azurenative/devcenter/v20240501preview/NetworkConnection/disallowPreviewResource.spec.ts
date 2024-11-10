@@ -61,10 +61,26 @@ describe("azurenative.devcenter.v20240501preview.NetworkConnection.disallowPrevi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkConnection shouldn't use an unstable API (devcenter.v20240501preview.NetworkConnection). A compatible replacement can be found at 'devcenter.NetworkConnection'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure NetworkConnection shouldn't use an unstable API (devcenter.v20240501preview.NetworkConnection). A compatible replacement can be found at 'devcenter.NetworkConnection'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkConnection shouldn't use an unstable API (devcenter.v20240501preview.NetworkConnection). A compatible replacement can be found at 'devcenter.NetworkConnection'." });
     });
 });

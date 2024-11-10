@@ -61,6 +61,24 @@ describe("azurenative.mobilenetwork.v20220401preview.AttachedDataNetwork.disallo
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AttachedDataNetwork shouldn't use an unstable API (mobilenetwork.v20220401preview.AttachedDataNetwork). A compatible replacement can be found at 'mobilenetwork.AttachedDataNetwork'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure AttachedDataNetwork shouldn't use an unstable API (mobilenetwork.v20220401preview.AttachedDataNetwork). A compatible replacement can be found at 'mobilenetwork.AttachedDataNetwork'." });

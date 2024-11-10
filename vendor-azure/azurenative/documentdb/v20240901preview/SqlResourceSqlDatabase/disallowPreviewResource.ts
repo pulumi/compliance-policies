@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20240901preview-sqlresourcesqldatabase-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20240901preview.SqlResourceSqlDatabase).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlResourceSqlDatabase, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlResourceSqlDatabase shouldn't use an unstable API (documentdb.v20240901preview.SqlResourceSqlDatabase). A compatible replacement can be found at 'documentdb.SqlResourceSqlDatabase'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-costmanagement-v20190401preview-budget-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20190401preview.Budget).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Budget, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Budget shouldn't use an unstable API (costmanagement.v20190401preview.Budget).");
         }),
     },

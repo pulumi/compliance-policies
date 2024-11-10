@@ -61,11 +61,26 @@ describe("azurenative.securityinsights.v20230601preview.AwsS3DataConnector.disal
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AwsS3DataConnector shouldn't use an unstable API (securityinsights.v20230601preview.AwsS3DataConnector). A compatible replacement can be found at 'securityinsights.AwsS3DataConnector'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure AwsS3DataConnector shouldn't use an unstable API (securityinsights.v20230601preview.AwsS3DataConnector). A compatible replacement can be found at 'securityinsights.AwsS3DataConnector'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AwsS3DataConnector shouldn't use an unstable API (securityinsights.v20230601preview.AwsS3DataConnector). A compatible replacement can be found at 'securityinsights.AwsS3DataConnector'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicefabric-v20231201preview-nodetype-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicefabric.v20231201preview.NodeType).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NodeType, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure NodeType shouldn't use an unstable API (servicefabric.v20231201preview.NodeType). A compatible replacement can be found at 'servicefabric.NodeType'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurearcdata-v20230115preview-datacontroller-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20230115preview.DataController).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataController, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DataController shouldn't use an unstable API (azurearcdata.v20230115preview.DataController). A compatible replacement can be found at 'azurearcdata.DataController'."
             );

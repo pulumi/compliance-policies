@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datareplication-v20210216preview-fabric-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datareplication.v20210216preview.Fabric).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Fabric, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Fabric shouldn't use an unstable API (datareplication.v20210216preview.Fabric). A compatible replacement can be found at 'datareplication.Fabric'.");
         }),
     },

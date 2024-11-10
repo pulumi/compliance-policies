@@ -61,11 +61,26 @@ describe("azurenative.connectedvmwarevsphere.v20230301preview.VirtualMachine.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualMachine shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VirtualMachine). A compatible replacement can be found at 'connectedvmwarevsphere.VirtualMachine'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure VirtualMachine shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VirtualMachine). A compatible replacement can be found at 'connectedvmwarevsphere.VirtualMachine'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualMachine shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VirtualMachine). A compatible replacement can be found at 'connectedvmwarevsphere.VirtualMachine'." });
     });
 });

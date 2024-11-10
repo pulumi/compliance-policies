@@ -61,6 +61,24 @@ describe("azurenative.app.v20220101preview.ContainerAppsSourceControl.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ContainerAppsSourceControl shouldn't use an unstable API (app.v20220101preview.ContainerAppsSourceControl). A compatible replacement can be found at 'app.ContainerAppsSourceControl'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure ContainerAppsSourceControl shouldn't use an unstable API (app.v20220101preview.ContainerAppsSourceControl). A compatible replacement can be found at 'app.ContainerAppsSourceControl'." });

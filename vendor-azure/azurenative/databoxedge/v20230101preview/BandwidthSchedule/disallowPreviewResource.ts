@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databoxedge-v20230101preview-bandwidthschedule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20230101preview.BandwidthSchedule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BandwidthSchedule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BandwidthSchedule shouldn't use an unstable API (databoxedge.v20230101preview.BandwidthSchedule). A compatible replacement can be found at 'databoxedge.BandwidthSchedule'."
             );

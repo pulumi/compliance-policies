@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databoxedge-v20230101preview-fileeventtrigger-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20230101preview.FileEventTrigger).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FileEventTrigger, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FileEventTrigger shouldn't use an unstable API (databoxedge.v20230101preview.FileEventTrigger). A compatible replacement can be found at 'databoxedge.FileEventTrigger'."
             );

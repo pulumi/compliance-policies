@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-subscription-v20240801preview-subscriptiontardirectory-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (subscription.v20240801preview.SubscriptionTarDirectory).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SubscriptionTarDirectory, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SubscriptionTarDirectory shouldn't use an unstable API (subscription.v20240801preview.SubscriptionTarDirectory). A compatible replacement can be found at 'subscription.SubscriptionTarDirectory'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20221215preview-updaterun-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20221215preview.UpdateRun).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(UpdateRun, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure UpdateRun shouldn't use an unstable API (azurestackhci.v20221215preview.UpdateRun). A compatible replacement can be found at 'azurestackhci.UpdateRun'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-connectedvmwarevsphere-v20230301preview-guestagent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20230301preview.GuestAgent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GuestAgent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GuestAgent shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.GuestAgent). A compatible replacement can be found at 'connectedvmwarevsphere.GuestAgent'."
             );

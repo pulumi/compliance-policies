@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20230701preview-afdcustomdomain-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20230701preview.AFDCustomDomain).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AFDCustomDomain, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AFDCustomDomain shouldn't use an unstable API (cdn.v20230701preview.AFDCustomDomain). A compatible replacement can be found at 'cdn.AFDCustomDomain'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20200515preview-linkedworkspace-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20200515preview.LinkedWorkspace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LinkedWorkspace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LinkedWorkspace shouldn't use an unstable API (machinelearningservices.v20200515preview.LinkedWorkspace).");
         }),
     },

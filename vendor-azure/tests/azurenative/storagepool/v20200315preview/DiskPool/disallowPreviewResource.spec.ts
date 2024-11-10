@@ -61,10 +61,26 @@ describe("azurenative.storagepool.v20200315preview.DiskPool.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiskPool shouldn't use an unstable API (storagepool.v20200315preview.DiskPool). A compatible replacement can be found at 'storagepool.DiskPool'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure DiskPool shouldn't use an unstable API (storagepool.v20200315preview.DiskPool). A compatible replacement can be found at 'storagepool.DiskPool'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiskPool shouldn't use an unstable API (storagepool.v20200315preview.DiskPool). A compatible replacement can be found at 'storagepool.DiskPool'." });
     });
 });

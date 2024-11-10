@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cloudngfw-v20240207preview-localrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cloudngfw.v20240207preview.LocalRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LocalRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LocalRule shouldn't use an unstable API (cloudngfw.v20240207preview.LocalRule). A compatible replacement can be found at 'cloudngfw.LocalRule'.");
         }),
     },

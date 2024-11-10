@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IpCommunity } from "@pulumi/azure-native/managednetworkfabric/v20230201preview";
 
@@ -21,10 +22,10 @@ import { IpCommunity } from "@pulumi/azure-native/managednetworkfabric/v20230201
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IpCommunity, {
         action: "",
         communityMembers: [""],
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

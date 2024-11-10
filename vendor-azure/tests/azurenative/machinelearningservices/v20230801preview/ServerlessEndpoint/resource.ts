@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ServerlessEndpoint } from "@pulumi/azure-native/machinelearningservices/v20230801preview";
 
@@ -21,7 +22,7 @@ import { ServerlessEndpoint } from "@pulumi/azure-native/machinelearningservices
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ServerlessEndpoint, {
         resourceGroupName: "",
         serverlessEndpointProperties: {
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

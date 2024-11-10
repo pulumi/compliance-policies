@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-redhatopenshift-v20230701preview-syncidentityprovider-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (redhatopenshift.v20230701preview.SyncIdentityProvider).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SyncIdentityProvider, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SyncIdentityProvider shouldn't use an unstable API (redhatopenshift.v20230701preview.SyncIdentityProvider). A compatible replacement can be found at 'redhatopenshift.SyncIdentityProvider'."
             );

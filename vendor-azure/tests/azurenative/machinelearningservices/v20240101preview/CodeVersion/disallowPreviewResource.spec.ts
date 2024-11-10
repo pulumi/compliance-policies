@@ -61,11 +61,26 @@ describe("azurenative.machinelearningservices.v20240101preview.CodeVersion.disal
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CodeVersion shouldn't use an unstable API (machinelearningservices.v20240101preview.CodeVersion). A compatible replacement can be found at 'machinelearningservices.CodeVersion'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure CodeVersion shouldn't use an unstable API (machinelearningservices.v20240101preview.CodeVersion). A compatible replacement can be found at 'machinelearningservices.CodeVersion'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CodeVersion shouldn't use an unstable API (machinelearningservices.v20240101preview.CodeVersion). A compatible replacement can be found at 'machinelearningservices.CodeVersion'." });
     });
 });

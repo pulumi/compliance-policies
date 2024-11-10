@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210601preview-eventhubdataconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210601preview.EventHubDataConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EventHubDataConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure EventHubDataConnection shouldn't use an unstable API (synapse.v20210601preview.EventHubDataConnection). A compatible replacement can be found at 'synapse.EventHubDataConnection'."
             );

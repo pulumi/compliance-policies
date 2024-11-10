@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-providerhub-v20210901preview-providerregistration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (providerhub.v20210901preview.ProviderRegistration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProviderRegistration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ProviderRegistration shouldn't use an unstable API (providerhub.v20210901preview.ProviderRegistration). A compatible replacement can be found at 'providerhub.ProviderRegistration'."
             );

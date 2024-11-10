@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-streamanalytics-v20200301preview-privateendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (streamanalytics.v20200301preview.PrivateEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateEndpoint shouldn't use an unstable API (streamanalytics.v20200301preview.PrivateEndpoint). A compatible replacement can be found at 'streamanalytics.PrivateEndpoint'."
             );

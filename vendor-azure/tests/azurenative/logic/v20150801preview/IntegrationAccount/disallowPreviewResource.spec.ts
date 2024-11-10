@@ -61,6 +61,24 @@ describe("azurenative.logic.v20150801preview.IntegrationAccount.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure IntegrationAccount shouldn't use an unstable API (logic.v20150801preview.IntegrationAccount). A compatible replacement can be found at 'logic.IntegrationAccount'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure IntegrationAccount shouldn't use an unstable API (logic.v20150801preview.IntegrationAccount). A compatible replacement can be found at 'logic.IntegrationAccount'." });

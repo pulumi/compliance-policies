@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerregistry-v20230601preview-archife-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerregistry.v20230601preview.Archife).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Archife, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Archife shouldn't use an unstable API (containerregistry.v20230601preview.Archife). A compatible replacement can be found at 'containerregistry.Archife'.");
         }),
     },

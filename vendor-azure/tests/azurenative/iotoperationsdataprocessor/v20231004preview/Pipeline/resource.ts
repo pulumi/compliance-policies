@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Pipeline } from "@pulumi/azure-native/iotoperationsdataprocessor/v20231004preview";
 
@@ -21,7 +22,7 @@ import { Pipeline } from "@pulumi/azure-native/iotoperationsdataprocessor/v20231
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Pipeline, {
         enabled: false,
         extendedLocation: {
@@ -35,5 +36,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         instanceName: "",
         resourceGroupName: "",
         stages: {},
-    });
+    }, policyconfig, resourceName);
 }

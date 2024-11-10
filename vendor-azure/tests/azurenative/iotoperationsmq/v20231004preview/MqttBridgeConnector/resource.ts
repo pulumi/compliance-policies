@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MqttBridgeConnector } from "@pulumi/azure-native/iotoperationsmq/v20231004preview";
 
@@ -21,7 +22,7 @@ import { MqttBridgeConnector } from "@pulumi/azure-native/iotoperationsmq/v20231
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MqttBridgeConnector, {
         extendedLocation: {
             name: "",
@@ -41,5 +42,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

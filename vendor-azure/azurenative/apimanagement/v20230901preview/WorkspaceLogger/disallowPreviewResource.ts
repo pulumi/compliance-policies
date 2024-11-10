@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apimanagement-v20230901preview-workspacelogger-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20230901preview.WorkspaceLogger).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkspaceLogger, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WorkspaceLogger shouldn't use an unstable API (apimanagement.v20230901preview.WorkspaceLogger). A compatible replacement can be found at 'apimanagement.WorkspaceLogger'."
             );

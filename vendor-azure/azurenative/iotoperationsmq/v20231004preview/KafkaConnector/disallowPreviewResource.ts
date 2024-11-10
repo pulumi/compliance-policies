@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsmq-v20231004preview-kafkaconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsmq.v20231004preview.KafkaConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KafkaConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure KafkaConnector shouldn't use an unstable API (iotoperationsmq.v20231004preview.KafkaConnector). A compatible replacement can be found at 'iotoperationsmq.KafkaConnector'."
             );

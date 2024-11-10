@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20221101preview-firewallrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20221101preview.FirewallRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure FirewallRule shouldn't use an unstable API (sql.v20221101preview.FirewallRule). A compatible replacement can be found at 'sql.FirewallRule'.");
         }),
     },

@@ -61,10 +61,26 @@ describe("azurenative.sql.v20230501preview.JobPrivateEndpoint.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobPrivateEndpoint shouldn't use an unstable API (sql.v20230501preview.JobPrivateEndpoint). A compatible replacement can be found at 'sql.JobPrivateEndpoint'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure JobPrivateEndpoint shouldn't use an unstable API (sql.v20230501preview.JobPrivateEndpoint). A compatible replacement can be found at 'sql.JobPrivateEndpoint'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobPrivateEndpoint shouldn't use an unstable API (sql.v20230501preview.JobPrivateEndpoint). A compatible replacement can be found at 'sql.JobPrivateEndpoint'." });
     });
 });

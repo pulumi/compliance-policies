@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ConnectivityConfiguration } from "@pulumi/azure-native/network/v20210501preview";
 
@@ -21,11 +22,11 @@ import { ConnectivityConfiguration } from "@pulumi/azure-native/network/v2021050
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ConnectivityConfiguration, {
         resourceGroupName: "",
         appliesToGroups: [],
         connectivityTopology: "",
         networkManagerName: "",
-    });
+    }, policyconfig, resourceName);
 }

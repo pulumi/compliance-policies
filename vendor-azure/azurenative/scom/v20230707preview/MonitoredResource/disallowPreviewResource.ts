@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scom-v20230707preview-monitoredresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scom.v20230707preview.MonitoredResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MonitoredResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MonitoredResource shouldn't use an unstable API (scom.v20230707preview.MonitoredResource). A compatible replacement can be found at 'scom.MonitoredResource'.");
         }),
     },

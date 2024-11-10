@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-m365securityandcompliance-v20210325preview-privatelinkservicesforedmupload-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (m365securityandcompliance.v20210325preview.PrivateLinkServicesForEDMUpload).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkServicesForEDMUpload, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkServicesForEDMUpload shouldn't use an unstable API (m365securityandcompliance.v20210325preview.PrivateLinkServicesForEDMUpload). A compatible replacement can be found at 'm365securityandcompliance.PrivateLinkServicesForEDMUpload'."
             );

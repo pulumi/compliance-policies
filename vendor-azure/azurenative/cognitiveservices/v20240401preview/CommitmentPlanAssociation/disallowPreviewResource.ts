@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cognitiveservices-v20240401preview-commitmentplanassociation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cognitiveservices.v20240401preview.CommitmentPlanAssociation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CommitmentPlanAssociation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CommitmentPlanAssociation shouldn't use an unstable API (cognitiveservices.v20240401preview.CommitmentPlanAssociation). A compatible replacement can be found at 'cognitiveservices.CommitmentPlanAssociation'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-healthbot-v20201208preview-bot-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (healthbot.v20201208preview.Bot).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bot, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Bot shouldn't use an unstable API (healthbot.v20201208preview.Bot). A compatible replacement can be found at 'healthbot.Bot'.");
         }),
     },

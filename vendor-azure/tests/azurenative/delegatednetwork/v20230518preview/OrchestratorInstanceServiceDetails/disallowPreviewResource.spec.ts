@@ -61,11 +61,26 @@ describe("azurenative.delegatednetwork.v20230518preview.OrchestratorInstanceServ
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OrchestratorInstanceServiceDetails shouldn't use an unstable API (delegatednetwork.v20230518preview.OrchestratorInstanceServiceDetails). A compatible replacement can be found at 'delegatednetwork.OrchestratorInstanceServiceDetails'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure OrchestratorInstanceServiceDetails shouldn't use an unstable API (delegatednetwork.v20230518preview.OrchestratorInstanceServiceDetails). A compatible replacement can be found at 'delegatednetwork.OrchestratorInstanceServiceDetails'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OrchestratorInstanceServiceDetails shouldn't use an unstable API (delegatednetwork.v20230518preview.OrchestratorInstanceServiceDetails). A compatible replacement can be found at 'delegatednetwork.OrchestratorInstanceServiceDetails'." });
     });
 });

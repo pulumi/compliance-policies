@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-migrate-v20220501preview-workloadinstance-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (migrate.v20220501preview.WorkloadInstance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkloadInstance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure WorkloadInstance shouldn't use an unstable API (migrate.v20220501preview.WorkloadInstance).");
         }),
     },

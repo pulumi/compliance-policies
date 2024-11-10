@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-redhatopenshift-v20230701preview-syncset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (redhatopenshift.v20230701preview.SyncSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SyncSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure SyncSet shouldn't use an unstable API (redhatopenshift.v20230701preview.SyncSet). A compatible replacement can be found at 'redhatopenshift.SyncSet'.");
         }),
     },

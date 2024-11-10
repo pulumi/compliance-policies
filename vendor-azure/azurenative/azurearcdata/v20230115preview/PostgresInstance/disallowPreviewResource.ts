@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurearcdata-v20230115preview-postgresinstance-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20230115preview.PostgresInstance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PostgresInstance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PostgresInstance shouldn't use an unstable API (azurearcdata.v20230115preview.PostgresInstance). A compatible replacement can be found at 'azurearcdata.PostgresInstance'."
             );

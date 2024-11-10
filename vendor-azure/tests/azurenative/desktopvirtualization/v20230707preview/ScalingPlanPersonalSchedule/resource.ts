@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ScalingPlanPersonalSchedule } from "@pulumi/azure-native/desktopvirtualization/v20230707preview";
 
@@ -21,9 +22,9 @@ import { ScalingPlanPersonalSchedule } from "@pulumi/azure-native/desktopvirtual
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ScalingPlanPersonalSchedule, {
         resourceGroupName: "",
         scalingPlanName: "",
-    });
+    }, policyconfig, resourceName);
 }

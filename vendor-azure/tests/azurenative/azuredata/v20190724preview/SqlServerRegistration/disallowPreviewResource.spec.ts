@@ -61,6 +61,24 @@ describe("azurenative.azuredata.v20190724preview.SqlServerRegistration.disallowP
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SqlServerRegistration shouldn't use an unstable API (azuredata.v20190724preview.SqlServerRegistration). A compatible replacement can be found at 'azuredata.SqlServerRegistration'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure SqlServerRegistration shouldn't use an unstable API (azuredata.v20190724preview.SqlServerRegistration). A compatible replacement can be found at 'azuredata.SqlServerRegistration'." });

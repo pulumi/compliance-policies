@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-deviceregistry-v20231101preview-asset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (deviceregistry.v20231101preview.Asset).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Asset, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Asset shouldn't use an unstable API (deviceregistry.v20231101preview.Asset). A compatible replacement can be found at 'deviceregistry.Asset'.");
         }),
     },

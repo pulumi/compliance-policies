@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-webpubsub-v20240101preview-webpubsubcustomdomain-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (webpubsub.v20240101preview.WebPubSubCustomDomain).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebPubSubCustomDomain, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WebPubSubCustomDomain shouldn't use an unstable API (webpubsub.v20240101preview.WebPubSubCustomDomain). A compatible replacement can be found at 'webpubsub.WebPubSubCustomDomain'."
             );

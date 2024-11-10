@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbformysql-v20180601privatepreview-virtualnetworkrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbformysql.v20180601privatepreview.VirtualNetworkRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualNetworkRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VirtualNetworkRule shouldn't use an unstable API (dbformysql.v20180601privatepreview.VirtualNetworkRule). A compatible replacement can be found at 'dbformysql.v20171201.VirtualNetworkRule'."
             );

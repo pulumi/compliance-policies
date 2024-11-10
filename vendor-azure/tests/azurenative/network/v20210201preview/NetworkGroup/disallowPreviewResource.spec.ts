@@ -61,6 +61,24 @@ describe("azurenative.network.v20210201preview.NetworkGroup.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkGroup shouldn't use an unstable API (network.v20210201preview.NetworkGroup). A compatible replacement can be found at 'network.NetworkGroup'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure NetworkGroup shouldn't use an unstable API (network.v20210201preview.NetworkGroup). A compatible replacement can be found at 'network.NetworkGroup'." });

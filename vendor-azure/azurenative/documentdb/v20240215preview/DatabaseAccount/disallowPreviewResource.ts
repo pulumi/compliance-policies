@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20240215preview-databaseaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20240215preview.DatabaseAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DatabaseAccount shouldn't use an unstable API (documentdb.v20240215preview.DatabaseAccount). A compatible replacement can be found at 'documentdb.DatabaseAccount'."
             );

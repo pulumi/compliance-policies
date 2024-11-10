@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-programmableconnectivity-v20240115preview-operatorapiconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (programmableconnectivity.v20240115preview.OperatorApiConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OperatorApiConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure OperatorApiConnection shouldn't use an unstable API (programmableconnectivity.v20240115preview.OperatorApiConnection). A compatible replacement can be found at 'programmableconnectivity.OperatorApiConnection'."
             );

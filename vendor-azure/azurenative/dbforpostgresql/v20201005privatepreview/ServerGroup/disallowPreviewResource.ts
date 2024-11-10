@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbforpostgresql-v20201005privatepreview-servergroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbforpostgresql.v20201005privatepreview.ServerGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServerGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ServerGroup shouldn't use an unstable API (dbforpostgresql.v20201005privatepreview.ServerGroup). A compatible replacement can be found at 'dbforpostgresql.v20221108.ServerGroup'."
             );

@@ -60,6 +60,26 @@ describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", f
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        delete args.props.networkProfile.networkPolicy;
+        await assertHasResourceViolation(policy, args, { message: "Ensure AKS cluster has Network Policy configured." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        delete args.props.networkProfile.networkPolicy;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);
@@ -68,8 +88,6 @@ describe("azurenative.containerservice.ManagedCluster.configureNetworkPolicy", f
     it("#2", async function () {
         const args = getResourceValidationArgs();
         delete args.props.networkProfile.networkPolicy;
-        await assertHasResourceViolation(policy, args, {
-            message: "Ensure AKS cluster has Network Policy configured.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Ensure AKS cluster has Network Policy configured." });
     });
 });

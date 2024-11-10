@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperations-v20240815preview-brokerauthentication-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperations.v20240815preview.BrokerAuthentication).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BrokerAuthentication, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BrokerAuthentication shouldn't use an unstable API (iotoperations.v20240815preview.BrokerAuthentication). A compatible replacement can be found at 'iotoperations.BrokerAuthentication'."
             );

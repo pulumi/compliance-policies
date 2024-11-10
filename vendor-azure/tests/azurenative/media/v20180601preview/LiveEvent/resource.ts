@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { LiveEvent } from "@pulumi/azure-native/media/v20180601preview";
 
@@ -21,12 +22,12 @@ import { LiveEvent } from "@pulumi/azure-native/media/v20180601preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(LiveEvent, {
         resourceGroupName: "",
         accountName: "",
         input: {
             streamingProtocol: "FragmentedMP4",
         },
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IscsiTarget } from "@pulumi/azure-native/storagepool/v20200315preview";
 
@@ -21,7 +22,7 @@ import { IscsiTarget } from "@pulumi/azure-native/storagepool/v20200315preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IscsiTarget, {
         diskPoolName: "",
         resourceGroupName: "",
@@ -47,5 +48,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 ],
             },
         ],
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databoxedge-v20220401preview-device-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20220401preview.Device).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Device, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Device shouldn't use an unstable API (databoxedge.v20220401preview.Device). A compatible replacement can be found at 'databoxedge.Device'.");
         }),
     },

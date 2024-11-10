@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20210701preview-privatelinkscopedresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20210701preview.PrivateLinkScopedResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkScopedResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkScopedResource shouldn't use an unstable API (insights.v20210701preview.PrivateLinkScopedResource). A compatible replacement can be found at 'insights.PrivateLinkScopedResource'."
             );

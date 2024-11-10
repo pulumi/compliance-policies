@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BookmarkRelation } from "@pulumi/azure-native/securityinsights/v20230701preview";
 
@@ -21,11 +22,11 @@ import { BookmarkRelation } from "@pulumi/azure-native/securityinsights/v2023070
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BookmarkRelation, {
         bookmarkId: "",
         relatedResourceId: "",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

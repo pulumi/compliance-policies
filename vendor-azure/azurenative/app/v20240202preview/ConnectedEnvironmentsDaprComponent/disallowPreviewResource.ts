@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20240202preview-connectedenvironmentsdaprcomponent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20240202preview.ConnectedEnvironmentsDaprComponent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectedEnvironmentsDaprComponent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConnectedEnvironmentsDaprComponent shouldn't use an unstable API (app.v20240202preview.ConnectedEnvironmentsDaprComponent). A compatible replacement can be found at 'app.ConnectedEnvironmentsDaprComponent'."
             );

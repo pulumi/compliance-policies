@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridnetwork-v20220101preview-vendorskupreview-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridnetwork.v20220101preview.VendorSkuPreview).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VendorSkuPreview, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VendorSkuPreview shouldn't use an unstable API (hybridnetwork.v20220101preview.VendorSkuPreview). A compatible replacement can be found at 'hybridnetwork.VendorSkuPreview'."
             );

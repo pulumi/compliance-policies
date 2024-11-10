@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-streamanalytics-v20170401preview-streamingjob-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (streamanalytics.v20170401preview.StreamingJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StreamingJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure StreamingJob shouldn't use an unstable API (streamanalytics.v20170401preview.StreamingJob). A compatible replacement can be found at 'streamanalytics.StreamingJob'."
             );

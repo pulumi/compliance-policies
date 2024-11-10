@@ -61,11 +61,26 @@ describe("azurenative.servicebus.v20180101preview.NamespaceVirtualNetworkRule.di
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NamespaceVirtualNetworkRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceVirtualNetworkRule). A compatible replacement can be found at 'servicebus.NamespaceVirtualNetworkRule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure NamespaceVirtualNetworkRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceVirtualNetworkRule). A compatible replacement can be found at 'servicebus.NamespaceVirtualNetworkRule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NamespaceVirtualNetworkRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceVirtualNetworkRule). A compatible replacement can be found at 'servicebus.NamespaceVirtualNetworkRule'." });
     });
 });

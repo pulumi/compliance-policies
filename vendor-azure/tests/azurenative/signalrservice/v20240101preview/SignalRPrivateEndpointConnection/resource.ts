@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SignalRPrivateEndpointConnection } from "@pulumi/azure-native/signalrservice/v20240101preview";
 
@@ -21,9 +22,9 @@ import { SignalRPrivateEndpointConnection } from "@pulumi/azure-native/signalrse
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SignalRPrivateEndpointConnection, {
         resourceGroupName: "",
         resourceName: "",
-    });
+    }, policyconfig, resourceName);
 }

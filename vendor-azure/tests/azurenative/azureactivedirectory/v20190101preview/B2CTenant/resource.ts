@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { B2CTenant } from "@pulumi/azure-native/azureactivedirectory/v20190101preview";
 
@@ -21,10 +22,10 @@ import { B2CTenant } from "@pulumi/azure-native/azureactivedirectory/v20190101pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(B2CTenant, {
         resourceGroupName: "",
         properties: {},
         sku: {},
-    });
+    }, policyconfig, resourceName);
 }

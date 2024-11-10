@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-resources-v20191001preview-azurepowershellscript-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (resources.v20191001preview.AzurePowerShellScript).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AzurePowerShellScript, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AzurePowerShellScript shouldn't use an unstable API (resources.v20191001preview.AzurePowerShellScript). A compatible replacement can be found at 'resources.AzurePowerShellScript'."
             );

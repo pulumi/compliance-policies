@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { TrafficControllerInterface } from "@pulumi/azure-native/servicenetworking/v20230501preview";
 
@@ -21,8 +22,8 @@ import { TrafficControllerInterface } from "@pulumi/azure-native/servicenetworki
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(TrafficControllerInterface, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

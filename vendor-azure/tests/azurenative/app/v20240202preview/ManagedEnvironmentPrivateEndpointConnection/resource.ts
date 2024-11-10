@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedEnvironmentPrivateEndpointConnection } from "@pulumi/azure-native/app/v20240202preview";
 
@@ -21,10 +22,10 @@ import { ManagedEnvironmentPrivateEndpointConnection } from "@pulumi/azure-nativ
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedEnvironmentPrivateEndpointConnection, {
         environmentName: "",
         privateLinkServiceConnectionState: {},
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

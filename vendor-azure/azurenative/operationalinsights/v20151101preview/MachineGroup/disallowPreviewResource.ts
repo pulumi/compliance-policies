@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-operationalinsights-v20151101preview-machinegroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (operationalinsights.v20151101preview.MachineGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachineGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MachineGroup shouldn't use an unstable API (operationalinsights.v20151101preview.MachineGroup). A compatible replacement can be found at 'operationalinsights.MachineGroup'."
             );

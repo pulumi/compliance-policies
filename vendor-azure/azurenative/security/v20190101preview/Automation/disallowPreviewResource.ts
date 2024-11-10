@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20190101preview-automation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20190101preview.Automation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Automation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Automation shouldn't use an unstable API (security.v20190101preview.Automation). A compatible replacement can be found at 'security.Automation'.");
         }),
     },

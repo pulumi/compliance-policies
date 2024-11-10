@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { VerifierWorkspace } from "@pulumi/azure-native/network/v20240101preview";
 
@@ -21,9 +22,9 @@ import { VerifierWorkspace } from "@pulumi/azure-native/network/v20240101preview
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(VerifierWorkspace, {
         networkManagerName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

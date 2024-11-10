@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsmq-v20231004preview-mqttbridgetopicmap-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsmq.v20231004preview.MqttBridgeTopicMap).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MqttBridgeTopicMap, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MqttBridgeTopicMap shouldn't use an unstable API (iotoperationsmq.v20231004preview.MqttBridgeTopicMap). A compatible replacement can be found at 'iotoperationsmq.MqttBridgeTopicMap'."
             );

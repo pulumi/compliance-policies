@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20231101preview-buildservicebuilder-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20231101preview.BuildServiceBuilder).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BuildServiceBuilder, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BuildServiceBuilder shouldn't use an unstable API (appplatform.v20231101preview.BuildServiceBuilder). A compatible replacement can be found at 'appplatform.BuildServiceBuilder'."
             );

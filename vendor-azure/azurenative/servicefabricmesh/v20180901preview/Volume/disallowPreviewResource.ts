@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicefabricmesh-v20180901preview-volume-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicefabricmesh.v20180901preview.Volume).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Volume, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Volume shouldn't use an unstable API (servicefabricmesh.v20180901preview.Volume). A compatible replacement can be found at 'servicefabricmesh.Volume'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210401preview-databaseprincipalassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210401preview.DatabasePrincipalAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabasePrincipalAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DatabasePrincipalAssignment shouldn't use an unstable API (synapse.v20210401preview.DatabasePrincipalAssignment). A compatible replacement can be found at 'synapse.DatabasePrincipalAssignment'."
             );

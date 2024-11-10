@@ -61,10 +61,26 @@ describe("azurenative.deviceregistry.v20240901preview.Schema.disallowPreviewReso
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Schema shouldn't use an unstable API (deviceregistry.v20240901preview.Schema). A compatible replacement can be found at 'deviceregistry.Schema'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Schema shouldn't use an unstable API (deviceregistry.v20240901preview.Schema). A compatible replacement can be found at 'deviceregistry.Schema'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Schema shouldn't use an unstable API (deviceregistry.v20240901preview.Schema). A compatible replacement can be found at 'deviceregistry.Schema'." });
     });
 });

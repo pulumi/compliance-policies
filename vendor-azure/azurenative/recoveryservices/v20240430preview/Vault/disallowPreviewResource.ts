@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-recoveryservices-v20240430preview-vault-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (recoveryservices.v20240430preview.Vault).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Vault, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Vault shouldn't use an unstable API (recoveryservices.v20240430preview.Vault). A compatible replacement can be found at 'recoveryservices.Vault'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerservice-v20240202preview-fleetupdatestrategy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20240202preview.FleetUpdateStrategy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FleetUpdateStrategy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FleetUpdateStrategy shouldn't use an unstable API (containerservice.v20240202preview.FleetUpdateStrategy). A compatible replacement can be found at 'containerservice.FleetUpdateStrategy'."
             );

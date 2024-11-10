@@ -61,10 +61,26 @@ describe("azurenative.automation.v20230515preview.Certificate.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (automation.v20230515preview.Certificate). A compatible replacement can be found at 'automation.Certificate'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Certificate shouldn't use an unstable API (automation.v20230515preview.Certificate). A compatible replacement can be found at 'automation.Certificate'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Certificate shouldn't use an unstable API (automation.v20230515preview.Certificate). A compatible replacement can be found at 'automation.Certificate'." });
     });
 });

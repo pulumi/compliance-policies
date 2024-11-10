@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { KafkaConfiguration } from "@pulumi/azure-native/purview/v20230501preview";
 
@@ -21,9 +22,9 @@ import { KafkaConfiguration } from "@pulumi/azure-native/purview/v20230501previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(KafkaConfiguration, {
         accountName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-notificationhubs-v20231001preview-notificationhub-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (notificationhubs.v20231001preview.NotificationHub).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NotificationHub, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NotificationHub shouldn't use an unstable API (notificationhubs.v20231001preview.NotificationHub). A compatible replacement can be found at 'notificationhubs.NotificationHub'."
             );

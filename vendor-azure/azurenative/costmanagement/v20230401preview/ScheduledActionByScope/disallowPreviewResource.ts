@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-costmanagement-v20230401preview-scheduledactionbyscope-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20230401preview.ScheduledActionByScope).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScheduledActionByScope, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ScheduledActionByScope shouldn't use an unstable API (costmanagement.v20230401preview.ScheduledActionByScope). A compatible replacement can be found at 'costmanagement.ScheduledActionByScope'."
             );

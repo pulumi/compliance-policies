@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-integrationspaces-v20231114preview-businessprocess-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (integrationspaces.v20231114preview.BusinessProcess).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BusinessProcess, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BusinessProcess shouldn't use an unstable API (integrationspaces.v20231114preview.BusinessProcess). A compatible replacement can be found at 'integrationspaces.BusinessProcess'."
             );

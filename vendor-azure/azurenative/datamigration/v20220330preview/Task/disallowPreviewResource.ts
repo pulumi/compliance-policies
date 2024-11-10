@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datamigration-v20220330preview-task-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20220330preview.Task).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Task, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Task shouldn't use an unstable API (datamigration.v20220330preview.Task). A compatible replacement can be found at 'datamigration.Task'.");
         }),
     },

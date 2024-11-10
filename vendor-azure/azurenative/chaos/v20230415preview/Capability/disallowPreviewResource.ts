@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-chaos-v20230415preview-capability-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (chaos.v20230415preview.Capability).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Capability, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Capability shouldn't use an unstable API (chaos.v20230415preview.Capability). A compatible replacement can be found at 'chaos.Capability'.");
         }),
     },

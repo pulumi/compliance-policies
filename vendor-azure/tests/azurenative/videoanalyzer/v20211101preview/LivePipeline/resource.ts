@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { LivePipeline } from "@pulumi/azure-native/videoanalyzer/v20211101preview";
 
@@ -21,11 +22,11 @@ import { LivePipeline } from "@pulumi/azure-native/videoanalyzer/v20211101previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(LivePipeline, {
         accountName: "",
         bitrateKbps: 1,
         resourceGroupName: "",
         topologyName: "",
-    });
+    }, policyconfig, resourceName);
 }

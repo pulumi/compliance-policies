@@ -61,6 +61,24 @@ describe("azurenative.authorization.v20211201preview.AccessReviewHistoryDefiniti
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AccessReviewHistoryDefinitionById shouldn't use an unstable API (authorization.v20211201preview.AccessReviewHistoryDefinitionById). A compatible replacement can be found at 'authorization.AccessReviewHistoryDefinitionById'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure AccessReviewHistoryDefinitionById shouldn't use an unstable API (authorization.v20211201preview.AccessReviewHistoryDefinitionById). A compatible replacement can be found at 'authorization.AccessReviewHistoryDefinitionById'." });

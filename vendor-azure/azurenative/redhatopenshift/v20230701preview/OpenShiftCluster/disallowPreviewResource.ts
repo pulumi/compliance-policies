@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-redhatopenshift-v20230701preview-openshiftcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (redhatopenshift.v20230701preview.OpenShiftCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OpenShiftCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure OpenShiftCluster shouldn't use an unstable API (redhatopenshift.v20230701preview.OpenShiftCluster). A compatible replacement can be found at 'redhatopenshift.OpenShiftCluster'."
             );

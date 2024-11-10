@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { KubernetesCluster } from "@pulumi/azure/containerservice";
@@ -22,7 +23,7 @@ import { KubernetesCluster } from "@pulumi/azure/containerservice";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(KubernetesCluster, {
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
         location: enums.resourcegroup.Location,
@@ -39,5 +40,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         identity: {
             type: "SystemAssigned",
         },
-    });
+    }, policyconfig, resourceName);
 }

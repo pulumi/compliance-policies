@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetworkfabric-v20230201preview-networktonetworkinterconnect-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetworkfabric.v20230201preview.NetworkToNetworkInterconnect).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkToNetworkInterconnect, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NetworkToNetworkInterconnect shouldn't use an unstable API (managednetworkfabric.v20230201preview.NetworkToNetworkInterconnect). A compatible replacement can be found at 'managednetworkfabric.NetworkToNetworkInterconnect'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210601preview-workspacesqlaadadmin-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210601preview.WorkspaceSqlAadAdmin).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkspaceSqlAadAdmin, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WorkspaceSqlAadAdmin shouldn't use an unstable API (synapse.v20210601preview.WorkspaceSqlAadAdmin). A compatible replacement can be found at 'synapse.WorkspaceSqlAadAdmin'."
             );

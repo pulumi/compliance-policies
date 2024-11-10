@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20240101preview-staticcidr-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20240101preview.StaticCidr).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StaticCidr, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure StaticCidr shouldn't use an unstable API (network.v20240101preview.StaticCidr). A compatible replacement can be found at 'network.StaticCidr'.");
         }),
     },

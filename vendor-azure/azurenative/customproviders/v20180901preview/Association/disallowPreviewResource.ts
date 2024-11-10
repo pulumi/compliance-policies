@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-customproviders-v20180901preview-association-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (customproviders.v20180901preview.Association).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Association, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Association shouldn't use an unstable API (customproviders.v20180901preview.Association). A compatible replacement can be found at 'customproviders.Association'.");
         }),
     },

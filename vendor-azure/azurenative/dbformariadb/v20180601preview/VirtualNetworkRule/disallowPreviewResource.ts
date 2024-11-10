@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbformariadb-v20180601preview-virtualnetworkrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbformariadb.v20180601preview.VirtualNetworkRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualNetworkRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VirtualNetworkRule shouldn't use an unstable API (dbformariadb.v20180601preview.VirtualNetworkRule). A compatible replacement can be found at 'dbformariadb.VirtualNetworkRule'."
             );

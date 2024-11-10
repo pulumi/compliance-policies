@@ -61,10 +61,26 @@ describe("azurenative.costmanagement.v20230701preview.View.disallowPreviewResour
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure View shouldn't use an unstable API (costmanagement.v20230701preview.View). A compatible replacement can be found at 'costmanagement.View'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure View shouldn't use an unstable API (costmanagement.v20230701preview.View). A compatible replacement can be found at 'costmanagement.View'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure View shouldn't use an unstable API (costmanagement.v20230701preview.View). A compatible replacement can be found at 'costmanagement.View'." });
     });
 });

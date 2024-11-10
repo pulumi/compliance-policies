@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-offazure-v20231001preview-mastersitescontroller-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (offazure.v20231001preview.MasterSitesController).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MasterSitesController, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MasterSitesController shouldn't use an unstable API (offazure.v20231001preview.MasterSitesController). A compatible replacement can be found at 'offazure.MasterSitesController'."
             );

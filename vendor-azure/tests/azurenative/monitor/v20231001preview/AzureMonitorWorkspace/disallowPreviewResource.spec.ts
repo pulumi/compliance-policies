@@ -61,11 +61,26 @@ describe("azurenative.monitor.v20231001preview.AzureMonitorWorkspace.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AzureMonitorWorkspace shouldn't use an unstable API (monitor.v20231001preview.AzureMonitorWorkspace). A compatible replacement can be found at 'monitor.AzureMonitorWorkspace'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure AzureMonitorWorkspace shouldn't use an unstable API (monitor.v20231001preview.AzureMonitorWorkspace). A compatible replacement can be found at 'monitor.AzureMonitorWorkspace'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AzureMonitorWorkspace shouldn't use an unstable API (monitor.v20231001preview.AzureMonitorWorkspace). A compatible replacement can be found at 'monitor.AzureMonitorWorkspace'." });
     });
 });

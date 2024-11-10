@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20210301preview-sentinelonboardingstate-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20210301preview.SentinelOnboardingState).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SentinelOnboardingState, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SentinelOnboardingState shouldn't use an unstable API (securityinsights.v20210301preview.SentinelOnboardingState). A compatible replacement can be found at 'securityinsights.SentinelOnboardingState'."
             );

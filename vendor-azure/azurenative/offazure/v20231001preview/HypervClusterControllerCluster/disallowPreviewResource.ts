@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-offazure-v20231001preview-hypervclustercontrollercluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (offazure.v20231001preview.HypervClusterControllerCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HypervClusterControllerCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure HypervClusterControllerCluster shouldn't use an unstable API (offazure.v20231001preview.HypervClusterControllerCluster). A compatible replacement can be found at 'offazure.HypervClusterControllerCluster'."
             );

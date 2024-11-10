@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilepacketcore-v20231015preview-nrfdeployment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilepacketcore.v20231015preview.NrfDeployment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NrfDeployment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NrfDeployment shouldn't use an unstable API (mobilepacketcore.v20231015preview.NrfDeployment). A compatible replacement can be found at 'mobilepacketcore.NrfDeployment'."
             );

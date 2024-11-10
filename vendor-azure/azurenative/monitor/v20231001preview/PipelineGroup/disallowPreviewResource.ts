@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-monitor-v20231001preview-pipelinegroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (monitor.v20231001preview.PipelineGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PipelineGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure PipelineGroup shouldn't use an unstable API (monitor.v20231001preview.PipelineGroup). A compatible replacement can be found at 'monitor.PipelineGroup'.");
         }),
     },

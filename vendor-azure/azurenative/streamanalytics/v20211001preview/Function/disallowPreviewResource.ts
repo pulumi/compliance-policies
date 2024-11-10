@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-streamanalytics-v20211001preview-function-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (streamanalytics.v20211001preview.Function).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Function, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Function shouldn't use an unstable API (streamanalytics.v20211001preview.Function). A compatible replacement can be found at 'streamanalytics.Function'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbforpostgresql-v20230601preview-virtualendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbforpostgresql.v20230601preview.VirtualEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VirtualEndpoint shouldn't use an unstable API (dbforpostgresql.v20230601preview.VirtualEndpoint). A compatible replacement can be found at 'dbforpostgresql.VirtualEndpoint'."
             );

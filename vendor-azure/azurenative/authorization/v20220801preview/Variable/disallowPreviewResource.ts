@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-authorization-v20220801preview-variable-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (authorization.v20220801preview.Variable).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Variable, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Variable shouldn't use an unstable API (authorization.v20220801preview.Variable).");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301preview";
 
@@ -21,8 +22,8 @@ import { PrivateLinkForAzureAd } from "@pulumi/azure-native/aadiam/v20200301prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PrivateLinkForAzureAd, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

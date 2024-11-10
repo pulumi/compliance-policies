@@ -61,11 +61,26 @@ describe("azurenative.timeseriesinsights.v20210331preview.Gen2Environment.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Gen2Environment shouldn't use an unstable API (timeseriesinsights.v20210331preview.Gen2Environment). A compatible replacement can be found at 'timeseriesinsights.Gen2Environment'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure Gen2Environment shouldn't use an unstable API (timeseriesinsights.v20210331preview.Gen2Environment). A compatible replacement can be found at 'timeseriesinsights.Gen2Environment'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Gen2Environment shouldn't use an unstable API (timeseriesinsights.v20210331preview.Gen2Environment). A compatible replacement can be found at 'timeseriesinsights.Gen2Environment'." });
     });
 });

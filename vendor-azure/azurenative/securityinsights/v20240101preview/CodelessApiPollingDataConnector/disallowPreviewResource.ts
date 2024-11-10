@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20240101preview-codelessapipollingdataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20240101preview.CodelessApiPollingDataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CodelessApiPollingDataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CodelessApiPollingDataConnector shouldn't use an unstable API (securityinsights.v20240101preview.CodelessApiPollingDataConnector). A compatible replacement can be found at 'securityinsights.CodelessApiPollingDataConnector'."
             );

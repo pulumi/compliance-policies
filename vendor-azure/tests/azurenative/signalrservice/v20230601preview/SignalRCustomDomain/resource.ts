@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SignalRCustomDomain } from "@pulumi/azure-native/signalrservice/v20230601preview";
 
@@ -21,11 +22,11 @@ import { SignalRCustomDomain } from "@pulumi/azure-native/signalrservice/v202306
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SignalRCustomDomain, {
         customCertificate: {},
         domainName: "",
         resourceGroupName: "",
         resourceName: "",
-    });
+    }, policyconfig, resourceName);
 }

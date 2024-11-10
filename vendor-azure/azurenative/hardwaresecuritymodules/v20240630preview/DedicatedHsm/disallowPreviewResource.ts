@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hardwaresecuritymodules-v20240630preview-dedicatedhsm-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hardwaresecuritymodules.v20240630preview.DedicatedHsm).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DedicatedHsm, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DedicatedHsm shouldn't use an unstable API (hardwaresecuritymodules.v20240630preview.DedicatedHsm). A compatible replacement can be found at 'hardwaresecuritymodules.DedicatedHsm'."
             );

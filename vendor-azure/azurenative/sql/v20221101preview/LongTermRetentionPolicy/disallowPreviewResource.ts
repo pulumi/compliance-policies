@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20221101preview-longtermretentionpolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20221101preview.LongTermRetentionPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LongTermRetentionPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure LongTermRetentionPolicy shouldn't use an unstable API (sql.v20221101preview.LongTermRetentionPolicy). A compatible replacement can be found at 'sql.LongTermRetentionPolicy'."
             );

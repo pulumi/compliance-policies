@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devcenter-v20240501preview-projectcatalog-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devcenter.v20240501preview.ProjectCatalog).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProjectCatalog, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ProjectCatalog shouldn't use an unstable API (devcenter.v20240501preview.ProjectCatalog). A compatible replacement can be found at 'devcenter.ProjectCatalog'.");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Springbootapp } from "@pulumi/azure-native/offazurespringboot/v20240401preview";
 
@@ -21,9 +22,9 @@ import { Springbootapp } from "@pulumi/azure-native/offazurespringboot/v20240401
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Springbootapp, {
         resourceGroupName: "",
         siteName: "",
-    });
+    }, policyconfig, resourceName);
 }

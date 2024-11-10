@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20200501preview-machinelearningdataset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20200501preview.MachineLearningDataset).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachineLearningDataset, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MachineLearningDataset shouldn't use an unstable API (machinelearningservices.v20200501preview.MachineLearningDataset). A compatible replacement can be found at 'machinelearningservices.MachineLearningDataset'."
             );

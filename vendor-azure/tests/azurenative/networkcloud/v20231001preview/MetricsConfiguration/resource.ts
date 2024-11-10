@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MetricsConfiguration } from "@pulumi/azure-native/networkcloud/v20231001preview";
 
@@ -21,7 +22,7 @@ import { MetricsConfiguration } from "@pulumi/azure-native/networkcloud/v2023100
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MetricsConfiguration, {
         clusterName: "",
         collectionInterval: 1.0,
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             type: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

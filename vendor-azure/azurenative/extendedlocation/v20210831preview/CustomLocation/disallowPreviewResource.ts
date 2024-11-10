@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-extendedlocation-v20210831preview-customlocation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (extendedlocation.v20210831preview.CustomLocation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomLocation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CustomLocation shouldn't use an unstable API (extendedlocation.v20210831preview.CustomLocation). A compatible replacement can be found at 'extendedlocation.CustomLocation'."
             );

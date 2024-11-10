@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PhpWorkload } from "@pulumi/azure-native/workloads/v20211201preview";
 
@@ -21,7 +22,7 @@ import { PhpWorkload } from "@pulumi/azure-native/workloads/v20211201preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PhpWorkload, {
         adminUserProfile: {
             sshPublicKey: "",
@@ -49,5 +50,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
             osImage: {},
         },
-    });
+    }, policyconfig, resourceName);
 }

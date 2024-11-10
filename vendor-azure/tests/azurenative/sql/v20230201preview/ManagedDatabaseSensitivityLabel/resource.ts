@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedDatabaseSensitivityLabel } from "@pulumi/azure-native/sql/v20230201preview";
 
@@ -21,7 +22,7 @@ import { ManagedDatabaseSensitivityLabel } from "@pulumi/azure-native/sql/v20230
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedDatabaseSensitivityLabel, {
         columnName: "",
         databaseName: "",
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         schemaName: "",
         tableName: "",
-    });
+    }, policyconfig, resourceName);
 }

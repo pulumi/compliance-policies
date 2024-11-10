@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BackupVault } from "@pulumi/azure-native/dataprotection/v20240201preview";
 
@@ -21,11 +22,11 @@ import { BackupVault } from "@pulumi/azure-native/dataprotection/v20240201previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BackupVault, {
         properties: {
             storageSettings: [{}],
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

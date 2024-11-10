@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventgrid-v20240601preview-systemtopiceventsubscription-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventgrid.v20240601preview.SystemTopicEventSubscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SystemTopicEventSubscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SystemTopicEventSubscription shouldn't use an unstable API (eventgrid.v20240601preview.SystemTopicEventSubscription). A compatible replacement can be found at 'eventgrid.SystemTopicEventSubscription'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerservice-v20240402preview-trustedaccessrolebinding-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20240402preview.TrustedAccessRoleBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TrustedAccessRoleBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TrustedAccessRoleBinding shouldn't use an unstable API (containerservice.v20240402preview.TrustedAccessRoleBinding). A compatible replacement can be found at 'containerservice.TrustedAccessRoleBinding'."
             );

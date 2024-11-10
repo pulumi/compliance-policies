@@ -61,10 +61,26 @@ describe("azurenative.azurearcdata.v20230115preview.FailoverGroup.disallowPrevie
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FailoverGroup shouldn't use an unstable API (azurearcdata.v20230115preview.FailoverGroup). A compatible replacement can be found at 'azurearcdata.FailoverGroup'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure FailoverGroup shouldn't use an unstable API (azurearcdata.v20230115preview.FailoverGroup). A compatible replacement can be found at 'azurearcdata.FailoverGroup'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FailoverGroup shouldn't use an unstable API (azurearcdata.v20230115preview.FailoverGroup). A compatible replacement can be found at 'azurearcdata.FailoverGroup'." });
     });
 });

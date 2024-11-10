@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scvmm-v20220521preview-virtualmachinetemplate-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scvmm.v20220521preview.VirtualMachineTemplate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VirtualMachineTemplate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VirtualMachineTemplate shouldn't use an unstable API (scvmm.v20220521preview.VirtualMachineTemplate). A compatible replacement can be found at 'scvmm.VirtualMachineTemplate'."
             );

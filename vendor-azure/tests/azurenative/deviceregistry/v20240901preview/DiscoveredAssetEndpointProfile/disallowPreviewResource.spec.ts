@@ -61,11 +61,26 @@ describe("azurenative.deviceregistry.v20240901preview.DiscoveredAssetEndpointPro
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiscoveredAssetEndpointProfile shouldn't use an unstable API (deviceregistry.v20240901preview.DiscoveredAssetEndpointProfile). A compatible replacement can be found at 'deviceregistry.DiscoveredAssetEndpointProfile'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure DiscoveredAssetEndpointProfile shouldn't use an unstable API (deviceregistry.v20240901preview.DiscoveredAssetEndpointProfile). A compatible replacement can be found at 'deviceregistry.DiscoveredAssetEndpointProfile'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DiscoveredAssetEndpointProfile shouldn't use an unstable API (deviceregistry.v20240901preview.DiscoveredAssetEndpointProfile). A compatible replacement can be found at 'deviceregistry.DiscoveredAssetEndpointProfile'." });
     });
 });

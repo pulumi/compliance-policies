@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azureactivedirectory-v20230517preview-guestusage-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20230517preview.GuestUsage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GuestUsage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GuestUsage shouldn't use an unstable API (azureactivedirectory.v20230517preview.GuestUsage). A compatible replacement can be found at 'azureactivedirectory.GuestUsage'."
             );

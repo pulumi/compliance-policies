@@ -61,11 +61,26 @@ describe("azurenative.securityinsights.v20230801preview.MSTIDataConnector.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MSTIDataConnector shouldn't use an unstable API (securityinsights.v20230801preview.MSTIDataConnector). A compatible replacement can be found at 'securityinsights.MSTIDataConnector'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure MSTIDataConnector shouldn't use an unstable API (securityinsights.v20230801preview.MSTIDataConnector). A compatible replacement can be found at 'securityinsights.MSTIDataConnector'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MSTIDataConnector shouldn't use an unstable API (securityinsights.v20230801preview.MSTIDataConnector). A compatible replacement can be found at 'securityinsights.MSTIDataConnector'." });
     });
 });

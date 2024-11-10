@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-maps-v20200201preview-privateatlase-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (maps.v20200201preview.PrivateAtlase).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateAtlase, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure PrivateAtlase shouldn't use an unstable API (maps.v20200201preview.PrivateAtlase). A compatible replacement can be found at 'maps.PrivateAtlase'.");
         }),
     },

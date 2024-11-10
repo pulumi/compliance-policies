@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-recoveryservices-v20240430preview-resourceguardproxy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (recoveryservices.v20240430preview.ResourceGuardProxy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourceGuardProxy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ResourceGuardProxy shouldn't use an unstable API (recoveryservices.v20240430preview.ResourceGuardProxy). A compatible replacement can be found at 'recoveryservices.ResourceGuardProxy'."
             );

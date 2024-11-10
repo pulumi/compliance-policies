@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datamigration-v20230715preview-databasemigrationssqldb-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20230715preview.DatabaseMigrationsSqlDb).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseMigrationsSqlDb, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DatabaseMigrationsSqlDb shouldn't use an unstable API (datamigration.v20230715preview.DatabaseMigrationsSqlDb). A compatible replacement can be found at 'datamigration.DatabaseMigrationsSqlDb'."
             );

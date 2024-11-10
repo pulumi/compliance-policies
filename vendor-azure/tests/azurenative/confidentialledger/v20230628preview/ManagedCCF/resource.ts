@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedCCF } from "@pulumi/azure-native/confidentialledger/v20230628preview";
 
@@ -21,8 +22,8 @@ import { ManagedCCF } from "@pulumi/azure-native/confidentialledger/v20230628pre
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedCCF, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

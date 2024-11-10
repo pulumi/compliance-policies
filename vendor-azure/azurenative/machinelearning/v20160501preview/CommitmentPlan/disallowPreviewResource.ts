@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearning-v20160501preview-commitmentplan-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearning.v20160501preview.CommitmentPlan).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CommitmentPlan, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CommitmentPlan shouldn't use an unstable API (machinelearning.v20160501preview.CommitmentPlan). A compatible replacement can be found at 'machinelearning.CommitmentPlan'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerservice-v20191027preview-openshiftmanagedcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20191027preview.OpenShiftManagedCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OpenShiftManagedCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure OpenShiftManagedCluster shouldn't use an unstable API (containerservice.v20191027preview.OpenShiftManagedCluster). A compatible replacement can be found at 'containerservice.OpenShiftManagedCluster'."
             );

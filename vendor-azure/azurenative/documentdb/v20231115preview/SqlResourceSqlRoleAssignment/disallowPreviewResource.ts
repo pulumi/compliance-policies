@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20231115preview-sqlresourcesqlroleassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20231115preview.SqlResourceSqlRoleAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlResourceSqlRoleAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlResourceSqlRoleAssignment shouldn't use an unstable API (documentdb.v20231115preview.SqlResourceSqlRoleAssignment). A compatible replacement can be found at 'documentdb.SqlResourceSqlRoleAssignment'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilepacketcore-v20231015preview-upfdeployment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilepacketcore.v20231015preview.UpfDeployment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(UpfDeployment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure UpfDeployment shouldn't use an unstable API (mobilepacketcore.v20231015preview.UpfDeployment). A compatible replacement can be found at 'mobilepacketcore.UpfDeployment'."
             );

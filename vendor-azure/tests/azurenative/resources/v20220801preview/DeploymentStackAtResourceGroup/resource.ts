@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DeploymentStackAtResourceGroup } from "@pulumi/azure-native/resources/v20220801preview";
 
@@ -21,7 +22,7 @@ import { DeploymentStackAtResourceGroup } from "@pulumi/azure-native/resources/v
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DeploymentStackAtResourceGroup, {
         resourceGroupName: "",
         actionOnUnmanage: {
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         denySettings: {
             mode: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

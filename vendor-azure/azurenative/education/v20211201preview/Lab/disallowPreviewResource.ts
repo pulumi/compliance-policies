@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-education-v20211201preview-lab-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (education.v20211201preview.Lab).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Lab, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Lab shouldn't use an unstable API (education.v20211201preview.Lab). A compatible replacement can be found at 'education.Lab'.");
         }),
     },

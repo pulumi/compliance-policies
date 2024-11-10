@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Student } from "@pulumi/azure-native/education/v20211201preview";
 
@@ -21,7 +22,7 @@ import { Student } from "@pulumi/azure-native/education/v20211201preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Student, {
         billingAccountName: "",
         billingProfileName: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         invoiceSectionName: "",
         lastName: "",
         role: "",
-    });
+    }, policyconfig, resourceName);
 }

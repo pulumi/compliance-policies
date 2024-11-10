@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicelinker-v20230401preview-connectordryrun-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicelinker.v20230401preview.ConnectorDryrun).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectorDryrun, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConnectorDryrun shouldn't use an unstable API (servicelinker.v20230401preview.ConnectorDryrun). A compatible replacement can be found at 'servicelinker.ConnectorDryrun'."
             );

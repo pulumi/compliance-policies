@@ -61,10 +61,26 @@ describe("azurenative.orbital.v20240301preview.L2Connection.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure L2Connection shouldn't use an unstable API (orbital.v20240301preview.L2Connection). A compatible replacement can be found at 'orbital.L2Connection'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure L2Connection shouldn't use an unstable API (orbital.v20240301preview.L2Connection). A compatible replacement can be found at 'orbital.L2Connection'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure L2Connection shouldn't use an unstable API (orbital.v20240301preview.L2Connection). A compatible replacement can be found at 'orbital.L2Connection'." });
     });
 });

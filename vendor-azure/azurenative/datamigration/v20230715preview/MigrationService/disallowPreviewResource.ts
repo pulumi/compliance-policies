@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datamigration-v20230715preview-migrationservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20230715preview.MigrationService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MigrationService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MigrationService shouldn't use an unstable API (datamigration.v20230715preview.MigrationService). A compatible replacement can be found at 'datamigration.MigrationService'."
             );

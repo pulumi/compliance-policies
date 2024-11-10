@@ -61,10 +61,26 @@ describe("azurenative.hybridcompute.v20230620preview.LicenseProfile.disallowPrev
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LicenseProfile shouldn't use an unstable API (hybridcompute.v20230620preview.LicenseProfile). A compatible replacement can be found at 'hybridcompute.LicenseProfile'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure LicenseProfile shouldn't use an unstable API (hybridcompute.v20230620preview.LicenseProfile). A compatible replacement can be found at 'hybridcompute.LicenseProfile'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LicenseProfile shouldn't use an unstable API (hybridcompute.v20230620preview.LicenseProfile). A compatible replacement can be found at 'hybridcompute.LicenseProfile'." });
     });
 });

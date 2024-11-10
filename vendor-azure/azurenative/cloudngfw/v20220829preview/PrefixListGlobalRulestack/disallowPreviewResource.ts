@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cloudngfw-v20220829preview-prefixlistglobalrulestack-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cloudngfw.v20220829preview.PrefixListGlobalRulestack).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrefixListGlobalRulestack, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrefixListGlobalRulestack shouldn't use an unstable API (cloudngfw.v20220829preview.PrefixListGlobalRulestack). A compatible replacement can be found at 'cloudngfw.PrefixListGlobalRulestack'."
             );

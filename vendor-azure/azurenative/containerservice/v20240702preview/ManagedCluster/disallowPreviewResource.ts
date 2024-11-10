@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerservice-v20240702preview-managedcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerservice.v20240702preview.ManagedCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedCluster shouldn't use an unstable API (containerservice.v20240702preview.ManagedCluster). A compatible replacement can be found at 'containerservice.ManagedCluster'."
             );

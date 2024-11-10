@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetworkfabric-v20230201preview-externalnetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetworkfabric.v20230201preview.ExternalNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ExternalNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ExternalNetwork shouldn't use an unstable API (managednetworkfabric.v20230201preview.ExternalNetwork). A compatible replacement can be found at 'managednetworkfabric.ExternalNetwork'."
             );

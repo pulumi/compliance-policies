@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-migrate-v20230401preview-sqlcollectoroperation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (migrate.v20230401preview.SqlCollectorOperation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlCollectorOperation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlCollectorOperation shouldn't use an unstable API (migrate.v20230401preview.SqlCollectorOperation). A compatible replacement can be found at 'migrate.SqlCollectorOperation'."
             );

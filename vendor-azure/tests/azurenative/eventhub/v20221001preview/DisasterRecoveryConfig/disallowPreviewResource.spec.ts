@@ -61,6 +61,24 @@ describe("azurenative.eventhub.v20221001preview.DisasterRecoveryConfig.disallowP
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DisasterRecoveryConfig shouldn't use an unstable API (eventhub.v20221001preview.DisasterRecoveryConfig). A compatible replacement can be found at 'eventhub.DisasterRecoveryConfig'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure DisasterRecoveryConfig shouldn't use an unstable API (eventhub.v20221001preview.DisasterRecoveryConfig). A compatible replacement can be found at 'eventhub.DisasterRecoveryConfig'." });

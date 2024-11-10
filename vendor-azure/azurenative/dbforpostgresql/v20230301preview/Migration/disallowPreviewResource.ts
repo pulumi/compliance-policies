@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbforpostgresql-v20230301preview-migration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbforpostgresql.v20230301preview.Migration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Migration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Migration shouldn't use an unstable API (dbforpostgresql.v20230301preview.Migration). A compatible replacement can be found at 'dbforpostgresql.Migration'.");
         }),
     },

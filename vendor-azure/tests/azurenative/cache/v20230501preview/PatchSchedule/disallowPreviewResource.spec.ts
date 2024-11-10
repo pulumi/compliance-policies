@@ -61,10 +61,26 @@ describe("azurenative.cache.v20230501preview.PatchSchedule.disallowPreviewResour
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PatchSchedule shouldn't use an unstable API (cache.v20230501preview.PatchSchedule). A compatible replacement can be found at 'cache.PatchSchedule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure PatchSchedule shouldn't use an unstable API (cache.v20230501preview.PatchSchedule). A compatible replacement can be found at 'cache.PatchSchedule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PatchSchedule shouldn't use an unstable API (cache.v20230501preview.PatchSchedule). A compatible replacement can be found at 'cache.PatchSchedule'." });
     });
 });

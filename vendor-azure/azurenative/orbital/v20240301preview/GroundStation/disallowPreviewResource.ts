@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-orbital-v20240301preview-groundstation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (orbital.v20240301preview.GroundStation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GroundStation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure GroundStation shouldn't use an unstable API (orbital.v20240301preview.GroundStation). A compatible replacement can be found at 'orbital.GroundStation'.");
         }),
     },

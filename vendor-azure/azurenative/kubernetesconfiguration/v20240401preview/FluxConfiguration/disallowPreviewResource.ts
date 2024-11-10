@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetesconfiguration-v20240401preview-fluxconfiguration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetesconfiguration.v20240401preview.FluxConfiguration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FluxConfiguration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FluxConfiguration shouldn't use an unstable API (kubernetesconfiguration.v20240401preview.FluxConfiguration). A compatible replacement can be found at 'kubernetesconfiguration.FluxConfiguration'."
             );

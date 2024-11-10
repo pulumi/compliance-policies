@@ -61,6 +61,24 @@ describe("azurenative.azuresphere.v20220901preview.Image.disallowPreviewResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Image shouldn't use an unstable API (azuresphere.v20220901preview.Image). A compatible replacement can be found at 'azuresphere.Image'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Image shouldn't use an unstable API (azuresphere.v20220901preview.Image). A compatible replacement can be found at 'azuresphere.Image'." });

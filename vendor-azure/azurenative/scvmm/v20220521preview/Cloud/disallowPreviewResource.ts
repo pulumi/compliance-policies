@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scvmm-v20220521preview-cloud-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scvmm.v20220521preview.Cloud).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cloud, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Cloud shouldn't use an unstable API (scvmm.v20220521preview.Cloud). A compatible replacement can be found at 'scvmm.Cloud'.");
         }),
     },

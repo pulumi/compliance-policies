@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20240515preview-mongodbresourcemongodbdatabase-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20240515preview.MongoDBResourceMongoDBDatabase).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MongoDBResourceMongoDBDatabase, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MongoDBResourceMongoDBDatabase shouldn't use an unstable API (documentdb.v20240515preview.MongoDBResourceMongoDBDatabase). A compatible replacement can be found at 'documentdb.MongoDBResourceMongoDBDatabase'."
             );

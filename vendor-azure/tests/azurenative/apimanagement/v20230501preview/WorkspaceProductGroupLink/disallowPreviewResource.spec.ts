@@ -61,11 +61,26 @@ describe("azurenative.apimanagement.v20230501preview.WorkspaceProductGroupLink.d
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WorkspaceProductGroupLink shouldn't use an unstable API (apimanagement.v20230501preview.WorkspaceProductGroupLink). A compatible replacement can be found at 'apimanagement.WorkspaceProductGroupLink'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure WorkspaceProductGroupLink shouldn't use an unstable API (apimanagement.v20230501preview.WorkspaceProductGroupLink). A compatible replacement can be found at 'apimanagement.WorkspaceProductGroupLink'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WorkspaceProductGroupLink shouldn't use an unstable API (apimanagement.v20230501preview.WorkspaceProductGroupLink). A compatible replacement can be found at 'apimanagement.WorkspaceProductGroupLink'." });
     });
 });

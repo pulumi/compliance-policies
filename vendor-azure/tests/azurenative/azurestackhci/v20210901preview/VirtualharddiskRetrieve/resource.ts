@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { VirtualharddiskRetrieve } from "@pulumi/azure-native/azurestackhci/v20210901preview";
 
@@ -21,8 +22,8 @@ import { VirtualharddiskRetrieve } from "@pulumi/azure-native/azurestackhci/v202
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(VirtualharddiskRetrieve, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

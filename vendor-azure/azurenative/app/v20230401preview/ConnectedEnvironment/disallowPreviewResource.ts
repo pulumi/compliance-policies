@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20230401preview-connectedenvironment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20230401preview.ConnectedEnvironment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectedEnvironment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConnectedEnvironment shouldn't use an unstable API (app.v20230401preview.ConnectedEnvironment). A compatible replacement can be found at 'app.ConnectedEnvironment'."
             );

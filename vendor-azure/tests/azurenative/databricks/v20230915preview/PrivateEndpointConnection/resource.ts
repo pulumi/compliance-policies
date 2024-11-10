@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PrivateEndpointConnection } from "@pulumi/azure-native/databricks/v20230915preview";
 
@@ -21,7 +22,7 @@ import { PrivateEndpointConnection } from "@pulumi/azure-native/databricks/v2023
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PrivateEndpointConnection, {
         properties: {
             privateLinkServiceConnectionState: {
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

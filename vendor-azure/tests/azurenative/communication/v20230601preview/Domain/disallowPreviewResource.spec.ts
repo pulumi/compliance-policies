@@ -61,10 +61,26 @@ describe("azurenative.communication.v20230601preview.Domain.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Domain shouldn't use an unstable API (communication.v20230601preview.Domain). A compatible replacement can be found at 'communication.Domain'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Domain shouldn't use an unstable API (communication.v20230601preview.Domain). A compatible replacement can be found at 'communication.Domain'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Domain shouldn't use an unstable API (communication.v20230601preview.Domain). A compatible replacement can be found at 'communication.Domain'." });
     });
 });

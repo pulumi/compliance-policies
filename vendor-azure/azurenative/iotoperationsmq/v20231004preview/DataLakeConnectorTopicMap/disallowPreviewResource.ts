@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsmq-v20231004preview-datalakeconnectortopicmap-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataLakeConnectorTopicMap, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DataLakeConnectorTopicMap shouldn't use an unstable API (iotoperationsmq.v20231004preview.DataLakeConnectorTopicMap). A compatible replacement can be found at 'iotoperationsmq.DataLakeConnectorTopicMap'."
             );

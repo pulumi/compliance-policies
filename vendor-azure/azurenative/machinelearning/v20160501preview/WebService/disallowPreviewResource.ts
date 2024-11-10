@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearning-v20160501preview-webservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearning.v20160501preview.WebService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure WebService shouldn't use an unstable API (machinelearning.v20160501preview.WebService). A compatible replacement can be found at 'machinelearning.WebService'.");
         }),
     },

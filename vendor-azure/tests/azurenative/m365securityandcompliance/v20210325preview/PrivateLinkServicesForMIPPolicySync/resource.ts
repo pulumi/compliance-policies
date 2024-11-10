@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PrivateLinkServicesForMIPPolicySync } from "@pulumi/azure-native/m365securityandcompliance/v20210325preview";
 
@@ -21,9 +22,9 @@ import { PrivateLinkServicesForMIPPolicySync } from "@pulumi/azure-native/m365se
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PrivateLinkServicesForMIPPolicySync, {
         resourceGroupName: "",
         kind: "fhir",
-    });
+    }, policyconfig, resourceName);
 }

@@ -61,10 +61,26 @@ describe("azurenative.azurestackhci.v20221215preview.GuestAgent.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GuestAgent shouldn't use an unstable API (azurestackhci.v20221215preview.GuestAgent). A compatible replacement can be found at 'azurestackhci.GuestAgent'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure GuestAgent shouldn't use an unstable API (azurestackhci.v20221215preview.GuestAgent). A compatible replacement can be found at 'azurestackhci.GuestAgent'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GuestAgent shouldn't use an unstable API (azurestackhci.v20221215preview.GuestAgent). A compatible replacement can be found at 'azurestackhci.GuestAgent'." });
     });
 });

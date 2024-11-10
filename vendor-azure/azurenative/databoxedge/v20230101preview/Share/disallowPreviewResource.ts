@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databoxedge-v20230101preview-share-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databoxedge.v20230101preview.Share).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Share, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Share shouldn't use an unstable API (databoxedge.v20230101preview.Share). A compatible replacement can be found at 'databoxedge.Share'.");
         }),
     },

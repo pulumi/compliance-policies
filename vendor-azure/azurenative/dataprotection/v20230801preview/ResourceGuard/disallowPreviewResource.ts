@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dataprotection-v20230801preview-resourceguard-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dataprotection.v20230801preview.ResourceGuard).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourceGuard, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ResourceGuard shouldn't use an unstable API (dataprotection.v20230801preview.ResourceGuard). A compatible replacement can be found at 'dataprotection.ResourceGuard'."
             );

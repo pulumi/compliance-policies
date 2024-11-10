@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcompute-v20200815preview-privatelinkscopedresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcompute.v20200815preview.PrivateLinkScopedResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkScopedResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkScopedResource shouldn't use an unstable API (hybridcompute.v20200815preview.PrivateLinkScopedResource). A compatible replacement can be found at 'hybridcompute.PrivateLinkScopedResource'."
             );

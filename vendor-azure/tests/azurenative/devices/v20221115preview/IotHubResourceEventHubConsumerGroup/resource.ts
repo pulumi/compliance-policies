@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IotHubResourceEventHubConsumerGroup } from "@pulumi/azure-native/devices/v20221115preview";
 
@@ -21,7 +22,7 @@ import { IotHubResourceEventHubConsumerGroup } from "@pulumi/azure-native/device
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IotHubResourceEventHubConsumerGroup, {
         eventHubEndpointName: "",
         properties: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         resourceGroupName: "",
         resourceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -61,10 +61,26 @@ describe("azurenative.cognitiveservices.v20240401preview.RaiPolicy.disallowPrevi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure RaiPolicy shouldn't use an unstable API (cognitiveservices.v20240401preview.RaiPolicy). A compatible replacement can be found at 'cognitiveservices.RaiPolicy'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure RaiPolicy shouldn't use an unstable API (cognitiveservices.v20240401preview.RaiPolicy). A compatible replacement can be found at 'cognitiveservices.RaiPolicy'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure RaiPolicy shouldn't use an unstable API (cognitiveservices.v20240401preview.RaiPolicy). A compatible replacement can be found at 'cognitiveservices.RaiPolicy'." });
     });
 });

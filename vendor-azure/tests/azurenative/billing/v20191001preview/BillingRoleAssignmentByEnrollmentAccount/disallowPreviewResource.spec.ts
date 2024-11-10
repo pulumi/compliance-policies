@@ -61,6 +61,24 @@ describe("azurenative.billing.v20191001preview.BillingRoleAssignmentByEnrollment
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BillingRoleAssignmentByEnrollmentAccount shouldn't use an unstable API (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount). A compatible replacement can be found at 'billing.BillingRoleAssignmentByEnrollmentAccount'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure BillingRoleAssignmentByEnrollmentAccount shouldn't use an unstable API (billing.v20191001preview.BillingRoleAssignmentByEnrollmentAccount). A compatible replacement can be found at 'billing.BillingRoleAssignmentByEnrollmentAccount'." });

@@ -61,6 +61,24 @@ describe("azurenative.dashboard.v20210901preview.Grafana.disallowPreviewResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Grafana shouldn't use an unstable API (dashboard.v20210901preview.Grafana). A compatible replacement can be found at 'dashboard.Grafana'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Grafana shouldn't use an unstable API (dashboard.v20210901preview.Grafana). A compatible replacement can be found at 'dashboard.Grafana'." });

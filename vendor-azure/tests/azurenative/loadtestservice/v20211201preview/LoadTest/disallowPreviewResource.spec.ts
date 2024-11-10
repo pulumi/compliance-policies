@@ -61,6 +61,24 @@ describe("azurenative.loadtestservice.v20211201preview.LoadTest.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure LoadTest shouldn't use an unstable API (loadtestservice.v20211201preview.LoadTest). A compatible replacement can be found at 'loadtestservice.LoadTest'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure LoadTest shouldn't use an unstable API (loadtestservice.v20211201preview.LoadTest). A compatible replacement can be found at 'loadtestservice.LoadTest'." });

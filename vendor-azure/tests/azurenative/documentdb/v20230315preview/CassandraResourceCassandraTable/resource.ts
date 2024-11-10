@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CassandraResourceCassandraTable } from "@pulumi/azure-native/documentdb/v20230315preview";
 
@@ -21,7 +22,7 @@ import { CassandraResourceCassandraTable } from "@pulumi/azure-native/documentdb
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CassandraResourceCassandraTable, {
         accountName: "",
         keyspaceName: "",
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             id: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

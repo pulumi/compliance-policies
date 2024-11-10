@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-voiceservices-v20221201preview-testline-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (voiceservices.v20221201preview.TestLine).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TestLine, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure TestLine shouldn't use an unstable API (voiceservices.v20221201preview.TestLine). A compatible replacement can be found at 'voiceservices.TestLine'.");
         }),
     },

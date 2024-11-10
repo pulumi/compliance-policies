@@ -61,10 +61,26 @@ describe("azurenative.hybridcontainerservice.v20231115preview.ProvisionedCluster
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProvisionedClusterInstance shouldn't use an unstable API (hybridcontainerservice.v20231115preview.ProvisionedClusterInstance)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ProvisionedClusterInstance shouldn't use an unstable API (hybridcontainerservice.v20231115preview.ProvisionedClusterInstance).",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProvisionedClusterInstance shouldn't use an unstable API (hybridcontainerservice.v20231115preview.ProvisionedClusterInstance)." });
     });
 });

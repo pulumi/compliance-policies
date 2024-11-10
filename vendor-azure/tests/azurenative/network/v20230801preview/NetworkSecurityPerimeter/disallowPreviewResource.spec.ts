@@ -61,11 +61,26 @@ describe("azurenative.network.v20230801preview.NetworkSecurityPerimeter.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkSecurityPerimeter shouldn't use an unstable API (network.v20230801preview.NetworkSecurityPerimeter). A compatible replacement can be found at 'network.NetworkSecurityPerimeter'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure NetworkSecurityPerimeter shouldn't use an unstable API (network.v20230801preview.NetworkSecurityPerimeter). A compatible replacement can be found at 'network.NetworkSecurityPerimeter'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkSecurityPerimeter shouldn't use an unstable API (network.v20230801preview.NetworkSecurityPerimeter). A compatible replacement can be found at 'network.NetworkSecurityPerimeter'." });
     });
 });

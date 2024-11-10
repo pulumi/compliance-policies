@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AssetEndpointProfile } from "@pulumi/azure-native/deviceregistry/v20231101preview";
 
@@ -21,7 +22,7 @@ import { AssetEndpointProfile } from "@pulumi/azure-native/deviceregistry/v20231
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AssetEndpointProfile, {
         targetAddress: "",
         extendedLocation: {
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             type: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

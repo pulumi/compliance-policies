@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PipelineTopology } from "@pulumi/azure-native/videoanalyzer/v20211101preview";
 
@@ -21,7 +22,7 @@ import { PipelineTopology } from "@pulumi/azure-native/videoanalyzer/v20211101pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PipelineTopology, {
         accountName: "",
         kind: "",
@@ -56,5 +57,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 type: "#Microsoft.VideoAnalyzer.RtspSource",
             },
         ],
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230201preview-databaseadvisor-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230201preview.DatabaseAdvisor).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseAdvisor, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DatabaseAdvisor shouldn't use an unstable API (sql.v20230201preview.DatabaseAdvisor). A compatible replacement can be found at 'sql.DatabaseAdvisor'.");
         }),
     },

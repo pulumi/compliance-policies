@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-networkcloud-v20240601preview-kubernetesclusterfeature-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (networkcloud.v20240601preview.KubernetesClusterFeature).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KubernetesClusterFeature, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure KubernetesClusterFeature shouldn't use an unstable API (networkcloud.v20240601preview.KubernetesClusterFeature). A compatible replacement can be found at 'networkcloud.KubernetesClusterFeature'."
             );

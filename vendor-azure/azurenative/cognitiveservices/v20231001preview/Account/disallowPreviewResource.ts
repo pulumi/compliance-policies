@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cognitiveservices-v20231001preview-account-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cognitiveservices.v20231001preview.Account).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Account, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Account shouldn't use an unstable API (cognitiveservices.v20231001preview.Account). A compatible replacement can be found at 'cognitiveservices.Account'.");
         }),
     },

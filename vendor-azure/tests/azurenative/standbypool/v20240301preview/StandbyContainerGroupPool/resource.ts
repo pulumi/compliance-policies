@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { StandbyContainerGroupPool } from "@pulumi/azure-native/standbypool/v20240301preview";
 
@@ -21,7 +22,7 @@ import { StandbyContainerGroupPool } from "@pulumi/azure-native/standbypool/v202
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(StandbyContainerGroupPool, {
         containerGroupProperties: {
             containerGroupProfile: {
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             maxReadyCapacity: 1.0,
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

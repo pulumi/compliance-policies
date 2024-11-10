@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mixedreality-v20210301preview-spatialanchorsaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mixedreality.v20210301preview.SpatialAnchorsAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SpatialAnchorsAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SpatialAnchorsAccount shouldn't use an unstable API (mixedreality.v20210301preview.SpatialAnchorsAccount). A compatible replacement can be found at 'mixedreality.SpatialAnchorsAccount'."
             );

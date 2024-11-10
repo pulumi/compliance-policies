@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-engagementfabric-v20180901preview-channel-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (engagementfabric.v20180901preview.Channel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Channel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Channel shouldn't use an unstable API (engagementfabric.v20180901preview.Channel). A compatible replacement can be found at 'engagementfabric.Channel'.");
         }),
     },

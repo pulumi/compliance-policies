@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20240501preview-jobcredential-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20240501preview.JobCredential).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(JobCredential, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure JobCredential shouldn't use an unstable API (sql.v20240501preview.JobCredential). A compatible replacement can be found at 'sql.JobCredential'.");
         }),
     },

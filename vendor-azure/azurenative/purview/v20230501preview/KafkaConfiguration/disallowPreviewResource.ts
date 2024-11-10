@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-purview-v20230501preview-kafkaconfiguration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (purview.v20230501preview.KafkaConfiguration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KafkaConfiguration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure KafkaConfiguration shouldn't use an unstable API (purview.v20230501preview.KafkaConfiguration). A compatible replacement can be found at 'purview.KafkaConfiguration'."
             );

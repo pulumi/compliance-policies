@@ -61,10 +61,26 @@ describe("azurenative.azureactivedirectory.v20230517preview.CIAMTenant.disallowP
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CIAMTenant shouldn't use an unstable API (azureactivedirectory.v20230517preview.CIAMTenant). A compatible replacement can be found at 'azureactivedirectory.CIAMTenant'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure CIAMTenant shouldn't use an unstable API (azureactivedirectory.v20230517preview.CIAMTenant). A compatible replacement can be found at 'azureactivedirectory.CIAMTenant'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CIAMTenant shouldn't use an unstable API (azureactivedirectory.v20230517preview.CIAMTenant). A compatible replacement can be found at 'azureactivedirectory.CIAMTenant'." });
     });
 });

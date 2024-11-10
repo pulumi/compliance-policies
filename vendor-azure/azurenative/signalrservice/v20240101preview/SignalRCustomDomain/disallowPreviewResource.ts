@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-signalrservice-v20240101preview-signalrcustomdomain-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (signalrservice.v20240101preview.SignalRCustomDomain).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SignalRCustomDomain, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SignalRCustomDomain shouldn't use an unstable API (signalrservice.v20240101preview.SignalRCustomDomain). A compatible replacement can be found at 'signalrservice.SignalRCustomDomain'."
             );

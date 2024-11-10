@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databox-v20240201preview-job-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databox.v20240201preview.Job).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Job, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Job shouldn't use an unstable API (databox.v20240201preview.Job). A compatible replacement can be found at 'databox.Job'.");
         }),
     },

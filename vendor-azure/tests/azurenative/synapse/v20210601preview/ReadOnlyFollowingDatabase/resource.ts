@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ReadOnlyFollowingDatabase } from "@pulumi/azure-native/synapse/v20210601preview";
 
@@ -21,11 +22,11 @@ import { ReadOnlyFollowingDatabase } from "@pulumi/azure-native/synapse/v2021060
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ReadOnlyFollowingDatabase, {
         kind: "ReadOnlyFollowing",
         kustoPoolName: "",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

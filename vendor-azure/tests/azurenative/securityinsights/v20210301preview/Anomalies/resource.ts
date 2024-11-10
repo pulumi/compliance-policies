@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Anomalies } from "@pulumi/azure-native/securityinsights/v20210301preview";
 
@@ -21,11 +22,11 @@ import { Anomalies } from "@pulumi/azure-native/securityinsights/v20210301previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Anomalies, {
         resourceGroupName: "",
         kind: "Anomalies",
         operationalInsightsResourceProvider: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

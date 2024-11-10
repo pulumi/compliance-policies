@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { NrtAlertRule } from "@pulumi/azure-native/securityinsights/v20240101preview";
 
@@ -21,7 +22,7 @@ import { NrtAlertRule } from "@pulumi/azure-native/securityinsights/v20240101pre
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(NrtAlertRule, {
         displayName: "",
         enabled: false,
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         suppressionDuration: "",
         suppressionEnabled: false,
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apimanagement-v20230301preview-gatewaycertificateauthority-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20230301preview.GatewayCertificateAuthority).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GatewayCertificateAuthority, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GatewayCertificateAuthority shouldn't use an unstable API (apimanagement.v20230301preview.GatewayCertificateAuthority). A compatible replacement can be found at 'apimanagement.GatewayCertificateAuthority'."
             );

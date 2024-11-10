@@ -61,6 +61,24 @@ describe("azurenative.databoxedge.v20230101preview.StorageAccountCredential.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure StorageAccountCredential shouldn't use an unstable API (databoxedge.v20230101preview.StorageAccountCredential). A compatible replacement can be found at 'databoxedge.StorageAccountCredential'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure StorageAccountCredential shouldn't use an unstable API (databoxedge.v20230101preview.StorageAccountCredential). A compatible replacement can be found at 'databoxedge.StorageAccountCredential'." });

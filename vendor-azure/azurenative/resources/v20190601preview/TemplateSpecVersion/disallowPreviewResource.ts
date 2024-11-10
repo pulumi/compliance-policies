@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-resources-v20190601preview-templatespecversion-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (resources.v20190601preview.TemplateSpecVersion).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TemplateSpecVersion, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TemplateSpecVersion shouldn't use an unstable API (resources.v20190601preview.TemplateSpecVersion). A compatible replacement can be found at 'resources.TemplateSpecVersion'."
             );

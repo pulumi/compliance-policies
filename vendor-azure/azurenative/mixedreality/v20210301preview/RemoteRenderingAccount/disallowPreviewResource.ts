@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mixedreality-v20210301preview-remoterenderingaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mixedreality.v20210301preview.RemoteRenderingAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RemoteRenderingAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure RemoteRenderingAccount shouldn't use an unstable API (mixedreality.v20210301preview.RemoteRenderingAccount). A compatible replacement can be found at 'mixedreality.RemoteRenderingAccount'."
             );

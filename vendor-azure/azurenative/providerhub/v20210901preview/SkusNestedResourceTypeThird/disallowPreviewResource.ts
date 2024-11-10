@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-providerhub-v20210901preview-skusnestedresourcetypethird-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (providerhub.v20210901preview.SkusNestedResourceTypeThird).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SkusNestedResourceTypeThird, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SkusNestedResourceTypeThird shouldn't use an unstable API (providerhub.v20210901preview.SkusNestedResourceTypeThird). A compatible replacement can be found at 'providerhub.SkusNestedResourceTypeThird'."
             );

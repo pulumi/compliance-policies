@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20200401preview-dnsforwardingruleset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20200401preview.DnsForwardingRuleset).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DnsForwardingRuleset, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DnsForwardingRuleset shouldn't use an unstable API (network.v20200401preview.DnsForwardingRuleset). A compatible replacement can be found at 'network.DnsForwardingRuleset'."
             );

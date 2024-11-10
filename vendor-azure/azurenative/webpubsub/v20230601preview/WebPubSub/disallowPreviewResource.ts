@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-webpubsub-v20230601preview-webpubsub-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (webpubsub.v20230601preview.WebPubSub).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebPubSub, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure WebPubSub shouldn't use an unstable API (webpubsub.v20230601preview.WebPubSub). A compatible replacement can be found at 'webpubsub.WebPubSub'.");
         }),
     },

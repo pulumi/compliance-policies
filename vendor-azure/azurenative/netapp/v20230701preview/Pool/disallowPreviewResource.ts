@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-netapp-v20230701preview-pool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (netapp.v20230701preview.Pool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Pool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Pool shouldn't use an unstable API (netapp.v20230701preview.Pool). A compatible replacement can be found at 'netapp.Pool'.");
         }),
     },

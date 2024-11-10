@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FailoverGroup } from "@pulumi/azure-native/azurearcdata/v20230115preview";
 
@@ -21,7 +22,7 @@ import { FailoverGroup } from "@pulumi/azure-native/azurearcdata/v20230115previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FailoverGroup, {
         properties: {
             partnerManagedInstanceId: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         resourceGroupName: "",
         sqlManagedInstanceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PostRule } from "@pulumi/azure-native/cloudngfw/v20230901preview";
 
@@ -21,9 +22,9 @@ import { PostRule } from "@pulumi/azure-native/cloudngfw/v20230901preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PostRule, {
         globalRulestackName: "",
         ruleName: "",
-    });
+    }, policyconfig, resourceName);
 }

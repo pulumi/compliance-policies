@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerstorage-v20230701preview-snapshot-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerstorage.v20230701preview.Snapshot).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Snapshot, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Snapshot shouldn't use an unstable API (containerstorage.v20230701preview.Snapshot). A compatible replacement can be found at 'containerstorage.Snapshot'.");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedCluster } from "@pulumi/azure-native/containerservice/managedCluster";
@@ -22,7 +23,7 @@ import { ManagedCluster } from "@pulumi/azure-native/containerservice/managedClu
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedCluster, {
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
         location: enums.resourcegroup.Location,
@@ -64,5 +65,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             name: "Basic",
             tier: "Free",
         },
-    });
+    }, policyconfig, resourceName);
 }

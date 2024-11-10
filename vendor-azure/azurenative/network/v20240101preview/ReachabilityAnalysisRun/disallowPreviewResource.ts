@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20240101preview-reachabilityanalysisrun-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20240101preview.ReachabilityAnalysisRun).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReachabilityAnalysisRun, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ReachabilityAnalysisRun shouldn't use an unstable API (network.v20240101preview.ReachabilityAnalysisRun). A compatible replacement can be found at 'network.ReachabilityAnalysisRun'."
             );

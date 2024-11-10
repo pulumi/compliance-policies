@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-keyvault-v20240401preview-mhsmprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (keyvault.v20240401preview.MHSMPrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MHSMPrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MHSMPrivateEndpointConnection shouldn't use an unstable API (keyvault.v20240401preview.MHSMPrivateEndpointConnection). A compatible replacement can be found at 'keyvault.MHSMPrivateEndpointConnection'."
             );

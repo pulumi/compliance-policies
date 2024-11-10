@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { NotebookWorkspace } from "@pulumi/azure-native/documentdb/v20240215preview";
 
@@ -21,9 +22,9 @@ import { NotebookWorkspace } from "@pulumi/azure-native/documentdb/v20240215prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(NotebookWorkspace, {
         accountName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

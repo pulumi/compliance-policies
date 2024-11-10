@@ -61,11 +61,26 @@ describe("azurenative.machinelearningservices.v20230601preview.CodeContainer.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CodeContainer shouldn't use an unstable API (machinelearningservices.v20230601preview.CodeContainer). A compatible replacement can be found at 'machinelearningservices.CodeContainer'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure CodeContainer shouldn't use an unstable API (machinelearningservices.v20230601preview.CodeContainer). A compatible replacement can be found at 'machinelearningservices.CodeContainer'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CodeContainer shouldn't use an unstable API (machinelearningservices.v20230601preview.CodeContainer). A compatible replacement can be found at 'machinelearningservices.CodeContainer'." });
     });
 });

@@ -61,11 +61,26 @@ describe("azurenative.mobilepacketcore.v20230515preview.NetworkFunction.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkFunction shouldn't use an unstable API (mobilepacketcore.v20230515preview.NetworkFunction). A compatible replacement can be found at 'mobilepacketcore.NetworkFunction'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure NetworkFunction shouldn't use an unstable API (mobilepacketcore.v20230515preview.NetworkFunction). A compatible replacement can be found at 'mobilepacketcore.NetworkFunction'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NetworkFunction shouldn't use an unstable API (mobilepacketcore.v20230515preview.NetworkFunction). A compatible replacement can be found at 'mobilepacketcore.NetworkFunction'." });
     });
 });

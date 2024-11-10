@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-openenergyplatform-v20220404preview-energyservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (openenergyplatform.v20220404preview.EnergyService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EnergyService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure EnergyService shouldn't use an unstable API (openenergyplatform.v20220404preview.EnergyService). A compatible replacement can be found at 'openenergyplatform.EnergyService'."
             );

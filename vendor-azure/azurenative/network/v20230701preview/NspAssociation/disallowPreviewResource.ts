@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20230701preview-nspassociation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20230701preview.NspAssociation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NspAssociation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure NspAssociation shouldn't use an unstable API (network.v20230701preview.NspAssociation). A compatible replacement can be found at 'network.NspAssociation'.");
         }),
     },

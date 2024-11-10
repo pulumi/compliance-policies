@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-m365securityandcompliance-v20210325preview-privatelinkservicesforo365managementactivityapi-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (m365securityandcompliance.v20210325preview.PrivateLinkServicesForO365ManagementActivityAPI).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkServicesForO365ManagementActivityAPI, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkServicesForO365ManagementActivityAPI shouldn't use an unstable API (m365securityandcompliance.v20210325preview.PrivateLinkServicesForO365ManagementActivityAPI). A compatible replacement can be found at 'm365securityandcompliance.PrivateLinkServicesForO365ManagementActivityAPI'."
             );

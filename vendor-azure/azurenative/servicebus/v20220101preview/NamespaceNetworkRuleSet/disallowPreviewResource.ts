@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicebus-v20220101preview-namespacenetworkruleset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicebus.v20220101preview.NamespaceNetworkRuleSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NamespaceNetworkRuleSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NamespaceNetworkRuleSet shouldn't use an unstable API (servicebus.v20220101preview.NamespaceNetworkRuleSet). A compatible replacement can be found at 'servicebus.NamespaceNetworkRuleSet'."
             );

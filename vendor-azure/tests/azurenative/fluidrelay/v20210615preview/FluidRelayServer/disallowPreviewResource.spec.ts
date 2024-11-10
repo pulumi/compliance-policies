@@ -61,6 +61,24 @@ describe("azurenative.fluidrelay.v20210615preview.FluidRelayServer.disallowPrevi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FluidRelayServer shouldn't use an unstable API (fluidrelay.v20210615preview.FluidRelayServer). A compatible replacement can be found at 'fluidrelay.FluidRelayServer'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure FluidRelayServer shouldn't use an unstable API (fluidrelay.v20210615preview.FluidRelayServer). A compatible replacement can be found at 'fluidrelay.FluidRelayServer'." });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20231001preview-threatintelligenceindicator-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20231001preview.ThreatIntelligenceIndicator).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ThreatIntelligenceIndicator, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ThreatIntelligenceIndicator shouldn't use an unstable API (securityinsights.v20231001preview.ThreatIntelligenceIndicator). A compatible replacement can be found at 'securityinsights.ThreatIntelligenceIndicator'."
             );

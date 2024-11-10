@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dynamics365fraudprotection-v20210201preview-instancedetails-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dynamics365fraudprotection.v20210201preview.InstanceDetails).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstanceDetails, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure InstanceDetails shouldn't use an unstable API (dynamics365fraudprotection.v20210201preview.InstanceDetails). A compatible replacement can be found at 'dynamics365fraudprotection.InstanceDetails'."
             );

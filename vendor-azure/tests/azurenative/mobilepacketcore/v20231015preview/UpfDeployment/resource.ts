@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { UpfDeployment } from "@pulumi/azure-native/mobilepacketcore/v20231015preview";
 
@@ -21,10 +22,10 @@ import { UpfDeployment } from "@pulumi/azure-native/mobilepacketcore/v20231015pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(UpfDeployment, {
         clusterService: "",
         componentParameters: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20230901preview-gatewayrouteconfig-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20230901preview.GatewayRouteConfig).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GatewayRouteConfig, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GatewayRouteConfig shouldn't use an unstable API (appplatform.v20230901preview.GatewayRouteConfig). A compatible replacement can be found at 'appplatform.GatewayRouteConfig'."
             );

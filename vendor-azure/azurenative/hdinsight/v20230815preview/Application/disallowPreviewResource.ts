@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hdinsight-v20230815preview-application-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hdinsight.v20230815preview.Application).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Application, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Application shouldn't use an unstable API (hdinsight.v20230815preview.Application). A compatible replacement can be found at 'hdinsight.Application'.");
         }),
     },

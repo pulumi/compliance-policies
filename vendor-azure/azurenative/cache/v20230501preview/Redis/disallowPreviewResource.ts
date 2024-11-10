@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cache-v20230501preview-redis-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cache.v20230501preview.Redis).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Redis, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Redis shouldn't use an unstable API (cache.v20230501preview.Redis). A compatible replacement can be found at 'cache.Redis'.");
         }),
     },

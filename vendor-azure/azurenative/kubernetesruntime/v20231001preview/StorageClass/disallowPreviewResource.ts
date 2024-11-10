@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetesruntime-v20231001preview-storageclass-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetesruntime.v20231001preview.StorageClass).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StorageClass, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure StorageClass shouldn't use an unstable API (kubernetesruntime.v20231001preview.StorageClass). A compatible replacement can be found at 'kubernetesruntime.StorageClass'."
             );

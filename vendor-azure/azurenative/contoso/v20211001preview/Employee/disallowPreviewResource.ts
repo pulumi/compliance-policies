@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-contoso-v20211001preview-employee-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (contoso.v20211001preview.Employee).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Employee, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Employee shouldn't use an unstable API (contoso.v20211001preview.Employee). A compatible replacement can be found at 'contoso.Employee'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-elastic-v20240501preview-monitoredsubscription-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (elastic.v20240501preview.MonitoredSubscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MonitoredSubscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MonitoredSubscription shouldn't use an unstable API (elastic.v20240501preview.MonitoredSubscription). A compatible replacement can be found at 'elastic.MonitoredSubscription'."
             );

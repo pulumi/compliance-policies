@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20210301preview-environmentspecificationversion-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20210301preview.EnvironmentSpecificationVersion).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EnvironmentSpecificationVersion, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure EnvironmentSpecificationVersion shouldn't use an unstable API (machinelearningservices.v20210301preview.EnvironmentSpecificationVersion). A compatible replacement can be found at 'machinelearningservices.EnvironmentSpecificationVersion'."
             );

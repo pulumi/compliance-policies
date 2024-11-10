@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DatabaseSecurityAlertPolicy } from "@pulumi/azure-native/sql/v20221101preview";
 
@@ -21,11 +22,11 @@ import { DatabaseSecurityAlertPolicy } from "@pulumi/azure-native/sql/v20221101p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DatabaseSecurityAlertPolicy, {
         databaseName: "",
         resourceGroupName: "",
         serverName: "",
         state: "Enabled",
-    });
+    }, policyconfig, resourceName);
 }

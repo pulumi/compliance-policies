@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-automation-v20230515preview-webhook-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (automation.v20230515preview.Webhook).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Webhook, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Webhook shouldn't use an unstable API (automation.v20230515preview.Webhook). A compatible replacement can be found at 'automation.Webhook'.");
         }),
     },

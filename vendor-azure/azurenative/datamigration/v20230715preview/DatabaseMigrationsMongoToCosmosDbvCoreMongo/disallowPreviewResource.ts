@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datamigration-v20230715preview-databasemigrationsmongotocosmosdbvcoremongo-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datamigration.v20230715preview.DatabaseMigrationsMongoToCosmosDbvCoreMongo).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatabaseMigrationsMongoToCosmosDbvCoreMongo, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DatabaseMigrationsMongoToCosmosDbvCoreMongo shouldn't use an unstable API (datamigration.v20230715preview.DatabaseMigrationsMongoToCosmosDbvCoreMongo). A compatible replacement can be found at 'datamigration.DatabaseMigrationsMongoToCosmosDbvCoreMongo'."
             );

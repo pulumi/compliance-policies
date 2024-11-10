@@ -61,11 +61,26 @@ describe("azurenative.documentdb.v20231115preview.CassandraResourceCassandraKeys
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CassandraResourceCassandraKeyspace shouldn't use an unstable API (documentdb.v20231115preview.CassandraResourceCassandraKeyspace). A compatible replacement can be found at 'documentdb.CassandraResourceCassandraKeyspace'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure CassandraResourceCassandraKeyspace shouldn't use an unstable API (documentdb.v20231115preview.CassandraResourceCassandraKeyspace). A compatible replacement can be found at 'documentdb.CassandraResourceCassandraKeyspace'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure CassandraResourceCassandraKeyspace shouldn't use an unstable API (documentdb.v20231115preview.CassandraResourceCassandraKeyspace). A compatible replacement can be found at 'documentdb.CassandraResourceCassandraKeyspace'." });
     });
 });

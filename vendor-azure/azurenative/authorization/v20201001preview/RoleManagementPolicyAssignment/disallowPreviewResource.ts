@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-authorization-v20201001preview-rolemanagementpolicyassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (authorization.v20201001preview.RoleManagementPolicyAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RoleManagementPolicyAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure RoleManagementPolicyAssignment shouldn't use an unstable API (authorization.v20201001preview.RoleManagementPolicyAssignment). A compatible replacement can be found at 'authorization.RoleManagementPolicyAssignment'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20231001preview-office365projectdataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20231001preview.Office365ProjectDataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Office365ProjectDataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Office365ProjectDataConnector shouldn't use an unstable API (securityinsights.v20231001preview.Office365ProjectDataConnector). A compatible replacement can be found at 'securityinsights.Office365ProjectDataConnector'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devices-v20230301preview-iotdpsresourceprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devices.v20230301preview.IotDpsResourcePrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IotDpsResourcePrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure IotDpsResourcePrivateEndpointConnection shouldn't use an unstable API (devices.v20230301preview.IotDpsResourcePrivateEndpointConnection). A compatible replacement can be found at 'devices.IotDpsResourcePrivateEndpointConnection'."
             );

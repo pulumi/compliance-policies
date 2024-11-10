@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-connectedvmwarevsphere-v20230301preview-vcenter-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (connectedvmwarevsphere.v20230301preview.VCenter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VCenter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'."
             );

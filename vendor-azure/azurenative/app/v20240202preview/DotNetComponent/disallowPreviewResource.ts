@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20240202preview-dotnetcomponent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20240202preview.DotNetComponent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DotNetComponent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DotNetComponent shouldn't use an unstable API (app.v20240202preview.DotNetComponent). A compatible replacement can be found at 'app.DotNetComponent'.");
         }),
     },

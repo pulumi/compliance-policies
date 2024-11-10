@@ -61,10 +61,26 @@ describe("azurenative.servicelinker.v20230401preview.Connector.disallowPreviewRe
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Connector shouldn't use an unstable API (servicelinker.v20230401preview.Connector). A compatible replacement can be found at 'servicelinker.Connector'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Connector shouldn't use an unstable API (servicelinker.v20230401preview.Connector). A compatible replacement can be found at 'servicelinker.Connector'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Connector shouldn't use an unstable API (servicelinker.v20230401preview.Connector). A compatible replacement can be found at 'servicelinker.Connector'." });
     });
 });

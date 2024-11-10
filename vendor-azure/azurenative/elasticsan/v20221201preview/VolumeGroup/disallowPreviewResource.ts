@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-elasticsan-v20221201preview-volumegroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (elasticsan.v20221201preview.VolumeGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure VolumeGroup shouldn't use an unstable API (elasticsan.v20221201preview.VolumeGroup). A compatible replacement can be found at 'elasticsan.VolumeGroup'.");
         }),
     },

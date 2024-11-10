@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DataLakeConnector } from "@pulumi/azure-native/iotoperationsmq/v20231004preview";
 
@@ -21,7 +22,7 @@ import { DataLakeConnector } from "@pulumi/azure-native/iotoperationsmq/v2023100
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DataLakeConnector, {
         databaseFormat: "",
         extendedLocation: {
@@ -36,5 +37,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         protocol: "",
         resourceGroupName: "",
         target: {},
-    });
+    }, policyconfig, resourceName);
 }

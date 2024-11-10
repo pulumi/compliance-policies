@@ -61,10 +61,26 @@ describe("azurenative.connectedvmwarevsphere.v20230301preview.VCenter.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VCenter shouldn't use an unstable API (connectedvmwarevsphere.v20230301preview.VCenter). A compatible replacement can be found at 'connectedvmwarevsphere.VCenter'." });
     });
 });

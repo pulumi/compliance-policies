@@ -61,11 +61,26 @@ describe("azurenative.cloudngfw.v20220829preview.PrefixListGlobalRulestack.disal
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrefixListGlobalRulestack shouldn't use an unstable API (cloudngfw.v20220829preview.PrefixListGlobalRulestack). A compatible replacement can be found at 'cloudngfw.PrefixListGlobalRulestack'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure PrefixListGlobalRulestack shouldn't use an unstable API (cloudngfw.v20220829preview.PrefixListGlobalRulestack). A compatible replacement can be found at 'cloudngfw.PrefixListGlobalRulestack'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrefixListGlobalRulestack shouldn't use an unstable API (cloudngfw.v20220829preview.PrefixListGlobalRulestack). A compatible replacement can be found at 'cloudngfw.PrefixListGlobalRulestack'." });
     });
 });

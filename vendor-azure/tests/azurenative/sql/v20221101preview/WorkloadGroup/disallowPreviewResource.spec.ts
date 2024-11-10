@@ -61,10 +61,26 @@ describe("azurenative.sql.v20221101preview.WorkloadGroup.disallowPreviewResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WorkloadGroup shouldn't use an unstable API (sql.v20221101preview.WorkloadGroup). A compatible replacement can be found at 'sql.WorkloadGroup'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure WorkloadGroup shouldn't use an unstable API (sql.v20221101preview.WorkloadGroup). A compatible replacement can be found at 'sql.WorkloadGroup'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure WorkloadGroup shouldn't use an unstable API (sql.v20221101preview.WorkloadGroup). A compatible replacement can be found at 'sql.WorkloadGroup'." });
     });
 });

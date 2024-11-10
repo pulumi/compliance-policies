@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-resourcegraph-v20200401preview-graphquery-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (resourcegraph.v20200401preview.GraphQuery).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GraphQuery, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure GraphQuery shouldn't use an unstable API (resourcegraph.v20200401preview.GraphQuery). A compatible replacement can be found at 'resourcegraph.GraphQuery'.");
         }),
     },

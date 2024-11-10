@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-confidentialledger-v20230628preview-ledger-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (confidentialledger.v20230628preview.Ledger).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Ledger, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Ledger shouldn't use an unstable API (confidentialledger.v20230628preview.Ledger). A compatible replacement can be found at 'confidentialledger.Ledger'.");
         }),
     },

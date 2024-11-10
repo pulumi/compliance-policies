@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BgpPeer } from "@pulumi/azure-native/kubernetesruntime/v20231001preview";
 
@@ -21,11 +22,11 @@ import { BgpPeer } from "@pulumi/azure-native/kubernetesruntime/v20231001preview
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BgpPeer, {
         myAsn: 1,
         peerAddress: "",
         peerAsn: 1,
         resourceUri: "",
-    });
+    }, policyconfig, resourceName);
 }

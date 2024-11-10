@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20240501preview-ipv6firewallrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20240501preview.IPv6FirewallRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IPv6FirewallRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IPv6FirewallRule shouldn't use an unstable API (sql.v20240501preview.IPv6FirewallRule). A compatible replacement can be found at 'sql.IPv6FirewallRule'.");
         }),
     },

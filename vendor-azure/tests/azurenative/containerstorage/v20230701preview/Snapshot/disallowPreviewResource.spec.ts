@@ -61,10 +61,26 @@ describe("azurenative.containerstorage.v20230701preview.Snapshot.disallowPreview
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Snapshot shouldn't use an unstable API (containerstorage.v20230701preview.Snapshot). A compatible replacement can be found at 'containerstorage.Snapshot'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Snapshot shouldn't use an unstable API (containerstorage.v20230701preview.Snapshot). A compatible replacement can be found at 'containerstorage.Snapshot'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Snapshot shouldn't use an unstable API (containerstorage.v20230701preview.Snapshot). A compatible replacement can be found at 'containerstorage.Snapshot'." });
     });
 });

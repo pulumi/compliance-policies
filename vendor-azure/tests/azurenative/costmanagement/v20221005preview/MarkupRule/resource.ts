@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MarkupRule } from "@pulumi/azure-native/costmanagement/v20221005preview";
 
@@ -21,7 +22,7 @@ import { MarkupRule } from "@pulumi/azure-native/costmanagement/v20221005preview
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MarkupRule, {
         billingAccountId: "",
         billingProfileId: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         percentage: 0,
         startDate: "",
-    });
+    }, policyconfig, resourceName);
 }

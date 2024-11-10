@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20180601preview-guestdiagnosticssettingsassociation-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20180601preview.GuestDiagnosticsSettingsAssociation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GuestDiagnosticsSettingsAssociation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GuestDiagnosticsSettingsAssociation shouldn't use an unstable API (insights.v20180601preview.GuestDiagnosticsSettingsAssociation). A compatible replacement can be found at 'insights.GuestDiagnosticsSettingsAssociation'."
             );

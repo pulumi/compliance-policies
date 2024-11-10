@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-quantum-v20231113preview-workspace-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (quantum.v20231113preview.Workspace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Workspace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Workspace shouldn't use an unstable API (quantum.v20231113preview.Workspace). A compatible replacement can be found at 'quantum.Workspace'.");
         }),
     },

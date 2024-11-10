@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-confluent-v20200301preview-organization-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (confluent.v20200301preview.Organization).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Organization, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Organization shouldn't use an unstable API (confluent.v20200301preview.Organization). A compatible replacement can be found at 'confluent.Organization'.");
         }),
     },

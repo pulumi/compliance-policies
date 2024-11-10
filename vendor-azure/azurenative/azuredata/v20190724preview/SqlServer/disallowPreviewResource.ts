@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azuredata-v20190724preview-sqlserver-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azuredata.v20190724preview.SqlServer).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlServer, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure SqlServer shouldn't use an unstable API (azuredata.v20190724preview.SqlServer). A compatible replacement can be found at 'azuredata.SqlServer'.");
         }),
     },

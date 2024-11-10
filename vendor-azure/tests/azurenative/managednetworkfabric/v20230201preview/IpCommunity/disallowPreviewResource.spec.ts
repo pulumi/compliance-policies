@@ -61,11 +61,26 @@ describe("azurenative.managednetworkfabric.v20230201preview.IpCommunity.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure IpCommunity shouldn't use an unstable API (managednetworkfabric.v20230201preview.IpCommunity). A compatible replacement can be found at 'managednetworkfabric.IpCommunity'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure IpCommunity shouldn't use an unstable API (managednetworkfabric.v20230201preview.IpCommunity). A compatible replacement can be found at 'managednetworkfabric.IpCommunity'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure IpCommunity shouldn't use an unstable API (managednetworkfabric.v20230201preview.IpCommunity). A compatible replacement can be found at 'managednetworkfabric.IpCommunity'." });
     });
 });

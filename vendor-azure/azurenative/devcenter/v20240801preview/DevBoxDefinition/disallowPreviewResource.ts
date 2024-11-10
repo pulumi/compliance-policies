@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devcenter-v20240801preview-devboxdefinition-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devcenter.v20240801preview.DevBoxDefinition).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DevBoxDefinition, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DevBoxDefinition shouldn't use an unstable API (devcenter.v20240801preview.DevBoxDefinition). A compatible replacement can be found at 'devcenter.DevBoxDefinition'."
             );

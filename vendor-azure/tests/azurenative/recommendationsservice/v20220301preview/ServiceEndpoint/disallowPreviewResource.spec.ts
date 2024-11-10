@@ -61,6 +61,24 @@ describe("azurenative.recommendationsservice.v20220301preview.ServiceEndpoint.di
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ServiceEndpoint shouldn't use an unstable API (recommendationsservice.v20220301preview.ServiceEndpoint). A compatible replacement can be found at 'recommendationsservice.ServiceEndpoint'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure ServiceEndpoint shouldn't use an unstable API (recommendationsservice.v20220301preview.ServiceEndpoint). A compatible replacement can be found at 'recommendationsservice.ServiceEndpoint'." });

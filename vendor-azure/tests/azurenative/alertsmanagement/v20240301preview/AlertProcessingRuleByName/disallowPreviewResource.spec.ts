@@ -61,11 +61,26 @@ describe("azurenative.alertsmanagement.v20240301preview.AlertProcessingRuleByNam
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20240301preview.AlertProcessingRuleByName). A compatible replacement can be found at 'alertsmanagement.AlertProcessingRuleByName'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20240301preview.AlertProcessingRuleByName). A compatible replacement can be found at 'alertsmanagement.AlertProcessingRuleByName'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20240301preview.AlertProcessingRuleByName). A compatible replacement can be found at 'alertsmanagement.AlertProcessingRuleByName'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerinstance-v20230201preview-containergroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerinstance.v20230201preview.ContainerGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ContainerGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ContainerGroup shouldn't use an unstable API (containerinstance.v20230201preview.ContainerGroup). A compatible replacement can be found at 'containerinstance.ContainerGroup'."
             );

@@ -61,10 +61,26 @@ describe("azurenative.devcenter.v20240501preview.Gallery.disallowPreviewResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Gallery shouldn't use an unstable API (devcenter.v20240501preview.Gallery). A compatible replacement can be found at 'devcenter.Gallery'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Gallery shouldn't use an unstable API (devcenter.v20240501preview.Gallery). A compatible replacement can be found at 'devcenter.Gallery'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Gallery shouldn't use an unstable API (devcenter.v20240501preview.Gallery). A compatible replacement can be found at 'devcenter.Gallery'." });
     });
 });

@@ -61,10 +61,26 @@ describe("azurenative.testbase.v20220401preview.FavoriteProcess.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FavoriteProcess shouldn't use an unstable API (testbase.v20220401preview.FavoriteProcess). A compatible replacement can be found at 'testbase.FavoriteProcess'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure FavoriteProcess shouldn't use an unstable API (testbase.v20220401preview.FavoriteProcess). A compatible replacement can be found at 'testbase.FavoriteProcess'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FavoriteProcess shouldn't use an unstable API (testbase.v20220401preview.FavoriteProcess). A compatible replacement can be found at 'testbase.FavoriteProcess'." });
     });
 });

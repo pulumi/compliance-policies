@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cache-v20230501preview-accesspolicyassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cache.v20230501preview.AccessPolicyAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AccessPolicyAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AccessPolicyAssignment shouldn't use an unstable API (cache.v20230501preview.AccessPolicyAssignment). A compatible replacement can be found at 'cache.AccessPolicyAssignment'."
             );

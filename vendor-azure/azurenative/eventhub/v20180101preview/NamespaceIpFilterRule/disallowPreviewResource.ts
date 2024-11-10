@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventhub-v20180101preview-namespaceipfilterrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventhub.v20180101preview.NamespaceIpFilterRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NamespaceIpFilterRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NamespaceIpFilterRule shouldn't use an unstable API (eventhub.v20180101preview.NamespaceIpFilterRule). A compatible replacement can be found at 'eventhub.NamespaceIpFilterRule'."
             );

@@ -28,8 +28,13 @@ export const configureNetworkPolicy: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "azure-containerservice-kubernetescluster-configure-network-policy",
         description: "Checks AKS cluster has Network Policy configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KubernetesCluster, (kubernetesCluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (kubernetesCluster.networkProfile) {
                 if (!kubernetesCluster.networkProfile.networkPolicy) {
                     reportViolation("Ensure AKS cluster has Network Policy configured.");

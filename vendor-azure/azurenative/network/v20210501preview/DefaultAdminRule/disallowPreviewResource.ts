@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20210501preview-defaultadminrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20210501preview.DefaultAdminRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DefaultAdminRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DefaultAdminRule shouldn't use an unstable API (network.v20210501preview.DefaultAdminRule). A compatible replacement can be found at 'network.DefaultAdminRule'.");
         }),
     },

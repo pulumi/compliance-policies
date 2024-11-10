@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { L2Connection } from "@pulumi/azure-native/orbital/v20240301preview";
 
@@ -21,7 +22,7 @@ import { L2Connection } from "@pulumi/azure-native/orbital/v20240301preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(L2Connection, {
         edgeSite: {
             id: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         name: "",
         resourceGroupName: "",
         vlanId: 1,
-    });
+    }, policyconfig, resourceName);
 }

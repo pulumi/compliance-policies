@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20231115preview-cassandraresourcecassandratable-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20231115preview.CassandraResourceCassandraTable).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CassandraResourceCassandraTable, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CassandraResourceCassandraTable shouldn't use an unstable API (documentdb.v20231115preview.CassandraResourceCassandraTable). A compatible replacement can be found at 'documentdb.CassandraResourceCassandraTable'."
             );

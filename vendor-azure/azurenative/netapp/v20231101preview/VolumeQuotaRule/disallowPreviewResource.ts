@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-netapp-v20231101preview-volumequotarule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (netapp.v20231101preview.VolumeQuotaRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeQuotaRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure VolumeQuotaRule shouldn't use an unstable API (netapp.v20231101preview.VolumeQuotaRule). A compatible replacement can be found at 'netapp.VolumeQuotaRule'.");
         }),
     },

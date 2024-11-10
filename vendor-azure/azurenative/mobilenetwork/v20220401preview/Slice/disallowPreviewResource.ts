@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilenetwork-v20220401preview-slice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilenetwork.v20220401preview.Slice).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Slice, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Slice shouldn't use an unstable API (mobilenetwork.v20220401preview.Slice). A compatible replacement can be found at 'mobilenetwork.Slice'.");
         }),
     },

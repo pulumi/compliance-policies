@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-offazure-v20231001preview-privateendpointconnectioncontroller-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (offazure.v20231001preview.PrivateEndpointConnectionController).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateEndpointConnectionController, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateEndpointConnectionController shouldn't use an unstable API (offazure.v20231001preview.PrivateEndpointConnectionController). A compatible replacement can be found at 'offazure.PrivateEndpointConnectionController'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-codesigning-v20240205preview-certificateprofile-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (codesigning.v20240205preview.CertificateProfile).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CertificateProfile, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CertificateProfile shouldn't use an unstable API (codesigning.v20240205preview.CertificateProfile). A compatible replacement can be found at 'codesigning.CertificateProfile'."
             );

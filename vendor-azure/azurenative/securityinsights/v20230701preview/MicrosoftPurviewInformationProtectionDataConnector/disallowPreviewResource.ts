@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20230701preview-microsoftpurviewinformationprotectiondataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20230701preview.MicrosoftPurviewInformationProtectionDataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MicrosoftPurviewInformationProtectionDataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MicrosoftPurviewInformationProtectionDataConnector shouldn't use an unstable API (securityinsights.v20230701preview.MicrosoftPurviewInformationProtectionDataConnector). A compatible replacement can be found at 'securityinsights.MicrosoftPurviewInformationProtectionDataConnector'."
             );

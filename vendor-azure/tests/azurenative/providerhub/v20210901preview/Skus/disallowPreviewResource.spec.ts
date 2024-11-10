@@ -61,6 +61,24 @@ describe("azurenative.providerhub.v20210901preview.Skus.disallowPreviewResource"
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Skus shouldn't use an unstable API (providerhub.v20210901preview.Skus). A compatible replacement can be found at 'providerhub.Skus'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Skus shouldn't use an unstable API (providerhub.v20210901preview.Skus). A compatible replacement can be found at 'providerhub.Skus'." });

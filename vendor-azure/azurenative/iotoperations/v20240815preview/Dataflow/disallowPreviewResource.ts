@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperations-v20240815preview-dataflow-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperations.v20240815preview.Dataflow).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Dataflow, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Dataflow shouldn't use an unstable API (iotoperations.v20240815preview.Dataflow). A compatible replacement can be found at 'iotoperations.Dataflow'.");
         }),
     },

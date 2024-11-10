@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20230801preview-capacityreservationgroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20230801preview.CapacityReservationGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CapacityReservationGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CapacityReservationGroup shouldn't use an unstable API (machinelearningservices.v20230801preview.CapacityReservationGroup). A compatible replacement can be found at 'machinelearningservices.CapacityReservationGroup'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cloudngfw-v20231010preview-certificateobjectlocalrulestack-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cloudngfw.v20231010preview.CertificateObjectLocalRulestack).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CertificateObjectLocalRulestack, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CertificateObjectLocalRulestack shouldn't use an unstable API (cloudngfw.v20231010preview.CertificateObjectLocalRulestack). A compatible replacement can be found at 'cloudngfw.CertificateObjectLocalRulestack'."
             );

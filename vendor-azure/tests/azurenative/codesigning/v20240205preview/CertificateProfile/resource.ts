@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CertificateProfile } from "@pulumi/azure-native/codesigning/v20240205preview";
 
@@ -21,10 +22,10 @@ import { CertificateProfile } from "@pulumi/azure-native/codesigning/v20240205pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CertificateProfile, {
         accountName: "",
         profileType: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

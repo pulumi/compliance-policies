@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FusionAlertRule } from "@pulumi/azure-native/securityinsights/v20240101preview";
 
@@ -21,12 +22,12 @@ import { FusionAlertRule } from "@pulumi/azure-native/securityinsights/v20240101
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FusionAlertRule, {
         alertRuleTemplateName: "",
         enabled: false,
         kind: "Fusion",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

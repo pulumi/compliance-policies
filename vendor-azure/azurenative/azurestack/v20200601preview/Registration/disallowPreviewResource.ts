@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestack-v20200601preview-registration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestack.v20200601preview.Registration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Registration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Registration shouldn't use an unstable API (azurestack.v20200601preview.Registration). A compatible replacement can be found at 'azurestack.Registration'.");
         }),
     },

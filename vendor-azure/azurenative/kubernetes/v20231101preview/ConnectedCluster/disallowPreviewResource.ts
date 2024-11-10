@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetes-v20231101preview-connectedcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetes.v20231101preview.ConnectedCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectedCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConnectedCluster shouldn't use an unstable API (kubernetes.v20231101preview.ConnectedCluster). A compatible replacement can be found at 'kubernetes.ConnectedCluster'."
             );

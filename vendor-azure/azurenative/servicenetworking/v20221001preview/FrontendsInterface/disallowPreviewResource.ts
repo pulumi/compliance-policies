@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicenetworking-v20221001preview-frontendsinterface-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicenetworking.v20221001preview.FrontendsInterface).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FrontendsInterface, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FrontendsInterface shouldn't use an unstable API (servicenetworking.v20221001preview.FrontendsInterface). A compatible replacement can be found at 'servicenetworking.FrontendsInterface'."
             );

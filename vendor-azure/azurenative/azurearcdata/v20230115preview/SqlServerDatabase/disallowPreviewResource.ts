@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurearcdata-v20230115preview-sqlserverdatabase-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurearcdata.v20230115preview.SqlServerDatabase).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlServerDatabase, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlServerDatabase shouldn't use an unstable API (azurearcdata.v20230115preview.SqlServerDatabase). A compatible replacement can be found at 'azurearcdata.SqlServerDatabase'."
             );

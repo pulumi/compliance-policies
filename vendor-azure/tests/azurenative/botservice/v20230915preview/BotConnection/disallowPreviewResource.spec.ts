@@ -61,10 +61,26 @@ describe("azurenative.botservice.v20230915preview.BotConnection.disallowPreviewR
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BotConnection shouldn't use an unstable API (botservice.v20230915preview.BotConnection). A compatible replacement can be found at 'botservice.BotConnection'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure BotConnection shouldn't use an unstable API (botservice.v20230915preview.BotConnection). A compatible replacement can be found at 'botservice.BotConnection'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BotConnection shouldn't use an unstable API (botservice.v20230915preview.BotConnection). A compatible replacement can be found at 'botservice.BotConnection'." });
     });
 });

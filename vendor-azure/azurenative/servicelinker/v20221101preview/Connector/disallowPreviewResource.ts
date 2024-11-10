@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicelinker-v20221101preview-connector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicelinker.v20221101preview.Connector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Connector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Connector shouldn't use an unstable API (servicelinker.v20221101preview.Connector).");
         }),
     },

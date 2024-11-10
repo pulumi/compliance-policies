@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-storagecache-v20231101preview-amlfilesystem-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (storagecache.v20231101preview.AmlFilesystem).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AmlFilesystem, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AmlFilesystem shouldn't use an unstable API (storagecache.v20231101preview.AmlFilesystem). A compatible replacement can be found at 'storagecache.AmlFilesystem'.");
         }),
     },

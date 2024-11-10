@@ -61,11 +61,26 @@ describe("azurenative.migrate.v20230401preview.SqlAssessmentV2Operation.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SqlAssessmentV2Operation shouldn't use an unstable API (migrate.v20230401preview.SqlAssessmentV2Operation). A compatible replacement can be found at 'migrate.SqlAssessmentV2Operation'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure SqlAssessmentV2Operation shouldn't use an unstable API (migrate.v20230401preview.SqlAssessmentV2Operation). A compatible replacement can be found at 'migrate.SqlAssessmentV2Operation'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SqlAssessmentV2Operation shouldn't use an unstable API (migrate.v20230401preview.SqlAssessmentV2Operation). A compatible replacement can be found at 'migrate.SqlAssessmentV2Operation'." });
     });
 });

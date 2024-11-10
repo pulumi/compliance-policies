@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datareplication-v20210216preview-dra-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datareplication.v20210216preview.Dra).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Dra, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Dra shouldn't use an unstable API (datareplication.v20210216preview.Dra). A compatible replacement can be found at 'datareplication.Dra'.");
         }),
     },

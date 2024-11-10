@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { StreamingJob } from "@pulumi/azure-native/streamanalytics/v20170401preview";
 
@@ -21,8 +22,8 @@ import { StreamingJob } from "@pulumi/azure-native/streamanalytics/v20170401prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(StreamingJob, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

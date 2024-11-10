@@ -61,11 +61,26 @@ describe("azurenative.timeseriesinsights.v20210630preview.EventHubEventSource.di
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure EventHubEventSource shouldn't use an unstable API (timeseriesinsights.v20210630preview.EventHubEventSource). A compatible replacement can be found at 'timeseriesinsights.EventHubEventSource'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure EventHubEventSource shouldn't use an unstable API (timeseriesinsights.v20210630preview.EventHubEventSource). A compatible replacement can be found at 'timeseriesinsights.EventHubEventSource'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure EventHubEventSource shouldn't use an unstable API (timeseriesinsights.v20210630preview.EventHubEventSource). A compatible replacement can be found at 'timeseriesinsights.EventHubEventSource'." });
     });
 });

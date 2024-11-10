@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-elasticsan-v20211120preview-elasticsan-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (elasticsan.v20211120preview.ElasticSan).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ElasticSan, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ElasticSan shouldn't use an unstable API (elasticsan.v20211120preview.ElasticSan). A compatible replacement can be found at 'elasticsan.ElasticSan'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-resourceconnector-v20211031preview-appliance-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (resourceconnector.v20211031preview.Appliance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Appliance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Appliance shouldn't use an unstable API (resourceconnector.v20211031preview.Appliance). A compatible replacement can be found at 'resourceconnector.Appliance'.");
         }),
     },

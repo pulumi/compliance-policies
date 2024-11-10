@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-machinelearningservices-v20240701preview-connectionraiblocklist-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (machinelearningservices.v20240701preview.ConnectionRaiBlocklist).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectionRaiBlocklist, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConnectionRaiBlocklist shouldn't use an unstable API (machinelearningservices.v20240701preview.ConnectionRaiBlocklist). A compatible replacement can be found at 'machinelearningservices.ConnectionRaiBlocklist'."
             );

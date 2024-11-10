@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AppAttachPackage } from "@pulumi/azure-native/desktopvirtualization/v20240306preview";
 
@@ -21,9 +22,9 @@ import { AppAttachPackage } from "@pulumi/azure-native/desktopvirtualization/v20
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AppAttachPackage, {
         properties: {},
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

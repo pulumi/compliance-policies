@@ -61,11 +61,26 @@ describe("azurenative.dbformysql.v20180601privatepreview.VirtualNetworkRule.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualNetworkRule shouldn't use an unstable API (dbformysql.v20180601privatepreview.VirtualNetworkRule). A compatible replacement can be found at 'dbformysql.v20171201.VirtualNetworkRule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure VirtualNetworkRule shouldn't use an unstable API (dbformysql.v20180601privatepreview.VirtualNetworkRule). A compatible replacement can be found at 'dbformysql.v20171201.VirtualNetworkRule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure VirtualNetworkRule shouldn't use an unstable API (dbformysql.v20180601privatepreview.VirtualNetworkRule). A compatible replacement can be found at 'dbformysql.v20171201.VirtualNetworkRule'." });
     });
 });

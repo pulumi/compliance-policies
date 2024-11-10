@@ -61,6 +61,24 @@ describe("azurenative.hybridnetwork.v20220101preview.Device.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Device shouldn't use an unstable API (hybridnetwork.v20220101preview.Device). A compatible replacement can be found at 'hybridnetwork.Device'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Device shouldn't use an unstable API (hybridnetwork.v20220101preview.Device). A compatible replacement can be found at 'hybridnetwork.Device'." });

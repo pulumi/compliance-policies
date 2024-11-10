@@ -61,11 +61,26 @@ describe("azurenative.servicebus.v20180101preview.NamespaceIpFilterRule.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NamespaceIpFilterRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceIpFilterRule). A compatible replacement can be found at 'servicebus.NamespaceIpFilterRule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure NamespaceIpFilterRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceIpFilterRule). A compatible replacement can be found at 'servicebus.NamespaceIpFilterRule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure NamespaceIpFilterRule shouldn't use an unstable API (servicebus.v20180101preview.NamespaceIpFilterRule). A compatible replacement can be found at 'servicebus.NamespaceIpFilterRule'." });
     });
 });

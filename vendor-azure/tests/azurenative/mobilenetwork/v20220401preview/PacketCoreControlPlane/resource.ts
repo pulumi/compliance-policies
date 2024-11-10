@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PacketCoreControlPlane } from "@pulumi/azure-native/mobilenetwork/v20220401preview";
 
@@ -21,7 +22,7 @@ import { PacketCoreControlPlane } from "@pulumi/azure-native/mobilenetwork/v2022
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PacketCoreControlPlane, {
         resourceGroupName: "",
         controlPlaneAccessInterface: {},
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             id: "",
         },
         sku: "",
-    });
+    }, policyconfig, resourceName);
 }

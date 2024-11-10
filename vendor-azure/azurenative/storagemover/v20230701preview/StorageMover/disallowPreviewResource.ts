@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-storagemover-v20230701preview-storagemover-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (storagemover.v20230701preview.StorageMover).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StorageMover, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure StorageMover shouldn't use an unstable API (storagemover.v20230701preview.StorageMover). A compatible replacement can be found at 'storagemover.StorageMover'.");
         }),
     },

@@ -61,11 +61,26 @@ describe("azurenative.dashboard.v20221001preview.ManagedPrivateEndpoint.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedPrivateEndpoint shouldn't use an unstable API (dashboard.v20221001preview.ManagedPrivateEndpoint). A compatible replacement can be found at 'dashboard.ManagedPrivateEndpoint'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ManagedPrivateEndpoint shouldn't use an unstable API (dashboard.v20221001preview.ManagedPrivateEndpoint). A compatible replacement can be found at 'dashboard.ManagedPrivateEndpoint'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedPrivateEndpoint shouldn't use an unstable API (dashboard.v20221001preview.ManagedPrivateEndpoint). A compatible replacement can be found at 'dashboard.ManagedPrivateEndpoint'." });
     });
 });

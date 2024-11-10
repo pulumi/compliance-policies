@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SqlResourceSqlContainer } from "@pulumi/azure-native/documentdb/v20240215preview";
 
@@ -21,7 +22,7 @@ import { SqlResourceSqlContainer } from "@pulumi/azure-native/documentdb/v202402
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SqlResourceSqlContainer, {
         accountName: "",
         databaseName: "",
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             id: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

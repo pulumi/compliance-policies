@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databricks-v20220401preview-accessconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databricks.v20220401preview.AccessConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AccessConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AccessConnector shouldn't use an unstable API (databricks.v20220401preview.AccessConnector). A compatible replacement can be found at 'databricks.AccessConnector'."
             );

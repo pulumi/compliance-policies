@@ -61,10 +61,26 @@ describe("azurenative.devhub.v20240801preview.Workflow.disallowPreviewResource",
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Workflow shouldn't use an unstable API (devhub.v20240801preview.Workflow). A compatible replacement can be found at 'devhub.Workflow'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Workflow shouldn't use an unstable API (devhub.v20240801preview.Workflow). A compatible replacement can be found at 'devhub.Workflow'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Workflow shouldn't use an unstable API (devhub.v20240801preview.Workflow). A compatible replacement can be found at 'devhub.Workflow'." });
     });
 });

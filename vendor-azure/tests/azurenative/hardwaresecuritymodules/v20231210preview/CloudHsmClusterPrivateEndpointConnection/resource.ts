@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CloudHsmClusterPrivateEndpointConnection } from "@pulumi/azure-native/hardwaresecuritymodules/v20231210preview";
 
@@ -21,10 +22,10 @@ import { CloudHsmClusterPrivateEndpointConnection } from "@pulumi/azure-native/h
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CloudHsmClusterPrivateEndpointConnection, {
         cloudHsmClusterName: "",
         privateLinkServiceConnectionState: {},
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230801preview-extendedserverblobauditingpolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230801preview.ExtendedServerBlobAuditingPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ExtendedServerBlobAuditingPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ExtendedServerBlobAuditingPolicy shouldn't use an unstable API (sql.v20230801preview.ExtendedServerBlobAuditingPolicy). A compatible replacement can be found at 'sql.ExtendedServerBlobAuditingPolicy'."
             );

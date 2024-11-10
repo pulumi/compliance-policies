@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-costmanagement-v20180801preview-reportbybillingaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (costmanagement.v20180801preview.ReportByBillingAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReportByBillingAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ReportByBillingAccount shouldn't use an unstable API (costmanagement.v20180801preview.ReportByBillingAccount). A compatible replacement can be found at 'costmanagement.ReportByBillingAccount'."
             );

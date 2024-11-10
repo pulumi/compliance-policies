@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230501preview-serverazureadonlyauthentication-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230501preview.ServerAzureADOnlyAuthentication).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServerAzureADOnlyAuthentication, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ServerAzureADOnlyAuthentication shouldn't use an unstable API (sql.v20230501preview.ServerAzureADOnlyAuthentication). A compatible replacement can be found at 'sql.ServerAzureADOnlyAuthentication'."
             );

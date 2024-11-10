@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ServerGroup } from "@pulumi/azure-native/dbforpostgresql/v20201005privatepreview";
 
@@ -21,8 +22,8 @@ import { ServerGroup } from "@pulumi/azure-native/dbforpostgresql/v20201005priva
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ServerGroup, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

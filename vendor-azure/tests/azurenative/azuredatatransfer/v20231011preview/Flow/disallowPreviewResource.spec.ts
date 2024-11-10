@@ -61,10 +61,26 @@ describe("azurenative.azuredatatransfer.v20231011preview.Flow.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Flow shouldn't use an unstable API (azuredatatransfer.v20231011preview.Flow). A compatible replacement can be found at 'azuredatatransfer.Flow'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Flow shouldn't use an unstable API (azuredatatransfer.v20231011preview.Flow). A compatible replacement can be found at 'azuredatatransfer.Flow'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Flow shouldn't use an unstable API (azuredatatransfer.v20231011preview.Flow). A compatible replacement can be found at 'azuredatatransfer.Flow'." });
     });
 });

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { RoleAssignmentArtifact } from "@pulumi/azure-native/blueprint/v20181101preview";
 
@@ -21,12 +22,12 @@ import { RoleAssignmentArtifact } from "@pulumi/azure-native/blueprint/v20181101
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(RoleAssignmentArtifact, {
         blueprintName: "",
         kind: "roleAssignment",
         principalIds: [""],
         resourceScope: "",
         roleDefinitionId: "",
-    });
+    }, policyconfig, resourceName);
 }

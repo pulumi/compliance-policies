@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-eventhub-v20221001preview-applicationgroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (eventhub.v20221001preview.ApplicationGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApplicationGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ApplicationGroup shouldn't use an unstable API (eventhub.v20221001preview.ApplicationGroup). A compatible replacement can be found at 'eventhub.ApplicationGroup'.");
         }),
     },

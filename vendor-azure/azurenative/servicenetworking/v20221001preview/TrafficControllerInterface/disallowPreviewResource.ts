@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicenetworking-v20221001preview-trafficcontrollerinterface-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicenetworking.v20221001preview.TrafficControllerInterface).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TrafficControllerInterface, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TrafficControllerInterface shouldn't use an unstable API (servicenetworking.v20221001preview.TrafficControllerInterface). A compatible replacement can be found at 'servicenetworking.TrafficControllerInterface'."
             );

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IpPrefix } from "@pulumi/azure-native/managednetworkfabric/v20230201preview";
 
@@ -21,7 +22,7 @@ import { IpPrefix } from "@pulumi/azure-native/managednetworkfabric/v20230201pre
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IpPrefix, {
         ipPrefixRules: [
             {
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         ],
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

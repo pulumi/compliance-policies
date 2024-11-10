@@ -61,11 +61,26 @@ describe("azurenative.sql.v20230501preview.StartStopManagedInstanceSchedule.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure StartStopManagedInstanceSchedule shouldn't use an unstable API (sql.v20230501preview.StartStopManagedInstanceSchedule). A compatible replacement can be found at 'sql.StartStopManagedInstanceSchedule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure StartStopManagedInstanceSchedule shouldn't use an unstable API (sql.v20230501preview.StartStopManagedInstanceSchedule). A compatible replacement can be found at 'sql.StartStopManagedInstanceSchedule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure StartStopManagedInstanceSchedule shouldn't use an unstable API (sql.v20230501preview.StartStopManagedInstanceSchedule). A compatible replacement can be found at 'sql.StartStopManagedInstanceSchedule'." });
     });
 });

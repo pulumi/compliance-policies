@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cdn-v20240601preview-afdtargetgroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cdn.v20240601preview.AFDTargetGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AFDTargetGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AFDTargetGroup shouldn't use an unstable API (cdn.v20240601preview.AFDTargetGroup). A compatible replacement can be found at 'cdn.AFDTargetGroup'.");
         }),
     },

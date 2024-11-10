@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridnetwork-v20220101preview-device-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridnetwork.v20220101preview.Device).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Device, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Device shouldn't use an unstable API (hybridnetwork.v20220101preview.Device). A compatible replacement can be found at 'hybridnetwork.Device'.");
         }),
     },

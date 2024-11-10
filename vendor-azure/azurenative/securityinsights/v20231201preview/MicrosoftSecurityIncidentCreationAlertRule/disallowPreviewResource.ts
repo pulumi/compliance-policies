@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20231201preview-microsoftsecurityincidentcreationalertrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20231201preview.MicrosoftSecurityIncidentCreationAlertRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MicrosoftSecurityIncidentCreationAlertRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MicrosoftSecurityIncidentCreationAlertRule shouldn't use an unstable API (securityinsights.v20231201preview.MicrosoftSecurityIncidentCreationAlertRule). A compatible replacement can be found at 'securityinsights.MicrosoftSecurityIncidentCreationAlertRule'."
             );

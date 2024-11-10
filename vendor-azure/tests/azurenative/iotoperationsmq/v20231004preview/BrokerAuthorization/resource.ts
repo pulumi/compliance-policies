@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BrokerAuthorization } from "@pulumi/azure-native/iotoperationsmq/v20231004preview";
 
@@ -21,7 +22,7 @@ import { BrokerAuthorization } from "@pulumi/azure-native/iotoperationsmq/v20231
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BrokerAuthorization, {
         authorizationPolicies: {},
         brokerName: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         listenerRef: [""],
         mqName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

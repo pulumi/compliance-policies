@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbformysql-v20200701privatepreview-configuration-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbformysql.v20200701privatepreview.Configuration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Configuration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Configuration shouldn't use an unstable API (dbformysql.v20200701privatepreview.Configuration). A compatible replacement can be found at 'dbformysql.v20220101.Configuration'."
             );

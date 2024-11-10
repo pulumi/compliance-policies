@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotoperationsdataprocessor-v20231004preview-dataset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotoperationsdataprocessor.v20231004preview.Dataset).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Dataset, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Dataset shouldn't use an unstable API (iotoperationsdataprocessor.v20231004preview.Dataset). A compatible replacement can be found at 'iotoperationsdataprocessor.Dataset'."
             );

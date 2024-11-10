@@ -61,11 +61,26 @@ describe("azurenative.elastic.v20240615preview.MonitoredSubscription.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MonitoredSubscription shouldn't use an unstable API (elastic.v20240615preview.MonitoredSubscription). A compatible replacement can be found at 'elastic.MonitoredSubscription'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure MonitoredSubscription shouldn't use an unstable API (elastic.v20240615preview.MonitoredSubscription). A compatible replacement can be found at 'elastic.MonitoredSubscription'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure MonitoredSubscription shouldn't use an unstable API (elastic.v20240615preview.MonitoredSubscription). A compatible replacement can be found at 'elastic.MonitoredSubscription'." });
     });
 });

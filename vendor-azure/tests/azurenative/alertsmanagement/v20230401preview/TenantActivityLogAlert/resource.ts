@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { TenantActivityLogAlert } from "@pulumi/azure-native/alertsmanagement/v20230401preview";
 
@@ -21,12 +22,12 @@ import { TenantActivityLogAlert } from "@pulumi/azure-native/alertsmanagement/v2
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(TenantActivityLogAlert, {
         actions: {},
         condition: {
             allOf: [{}],
         },
         managementGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

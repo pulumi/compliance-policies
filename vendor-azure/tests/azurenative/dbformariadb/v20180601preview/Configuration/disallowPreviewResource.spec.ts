@@ -61,6 +61,24 @@ describe("azurenative.dbformariadb.v20180601preview.Configuration.disallowPrevie
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Configuration shouldn't use an unstable API (dbformariadb.v20180601preview.Configuration). A compatible replacement can be found at 'dbformariadb.Configuration'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Configuration shouldn't use an unstable API (dbformariadb.v20180601preview.Configuration). A compatible replacement can be found at 'dbformariadb.Configuration'." });

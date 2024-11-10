@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-authorization-v20211201preview-accessreviewscheduledefinitionbyid-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (authorization.v20211201preview.AccessReviewScheduleDefinitionById).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AccessReviewScheduleDefinitionById, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AccessReviewScheduleDefinitionById shouldn't use an unstable API (authorization.v20211201preview.AccessReviewScheduleDefinitionById). A compatible replacement can be found at 'authorization.AccessReviewScheduleDefinitionById'."
             );

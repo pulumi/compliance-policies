@@ -61,10 +61,26 @@ describe("azurenative.azurestackhci.v20240215preview.Cluster.disallowPreviewReso
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Cluster shouldn't use an unstable API (azurestackhci.v20240215preview.Cluster). A compatible replacement can be found at 'azurestackhci.Cluster'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Cluster shouldn't use an unstable API (azurestackhci.v20240215preview.Cluster). A compatible replacement can be found at 'azurestackhci.Cluster'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Cluster shouldn't use an unstable API (azurestackhci.v20240215preview.Cluster). A compatible replacement can be found at 'azurestackhci.Cluster'." });
     });
 });

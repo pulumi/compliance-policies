@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AzurePowerShellScript } from "@pulumi/azure-native/resources/v20191001preview";
 
@@ -21,12 +22,12 @@ import { AzurePowerShellScript } from "@pulumi/azure-native/resources/v20191001p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AzurePowerShellScript, {
         resourceGroupName: "",
         azPowerShellVersion: "",
         identity: {},
         kind: "AzurePowerShell",
         retentionInterval: "",
-    });
+    }, policyconfig, resourceName);
 }

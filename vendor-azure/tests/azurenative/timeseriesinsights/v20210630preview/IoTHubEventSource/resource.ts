@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IoTHubEventSource } from "@pulumi/azure-native/timeseriesinsights/v20210630preview";
 
@@ -21,7 +22,7 @@ import { IoTHubEventSource } from "@pulumi/azure-native/timeseriesinsights/v2021
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IoTHubEventSource, {
         consumerGroupName: "",
         environmentName: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "Microsoft.IoTHub",
         resourceGroupName: "",
         sharedAccessKey: "",
-    });
+    }, policyconfig, resourceName);
 }

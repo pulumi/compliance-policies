@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azuredatatransfer-v20231011preview-flow-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azuredatatransfer.v20231011preview.Flow).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Flow, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Flow shouldn't use an unstable API (azuredatatransfer.v20231011preview.Flow). A compatible replacement can be found at 'azuredatatransfer.Flow'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-timeseriesinsights-v20210630preview-referencedataset-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (timeseriesinsights.v20210630preview.ReferenceDataSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReferenceDataSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ReferenceDataSet shouldn't use an unstable API (timeseriesinsights.v20210630preview.ReferenceDataSet). A compatible replacement can be found at 'timeseriesinsights.ReferenceDataSet'."
             );

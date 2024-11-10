@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-timeseriesinsights-v20210630preview-gen2environment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (timeseriesinsights.v20210630preview.Gen2Environment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Gen2Environment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure Gen2Environment shouldn't use an unstable API (timeseriesinsights.v20210630preview.Gen2Environment). A compatible replacement can be found at 'timeseriesinsights.Gen2Environment'."
             );

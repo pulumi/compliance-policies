@@ -61,11 +61,26 @@ describe("azurenative.apimanagement.v20220901preview.PrivateEndpointConnectionBy
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateEndpointConnectionByName shouldn't use an unstable API (apimanagement.v20220901preview.PrivateEndpointConnectionByName). A compatible replacement can be found at 'apimanagement.PrivateEndpointConnectionByName'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure PrivateEndpointConnectionByName shouldn't use an unstable API (apimanagement.v20220901preview.PrivateEndpointConnectionByName). A compatible replacement can be found at 'apimanagement.PrivateEndpointConnectionByName'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PrivateEndpointConnectionByName shouldn't use an unstable API (apimanagement.v20220901preview.PrivateEndpointConnectionByName). A compatible replacement can be found at 'apimanagement.PrivateEndpointConnectionByName'." });
     });
 });

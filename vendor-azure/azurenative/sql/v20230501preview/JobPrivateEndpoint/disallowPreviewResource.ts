@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sql-v20230501preview-jobprivateendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sql.v20230501preview.JobPrivateEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(JobPrivateEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure JobPrivateEndpoint shouldn't use an unstable API (sql.v20230501preview.JobPrivateEndpoint). A compatible replacement can be found at 'sql.JobPrivateEndpoint'.");
         }),
     },

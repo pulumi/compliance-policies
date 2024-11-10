@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20201005preview-webtest-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20201005preview.WebTest).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebTest, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure WebTest shouldn't use an unstable API (insights.v20201005preview.WebTest). A compatible replacement can be found at 'insights.WebTest'.");
         }),
     },

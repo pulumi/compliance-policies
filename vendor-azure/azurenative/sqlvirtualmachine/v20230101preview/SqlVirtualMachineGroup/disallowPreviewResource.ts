@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-sqlvirtualmachine-v20230101preview-sqlvirtualmachinegroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (sqlvirtualmachine.v20230101preview.SqlVirtualMachineGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlVirtualMachineGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlVirtualMachineGroup shouldn't use an unstable API (sqlvirtualmachine.v20230101preview.SqlVirtualMachineGroup). A compatible replacement can be found at 'sqlvirtualmachine.SqlVirtualMachineGroup'."
             );

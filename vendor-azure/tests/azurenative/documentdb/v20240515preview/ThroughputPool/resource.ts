@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ThroughputPool } from "@pulumi/azure-native/documentdb/v20240515preview";
 
@@ -21,8 +22,8 @@ import { ThroughputPool } from "@pulumi/azure-native/documentdb/v20240515preview
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ThroughputPool, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

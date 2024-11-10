@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-offazure-v20231001preview-webappdiscoverysitedatasourcescontroller-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (offazure.v20231001preview.WebAppDiscoverySiteDataSourcesController).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebAppDiscoverySiteDataSourcesController, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WebAppDiscoverySiteDataSourcesController shouldn't use an unstable API (offazure.v20231001preview.WebAppDiscoverySiteDataSourcesController). A compatible replacement can be found at 'offazure.WebAppDiscoverySiteDataSourcesController'."
             );

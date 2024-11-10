@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Report } from "@pulumi/azure-native/appcomplianceautomation/v20221116preview";
 
@@ -21,7 +22,7 @@ import { Report } from "@pulumi/azure-native/appcomplianceautomation/v20221116pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Report, {
         properties: {
             resources: [{
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             timeZone: "",
             triggerTime: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

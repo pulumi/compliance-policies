@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SharedPrivateLinkResource } from "@pulumi/azure-native/databasewatcher/v20240719preview";
 
@@ -21,12 +22,12 @@ import { SharedPrivateLinkResource } from "@pulumi/azure-native/databasewatcher/
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SharedPrivateLinkResource, {
         groupId: "",
         privateLinkResourceId: "",
         requestMessage: "",
         resourceGroupName: "",
         watcherName: "",
-    });
+    }, policyconfig, resourceName);
 }

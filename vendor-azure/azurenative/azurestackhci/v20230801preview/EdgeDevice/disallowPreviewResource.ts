@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20230801preview-edgedevice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20230801preview.EdgeDevice).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EdgeDevice, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EdgeDevice shouldn't use an unstable API (azurestackhci.v20230801preview.EdgeDevice). A compatible replacement can be found at 'azurestackhci.EdgeDevice'.");
         }),
     },

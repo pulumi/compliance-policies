@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ObservabilityService } from "@pulumi/azure-native/mobilepacketcore/v20231015preview";
 
@@ -21,7 +22,7 @@ import { ObservabilityService } from "@pulumi/azure-native/mobilepacketcore/v202
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ObservabilityService, {
         clusterService: "",
         componentParameters: [
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         ],
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

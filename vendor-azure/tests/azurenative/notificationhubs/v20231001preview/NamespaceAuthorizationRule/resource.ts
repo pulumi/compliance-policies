@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { NamespaceAuthorizationRule } from "@pulumi/azure-native/notificationhubs/v20231001preview";
 
@@ -21,10 +22,10 @@ import { NamespaceAuthorizationRule } from "@pulumi/azure-native/notificationhub
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(NamespaceAuthorizationRule, {
         rights: [""],
         namespaceName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

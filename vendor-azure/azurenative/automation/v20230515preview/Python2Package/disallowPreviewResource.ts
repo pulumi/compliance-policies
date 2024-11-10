@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-automation-v20230515preview-python2package-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (automation.v20230515preview.Python2Package).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Python2Package, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Python2Package shouldn't use an unstable API (automation.v20230515preview.Python2Package). A compatible replacement can be found at 'automation.Python2Package'.");
         }),
     },

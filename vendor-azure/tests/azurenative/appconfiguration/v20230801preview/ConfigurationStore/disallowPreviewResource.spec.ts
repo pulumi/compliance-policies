@@ -61,11 +61,26 @@ describe("azurenative.appconfiguration.v20230801preview.ConfigurationStore.disal
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ConfigurationStore shouldn't use an unstable API (appconfiguration.v20230801preview.ConfigurationStore). A compatible replacement can be found at 'appconfiguration.ConfigurationStore'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ConfigurationStore shouldn't use an unstable API (appconfiguration.v20230801preview.ConfigurationStore). A compatible replacement can be found at 'appconfiguration.ConfigurationStore'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ConfigurationStore shouldn't use an unstable API (appconfiguration.v20230801preview.ConfigurationStore). A compatible replacement can be found at 'appconfiguration.ConfigurationStore'." });
     });
 });

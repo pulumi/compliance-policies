@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-orbital-v20240301preview-l2connection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (orbital.v20240301preview.L2Connection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(L2Connection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure L2Connection shouldn't use an unstable API (orbital.v20240301preview.L2Connection). A compatible replacement can be found at 'orbital.L2Connection'.");
         }),
     },

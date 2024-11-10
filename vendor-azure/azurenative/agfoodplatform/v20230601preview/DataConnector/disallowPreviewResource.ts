@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-agfoodplatform-v20230601preview-dataconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (agfoodplatform.v20230601preview.DataConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DataConnector shouldn't use an unstable API (agfoodplatform.v20230601preview.DataConnector). A compatible replacement can be found at 'agfoodplatform.DataConnector'."
             );

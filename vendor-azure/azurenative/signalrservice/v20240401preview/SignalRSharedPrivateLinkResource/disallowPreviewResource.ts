@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-signalrservice-v20240401preview-signalrsharedprivatelinkresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (signalrservice.v20240401preview.SignalRSharedPrivateLinkResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SignalRSharedPrivateLinkResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SignalRSharedPrivateLinkResource shouldn't use an unstable API (signalrservice.v20240401preview.SignalRSharedPrivateLinkResource). A compatible replacement can be found at 'signalrservice.SignalRSharedPrivateLinkResource'."
             );

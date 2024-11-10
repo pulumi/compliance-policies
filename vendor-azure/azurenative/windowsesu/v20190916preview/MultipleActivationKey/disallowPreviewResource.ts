@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-windowsesu-v20190916preview-multipleactivationkey-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (windowsesu.v20190916preview.MultipleActivationKey).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MultipleActivationKey, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure MultipleActivationKey shouldn't use an unstable API (windowsesu.v20190916preview.MultipleActivationKey). A compatible replacement can be found at 'windowsesu.MultipleActivationKey'."
             );

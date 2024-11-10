@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-loadtestservice-v20231201preview-loadtest-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (loadtestservice.v20231201preview.LoadTest).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LoadTest, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LoadTest shouldn't use an unstable API (loadtestservice.v20231201preview.LoadTest). A compatible replacement can be found at 'loadtestservice.LoadTest'.");
         }),
     },

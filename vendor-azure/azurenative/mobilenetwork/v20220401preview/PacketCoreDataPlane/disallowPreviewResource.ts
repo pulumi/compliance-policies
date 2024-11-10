@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilenetwork-v20220401preview-packetcoredataplane-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilenetwork.v20220401preview.PacketCoreDataPlane).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PacketCoreDataPlane, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PacketCoreDataPlane shouldn't use an unstable API (mobilenetwork.v20220401preview.PacketCoreDataPlane). A compatible replacement can be found at 'mobilenetwork.PacketCoreDataPlane'."
             );

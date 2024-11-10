@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dbformariadb-v20200101privatepreview-serverkey-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dbformariadb.v20200101privatepreview.ServerKey).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServerKey, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ServerKey shouldn't use an unstable API (dbformariadb.v20200101privatepreview.ServerKey).");
         }),
     },

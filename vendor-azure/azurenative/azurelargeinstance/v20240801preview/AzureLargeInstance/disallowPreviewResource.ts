@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurelargeinstance-v20240801preview-azurelargeinstance-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurelargeinstance.v20240801preview.AzureLargeInstance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AzureLargeInstance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AzureLargeInstance shouldn't use an unstable API (azurelargeinstance.v20240801preview.AzureLargeInstance). A compatible replacement can be found at 'azurelargeinstance.AzureLargeInstance'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devcenter-v20240801preview-projectenvironmenttype-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devcenter.v20240801preview.ProjectEnvironmentType).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProjectEnvironmentType, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ProjectEnvironmentType shouldn't use an unstable API (devcenter.v20240801preview.ProjectEnvironmentType). A compatible replacement can be found at 'devcenter.ProjectEnvironmentType'."
             );

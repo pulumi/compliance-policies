@@ -61,6 +61,24 @@ describe("azurenative.agfoodplatform.v20210901preview.FarmBeatsModel.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20210901preview.FarmBeatsModel). A compatible replacement can be found at 'agfoodplatform.FarmBeatsModel'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure FarmBeatsModel shouldn't use an unstable API (agfoodplatform.v20210901preview.FarmBeatsModel). A compatible replacement can be found at 'agfoodplatform.FarmBeatsModel'." });

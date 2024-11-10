@@ -61,10 +61,26 @@ describe("azurenative.redhatopenshift.v20230701preview.Secret.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Secret shouldn't use an unstable API (redhatopenshift.v20230701preview.Secret). A compatible replacement can be found at 'redhatopenshift.Secret'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Secret shouldn't use an unstable API (redhatopenshift.v20230701preview.Secret). A compatible replacement can be found at 'redhatopenshift.Secret'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Secret shouldn't use an unstable API (redhatopenshift.v20230701preview.Secret). A compatible replacement can be found at 'redhatopenshift.Secret'." });
     });
 });

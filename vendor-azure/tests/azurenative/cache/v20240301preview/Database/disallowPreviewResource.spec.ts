@@ -61,10 +61,26 @@ describe("azurenative.cache.v20240301preview.Database.disallowPreviewResource", 
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Database shouldn't use an unstable API (cache.v20240301preview.Database). A compatible replacement can be found at 'cache.Database'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Database shouldn't use an unstable API (cache.v20240301preview.Database). A compatible replacement can be found at 'cache.Database'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Database shouldn't use an unstable API (cache.v20240301preview.Database). A compatible replacement can be found at 'cache.Database'." });
     });
 });

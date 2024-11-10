@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ComputePolicy } from "@pulumi/azure-native/datalakeanalytics/v20191101preview";
 
@@ -21,11 +22,11 @@ import { ComputePolicy } from "@pulumi/azure-native/datalakeanalytics/v20191101p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ComputePolicy, {
         resourceGroupName: "",
         accountName: "",
         objectId: "",
         objectType: "",
-    });
+    }, policyconfig, resourceName);
 }

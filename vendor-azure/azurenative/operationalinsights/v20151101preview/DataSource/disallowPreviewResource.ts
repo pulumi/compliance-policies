@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-operationalinsights-v20151101preview-datasource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (operationalinsights.v20151101preview.DataSource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataSource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DataSource shouldn't use an unstable API (operationalinsights.v20151101preview.DataSource). A compatible replacement can be found at 'operationalinsights.DataSource'."
             );

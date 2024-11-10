@@ -61,10 +61,26 @@ describe("azurenative.networkcloud.v20231001preview.L3Network.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure L3Network shouldn't use an unstable API (networkcloud.v20231001preview.L3Network). A compatible replacement can be found at 'networkcloud.L3Network'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure L3Network shouldn't use an unstable API (networkcloud.v20231001preview.L3Network). A compatible replacement can be found at 'networkcloud.L3Network'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure L3Network shouldn't use an unstable API (networkcloud.v20231001preview.L3Network). A compatible replacement can be found at 'networkcloud.L3Network'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datalakeanalytics-v20191101preview-computepolicy-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datalakeanalytics.v20191101preview.ComputePolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ComputePolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ComputePolicy shouldn't use an unstable API (datalakeanalytics.v20191101preview.ComputePolicy). A compatible replacement can be found at 'datalakeanalytics.ComputePolicy'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kubernetesconfiguration-v20220402preview-privatelinkscope-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kubernetesconfiguration.v20220402preview.PrivateLinkScope).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkScope, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkScope shouldn't use an unstable API (kubernetesconfiguration.v20220402preview.PrivateLinkScope). A compatible replacement can be found at 'kubernetesconfiguration.PrivateLinkScope'."
             );

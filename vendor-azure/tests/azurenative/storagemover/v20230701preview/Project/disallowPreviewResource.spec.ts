@@ -61,10 +61,26 @@ describe("azurenative.storagemover.v20230701preview.Project.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Project shouldn't use an unstable API (storagemover.v20230701preview.Project). A compatible replacement can be found at 'storagemover.Project'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Project shouldn't use an unstable API (storagemover.v20230701preview.Project). A compatible replacement can be found at 'storagemover.Project'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Project shouldn't use an unstable API (storagemover.v20230701preview.Project). A compatible replacement can be found at 'storagemover.Project'." });
     });
 });

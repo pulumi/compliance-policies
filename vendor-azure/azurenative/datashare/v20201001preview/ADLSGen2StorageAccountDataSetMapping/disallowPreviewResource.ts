@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datashare-v20201001preview-adlsgen2storageaccountdatasetmapping-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20201001preview.ADLSGen2StorageAccountDataSetMapping).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ADLSGen2StorageAccountDataSetMapping, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ADLSGen2StorageAccountDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.ADLSGen2StorageAccountDataSetMapping). A compatible replacement can be found at 'datashare.ADLSGen2StorageAccountDataSetMapping'."
             );

@@ -61,10 +61,26 @@ describe("azurenative.app.v20240202preview.ManagedEnvironment.disallowPreviewRes
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedEnvironment shouldn't use an unstable API (app.v20240202preview.ManagedEnvironment). A compatible replacement can be found at 'app.ManagedEnvironment'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure ManagedEnvironment shouldn't use an unstable API (app.v20240202preview.ManagedEnvironment). A compatible replacement can be found at 'app.ManagedEnvironment'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedEnvironment shouldn't use an unstable API (app.v20240202preview.ManagedEnvironment). A compatible replacement can be found at 'app.ManagedEnvironment'." });
     });
 });

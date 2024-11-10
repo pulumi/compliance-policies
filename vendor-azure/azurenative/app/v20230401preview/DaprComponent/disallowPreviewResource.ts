@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20230401preview-daprcomponent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20230401preview.DaprComponent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DaprComponent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DaprComponent shouldn't use an unstable API (app.v20230401preview.DaprComponent). A compatible replacement can be found at 'app.DaprComponent'.");
         }),
     },

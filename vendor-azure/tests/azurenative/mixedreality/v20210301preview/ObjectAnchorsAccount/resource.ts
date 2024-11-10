@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ObjectAnchorsAccount } from "@pulumi/azure-native/mixedreality/v20210301preview";
 
@@ -21,8 +22,8 @@ import { ObjectAnchorsAccount } from "@pulumi/azure-native/mixedreality/v2021030
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ObjectAnchorsAccount, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

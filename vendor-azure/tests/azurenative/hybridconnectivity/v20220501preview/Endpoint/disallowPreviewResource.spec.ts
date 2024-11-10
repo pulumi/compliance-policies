@@ -61,6 +61,24 @@ describe("azurenative.hybridconnectivity.v20220501preview.Endpoint.disallowPrevi
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Endpoint shouldn't use an unstable API (hybridconnectivity.v20220501preview.Endpoint). A compatible replacement can be found at 'hybridconnectivity.Endpoint'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure Endpoint shouldn't use an unstable API (hybridconnectivity.v20220501preview.Endpoint). A compatible replacement can be found at 'hybridconnectivity.Endpoint'." });

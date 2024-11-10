@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devices-v20221115preview-iothubresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devices.v20221115preview.IotHubResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IotHubResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IotHubResource shouldn't use an unstable API (devices.v20221115preview.IotHubResource). A compatible replacement can be found at 'devices.IotHubResource'.");
         }),
     },

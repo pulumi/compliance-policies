@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { HciEdgeDevice } from "@pulumi/azure-native/azurestackhci/v20240215preview";
 
@@ -21,9 +22,9 @@ import { HciEdgeDevice } from "@pulumi/azure-native/azurestackhci/v20240215previ
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(HciEdgeDevice, {
         kind: "HCI",
         resourceUri: "",
-    });
+    }, policyconfig, resourceName);
 }

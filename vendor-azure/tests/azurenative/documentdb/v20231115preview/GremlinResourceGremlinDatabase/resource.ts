@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { GremlinResourceGremlinDatabase } from "@pulumi/azure-native/documentdb/v20231115preview";
 
@@ -21,12 +22,12 @@ import { GremlinResourceGremlinDatabase } from "@pulumi/azure-native/documentdb/
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(GremlinResourceGremlinDatabase, {
         accountName: "",
         resource: {
             id: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

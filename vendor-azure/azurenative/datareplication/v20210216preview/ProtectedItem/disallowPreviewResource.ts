@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datareplication-v20210216preview-protecteditem-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datareplication.v20210216preview.ProtectedItem).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ProtectedItem, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ProtectedItem shouldn't use an unstable API (datareplication.v20210216preview.ProtectedItem). A compatible replacement can be found at 'datareplication.ProtectedItem'."
             );

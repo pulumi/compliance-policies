@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-alertsmanagement-v20240301preview-alertprocessingrulebyname-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20240301preview.AlertProcessingRuleByName).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AlertProcessingRuleByName, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AlertProcessingRuleByName shouldn't use an unstable API (alertsmanagement.v20240301preview.AlertProcessingRuleByName). A compatible replacement can be found at 'alertsmanagement.AlertProcessingRuleByName'."
             );

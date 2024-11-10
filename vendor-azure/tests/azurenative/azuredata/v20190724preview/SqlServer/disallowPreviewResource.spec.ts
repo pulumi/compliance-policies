@@ -61,6 +61,24 @@ describe("azurenative.azuredata.v20190724preview.SqlServer.disallowPreviewResour
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SqlServer shouldn't use an unstable API (azuredata.v20190724preview.SqlServer). A compatible replacement can be found at 'azuredata.SqlServer'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Azure SqlServer shouldn't use an unstable API (azuredata.v20190724preview.SqlServer). A compatible replacement can be found at 'azuredata.SqlServer'." });

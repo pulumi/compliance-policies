@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IoMAMPolicyByName } from "@pulumi/azure-native/intune/v20150114preview";
 
@@ -21,9 +22,9 @@ import { IoMAMPolicyByName } from "@pulumi/azure-native/intune/v20150114preview"
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(IoMAMPolicyByName, {
         friendlyName: "",
         hostName: "",
-    });
+    }, policyconfig, resourceName);
 }

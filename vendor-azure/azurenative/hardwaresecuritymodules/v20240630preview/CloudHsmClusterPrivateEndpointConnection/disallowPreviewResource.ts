@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hardwaresecuritymodules-v20240630preview-cloudhsmclusterprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hardwaresecuritymodules.v20240630preview.CloudHsmClusterPrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CloudHsmClusterPrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CloudHsmClusterPrivateEndpointConnection shouldn't use an unstable API (hardwaresecuritymodules.v20240630preview.CloudHsmClusterPrivateEndpointConnection). A compatible replacement can be found at 'hardwaresecuritymodules.CloudHsmClusterPrivateEndpointConnection'."
             );

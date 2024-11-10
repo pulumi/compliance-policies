@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { OrderItem } from "@pulumi/azure-native/edgeorder/v20220501preview";
 
@@ -21,7 +22,7 @@ import { OrderItem } from "@pulumi/azure-native/edgeorder/v20220501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(OrderItem, {
         resourceGroupName: "",
         addressDetails: {
@@ -40,5 +41,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 hierarchyInformation: {},
             },
         },
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DatabaseMigrationsMongoToCosmosDbvCoreMongo } from "@pulumi/azure-native/datamigration/v20230715preview";
 
@@ -21,10 +22,10 @@ import { DatabaseMigrationsMongoToCosmosDbvCoreMongo } from "@pulumi/azure-nativ
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DatabaseMigrationsMongoToCosmosDbvCoreMongo, {
         kind: "MongoToCosmosDbMongo",
         resourceGroupName: "",
         targetResourceName: "",
-    });
+    }, policyconfig, resourceName);
 }

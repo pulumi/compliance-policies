@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-elastic-v20240615preview-tagrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (elastic.v20240615preview.TagRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TagRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure TagRule shouldn't use an unstable API (elastic.v20240615preview.TagRule). A compatible replacement can be found at 'elastic.TagRule'.");
         }),
     },

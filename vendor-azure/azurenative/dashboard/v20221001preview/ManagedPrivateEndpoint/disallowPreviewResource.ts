@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dashboard-v20221001preview-managedprivateendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dashboard.v20221001preview.ManagedPrivateEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedPrivateEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedPrivateEndpoint shouldn't use an unstable API (dashboard.v20221001preview.ManagedPrivateEndpoint). A compatible replacement can be found at 'dashboard.ManagedPrivateEndpoint'."
             );

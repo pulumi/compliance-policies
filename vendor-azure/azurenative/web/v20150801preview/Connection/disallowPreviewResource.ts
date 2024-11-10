@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-web-v20150801preview-connection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (web.v20150801preview.Connection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Connection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Connection shouldn't use an unstable API (web.v20150801preview.Connection). A compatible replacement can be found at 'web.Connection'.");
         }),
     },

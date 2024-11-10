@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AzureBareMetalInstance } from "@pulumi/azure-native/baremetalinfrastructure/v20240801preview";
 
@@ -21,8 +22,8 @@ import { AzureBareMetalInstance } from "@pulumi/azure-native/baremetalinfrastruc
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AzureBareMetalInstance, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

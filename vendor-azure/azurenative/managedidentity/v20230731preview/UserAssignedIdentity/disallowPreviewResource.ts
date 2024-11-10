@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managedidentity-v20230731preview-userassignedidentity-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managedidentity.v20230731preview.UserAssignedIdentity).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(UserAssignedIdentity, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure UserAssignedIdentity shouldn't use an unstable API (managedidentity.v20230731preview.UserAssignedIdentity). A compatible replacement can be found at 'managedidentity.UserAssignedIdentity'."
             );

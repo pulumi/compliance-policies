@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ArcAddon } from "@pulumi/azure-native/databoxedge/v20230101preview";
 
@@ -21,7 +22,7 @@ import { ArcAddon } from "@pulumi/azure-native/databoxedge/v20230101preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ArcAddon, {
         resourceGroupName: "",
         deviceName: "",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceName: "",
         roleName: "",
         subscriptionId: "",
-    });
+    }, policyconfig, resourceName);
 }

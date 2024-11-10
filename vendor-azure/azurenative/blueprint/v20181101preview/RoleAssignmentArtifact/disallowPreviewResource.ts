@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-blueprint-v20181101preview-roleassignmentartifact-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (blueprint.v20181101preview.RoleAssignmentArtifact).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RoleAssignmentArtifact, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure RoleAssignmentArtifact shouldn't use an unstable API (blueprint.v20181101preview.RoleAssignmentArtifact). A compatible replacement can be found at 'blueprint.RoleAssignmentArtifact'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-alertsmanagement-v20230401preview-tenantactivitylogalert-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (alertsmanagement.v20230401preview.TenantActivityLogAlert).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TenantActivityLogAlert, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure TenantActivityLogAlert shouldn't use an unstable API (alertsmanagement.v20230401preview.TenantActivityLogAlert).");
         }),
     },

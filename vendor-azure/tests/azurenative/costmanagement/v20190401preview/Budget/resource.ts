@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Budget } from "@pulumi/azure-native/costmanagement/v20190401preview";
 
@@ -21,7 +22,7 @@ import { Budget } from "@pulumi/azure-native/costmanagement/v20190401preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Budget, {
         amount: 0,
         category: "",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         timePeriod: {
             startDate: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

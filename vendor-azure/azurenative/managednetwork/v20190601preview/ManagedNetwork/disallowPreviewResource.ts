@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetwork-v20190601preview-managednetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetwork.v20190601preview.ManagedNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedNetwork shouldn't use an unstable API (managednetwork.v20190601preview.ManagedNetwork). A compatible replacement can be found at 'managednetwork.ManagedNetwork'."
             );

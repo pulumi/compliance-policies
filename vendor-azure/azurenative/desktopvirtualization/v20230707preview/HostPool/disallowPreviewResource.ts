@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-desktopvirtualization-v20230707preview-hostpool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (desktopvirtualization.v20230707preview.HostPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HostPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure HostPool shouldn't use an unstable API (desktopvirtualization.v20230707preview.HostPool). A compatible replacement can be found at 'desktopvirtualization.HostPool'."
             );

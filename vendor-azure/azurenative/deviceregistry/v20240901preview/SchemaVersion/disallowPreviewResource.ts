@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-deviceregistry-v20240901preview-schemaversion-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (deviceregistry.v20240901preview.SchemaVersion).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SchemaVersion, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SchemaVersion shouldn't use an unstable API (deviceregistry.v20240901preview.SchemaVersion). A compatible replacement can be found at 'deviceregistry.SchemaVersion'."
             );

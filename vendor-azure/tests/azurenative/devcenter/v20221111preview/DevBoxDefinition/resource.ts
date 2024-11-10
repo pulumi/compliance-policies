@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DevBoxDefinition } from "@pulumi/azure-native/devcenter/v20221111preview";
 
@@ -21,7 +22,7 @@ import { DevBoxDefinition } from "@pulumi/azure-native/devcenter/v20221111previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DevBoxDefinition, {
         resourceGroupName: "",
         devCenterName: "",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         sku: {
             name: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

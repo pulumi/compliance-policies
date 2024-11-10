@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-communication-v20230601preview-suppressionlist-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (communication.v20230601preview.SuppressionList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SuppressionList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SuppressionList shouldn't use an unstable API (communication.v20230601preview.SuppressionList). A compatible replacement can be found at 'communication.SuppressionList'."
             );

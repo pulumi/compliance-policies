@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-codesigning-v20240205preview-codesigningaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (codesigning.v20240205preview.CodeSigningAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CodeSigningAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CodeSigningAccount shouldn't use an unstable API (codesigning.v20240205preview.CodeSigningAccount). A compatible replacement can be found at 'codesigning.CodeSigningAccount'."
             );

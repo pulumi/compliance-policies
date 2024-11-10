@@ -61,11 +61,26 @@ describe("azurenative.eventgrid.v20240601preview.PartnerTopicEventSubscription.d
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PartnerTopicEventSubscription shouldn't use an unstable API (eventgrid.v20240601preview.PartnerTopicEventSubscription). A compatible replacement can be found at 'eventgrid.PartnerTopicEventSubscription'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure PartnerTopicEventSubscription shouldn't use an unstable API (eventgrid.v20240601preview.PartnerTopicEventSubscription). A compatible replacement can be found at 'eventgrid.PartnerTopicEventSubscription'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PartnerTopicEventSubscription shouldn't use an unstable API (eventgrid.v20240601preview.PartnerTopicEventSubscription). A compatible replacement can be found at 'eventgrid.PartnerTopicEventSubscription'." });
     });
 });

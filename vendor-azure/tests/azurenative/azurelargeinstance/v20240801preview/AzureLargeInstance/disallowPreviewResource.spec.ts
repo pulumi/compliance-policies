@@ -61,11 +61,26 @@ describe("azurenative.azurelargeinstance.v20240801preview.AzureLargeInstance.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AzureLargeInstance shouldn't use an unstable API (azurelargeinstance.v20240801preview.AzureLargeInstance). A compatible replacement can be found at 'azurelargeinstance.AzureLargeInstance'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure AzureLargeInstance shouldn't use an unstable API (azurelargeinstance.v20240801preview.AzureLargeInstance). A compatible replacement can be found at 'azurelargeinstance.AzureLargeInstance'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure AzureLargeInstance shouldn't use an unstable API (azurelargeinstance.v20240801preview.AzureLargeInstance). A compatible replacement can be found at 'azurelargeinstance.AzureLargeInstance'." });
     });
 });

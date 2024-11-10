@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-solutions-v20231201preview-jitrequest-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (solutions.v20231201preview.JitRequest).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(JitRequest, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure JitRequest shouldn't use an unstable API (solutions.v20231201preview.JitRequest). A compatible replacement can be found at 'solutions.JitRequest'.");
         }),
     },

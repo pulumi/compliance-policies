@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AnomalySecurityMLAnalyticsSettings } from "@pulumi/azure-native/securityinsights/v20230801preview";
 
@@ -21,7 +22,7 @@ import { AnomalySecurityMLAnalyticsSettings } from "@pulumi/azure-native/securit
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AnomalySecurityMLAnalyticsSettings, {
         anomalyVersion: "",
         displayName: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         settingsStatus: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

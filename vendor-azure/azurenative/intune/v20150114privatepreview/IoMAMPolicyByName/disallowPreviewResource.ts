@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-intune-v20150114privatepreview-iomampolicybyname-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (intune.v20150114privatepreview.IoMAMPolicyByName).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IoMAMPolicyByName, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure IoMAMPolicyByName shouldn't use an unstable API (intune.v20150114privatepreview.IoMAMPolicyByName). A compatible replacement can be found at 'intune.IoMAMPolicyByName'."
             );

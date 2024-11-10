@@ -61,11 +61,26 @@ describe("azurenative.professionalservice.v20230701preview.ProfessionalServiceSu
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProfessionalServiceSubscriptionLevel shouldn't use an unstable API (professionalservice.v20230701preview.ProfessionalServiceSubscriptionLevel). A compatible replacement can be found at 'professionalservice.ProfessionalServiceSubscriptionLevel'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ProfessionalServiceSubscriptionLevel shouldn't use an unstable API (professionalservice.v20230701preview.ProfessionalServiceSubscriptionLevel). A compatible replacement can be found at 'professionalservice.ProfessionalServiceSubscriptionLevel'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProfessionalServiceSubscriptionLevel shouldn't use an unstable API (professionalservice.v20230701preview.ProfessionalServiceSubscriptionLevel). A compatible replacement can be found at 'professionalservice.ProfessionalServiceSubscriptionLevel'." });
     });
 });

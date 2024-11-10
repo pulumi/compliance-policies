@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-fluidrelay-v20210615preview-fluidrelayserver-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (fluidrelay.v20210615preview.FluidRelayServer).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FluidRelayServer, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure FluidRelayServer shouldn't use an unstable API (fluidrelay.v20210615preview.FluidRelayServer). A compatible replacement can be found at 'fluidrelay.FluidRelayServer'."
             );

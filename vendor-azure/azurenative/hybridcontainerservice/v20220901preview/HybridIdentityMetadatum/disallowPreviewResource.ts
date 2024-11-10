@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcontainerservice-v20220901preview-hybrididentitymetadatum-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcontainerservice.v20220901preview.HybridIdentityMetadatum).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HybridIdentityMetadatum, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure HybridIdentityMetadatum shouldn't use an unstable API (hybridcontainerservice.v20220901preview.HybridIdentityMetadatum). A compatible replacement can be found at 'hybridcontainerservice.HybridIdentityMetadatum'."
             );

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { EdgeSite } from "@pulumi/azure-native/orbital/v20240301preview";
 
@@ -21,11 +22,11 @@ import { EdgeSite } from "@pulumi/azure-native/orbital/v20240301preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(EdgeSite, {
         globalCommunicationsSite: {
             id: "",
         },
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

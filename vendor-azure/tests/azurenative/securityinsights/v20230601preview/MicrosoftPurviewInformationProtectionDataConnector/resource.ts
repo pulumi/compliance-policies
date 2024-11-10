@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MicrosoftPurviewInformationProtectionDataConnector } from "@pulumi/azure-native/securityinsights/v20230601preview";
 
@@ -21,7 +22,7 @@ import { MicrosoftPurviewInformationProtectionDataConnector } from "@pulumi/azur
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MicrosoftPurviewInformationProtectionDataConnector, {
         dataTypes: {
             logs: {
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         tenantId: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-scom-v20230707preview-managedgateway-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (scom.v20230707preview.ManagedGateway).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedGateway, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure ManagedGateway shouldn't use an unstable API (scom.v20230707preview.ManagedGateway). A compatible replacement can be found at 'scom.ManagedGateway'.");
         }),
     },

@@ -61,11 +61,26 @@ describe("azurenative.network.v20240101preview.SecurityAdminConfiguration.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SecurityAdminConfiguration shouldn't use an unstable API (network.v20240101preview.SecurityAdminConfiguration). A compatible replacement can be found at 'network.SecurityAdminConfiguration'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure SecurityAdminConfiguration shouldn't use an unstable API (network.v20240101preview.SecurityAdminConfiguration). A compatible replacement can be found at 'network.SecurityAdminConfiguration'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SecurityAdminConfiguration shouldn't use an unstable API (network.v20240101preview.SecurityAdminConfiguration). A compatible replacement can be found at 'network.SecurityAdminConfiguration'." });
     });
 });

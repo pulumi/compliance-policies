@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-botservice-v20230915preview-channel-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (botservice.v20230915preview.Channel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Channel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Channel shouldn't use an unstable API (botservice.v20230915preview.Channel). A compatible replacement can be found at 'botservice.Channel'.");
         }),
     },

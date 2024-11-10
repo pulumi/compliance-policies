@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20231101preview-buildserviceagentpool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20231101preview.BuildServiceAgentPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BuildServiceAgentPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BuildServiceAgentPool shouldn't use an unstable API (appplatform.v20231101preview.BuildServiceAgentPool). A compatible replacement can be found at 'appplatform.BuildServiceAgentPool'."
             );

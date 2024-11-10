@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { TagProductLink } from "@pulumi/azure-native/apimanagement/v20220901preview";
 
@@ -21,11 +22,11 @@ import { TagProductLink } from "@pulumi/azure-native/apimanagement/v20220901prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(TagProductLink, {
         productId: "",
         resourceGroupName: "",
         serviceName: "",
         tagId: "",
-    });
+    }, policyconfig, resourceName);
 }

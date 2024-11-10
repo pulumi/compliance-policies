@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-networkcloud-v20231001preview-cloudservicesnetwork-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (networkcloud.v20231001preview.CloudServicesNetwork).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CloudServicesNetwork, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CloudServicesNetwork shouldn't use an unstable API (networkcloud.v20231001preview.CloudServicesNetwork). A compatible replacement can be found at 'networkcloud.CloudServicesNetwork'."
             );

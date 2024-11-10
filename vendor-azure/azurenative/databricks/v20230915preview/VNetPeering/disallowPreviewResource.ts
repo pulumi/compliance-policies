@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-databricks-v20230915preview-vnetpeering-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (databricks.v20230915preview.VNetPeering).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VNetPeering, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure VNetPeering shouldn't use an unstable API (databricks.v20230915preview.VNetPeering). A compatible replacement can be found at 'databricks.VNetPeering'.");
         }),
     },

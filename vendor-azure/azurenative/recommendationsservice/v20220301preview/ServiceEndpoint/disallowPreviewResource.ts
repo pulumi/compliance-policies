@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-recommendationsservice-v20220301preview-serviceendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (recommendationsservice.v20220301preview.ServiceEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServiceEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ServiceEndpoint shouldn't use an unstable API (recommendationsservice.v20220301preview.ServiceEndpoint). A compatible replacement can be found at 'recommendationsservice.ServiceEndpoint'."
             );

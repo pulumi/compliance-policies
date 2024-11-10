@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import * as enums from "../../enums";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ManagedDisk } from "@pulumi/azure/compute";
@@ -22,7 +23,7 @@ import { ManagedDisk } from "@pulumi/azure/compute";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ManagedDisk, {
         name: "test-disk",
         resourceGroupName: enums.resourcegroup.ResourceGroupName,
@@ -40,5 +41,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 sourceVaultId: enums.keyvault.SourceVaultId,
             },
         },
-    });
+    }, policyconfig, resourceName);
 }

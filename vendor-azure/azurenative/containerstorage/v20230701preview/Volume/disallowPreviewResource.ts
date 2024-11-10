@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-containerstorage-v20230701preview-volume-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (containerstorage.v20230701preview.Volume).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Volume, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Volume shouldn't use an unstable API (containerstorage.v20230701preview.Volume). A compatible replacement can be found at 'containerstorage.Volume'.");
         }),
     },

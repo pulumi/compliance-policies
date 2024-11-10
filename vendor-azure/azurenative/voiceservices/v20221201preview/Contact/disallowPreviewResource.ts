@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-voiceservices-v20221201preview-contact-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (voiceservices.v20221201preview.Contact).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Contact, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Contact shouldn't use an unstable API (voiceservices.v20221201preview.Contact). A compatible replacement can be found at 'voiceservices.Contact'.");
         }),
     },

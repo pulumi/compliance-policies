@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-notificationhubs-v20231001preview-namespaceauthorizationrule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (notificationhubs.v20231001preview.NamespaceAuthorizationRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NamespaceAuthorizationRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NamespaceAuthorizationRule shouldn't use an unstable API (notificationhubs.v20231001preview.NamespaceAuthorizationRule). A compatible replacement can be found at 'notificationhubs.NamespaceAuthorizationRule'."
             );

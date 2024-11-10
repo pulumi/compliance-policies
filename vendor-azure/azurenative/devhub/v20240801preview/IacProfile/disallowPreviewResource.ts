@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-devhub-v20240801preview-iacprofile-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (devhub.v20240801preview.IacProfile).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IacProfile, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IacProfile shouldn't use an unstable API (devhub.v20240801preview.IacProfile). A compatible replacement can be found at 'devhub.IacProfile'.");
         }),
     },

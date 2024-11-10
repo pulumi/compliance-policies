@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-automanage-v20200630preview-configurationprofilepreference-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (automanage.v20200630preview.ConfigurationProfilePreference).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConfigurationProfilePreference, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ConfigurationProfilePreference shouldn't use an unstable API (automanage.v20200630preview.ConfigurationProfilePreference). A compatible replacement can be found at 'automanage.ConfigurationProfilePreference'."
             );

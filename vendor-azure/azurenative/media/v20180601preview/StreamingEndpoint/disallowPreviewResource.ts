@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-media-v20180601preview-streamingendpoint-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (media.v20180601preview.StreamingEndpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StreamingEndpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure StreamingEndpoint shouldn't use an unstable API (media.v20180601preview.StreamingEndpoint). A compatible replacement can be found at 'media.StreamingEndpoint'.");
         }),
     },

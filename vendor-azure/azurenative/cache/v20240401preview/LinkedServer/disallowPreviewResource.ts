@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cache-v20240401preview-linkedserver-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cache.v20240401preview.LinkedServer).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LinkedServer, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LinkedServer shouldn't use an unstable API (cache.v20240401preview.LinkedServer). A compatible replacement can be found at 'cache.LinkedServer'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetworkfabric-v20230201preview-networkrack-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetworkfabric.v20230201preview.NetworkRack).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkRack, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NetworkRack shouldn't use an unstable API (managednetworkfabric.v20230201preview.NetworkRack). A compatible replacement can be found at 'managednetworkfabric.NetworkRack'."
             );

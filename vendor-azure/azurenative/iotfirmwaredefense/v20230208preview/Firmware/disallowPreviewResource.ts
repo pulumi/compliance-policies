@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-iotfirmwaredefense-v20230208preview-firmware-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (iotfirmwaredefense.v20230208preview.Firmware).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Firmware, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Firmware shouldn't use an unstable API (iotfirmwaredefense.v20230208preview.Firmware). A compatible replacement can be found at 'iotfirmwaredefense.Firmware'.");
         }),
     },

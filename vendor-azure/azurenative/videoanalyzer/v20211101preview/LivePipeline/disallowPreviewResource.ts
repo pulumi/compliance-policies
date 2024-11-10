@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-videoanalyzer-v20211101preview-livepipeline-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (videoanalyzer.v20211101preview.LivePipeline).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LivePipeline, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LivePipeline shouldn't use an unstable API (videoanalyzer.v20211101preview.LivePipeline). A compatible replacement can be found at 'videoanalyzer.LivePipeline'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-blueprint-v20181101preview-templateartifact-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (blueprint.v20181101preview.TemplateArtifact).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TemplateArtifact, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure TemplateArtifact shouldn't use an unstable API (blueprint.v20181101preview.TemplateArtifact). A compatible replacement can be found at 'blueprint.TemplateArtifact'."
             );

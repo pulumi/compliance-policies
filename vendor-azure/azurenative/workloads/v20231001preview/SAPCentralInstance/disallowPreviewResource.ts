@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-workloads-v20231001preview-sapcentralinstance-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (workloads.v20231001preview.SAPCentralInstance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SAPCentralInstance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SAPCentralInstance shouldn't use an unstable API (workloads.v20231001preview.SAPCentralInstance). A compatible replacement can be found at 'workloads.SAPCentralInstance'."
             );

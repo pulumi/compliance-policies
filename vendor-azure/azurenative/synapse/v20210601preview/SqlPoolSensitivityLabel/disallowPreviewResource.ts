@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-synapse-v20210601preview-sqlpoolsensitivitylabel-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (synapse.v20210601preview.SqlPoolSensitivityLabel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SqlPoolSensitivityLabel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SqlPoolSensitivityLabel shouldn't use an unstable API (synapse.v20210601preview.SqlPoolSensitivityLabel). A compatible replacement can be found at 'synapse.SqlPoolSensitivityLabel'."
             );

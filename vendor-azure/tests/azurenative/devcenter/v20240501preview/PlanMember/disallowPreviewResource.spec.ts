@@ -61,10 +61,26 @@ describe("azurenative.devcenter.v20240501preview.PlanMember.disallowPreviewResou
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PlanMember shouldn't use an unstable API (devcenter.v20240501preview.PlanMember). A compatible replacement can be found at 'devcenter.PlanMember'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure PlanMember shouldn't use an unstable API (devcenter.v20240501preview.PlanMember). A compatible replacement can be found at 'devcenter.PlanMember'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PlanMember shouldn't use an unstable API (devcenter.v20240501preview.PlanMember). A compatible replacement can be found at 'devcenter.PlanMember'." });
     });
 });

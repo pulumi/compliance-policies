@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20200301preview-componentlinkedstorageaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20200301preview.ComponentLinkedStorageAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ComponentLinkedStorageAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ComponentLinkedStorageAccount shouldn't use an unstable API (insights.v20200301preview.ComponentLinkedStorageAccount). A compatible replacement can be found at 'insights.ComponentLinkedStorageAccount'."
             );

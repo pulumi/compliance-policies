@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CredentialSet } from "@pulumi/azure-native/containerregistry/v20230101preview";
 
@@ -21,9 +22,9 @@ import { CredentialSet } from "@pulumi/azure-native/containerregistry/v20230101p
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CredentialSet, {
         resourceGroupName: "",
         registryName: "",
-    });
+    }, policyconfig, resourceName);
 }

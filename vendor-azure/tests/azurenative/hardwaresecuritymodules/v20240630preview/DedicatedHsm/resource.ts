@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DedicatedHsm } from "@pulumi/azure-native/hardwaresecuritymodules/v20240630preview";
 
@@ -21,9 +22,9 @@ import { DedicatedHsm } from "@pulumi/azure-native/hardwaresecuritymodules/v2024
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DedicatedHsm, {
         resourceGroupName: "",
         sku: {},
-    });
+    }, policyconfig, resourceName);
 }

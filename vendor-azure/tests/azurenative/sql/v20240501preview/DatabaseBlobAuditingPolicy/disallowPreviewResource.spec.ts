@@ -61,11 +61,26 @@ describe("azurenative.sql.v20240501preview.DatabaseBlobAuditingPolicy.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DatabaseBlobAuditingPolicy shouldn't use an unstable API (sql.v20240501preview.DatabaseBlobAuditingPolicy). A compatible replacement can be found at 'sql.DatabaseBlobAuditingPolicy'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure DatabaseBlobAuditingPolicy shouldn't use an unstable API (sql.v20240501preview.DatabaseBlobAuditingPolicy). A compatible replacement can be found at 'sql.DatabaseBlobAuditingPolicy'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure DatabaseBlobAuditingPolicy shouldn't use an unstable API (sql.v20240501preview.DatabaseBlobAuditingPolicy). A compatible replacement can be found at 'sql.DatabaseBlobAuditingPolicy'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-insights-v20200101preview-managementgroupdiagnosticsetting-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (insights.v20200101preview.ManagementGroupDiagnosticSetting).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagementGroupDiagnosticSetting, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagementGroupDiagnosticSetting shouldn't use an unstable API (insights.v20200101preview.ManagementGroupDiagnosticSetting). A compatible replacement can be found at 'insights.ManagementGroupDiagnosticSetting'."
             );

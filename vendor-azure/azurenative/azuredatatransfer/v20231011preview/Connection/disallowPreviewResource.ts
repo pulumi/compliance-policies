@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azuredatatransfer-v20231011preview-connection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azuredatatransfer.v20231011preview.Connection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Connection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Connection shouldn't use an unstable API (azuredatatransfer.v20231011preview.Connection). A compatible replacement can be found at 'azuredatatransfer.Connection'.");
         }),
     },

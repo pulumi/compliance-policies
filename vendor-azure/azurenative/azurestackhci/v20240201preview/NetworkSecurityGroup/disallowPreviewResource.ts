@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20240201preview-networksecuritygroup-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20240201preview.NetworkSecurityGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkSecurityGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NetworkSecurityGroup shouldn't use an unstable API (azurestackhci.v20240201preview.NetworkSecurityGroup). A compatible replacement can be found at 'azurestackhci.NetworkSecurityGroup'."
             );

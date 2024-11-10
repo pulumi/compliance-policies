@@ -61,10 +61,26 @@ describe("azurenative.insights.v20230501preview.TenantActionGroup.disallowPrevie
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure TenantActionGroup shouldn't use an unstable API (insights.v20230501preview.TenantActionGroup). A compatible replacement can be found at 'insights.TenantActionGroup'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure TenantActionGroup shouldn't use an unstable API (insights.v20230501preview.TenantActionGroup). A compatible replacement can be found at 'insights.TenantActionGroup'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure TenantActionGroup shouldn't use an unstable API (insights.v20230501preview.TenantActionGroup). A compatible replacement can be found at 'insights.TenantActionGroup'." });
     });
 });

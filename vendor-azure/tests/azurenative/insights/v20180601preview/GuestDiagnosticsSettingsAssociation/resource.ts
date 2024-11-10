@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { GuestDiagnosticsSettingsAssociation } from "@pulumi/azure-native/insights/v20180601preview";
 
@@ -21,9 +22,9 @@ import { GuestDiagnosticsSettingsAssociation } from "@pulumi/azure-native/insigh
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(GuestDiagnosticsSettingsAssociation, {
         guestDiagnosticSettingsName: "",
         resourceUri: "",
-    });
+    }, policyconfig, resourceName);
 }

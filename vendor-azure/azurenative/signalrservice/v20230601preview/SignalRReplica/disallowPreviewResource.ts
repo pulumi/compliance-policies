@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-signalrservice-v20230601preview-signalrreplica-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (signalrservice.v20230601preview.SignalRReplica).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SignalRReplica, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SignalRReplica shouldn't use an unstable API (signalrservice.v20230601preview.SignalRReplica). A compatible replacement can be found at 'signalrservice.SignalRReplica'."
             );

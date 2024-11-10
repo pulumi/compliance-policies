@@ -61,11 +61,26 @@ describe("azurenative.iotoperationsdataprocessor.v20231004preview.Dataset.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Dataset shouldn't use an unstable API (iotoperationsdataprocessor.v20231004preview.Dataset). A compatible replacement can be found at 'iotoperationsdataprocessor.Dataset'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure Dataset shouldn't use an unstable API (iotoperationsdataprocessor.v20231004preview.Dataset). A compatible replacement can be found at 'iotoperationsdataprocessor.Dataset'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Dataset shouldn't use an unstable API (iotoperationsdataprocessor.v20231004preview.Dataset). A compatible replacement can be found at 'iotoperationsdataprocessor.Dataset'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-logic-v20150801preview-integrationaccount-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (logic.v20150801preview.IntegrationAccount).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IntegrationAccount, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure IntegrationAccount shouldn't use an unstable API (logic.v20150801preview.IntegrationAccount). A compatible replacement can be found at 'logic.IntegrationAccount'.");
         }),
     },

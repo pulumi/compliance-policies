@@ -61,11 +61,26 @@ describe("azurenative.standbypool.v20231201preview.StandbyContainerGroupPool.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure StandbyContainerGroupPool shouldn't use an unstable API (standbypool.v20231201preview.StandbyContainerGroupPool). A compatible replacement can be found at 'standbypool.StandbyContainerGroupPool'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure StandbyContainerGroupPool shouldn't use an unstable API (standbypool.v20231201preview.StandbyContainerGroupPool). A compatible replacement can be found at 'standbypool.StandbyContainerGroupPool'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure StandbyContainerGroupPool shouldn't use an unstable API (standbypool.v20231201preview.StandbyContainerGroupPool). A compatible replacement can be found at 'standbypool.StandbyContainerGroupPool'." });
     });
 });

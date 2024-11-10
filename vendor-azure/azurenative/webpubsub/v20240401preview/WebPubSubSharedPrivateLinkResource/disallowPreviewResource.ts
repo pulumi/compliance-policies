@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-webpubsub-v20240401preview-webpubsubsharedprivatelinkresource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (webpubsub.v20240401preview.WebPubSubSharedPrivateLinkResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebPubSubSharedPrivateLinkResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WebPubSubSharedPrivateLinkResource shouldn't use an unstable API (webpubsub.v20240401preview.WebPubSubSharedPrivateLinkResource). A compatible replacement can be found at 'webpubsub.WebPubSubSharedPrivateLinkResource'."
             );

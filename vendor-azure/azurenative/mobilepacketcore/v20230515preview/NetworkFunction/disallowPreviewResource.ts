@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-mobilepacketcore-v20230515preview-networkfunction-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (mobilepacketcore.v20230515preview.NetworkFunction).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkFunction, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NetworkFunction shouldn't use an unstable API (mobilepacketcore.v20230515preview.NetworkFunction). A compatible replacement can be found at 'mobilepacketcore.NetworkFunction'."
             );

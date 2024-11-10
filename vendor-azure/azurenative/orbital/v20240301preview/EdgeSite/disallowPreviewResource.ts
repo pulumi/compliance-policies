@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-orbital-v20240301preview-edgesite-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (orbital.v20240301preview.EdgeSite).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EdgeSite, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EdgeSite shouldn't use an unstable API (orbital.v20240301preview.EdgeSite). A compatible replacement can be found at 'orbital.EdgeSite'.");
         }),
     },

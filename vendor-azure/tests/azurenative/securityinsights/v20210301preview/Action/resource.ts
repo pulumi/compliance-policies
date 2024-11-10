@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Action } from "@pulumi/azure-native/securityinsights/v20210301preview";
 
@@ -21,7 +22,7 @@ import { Action } from "@pulumi/azure-native/securityinsights/v20210301preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Action, {
         resourceGroupName: "",
         logicAppResourceId: "",
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         ruleId: "",
         triggerUri: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

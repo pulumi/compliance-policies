@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-media-v20200201preview-mediagraph-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (media.v20200201preview.MediaGraph).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MediaGraph, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MediaGraph shouldn't use an unstable API (media.v20200201preview.MediaGraph). A compatible replacement can be found at 'media.MediaGraph'.");
         }),
     },

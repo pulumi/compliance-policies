@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-logz-v20220101preview-metricssource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (logz.v20220101preview.MetricsSource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MetricsSource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure MetricsSource shouldn't use an unstable API (logz.v20220101preview.MetricsSource). A compatible replacement can be found at 'logz.MetricsSource'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-storagecache-v20230301preview-cache-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (storagecache.v20230301preview.Cache).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cache, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Cache shouldn't use an unstable API (storagecache.v20230301preview.Cache). A compatible replacement can be found at 'storagecache.Cache'.");
         }),
     },

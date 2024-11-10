@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FederatedIdentityCredential } from "@pulumi/azure-native/managedidentity/v20230731preview";
 
@@ -21,12 +22,12 @@ import { FederatedIdentityCredential } from "@pulumi/azure-native/managedidentit
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FederatedIdentityCredential, {
         audiences: [""],
         issuer: "",
         resourceGroupName: "",
         resourceName: "",
         subject: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BlobStorageAccountDataSet } from "@pulumi/azure-native/datashare/v20201001preview";
 
@@ -21,7 +22,7 @@ import { BlobStorageAccountDataSet } from "@pulumi/azure-native/datashare/v20201
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BlobStorageAccountDataSet, {
         resourceGroupName: "",
         accountName: "",
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         paths: [],
         shareName: "",
         storageAccountResourceId: "",
-    });
+    }, policyconfig, resourceName);
 }

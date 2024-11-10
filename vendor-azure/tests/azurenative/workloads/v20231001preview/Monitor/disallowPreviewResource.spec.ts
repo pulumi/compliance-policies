@@ -61,10 +61,26 @@ describe("azurenative.workloads.v20231001preview.Monitor.disallowPreviewResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Monitor shouldn't use an unstable API (workloads.v20231001preview.Monitor). A compatible replacement can be found at 'workloads.Monitor'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Monitor shouldn't use an unstable API (workloads.v20231001preview.Monitor). A compatible replacement can be found at 'workloads.Monitor'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Monitor shouldn't use an unstable API (workloads.v20231001preview.Monitor). A compatible replacement can be found at 'workloads.Monitor'." });
     });
 });

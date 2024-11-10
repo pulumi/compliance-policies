@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20210201preview-adminrulecollection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20210201preview.AdminRuleCollection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AdminRuleCollection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AdminRuleCollection shouldn't use an unstable API (network.v20210201preview.AdminRuleCollection). A compatible replacement can be found at 'network.AdminRuleCollection'."
             );

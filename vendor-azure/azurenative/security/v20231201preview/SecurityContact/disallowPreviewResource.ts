@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20231201preview-securitycontact-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20231201preview.SecurityContact).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecurityContact, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure SecurityContact shouldn't use an unstable API (security.v20231201preview.SecurityContact). A compatible replacement can be found at 'security.SecurityContact'.");
         }),
     },

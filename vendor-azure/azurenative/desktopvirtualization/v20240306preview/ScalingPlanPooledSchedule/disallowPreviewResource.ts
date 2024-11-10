@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-desktopvirtualization-v20240306preview-scalingplanpooledschedule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (desktopvirtualization.v20240306preview.ScalingPlanPooledSchedule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScalingPlanPooledSchedule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ScalingPlanPooledSchedule shouldn't use an unstable API (desktopvirtualization.v20240306preview.ScalingPlanPooledSchedule). A compatible replacement can be found at 'desktopvirtualization.ScalingPlanPooledSchedule'."
             );

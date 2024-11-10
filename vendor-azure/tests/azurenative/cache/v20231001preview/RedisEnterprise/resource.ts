@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { RedisEnterprise } from "@pulumi/azure-native/cache/v20231001preview";
 
@@ -21,11 +22,11 @@ import { RedisEnterprise } from "@pulumi/azure-native/cache/v20231001preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(RedisEnterprise, {
         resourceGroupName: "",
         sku: {
             name: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

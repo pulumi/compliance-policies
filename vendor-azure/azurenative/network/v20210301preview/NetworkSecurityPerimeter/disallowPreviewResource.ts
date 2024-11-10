@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20210301preview-networksecurityperimeter-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20210301preview.NetworkSecurityPerimeter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkSecurityPerimeter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure NetworkSecurityPerimeter shouldn't use an unstable API (network.v20210301preview.NetworkSecurityPerimeter). A compatible replacement can be found at 'network.NetworkSecurityPerimeter'."
             );

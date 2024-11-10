@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-testbase-v20220401preview-customerevent-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (testbase.v20220401preview.CustomerEvent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomerEvent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure CustomerEvent shouldn't use an unstable API (testbase.v20220401preview.CustomerEvent). A compatible replacement can be found at 'testbase.CustomerEvent'.");
         }),
     },

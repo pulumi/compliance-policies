@@ -61,10 +61,26 @@ describe("azurenative.dbformysql.v20230601preview.FirewallRule.disallowPreviewRe
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FirewallRule shouldn't use an unstable API (dbformysql.v20230601preview.FirewallRule). A compatible replacement can be found at 'dbformysql.FirewallRule'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure FirewallRule shouldn't use an unstable API (dbformysql.v20230601preview.FirewallRule). A compatible replacement can be found at 'dbformysql.FirewallRule'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FirewallRule shouldn't use an unstable API (dbformysql.v20230601preview.FirewallRule). A compatible replacement can be found at 'dbformysql.FirewallRule'." });
     });
 });

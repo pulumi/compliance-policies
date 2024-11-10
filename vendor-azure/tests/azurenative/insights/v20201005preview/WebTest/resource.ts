@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { WebTest } from "@pulumi/azure-native/insights/v20201005preview";
 
@@ -21,11 +22,11 @@ import { WebTest } from "@pulumi/azure-native/insights/v20201005preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(WebTest, {
         resourceGroupName: "",
         locations: [],
         syntheticMonitorId: "",
         webTestKind: "ping",
-    });
+    }, policyconfig, resourceName);
 }

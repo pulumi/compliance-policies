@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SqlPoolWorkloadGroup } from "@pulumi/azure-native/synapse/v20210601preview";
 
@@ -21,7 +22,7 @@ import { SqlPoolWorkloadGroup } from "@pulumi/azure-native/synapse/v20210601prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SqlPoolWorkloadGroup, {
         maxResourcePercent: 1,
         minResourcePercent: 1,
@@ -29,5 +30,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         resourceGroupName: "",
         sqlPoolName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azureactivedirectory-v20230517preview-ciamtenant-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azureactivedirectory.v20230517preview.CIAMTenant).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CIAMTenant, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CIAMTenant shouldn't use an unstable API (azureactivedirectory.v20230517preview.CIAMTenant). A compatible replacement can be found at 'azureactivedirectory.CIAMTenant'."
             );

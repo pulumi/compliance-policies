@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-communication-v20230401preview-emailservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (communication.v20230401preview.EmailService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EmailService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EmailService shouldn't use an unstable API (communication.v20230401preview.EmailService). A compatible replacement can be found at 'communication.EmailService'.");
         }),
     },

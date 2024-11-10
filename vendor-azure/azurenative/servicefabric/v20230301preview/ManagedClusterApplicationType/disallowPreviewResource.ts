@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicefabric-v20230301preview-managedclusterapplicationtype-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicefabric.v20230301preview.ManagedClusterApplicationType).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedClusterApplicationType, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ManagedClusterApplicationType shouldn't use an unstable API (servicefabric.v20230301preview.ManagedClusterApplicationType). A compatible replacement can be found at 'servicefabric.ManagedClusterApplicationType'."
             );

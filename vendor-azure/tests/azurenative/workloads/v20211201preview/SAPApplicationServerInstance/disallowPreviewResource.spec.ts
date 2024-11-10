@@ -61,11 +61,26 @@ describe("azurenative.workloads.v20211201preview.SAPApplicationServerInstance.di
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SAPApplicationServerInstance shouldn't use an unstable API (workloads.v20211201preview.SAPApplicationServerInstance). A compatible replacement can be found at 'workloads.SAPApplicationServerInstance'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure SAPApplicationServerInstance shouldn't use an unstable API (workloads.v20211201preview.SAPApplicationServerInstance). A compatible replacement can be found at 'workloads.SAPApplicationServerInstance'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SAPApplicationServerInstance shouldn't use an unstable API (workloads.v20211201preview.SAPApplicationServerInstance). A compatible replacement can be found at 'workloads.SAPApplicationServerInstance'." });
     });
 });

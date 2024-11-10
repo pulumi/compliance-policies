@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BuildpackBinding } from "@pulumi/azure-native/appplatform/v20231101preview";
 
@@ -21,11 +22,11 @@ import { BuildpackBinding } from "@pulumi/azure-native/appplatform/v20231101prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BuildpackBinding, {
         buildServiceName: "",
         builderName: "",
         resourceGroupName: "",
         serviceName: "",
-    });
+    }, policyconfig, resourceName);
 }

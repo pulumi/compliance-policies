@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-communication-v20230401preview-communicationservice-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (communication.v20230401preview.CommunicationService).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CommunicationService, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CommunicationService shouldn't use an unstable API (communication.v20230401preview.CommunicationService). A compatible replacement can be found at 'communication.CommunicationService'."
             );

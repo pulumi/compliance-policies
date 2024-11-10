@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-securityinsights-v20210301preview-activitycustomentityquery-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (securityinsights.v20210301preview.ActivityCustomEntityQuery).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ActivityCustomEntityQuery, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ActivityCustomEntityQuery shouldn't use an unstable API (securityinsights.v20210301preview.ActivityCustomEntityQuery). A compatible replacement can be found at 'securityinsights.ActivityCustomEntityQuery'."
             );

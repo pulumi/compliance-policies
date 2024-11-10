@@ -61,11 +61,26 @@ describe("azurenative.programmableconnectivity.v20240115preview.OperatorApiConne
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OperatorApiConnection shouldn't use an unstable API (programmableconnectivity.v20240115preview.OperatorApiConnection). A compatible replacement can be found at 'programmableconnectivity.OperatorApiConnection'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure OperatorApiConnection shouldn't use an unstable API (programmableconnectivity.v20240115preview.OperatorApiConnection). A compatible replacement can be found at 'programmableconnectivity.OperatorApiConnection'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OperatorApiConnection shouldn't use an unstable API (programmableconnectivity.v20240115preview.OperatorApiConnection). A compatible replacement can be found at 'programmableconnectivity.OperatorApiConnection'." });
     });
 });

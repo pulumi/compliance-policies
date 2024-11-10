@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-timeseriesinsights-v20210630preview-eventhubeventsource-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (timeseriesinsights.v20210630preview.EventHubEventSource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EventHubEventSource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure EventHubEventSource shouldn't use an unstable API (timeseriesinsights.v20210630preview.EventHubEventSource). A compatible replacement can be found at 'timeseriesinsights.EventHubEventSource'."
             );

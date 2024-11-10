@@ -28,8 +28,13 @@ export const configureNetworkPolicy: ResourceValidationPolicy = policyManager.re
     resourceValidationPolicy: {
         name: "azurenative-containerservice-managedcluster-configure-network-policy",
         description: "Checks AKS cluster has Network Policy configured.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedCluster, (mangagedCluster, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (mangagedCluster.networkProfile) {
                 if (!mangagedCluster.networkProfile.networkPolicy) {
                     reportViolation("Ensure AKS cluster has Network Policy configured.");

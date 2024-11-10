@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { VideoAnalyzer } from "@pulumi/azure-native/videoanalyzer/v20210501preview";
 
@@ -21,12 +22,12 @@ import { VideoAnalyzer } from "@pulumi/azure-native/videoanalyzer/v20210501previ
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(VideoAnalyzer, {
         encryption: {
             type: "",
         },
         resourceGroupName: "",
         storageAccounts: [{}],
-    });
+    }, policyconfig, resourceName);
 }

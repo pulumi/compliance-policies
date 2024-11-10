@@ -61,10 +61,26 @@ describe("azurenative.containerregistry.v20230601preview.PipelineRun.disallowPre
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PipelineRun shouldn't use an unstable API (containerregistry.v20230601preview.PipelineRun). A compatible replacement can be found at 'containerregistry.PipelineRun'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure PipelineRun shouldn't use an unstable API (containerregistry.v20230601preview.PipelineRun). A compatible replacement can be found at 'containerregistry.PipelineRun'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure PipelineRun shouldn't use an unstable API (containerregistry.v20230601preview.PipelineRun). A compatible replacement can be found at 'containerregistry.PipelineRun'." });
     });
 });

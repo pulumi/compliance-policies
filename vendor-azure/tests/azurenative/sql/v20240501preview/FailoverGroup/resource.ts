@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FailoverGroup } from "@pulumi/azure-native/sql/v20240501preview";
 
@@ -21,7 +22,7 @@ import { FailoverGroup } from "@pulumi/azure-native/sql/v20240501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FailoverGroup, {
         partnerServers: [
             {
@@ -33,5 +34,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         resourceGroupName: "",
         serverName: "",
-    });
+    }, policyconfig, resourceName);
 }

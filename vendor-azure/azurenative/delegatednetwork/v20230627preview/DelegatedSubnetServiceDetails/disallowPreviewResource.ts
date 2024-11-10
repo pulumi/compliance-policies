@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-delegatednetwork-v20230627preview-delegatedsubnetservicedetails-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (delegatednetwork.v20230627preview.DelegatedSubnetServiceDetails).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DelegatedSubnetServiceDetails, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure DelegatedSubnetServiceDetails shouldn't use an unstable API (delegatednetwork.v20230627preview.DelegatedSubnetServiceDetails). A compatible replacement can be found at 'delegatednetwork.DelegatedSubnetServiceDetails'."
             );

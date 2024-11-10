@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { KubernetesRole } from "@pulumi/azure-native/databoxedge/v20230101preview";
 
@@ -21,7 +22,7 @@ import { KubernetesRole } from "@pulumi/azure-native/databoxedge/v20230101previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(KubernetesRole, {
         resourceGroupName: "",
         deviceName: "",
@@ -36,5 +37,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             },
         },
         roleStatus: "",
-    });
+    }, policyconfig, resourceName);
 }

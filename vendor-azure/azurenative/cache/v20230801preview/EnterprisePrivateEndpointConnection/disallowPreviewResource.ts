@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-cache-v20230801preview-enterpriseprivateendpointconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (cache.v20230801preview.EnterprisePrivateEndpointConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EnterprisePrivateEndpointConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure EnterprisePrivateEndpointConnection shouldn't use an unstable API (cache.v20230801preview.EnterprisePrivateEndpointConnection). A compatible replacement can be found at 'cache.EnterprisePrivateEndpointConnection'."
             );

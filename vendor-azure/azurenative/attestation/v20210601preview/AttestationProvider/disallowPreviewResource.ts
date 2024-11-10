@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-attestation-v20210601preview-attestationprovider-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (attestation.v20210601preview.AttestationProvider).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AttestationProvider, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AttestationProvider shouldn't use an unstable API (attestation.v20210601preview.AttestationProvider). A compatible replacement can be found at 'attestation.AttestationProvider'."
             );

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hdinsight-v20231101preview-cluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hdinsight.v20231101preview.Cluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Cluster shouldn't use an unstable API (hdinsight.v20231101preview.Cluster). A compatible replacement can be found at 'hdinsight.v20240501.Cluster'.");
         }),
     },

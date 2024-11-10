@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-network-v20230701preview-zone-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (network.v20230701preview.Zone).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Zone, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Zone shouldn't use an unstable API (network.v20230701preview.Zone). A compatible replacement can be found at 'network.Zone'.");
         }),
     },

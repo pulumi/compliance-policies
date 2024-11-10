@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AdminRule } from "@pulumi/azure-native/network/v20210501preview";
 
@@ -21,7 +22,7 @@ import { AdminRule } from "@pulumi/azure-native/network/v20210501preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AdminRule, {
         resourceGroupName: "",
         access: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         priority: 0,
         protocol: "",
         ruleCollectionName: "",
-    });
+    }, policyconfig, resourceName);
 }

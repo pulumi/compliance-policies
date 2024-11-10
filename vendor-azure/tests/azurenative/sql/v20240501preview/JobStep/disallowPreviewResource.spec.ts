@@ -61,10 +61,26 @@ describe("azurenative.sql.v20240501preview.JobStep.disallowPreviewResource", fun
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobStep shouldn't use an unstable API (sql.v20240501preview.JobStep). A compatible replacement can be found at 'sql.JobStep'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure JobStep shouldn't use an unstable API (sql.v20240501preview.JobStep). A compatible replacement can be found at 'sql.JobStep'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure JobStep shouldn't use an unstable API (sql.v20240501preview.JobStep). A compatible replacement can be found at 'sql.JobStep'." });
     });
 });

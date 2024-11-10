@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-healthcareapis-v20221001preview-analyticsconnector-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (healthcareapis.v20221001preview.AnalyticsConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AnalyticsConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure AnalyticsConnector shouldn't use an unstable API (healthcareapis.v20221001preview.AnalyticsConnector).");
         }),
     },

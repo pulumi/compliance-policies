@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20220101preview-governancerule-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20220101preview.GovernanceRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GovernanceRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure GovernanceRule shouldn't use an unstable API (security.v20220101preview.GovernanceRule).");
         }),
     },

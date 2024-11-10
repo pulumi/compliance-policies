@@ -61,11 +61,26 @@ describe("azurenative.synapse.v20210601preview.KustoPoolAttachedDatabaseConfigur
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure KustoPoolAttachedDatabaseConfiguration shouldn't use an unstable API (synapse.v20210601preview.KustoPoolAttachedDatabaseConfiguration). A compatible replacement can be found at 'synapse.KustoPoolAttachedDatabaseConfiguration'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure KustoPoolAttachedDatabaseConfiguration shouldn't use an unstable API (synapse.v20210601preview.KustoPoolAttachedDatabaseConfiguration). A compatible replacement can be found at 'synapse.KustoPoolAttachedDatabaseConfiguration'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure KustoPoolAttachedDatabaseConfiguration shouldn't use an unstable API (synapse.v20210601preview.KustoPoolAttachedDatabaseConfiguration). A compatible replacement can be found at 'synapse.KustoPoolAttachedDatabaseConfiguration'." });
     });
 });

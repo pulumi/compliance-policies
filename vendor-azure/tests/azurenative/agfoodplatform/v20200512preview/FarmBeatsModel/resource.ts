@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FarmBeatsModel } from "@pulumi/azure-native/agfoodplatform/v20200512preview";
 
@@ -21,8 +22,8 @@ import { FarmBeatsModel } from "@pulumi/azure-native/agfoodplatform/v20200512pre
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FarmBeatsModel, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

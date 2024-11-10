@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AlertRuleResource } from "@pulumi/azure-native/databasewatcher/v20240719preview";
 
@@ -21,7 +22,7 @@ import { AlertRuleResource } from "@pulumi/azure-native/databasewatcher/v2024071
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AlertRuleResource, {
         alertRuleResourceId: "",
         alertRuleTemplateId: "",
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         creationTime: "",
         resourceGroupName: "",
         watcherName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { KafkaConnector } from "@pulumi/azure-native/iotoperationsmq/v20231004preview";
 
@@ -21,7 +22,7 @@ import { KafkaConnector } from "@pulumi/azure-native/iotoperationsmq/v20231004pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(KafkaConnector, {
         extendedLocation: {
             name: "",
@@ -38,5 +39,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         },
         mqName: "",
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { WordpressInstance } from "@pulumi/azure-native/workloads/v20211201preview";
 
@@ -21,10 +22,10 @@ import { WordpressInstance } from "@pulumi/azure-native/workloads/v20211201previ
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(WordpressInstance, {
         phpWorkloadName: "",
         resourceGroupName: "",
         version: "",
-    });
+    }, policyconfig, resourceName);
 }

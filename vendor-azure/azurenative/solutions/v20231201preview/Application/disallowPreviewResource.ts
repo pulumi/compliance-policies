@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-solutions-v20231201preview-application-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (solutions.v20231201preview.Application).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Application, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Application shouldn't use an unstable API (solutions.v20231201preview.Application). A compatible replacement can be found at 'solutions.Application'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-kusto-v20180907preview-eventhubconnection-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (kusto.v20180907preview.EventHubConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EventHubConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure EventHubConnection shouldn't use an unstable API (kusto.v20180907preview.EventHubConnection). A compatible replacement can be found at 'kusto.EventHubConnection'.");
         }),
     },

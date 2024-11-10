@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appplatform-v20230701preview-apiportalcustomdomain-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appplatform.v20230701preview.ApiPortalCustomDomain).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApiPortalCustomDomain, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ApiPortalCustomDomain shouldn't use an unstable API (appplatform.v20230701preview.ApiPortalCustomDomain). A compatible replacement can be found at 'appplatform.ApiPortalCustomDomain'."
             );

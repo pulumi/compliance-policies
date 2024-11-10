@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AccessReviewHistoryDefinitionById } from "@pulumi/azure-native/authorization/v20211201preview";
 
@@ -21,6 +22,6 @@ import { AccessReviewHistoryDefinitionById } from "@pulumi/azure-native/authoriz
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(AccessReviewHistoryDefinitionById, {});
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
+    return createResourceValidationArgs(AccessReviewHistoryDefinitionById, {}, policyconfig, resourceName);
 }

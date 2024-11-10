@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-servicefabricmesh-v20180901preview-secretvalue-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (servicefabricmesh.v20180901preview.SecretValue).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecretValue, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure SecretValue shouldn't use an unstable API (servicefabricmesh.v20180901preview.SecretValue). A compatible replacement can be found at 'servicefabricmesh.SecretValue'."
             );

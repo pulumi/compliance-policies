@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MLBehaviorAnalyticsAlertRule } from "@pulumi/azure-native/securityinsights/v20230801preview";
 
@@ -21,12 +22,12 @@ import { MLBehaviorAnalyticsAlertRule } from "@pulumi/azure-native/securityinsig
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MLBehaviorAnalyticsAlertRule, {
         alertRuleTemplateName: "",
         enabled: false,
         kind: "MLBehaviorAnalytics",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

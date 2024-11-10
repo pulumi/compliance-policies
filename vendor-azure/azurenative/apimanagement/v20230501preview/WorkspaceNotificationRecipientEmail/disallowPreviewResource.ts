@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-apimanagement-v20230501preview-workspacenotificationrecipientemail-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (apimanagement.v20230501preview.WorkspaceNotificationRecipientEmail).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkspaceNotificationRecipientEmail, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure WorkspaceNotificationRecipientEmail shouldn't use an unstable API (apimanagement.v20230501preview.WorkspaceNotificationRecipientEmail). A compatible replacement can be found at 'apimanagement.WorkspaceNotificationRecipientEmail'."
             );

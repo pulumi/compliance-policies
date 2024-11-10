@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcontainerservice-v20220501preview-agentpool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcontainerservice.v20220501preview.AgentPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AgentPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AgentPool shouldn't use an unstable API (hybridcontainerservice.v20220501preview.AgentPool). A compatible replacement can be found at 'hybridcontainerservice.AgentPool'."
             );

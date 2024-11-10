@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AmlFilesystem } from "@pulumi/azure-native/storagecache/v20231101preview";
 
@@ -21,11 +22,11 @@ import { AmlFilesystem } from "@pulumi/azure-native/storagecache/v20231101previe
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AmlFilesystem, {
         filesystemSubnet: "",
         maintenanceWindow: {},
         resourceGroupName: "",
         storageCapacityTiB: 1.0,
-    });
+    }, policyconfig, resourceName);
 }

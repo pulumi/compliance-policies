@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AwsCloudTrailDataConnector } from "@pulumi/azure-native/securityinsights/v20230601preview";
 
@@ -21,7 +22,7 @@ import { AwsCloudTrailDataConnector } from "@pulumi/azure-native/securityinsight
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AwsCloudTrailDataConnector, {
         dataTypes: {
             logs: {
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         kind: "AmazonWebServicesCloudTrail",
         resourceGroupName: "",
         workspaceName: "",
-    });
+    }, policyconfig, resourceName);
 }

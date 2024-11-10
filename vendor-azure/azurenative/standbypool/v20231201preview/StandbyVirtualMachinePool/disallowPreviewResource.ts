@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-standbypool-v20231201preview-standbyvirtualmachinepool-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (standbypool.v20231201preview.StandbyVirtualMachinePool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StandbyVirtualMachinePool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure StandbyVirtualMachinePool shouldn't use an unstable API (standbypool.v20231201preview.StandbyVirtualMachinePool). A compatible replacement can be found at 'standbypool.StandbyVirtualMachinePool'."
             );

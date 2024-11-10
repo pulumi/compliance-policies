@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-logic-v20150201preview-workflow-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (logic.v20150201preview.Workflow).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Workflow, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Workflow shouldn't use an unstable API (logic.v20150201preview.Workflow). A compatible replacement can be found at 'logic.Workflow'.");
         }),
     },

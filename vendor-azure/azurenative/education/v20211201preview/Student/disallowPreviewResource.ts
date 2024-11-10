@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-education-v20211201preview-student-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (education.v20211201preview.Student).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Student, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Student shouldn't use an unstable API (education.v20211201preview.Student). A compatible replacement can be found at 'education.Student'.");
         }),
     },

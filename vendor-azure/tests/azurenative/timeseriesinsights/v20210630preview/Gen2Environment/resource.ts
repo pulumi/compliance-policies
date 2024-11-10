@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Gen2Environment } from "@pulumi/azure-native/timeseriesinsights/v20210630preview";
 
@@ -21,7 +22,7 @@ import { Gen2Environment } from "@pulumi/azure-native/timeseriesinsights/v202106
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Gen2Environment, {
         kind: "Gen2",
         resourceGroupName: "",
@@ -34,5 +35,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             managementKey: "",
         },
         timeSeriesIdProperties: [{}],
-    });
+    }, policyconfig, resourceName);
 }

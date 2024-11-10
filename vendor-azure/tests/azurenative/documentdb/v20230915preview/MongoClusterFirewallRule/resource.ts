@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { MongoClusterFirewallRule } from "@pulumi/azure-native/documentdb/v20230915preview";
 
@@ -21,11 +22,11 @@ import { MongoClusterFirewallRule } from "@pulumi/azure-native/documentdb/v20230
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(MongoClusterFirewallRule, {
         endIpAddress: "",
         mongoClusterName: "",
         resourceGroupName: "",
         startIpAddress: "",
-    });
+    }, policyconfig, resourceName);
 }

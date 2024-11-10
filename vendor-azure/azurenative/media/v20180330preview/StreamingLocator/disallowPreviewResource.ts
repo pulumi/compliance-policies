@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-media-v20180330preview-streaminglocator-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (media.v20180330preview.StreamingLocator).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StreamingLocator, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure StreamingLocator shouldn't use an unstable API (media.v20180330preview.StreamingLocator). A compatible replacement can be found at 'media.StreamingLocator'.");
         }),
     },

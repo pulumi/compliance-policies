@@ -61,10 +61,26 @@ describe("azurenative.chaos.v20240322preview.Capability.disallowPreviewResource"
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Capability shouldn't use an unstable API (chaos.v20240322preview.Capability). A compatible replacement can be found at 'chaos.Capability'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Capability shouldn't use an unstable API (chaos.v20240322preview.Capability). A compatible replacement can be found at 'chaos.Capability'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Capability shouldn't use an unstable API (chaos.v20240322preview.Capability). A compatible replacement can be found at 'chaos.Capability'." });
     });
 });

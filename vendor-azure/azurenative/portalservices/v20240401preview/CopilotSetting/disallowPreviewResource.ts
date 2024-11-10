@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-portalservices-v20240401preview-copilotsetting-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (portalservices.v20240401preview.CopilotSetting).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CopilotSetting, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CopilotSetting shouldn't use an unstable API (portalservices.v20240401preview.CopilotSetting). A compatible replacement can be found at 'portalservices.CopilotSetting'."
             );

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DeidService } from "@pulumi/azure-native/healthdataaiservices/v20240228preview";
 
@@ -21,8 +22,8 @@ import { DeidService } from "@pulumi/azure-native/healthdataaiservices/v20240228
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DeidService, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

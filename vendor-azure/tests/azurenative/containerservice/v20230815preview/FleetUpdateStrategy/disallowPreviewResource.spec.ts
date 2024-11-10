@@ -61,11 +61,26 @@ describe("azurenative.containerservice.v20230815preview.FleetUpdateStrategy.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FleetUpdateStrategy shouldn't use an unstable API (containerservice.v20230815preview.FleetUpdateStrategy). A compatible replacement can be found at 'containerservice.FleetUpdateStrategy'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure FleetUpdateStrategy shouldn't use an unstable API (containerservice.v20230815preview.FleetUpdateStrategy). A compatible replacement can be found at 'containerservice.FleetUpdateStrategy'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure FleetUpdateStrategy shouldn't use an unstable API (containerservice.v20230815preview.FleetUpdateStrategy). A compatible replacement can be found at 'containerservice.FleetUpdateStrategy'." });
     });
 });

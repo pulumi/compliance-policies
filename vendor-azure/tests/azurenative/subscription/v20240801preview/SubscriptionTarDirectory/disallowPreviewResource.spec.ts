@@ -61,11 +61,26 @@ describe("azurenative.subscription.v20240801preview.SubscriptionTarDirectory.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SubscriptionTarDirectory shouldn't use an unstable API (subscription.v20240801preview.SubscriptionTarDirectory). A compatible replacement can be found at 'subscription.SubscriptionTarDirectory'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure SubscriptionTarDirectory shouldn't use an unstable API (subscription.v20240801preview.SubscriptionTarDirectory). A compatible replacement can be found at 'subscription.SubscriptionTarDirectory'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure SubscriptionTarDirectory shouldn't use an unstable API (subscription.v20240801preview.SubscriptionTarDirectory). A compatible replacement can be found at 'subscription.SubscriptionTarDirectory'." });
     });
 });

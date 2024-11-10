@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-datashare-v20201001preview-blobstorageaccountdatasetmapping-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (datashare.v20201001preview.BlobStorageAccountDataSetMapping).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BlobStorageAccountDataSetMapping, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure BlobStorageAccountDataSetMapping shouldn't use an unstable API (datashare.v20201001preview.BlobStorageAccountDataSetMapping). A compatible replacement can be found at 'datashare.BlobStorageAccountDataSetMapping'."
             );

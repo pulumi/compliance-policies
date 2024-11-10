@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-aadiam-v20200301preview-privatelinkforazuread-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (aadiam.v20200301preview.PrivateLinkForAzureAd).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateLinkForAzureAd, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure PrivateLinkForAzureAd shouldn't use an unstable API (aadiam.v20200301preview.PrivateLinkForAzureAd). A compatible replacement can be found at 'aadiam.PrivateLinkForAzureAd'."
             );

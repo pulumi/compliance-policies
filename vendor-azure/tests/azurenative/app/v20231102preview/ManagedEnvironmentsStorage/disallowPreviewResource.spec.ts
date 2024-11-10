@@ -61,11 +61,26 @@ describe("azurenative.app.v20231102preview.ManagedEnvironmentsStorage.disallowPr
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedEnvironmentsStorage shouldn't use an unstable API (app.v20231102preview.ManagedEnvironmentsStorage). A compatible replacement can be found at 'app.ManagedEnvironmentsStorage'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ManagedEnvironmentsStorage shouldn't use an unstable API (app.v20231102preview.ManagedEnvironmentsStorage). A compatible replacement can be found at 'app.ManagedEnvironmentsStorage'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ManagedEnvironmentsStorage shouldn't use an unstable API (app.v20231102preview.ManagedEnvironmentsStorage). A compatible replacement can be found at 'app.ManagedEnvironmentsStorage'." });
     });
 });

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hardwaresecuritymodules-v20220831preview-cloudhsmcluster-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hardwaresecuritymodules.v20220831preview.CloudHsmCluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CloudHsmCluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CloudHsmCluster shouldn't use an unstable API (hardwaresecuritymodules.v20220831preview.CloudHsmCluster). A compatible replacement can be found at 'hardwaresecuritymodules.CloudHsmCluster'."
             );

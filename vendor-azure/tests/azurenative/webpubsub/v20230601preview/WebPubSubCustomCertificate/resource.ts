@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { WebPubSubCustomCertificate } from "@pulumi/azure-native/webpubsub/v20230601preview";
 
@@ -21,11 +22,11 @@ import { WebPubSubCustomCertificate } from "@pulumi/azure-native/webpubsub/v2023
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(WebPubSubCustomCertificate, {
         keyVaultBaseUri: "",
         keyVaultSecretName: "",
         resourceGroupName: "",
         resourceName: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -61,11 +61,26 @@ describe("azurenative.devcenter.v20231001preview.ProjectEnvironmentType.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProjectEnvironmentType shouldn't use an unstable API (devcenter.v20231001preview.ProjectEnvironmentType). A compatible replacement can be found at 'devcenter.ProjectEnvironmentType'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message:
-                "Azure ProjectEnvironmentType shouldn't use an unstable API (devcenter.v20231001preview.ProjectEnvironmentType). A compatible replacement can be found at 'devcenter.ProjectEnvironmentType'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure ProjectEnvironmentType shouldn't use an unstable API (devcenter.v20231001preview.ProjectEnvironmentType). A compatible replacement can be found at 'devcenter.ProjectEnvironmentType'." });
     });
 });

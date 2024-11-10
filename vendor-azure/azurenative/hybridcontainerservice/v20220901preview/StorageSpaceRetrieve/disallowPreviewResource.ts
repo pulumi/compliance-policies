@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-hybridcontainerservice-v20220901preview-storagespaceretrieve-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (hybridcontainerservice.v20220901preview.StorageSpaceRetrieve).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StorageSpaceRetrieve, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure StorageSpaceRetrieve shouldn't use an unstable API (hybridcontainerservice.v20220901preview.StorageSpaceRetrieve). A compatible replacement can be found at 'hybridcontainerservice.StorageSpaceRetrieve'."
             );

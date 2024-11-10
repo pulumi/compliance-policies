@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-managednetwork-v20190601preview-scopeassignment-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (managednetwork.v20190601preview.ScopeAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScopeAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure ScopeAssignment shouldn't use an unstable API (managednetwork.v20190601preview.ScopeAssignment). A compatible replacement can be found at 'managednetwork.ScopeAssignment'."
             );

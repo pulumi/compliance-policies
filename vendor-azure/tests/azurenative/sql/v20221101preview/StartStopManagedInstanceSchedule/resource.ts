@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { StartStopManagedInstanceSchedule } from "@pulumi/azure-native/sql/v20221101preview";
 
@@ -21,7 +22,7 @@ import { StartStopManagedInstanceSchedule } from "@pulumi/azure-native/sql/v2022
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(StartStopManagedInstanceSchedule, {
         managedInstanceName: "",
         resourceGroupName: "",
@@ -33,5 +34,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 stopTime: "",
             },
         ],
-    });
+    }, policyconfig, resourceName);
 }

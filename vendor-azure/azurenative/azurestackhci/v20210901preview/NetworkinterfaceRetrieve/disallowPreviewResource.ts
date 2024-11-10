@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-azurestackhci-v20210901preview-networkinterfaceretrieve-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (azurestackhci.v20210901preview.NetworkinterfaceRetrieve).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NetworkinterfaceRetrieve, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure NetworkinterfaceRetrieve shouldn't use an unstable API (azurestackhci.v20210901preview.NetworkinterfaceRetrieve).");
         }),
     },

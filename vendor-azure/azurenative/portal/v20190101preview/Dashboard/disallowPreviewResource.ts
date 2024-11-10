@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-portal-v20190101preview-dashboard-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (portal.v20190101preview.Dashboard).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Dashboard, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Dashboard shouldn't use an unstable API (portal.v20190101preview.Dashboard). A compatible replacement can be found at 'portal.Dashboard'.");
         }),
     },

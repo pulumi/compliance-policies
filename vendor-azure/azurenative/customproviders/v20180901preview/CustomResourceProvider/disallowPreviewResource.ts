@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-customproviders-v20180901preview-customresourceprovider-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (customproviders.v20180901preview.CustomResourceProvider).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomResourceProvider, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure CustomResourceProvider shouldn't use an unstable API (customproviders.v20180901preview.CustomResourceProvider). A compatible replacement can be found at 'customproviders.CustomResourceProvider'."
             );

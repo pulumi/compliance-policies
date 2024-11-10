@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-monitor-v20231001preview-azuremonitorworkspace-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (monitor.v20231001preview.AzureMonitorWorkspace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AzureMonitorWorkspace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AzureMonitorWorkspace shouldn't use an unstable API (monitor.v20231001preview.AzureMonitorWorkspace). A compatible replacement can be found at 'monitor.AzureMonitorWorkspace'."
             );

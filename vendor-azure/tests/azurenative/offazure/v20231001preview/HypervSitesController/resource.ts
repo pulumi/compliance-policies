@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { HypervSitesController } from "@pulumi/azure-native/offazure/v20231001preview";
 
@@ -21,8 +22,8 @@ import { HypervSitesController } from "@pulumi/azure-native/offazure/v20231001pr
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(HypervSitesController, {
         resourceGroupName: "",
-    });
+    }, policyconfig, resourceName);
 }

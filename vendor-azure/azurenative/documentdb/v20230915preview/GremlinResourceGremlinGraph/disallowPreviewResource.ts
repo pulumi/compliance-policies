@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-documentdb-v20230915preview-gremlinresourcegremlingraph-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (documentdb.v20230915preview.GremlinResourceGremlinGraph).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GremlinResourceGremlinGraph, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure GremlinResourceGremlinGraph shouldn't use an unstable API (documentdb.v20230915preview.GremlinResourceGremlinGraph). A compatible replacement can be found at 'documentdb.GremlinResourceGremlinGraph'."
             );

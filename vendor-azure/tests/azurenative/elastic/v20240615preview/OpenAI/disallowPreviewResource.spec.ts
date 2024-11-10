@@ -61,10 +61,26 @@ describe("azurenative.elastic.v20240615preview.OpenAI.disallowPreviewResource", 
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OpenAI shouldn't use an unstable API (elastic.v20240615preview.OpenAI). A compatible replacement can be found at 'elastic.OpenAI'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure OpenAI shouldn't use an unstable API (elastic.v20240615preview.OpenAI). A compatible replacement can be found at 'elastic.OpenAI'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure OpenAI shouldn't use an unstable API (elastic.v20240615preview.OpenAI). A compatible replacement can be found at 'elastic.OpenAI'." });
     });
 });

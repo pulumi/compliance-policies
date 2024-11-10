@@ -61,10 +61,26 @@ describe("azurenative.quota.v20230601preview.GroupQuota.disallowPreviewResource"
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GroupQuota shouldn't use an unstable API (quota.v20230601preview.GroupQuota). A compatible replacement can be found at 'quota.GroupQuota'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure GroupQuota shouldn't use an unstable API (quota.v20230601preview.GroupQuota). A compatible replacement can be found at 'quota.GroupQuota'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure GroupQuota shouldn't use an unstable API (quota.v20230601preview.GroupQuota). A compatible replacement can be found at 'quota.GroupQuota'." });
     });
 });

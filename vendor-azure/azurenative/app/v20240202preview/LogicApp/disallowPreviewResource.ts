@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-app-v20240202preview-logicapp-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (app.v20240202preview.LogicApp).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LogicApp, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure LogicApp shouldn't use an unstable API (app.v20240202preview.LogicApp). A compatible replacement can be found at 'app.LogicApp'.");
         }),
     },

@@ -61,10 +61,26 @@ describe("azurenative.confidentialledger.v20230628preview.Ledger.disallowPreview
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Ledger shouldn't use an unstable API (confidentialledger.v20230628preview.Ledger). A compatible replacement can be found at 'confidentialledger.Ledger'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure Ledger shouldn't use an unstable API (confidentialledger.v20230628preview.Ledger). A compatible replacement can be found at 'confidentialledger.Ledger'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure Ledger shouldn't use an unstable API (confidentialledger.v20230628preview.Ledger). A compatible replacement can be found at 'confidentialledger.Ledger'." });
     });
 });

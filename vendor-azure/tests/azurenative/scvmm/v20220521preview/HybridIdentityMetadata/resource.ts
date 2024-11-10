@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { HybridIdentityMetadata } from "@pulumi/azure-native/scvmm/v20220521preview";
 
@@ -21,9 +22,9 @@ import { HybridIdentityMetadata } from "@pulumi/azure-native/scvmm/v20220521prev
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(HybridIdentityMetadata, {
         resourceGroupName: "",
         virtualMachineName: "",
-    });
+    }, policyconfig, resourceName);
 }

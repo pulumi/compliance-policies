@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appcomplianceautomation-v20221116preview-report-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appcomplianceautomation.v20221116preview.Report).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Report, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Report shouldn't use an unstable API (appcomplianceautomation.v20221116preview.Report). A compatible replacement can be found at 'appcomplianceautomation.Report'.");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { NspAccessRule } from "@pulumi/azure-native/network/v20210201preview";
 
@@ -21,10 +22,10 @@ import { NspAccessRule } from "@pulumi/azure-native/network/v20210201preview";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(NspAccessRule, {
         resourceGroupName: "",
         networkSecurityPerimeterName: "",
         profileName: "",
-    });
+    }, policyconfig, resourceName);
 }

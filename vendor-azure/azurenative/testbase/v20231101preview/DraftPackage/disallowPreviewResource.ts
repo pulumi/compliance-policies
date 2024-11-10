@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-testbase-v20231101preview-draftpackage-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (testbase.v20231101preview.DraftPackage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DraftPackage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure DraftPackage shouldn't use an unstable API (testbase.v20231101preview.DraftPackage). A compatible replacement can be found at 'testbase.DraftPackage'.");
         }),
     },

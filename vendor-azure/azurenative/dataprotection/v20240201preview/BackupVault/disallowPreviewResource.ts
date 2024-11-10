@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-dataprotection-v20240201preview-backupvault-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (dataprotection.v20240201preview.BackupVault).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BackupVault, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure BackupVault shouldn't use an unstable API (dataprotection.v20240201preview.BackupVault). A compatible replacement can be found at 'dataprotection.BackupVault'.");
         }),
     },

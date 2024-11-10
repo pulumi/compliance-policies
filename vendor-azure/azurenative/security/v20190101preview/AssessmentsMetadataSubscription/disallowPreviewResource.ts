@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-security-v20190101preview-assessmentsmetadatasubscription-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (security.v20190101preview.AssessmentsMetadataSubscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AssessmentsMetadataSubscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Azure AssessmentsMetadataSubscription shouldn't use an unstable API (security.v20190101preview.AssessmentsMetadataSubscription). A compatible replacement can be found at 'security.AssessmentsMetadataSubscription'."
             );

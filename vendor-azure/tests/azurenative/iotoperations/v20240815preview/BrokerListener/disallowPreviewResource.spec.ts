@@ -61,10 +61,26 @@ describe("azurenative.iotoperations.v20240815preview.BrokerListener.disallowPrev
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BrokerListener shouldn't use an unstable API (iotoperations.v20240815preview.BrokerListener). A compatible replacement can be found at 'iotoperations.BrokerListener'." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Azure BrokerListener shouldn't use an unstable API (iotoperations.v20240815preview.BrokerListener). A compatible replacement can be found at 'iotoperations.BrokerListener'.",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Azure BrokerListener shouldn't use an unstable API (iotoperations.v20240815preview.BrokerListener). A compatible replacement can be found at 'iotoperations.BrokerListener'." });
     });
 });

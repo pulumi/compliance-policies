@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { BackupShortTermRetentionPolicy } from "@pulumi/azure-native/sql/v20240501preview";
 
@@ -21,10 +22,10 @@ import { BackupShortTermRetentionPolicy } from "@pulumi/azure-native/sql/v202405
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(BackupShortTermRetentionPolicy, {
         databaseName: "",
         resourceGroupName: "",
         serverName: "",
-    });
+    }, policyconfig, resourceName);
 }

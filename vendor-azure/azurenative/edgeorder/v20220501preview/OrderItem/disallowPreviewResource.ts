@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-edgeorder-v20220501preview-orderitem-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (edgeorder.v20220501preview.OrderItem).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OrderItem, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure OrderItem shouldn't use an unstable API (edgeorder.v20220501preview.OrderItem). A compatible replacement can be found at 'edgeorder.OrderItem'.");
         }),
     },

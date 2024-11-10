@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-appconfiguration-v20230801preview-keyvalue-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (appconfiguration.v20230801preview.KeyValue).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(KeyValue, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure KeyValue shouldn't use an unstable API (appconfiguration.v20230801preview.KeyValue). A compatible replacement can be found at 'appconfiguration.KeyValue'.");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-maps-v20200201preview-creator-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (maps.v20200201preview.Creator).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Creator, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure Creator shouldn't use an unstable API (maps.v20200201preview.Creator). A compatible replacement can be found at 'maps.Creator'.");
         }),
     },

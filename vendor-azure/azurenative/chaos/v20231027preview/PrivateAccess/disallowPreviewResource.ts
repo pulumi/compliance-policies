@@ -31,8 +31,13 @@ export const disallowPreviewResource: ResourceValidationPolicy = policyManager.r
     resourceValidationPolicy: {
         name: "azurenative-chaos-v20231027preview-privateaccess-disallow-preview-resource",
         description: "Disallow the use of non-stable (Preview) Azure resouces (chaos.v20231027preview.PrivateAccess).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateAccess, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure PrivateAccess shouldn't use an unstable API (chaos.v20231027preview.PrivateAccess). A compatible replacement can be found at 'chaos.PrivateAccess'.");
         }),
     },

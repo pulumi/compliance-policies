@@ -38,6 +38,14 @@ describe("aws.kms.Key.enableKeyRotation", function() {
         });
     });
 
+    it("enforcementLevel", async function() {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
+
+    it("description", async function() {
+        assertResourcePolicyDescription(policy);
+    });
+
     it("code", async function () {
         assertCodeQuality(this.test?.parent?.title, __filename);
     });

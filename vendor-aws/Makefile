@@ -54,25 +54,37 @@ stats:
 	@echo -n "Number of policies for aws-native: "
 	@find $$PWD/awsnative -type f  | grep -v index.ts | wc -l
 
+upgrade::
+	@yarn upgrade @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
+
 # runs sequential tests in parallel.
 test:: prepare
 	@$(MAKE) -j $(MAKEJOBS) sequentialtest
+
+# ensure unit test files contain some required unit tests for quality and assurance purpose.
+validateunittestfiles:
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"name"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'name' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"registration"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'registration' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"metadata"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'metadata' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"enforcementLevel"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'enforcementLevel' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"description"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'description' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"code"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'code' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"policy-config-include"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'policy-config-include' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"policy-config-exclude"' {} + | wc -l)" -eq "0" && echo "* All unit test files have 'policy-config-exclude' unit test"
+	@test "$(shell find tests/aws/ tests/awsnative/ -name "*.spec.ts" -exec grep -L '"#1"' {} + | wc -l)" -eq "0" && echo "* All unit test files have '#1' unit test"
 
 # runs limited tests in parallel.
 fasttest::
 	@$(MAKE) -j $(MAKEJOBS) fastsequentialtest
 
-upgrade::
-	@yarn upgrade @pulumi/compliance-policies-unit-test-helpers@latest $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save
-
 # Currently, running all unit tests at once causes some massive performance and memory issues
 # due to the way NodeJS loads everything into memory. To work around the issue, unit tests are
 # executed per service instead as a single block. This way, NodeJS only loads a fraction of
 # the provider which improves performance and significantly reduces memory requirements.
-sequentialtest: $(TARGETS)
+sequentialtest: validateunittestfiles $(TARGETS)
 
 # Same as above, but running only a subset of unit tests to save time.
-fastsequentialtest: $(FAST_TARGETS)
+fastsequentialtest: validateunittestfiles $(FAST_TARGETS)
 
 # Note that $(TARGETS) includes $(FAST_TARGETS)
 $(TARGETS): prepare

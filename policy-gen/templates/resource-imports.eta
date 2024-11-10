@@ -1,4 +1,5 @@
 <%~ includeFile("../../headers.eta") %>
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";

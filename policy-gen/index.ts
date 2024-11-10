@@ -104,6 +104,8 @@ commander.program
         const dryrun: boolean = options.dryrun ? true : false;
         const maxPolicies: number = parseInt(options.max, 10);
 
+        console.log(`* provider: ${name}, version: ${version}, dry-run: ${dryrun && "yes" || "no"}, maximum policies: ${maxPolicies}`);
+
         cmd_run({
             name: name,
             version: version,

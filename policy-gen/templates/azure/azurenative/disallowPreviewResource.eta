@@ -13,8 +13,13 @@ export const <%~ it.policyVariableName %>: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "<%~ it.policyName %>",
         description: "Disallow the use of non-stable (Preview) Azure resouces (<%~ it.resourceType %>).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Azure <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).<% if (it.resourceTypeAlias !== "") { %> A compatible replacement can be found at '<%~ it.resourceTypeAlias %>'.<% } %>");
         }),
     },

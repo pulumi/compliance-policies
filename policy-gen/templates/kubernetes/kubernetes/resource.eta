@@ -6,6 +6,6 @@ import { <%~ it.shortResourceType %> } from "<%~ it.scopedImport %>";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(<%~ it.shortResourceType %>, {});
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
+    return createResourceValidationArgs(<%~ it.shortResourceType %>, {}, policyconfig, resourceName);
 }

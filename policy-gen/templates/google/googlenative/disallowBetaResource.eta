@@ -13,8 +13,13 @@ export const <%= it.policyVariableName %>: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "<%= it.policyName %>",
         description: "Disallow the use of non-stable (Beta) resouces (<%~ it.resourceType %>).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(<%~ it.shortResourceType %>, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("<%~ it.serviceName %> <%~ it.shortResourceType %> shouldn't use an unstable API (<%~ it.resourceType %>).");
         }),
     },

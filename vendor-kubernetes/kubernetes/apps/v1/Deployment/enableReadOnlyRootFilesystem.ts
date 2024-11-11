@@ -28,8 +28,13 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-deployment-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes Deployments run pods with a read-only filesystem.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Deployment, (deployment, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (deployment.spec && deployment.spec.template.spec && deployment.spec.template.spec.containers.length > 0) {
                 deployment.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {

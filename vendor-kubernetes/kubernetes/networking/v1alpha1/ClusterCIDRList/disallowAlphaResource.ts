@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-networking-v1alpha1-clustercidrlist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (networking.v1alpha1.ClusterCIDRList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterCIDRList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ClusterCIDRList shouldn't use an unstable API (networking.v1alpha1.ClusterCIDRList).");
         }),
     },

@@ -49,6 +49,28 @@ describe("kubernetes.policy.v1.PodDisruptionBudget.disallowZeroVoluntaryDisrupti
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.spec.maxUnavailable = undefined;
+        args.props.spec.minAvailable = "100%";
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes PodDisruptionBudgets should allow voluntary pod disruption when setting 'minAvailable'." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.spec.maxUnavailable = undefined;
+        args.props.spec.minAvailable = "100%";
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

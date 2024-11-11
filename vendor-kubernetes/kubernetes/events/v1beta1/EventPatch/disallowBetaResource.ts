@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-events-v1beta1-eventpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (events.v1beta1.EventPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EventPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes EventPatch shouldn't use an unstable API (events.v1beta1.EventPatch).");
         }),
     },

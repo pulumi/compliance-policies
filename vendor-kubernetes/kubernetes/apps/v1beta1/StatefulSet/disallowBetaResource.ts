@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1beta1-statefulset-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (apps.v1beta1.StatefulSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StatefulSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes StatefulSet shouldn't use an unstable API (apps.v1beta1.StatefulSet).");
         }),
     },

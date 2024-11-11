@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-certificates-v1alpha1-clustertrustbundlelist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (certificates.v1alpha1.ClusterTrustBundleList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterTrustBundleList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ClusterTrustBundleList shouldn't use an unstable API (certificates.v1alpha1.ClusterTrustBundleList).");
         }),
     },

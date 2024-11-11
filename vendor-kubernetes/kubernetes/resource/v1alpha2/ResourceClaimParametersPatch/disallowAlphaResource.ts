@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-resource-v1alpha2-resourceclaimparameterspatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha2.ResourceClaimParametersPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResourceClaimParametersPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ResourceClaimParametersPatch shouldn't use an unstable API (resource.v1alpha2.ResourceClaimParametersPatch).");
         }),
     },

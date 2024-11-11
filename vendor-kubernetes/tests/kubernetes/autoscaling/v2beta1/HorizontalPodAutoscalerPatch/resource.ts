@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { HorizontalPodAutoscalerPatch } from "@pulumi/kubernetes/autoscaling/v2beta1";
 
@@ -21,6 +22,6 @@ import { HorizontalPodAutoscalerPatch } from "@pulumi/kubernetes/autoscaling/v2b
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(HorizontalPodAutoscalerPatch, {});
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
+    return createResourceValidationArgs(HorizontalPodAutoscalerPatch, {}, policyconfig, resourceName);
 }

@@ -28,8 +28,13 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-statefulset-configure-recommended-labels",
         description: "Checks that Kubernetes StatefulSets have the recommended labels.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StatefulSet, (statefulSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!statefulSet.metadata || !statefulSet.metadata.labels) {
                 reportViolation("Kubernetes StatefulSets should use the recommended labels.");
             } else {

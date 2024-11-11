@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-storage-v1alpha1-volumeattributesclasslist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (storage.v1alpha1.VolumeAttributesClassList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeAttributesClassList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes VolumeAttributesClassList shouldn't use an unstable API (storage.v1alpha1.VolumeAttributesClassList).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-storage-v1beta1-volumeattachmentlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.VolumeAttachmentList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeAttachmentList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes VolumeAttachmentList shouldn't use an unstable API (storage.v1beta1.VolumeAttachmentList).");
         }),
     },

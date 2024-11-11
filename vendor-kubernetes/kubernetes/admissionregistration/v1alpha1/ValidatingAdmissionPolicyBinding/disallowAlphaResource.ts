@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-admissionregistration-v1alpha1-validatingadmissionpolicybinding-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (admissionregistration.v1alpha1.ValidatingAdmissionPolicyBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ValidatingAdmissionPolicyBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ValidatingAdmissionPolicyBinding shouldn't use an unstable API (admissionregistration.v1alpha1.ValidatingAdmissionPolicyBinding).");
         }),
     },

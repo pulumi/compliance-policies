@@ -28,8 +28,13 @@ export const disallowPod: ResourceValidationPolicy = policyManager.registerPolic
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-pod-disallow-pod",
         description: "Checks that Kubernetes Pods are not used directly.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Pod, (pod, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes Pods should not be used directly. Instead, you may want to use a Deployment, ReplicaSet, DaemonSet or Job.");
         }),
     },

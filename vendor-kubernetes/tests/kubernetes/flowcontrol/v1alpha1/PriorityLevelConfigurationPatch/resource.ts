@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PriorityLevelConfigurationPatch } from "@pulumi/kubernetes/flowcontrol/v1alpha1";
 
@@ -21,6 +22,6 @@ import { PriorityLevelConfigurationPatch } from "@pulumi/kubernetes/flowcontrol/
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(PriorityLevelConfigurationPatch, {});
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
+    return createResourceValidationArgs(PriorityLevelConfigurationPatch, {}, policyconfig, resourceName);
 }

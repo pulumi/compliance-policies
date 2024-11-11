@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-settings-v1alpha1-podpreset-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (settings.v1alpha1.PodPreset).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PodPreset, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes PodPreset shouldn't use an unstable API (settings.v1alpha1.PodPreset).");
         }),
     },

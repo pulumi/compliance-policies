@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-resource-v1alpha3-deviceclasspatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (resource.v1alpha3.DeviceClassPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DeviceClassPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes DeviceClassPatch shouldn't use an unstable API (resource.v1alpha3.DeviceClassPatch).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-rbac-v1beta1-clusterrolebinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.ClusterRoleBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterRoleBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ClusterRoleBinding shouldn't use an unstable API (rbac.v1beta1.ClusterRoleBinding).");
         }),
     },

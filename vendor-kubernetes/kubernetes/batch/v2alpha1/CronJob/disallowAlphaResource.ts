@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-batch-v2alpha1-cronjob-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (batch.v2alpha1.CronJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CronJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes CronJob shouldn't use an unstable API (batch.v2alpha1.CronJob).");
         }),
     },

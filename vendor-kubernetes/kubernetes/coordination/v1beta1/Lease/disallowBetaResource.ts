@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-coordination-v1beta1-lease-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (coordination.v1beta1.Lease).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Lease, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes Lease shouldn't use an unstable API (coordination.v1beta1.Lease).");
         }),
     },

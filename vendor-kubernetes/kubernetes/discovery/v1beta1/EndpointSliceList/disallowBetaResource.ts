@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-discovery-v1beta1-endpointslicelist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (discovery.v1beta1.EndpointSliceList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EndpointSliceList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes EndpointSliceList shouldn't use an unstable API (discovery.v1beta1.EndpointSliceList).");
         }),
     },

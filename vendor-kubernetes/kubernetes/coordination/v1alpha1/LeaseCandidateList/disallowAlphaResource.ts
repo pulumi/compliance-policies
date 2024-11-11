@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-coordination-v1alpha1-leasecandidatelist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (coordination.v1alpha1.LeaseCandidateList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LeaseCandidateList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes LeaseCandidateList shouldn't use an unstable API (coordination.v1alpha1.LeaseCandidateList).");
         }),
     },

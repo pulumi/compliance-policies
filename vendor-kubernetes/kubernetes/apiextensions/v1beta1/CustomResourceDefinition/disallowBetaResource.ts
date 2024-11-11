@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-apiextensions-v1beta1-customresourcedefinition-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (apiextensions.v1beta1.CustomResourceDefinition).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomResourceDefinition, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes CustomResourceDefinition shouldn't use an unstable API (apiextensions.v1beta1.CustomResourceDefinition).");
         }),
     },

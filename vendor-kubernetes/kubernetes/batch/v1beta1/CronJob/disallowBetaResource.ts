@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-batch-v1beta1-cronjob-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (batch.v1beta1.CronJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CronJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes CronJob shouldn't use an unstable API (batch.v1beta1.CronJob).");
         }),
     },

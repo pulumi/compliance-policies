@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-rbac-v1beta1-rolebindingpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (rbac.v1beta1.RoleBindingPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RoleBindingPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes RoleBindingPatch shouldn't use an unstable API (rbac.v1beta1.RoleBindingPatch).");
         }),
     },

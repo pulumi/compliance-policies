@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-scheduling-v1beta1-priorityclass-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (scheduling.v1beta1.PriorityClass).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PriorityClass, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes PriorityClass shouldn't use an unstable API (scheduling.v1beta1.PriorityClass).");
         }),
     },

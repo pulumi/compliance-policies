@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-storagemigration-v1alpha1-storageversionmigrationpatch-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (storagemigration.v1alpha1.StorageVersionMigrationPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StorageVersionMigrationPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes StorageVersionMigrationPatch shouldn't use an unstable API (storagemigration.v1alpha1.StorageVersionMigrationPatch).");
         }),
     },

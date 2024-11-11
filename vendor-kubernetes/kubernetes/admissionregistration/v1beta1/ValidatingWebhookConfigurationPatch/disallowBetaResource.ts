@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-admissionregistration-v1beta1-validatingwebhookconfigurationpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (admissionregistration.v1beta1.ValidatingWebhookConfigurationPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ValidatingWebhookConfigurationPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ValidatingWebhookConfigurationPatch shouldn't use an unstable API (admissionregistration.v1beta1.ValidatingWebhookConfigurationPatch).");
         }),
     },

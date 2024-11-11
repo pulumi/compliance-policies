@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-autoscaling-v2beta1-horizontalpodautoscalerlist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (autoscaling.v2beta1.HorizontalPodAutoscalerList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HorizontalPodAutoscalerList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes HorizontalPodAutoscalerList shouldn't use an unstable API (autoscaling.v2beta1.HorizontalPodAutoscalerList).");
         }),
     },

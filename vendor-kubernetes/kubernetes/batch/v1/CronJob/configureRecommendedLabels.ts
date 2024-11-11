@@ -28,8 +28,13 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "kubernetes-batch-v1-cronjob-configure-recommended-labels",
         description: "Checks that Kubernetes CronJobs have the recommended labels.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CronJob, (cronJob, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!cronJob.metadata || !cronJob.metadata.labels) {
                 reportViolation("Kubernetes CronJobs should use the recommended labels.");
             } else {

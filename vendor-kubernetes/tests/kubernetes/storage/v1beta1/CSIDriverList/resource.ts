@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CSIDriverList } from "@pulumi/kubernetes/storage/v1beta1";
 
@@ -21,8 +22,8 @@ import { CSIDriverList } from "@pulumi/kubernetes/storage/v1beta1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CSIDriverList, {
         items: [],
-    });
+    }, policyconfig, resourceName);
 }

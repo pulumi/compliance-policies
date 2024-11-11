@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-auditregistration-v1alpha1-auditsink-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (auditregistration.v1alpha1.AuditSink).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AuditSink, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes AuditSink shouldn't use an unstable API (auditregistration.v1alpha1.AuditSink).");
         }),
     },

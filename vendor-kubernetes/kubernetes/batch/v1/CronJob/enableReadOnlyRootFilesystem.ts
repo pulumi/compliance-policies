@@ -28,8 +28,13 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-batch-v1-cronjob-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes CronJobs run pods with a read-only filesystem.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CronJob, (cronJob, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (cronJob.spec && cronJob.spec.jobTemplate.spec && cronJob.spec.jobTemplate.spec.template.spec && cronJob.spec.jobTemplate.spec.template.spec.containers.length > 0) {
                 cronJob.spec.jobTemplate.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {

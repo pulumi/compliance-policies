@@ -28,8 +28,13 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-daemonset-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes DaemonSets run pods with a read-only filesystem.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DaemonSet, (daemonSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (daemonSet.spec && daemonSet.spec.template.spec && daemonSet.spec.template.spec.containers.length > 0) {
                 daemonSet.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {

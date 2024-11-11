@@ -28,8 +28,13 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-statefulset-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes StatefulSets run pods with a read-only filesystem.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(StatefulSet, (statefulSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (statefulSet.spec && statefulSet.spec.template.spec && statefulSet.spec.template.spec.containers.length > 0) {
                 statefulSet.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {

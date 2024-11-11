@@ -50,6 +50,26 @@ describe("kubernetes.apps.v1.ReplicaSet.enableReadOnlyRootFilesystem", function(
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        args.props.spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem = undefined;
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes ReplicaSets should run their pods using a read-only filesystem." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        args.props.spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem = undefined;
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertNoResourceViolations(policy, args);

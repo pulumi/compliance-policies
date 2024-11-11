@@ -28,8 +28,13 @@ export const enableReadOnlyRootFilesystem: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-replicaset-enable-read-only-root-filesystem",
         description: "Checks that Kubernetes ReplicaSets run pods with a read-only filesystem.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReplicaSet, (replicaset, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (replicaset.spec && replicaset.spec.template && replicaset.spec.template.spec && replicaset.spec.template.spec.containers.length > 0) {
                 replicaset.spec.template.spec.containers.forEach((container) => {
                     if (!container.securityContext || !container.securityContext.readOnlyRootFilesystem) {

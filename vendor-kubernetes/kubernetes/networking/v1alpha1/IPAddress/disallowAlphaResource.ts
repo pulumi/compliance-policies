@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-networking-v1alpha1-ipaddress-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (networking.v1alpha1.IPAddress).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IPAddress, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes IPAddress shouldn't use an unstable API (networking.v1alpha1.IPAddress).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-storage-v1beta1-volumeattributesclasspatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (storage.v1beta1.VolumeAttributesClassPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(VolumeAttributesClassPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes VolumeAttributesClassPatch shouldn't use an unstable API (storage.v1beta1.VolumeAttributesClassPatch).");
         }),
     },

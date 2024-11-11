@@ -28,8 +28,13 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-replicaset-configure-recommended-labels",
         description: "Checks that Kubernetes ReplicaSets use the recommended labels.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReplicaSet, (replicaSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!replicaSet.metadata || !replicaSet.metadata.labels) {
                 reportViolation("Kubernetes ReplicaSets should use the recommended labels.");
             } else {

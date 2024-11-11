@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-policy-v1beta1-podsecuritypolicylist-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (policy.v1beta1.PodSecurityPolicyList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PodSecurityPolicyList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes PodSecurityPolicyList shouldn't use an unstable API (policy.v1beta1.PodSecurityPolicyList).");
         }),
     },

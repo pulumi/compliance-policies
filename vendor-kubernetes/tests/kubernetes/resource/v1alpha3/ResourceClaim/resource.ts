@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ResourceClaim } from "@pulumi/kubernetes/resource/v1alpha3";
 
@@ -21,8 +22,8 @@ import { ResourceClaim } from "@pulumi/kubernetes/resource/v1alpha3";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ResourceClaim, {
         spec: {},
-    });
+    }, policyconfig, resourceName);
 }

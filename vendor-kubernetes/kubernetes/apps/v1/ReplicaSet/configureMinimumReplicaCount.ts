@@ -28,8 +28,13 @@ export const configureMinimumReplicaCount: ResourceValidationPolicy = policyMana
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-replicaset-configure-minimum-replica-count",
         description: "Checks that Kubernetes ReplicaSets have at least three replicas.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReplicaSet, (replicaSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!replicaSet.spec || !replicaSet.spec.replicas || replicaSet.spec.replicas < 3) {
                 reportViolation("Kubernetes ReplicaSet should have at least three replicas.");
             }

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-flowcontrol-v1alpha1-prioritylevelconfigurationlist-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (flowcontrol.v1alpha1.PriorityLevelConfigurationList).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PriorityLevelConfigurationList, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes PriorityLevelConfigurationList shouldn't use an unstable API (flowcontrol.v1alpha1.PriorityLevelConfigurationList).");
         }),
     },

@@ -61,6 +61,24 @@ describe("kubernetes.scheduling.v1beta1.PriorityClassPatch.disallowBetaResource"
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Kubernetes PriorityClassPatch shouldn't use an unstable API (scheduling.v1beta1.PriorityClassPatch)." });
+    });
+
+    it("policy-config-exclude", async function() {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Kubernetes PriorityClassPatch shouldn't use an unstable API (scheduling.v1beta1.PriorityClassPatch)." });

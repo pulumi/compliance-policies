@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-networking-v1beta1-ipaddresspatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (networking.v1beta1.IPAddressPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IPAddressPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes IPAddressPatch shouldn't use an unstable API (networking.v1beta1.IPAddressPatch).");
         }),
     },

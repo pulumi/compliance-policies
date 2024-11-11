@@ -28,8 +28,13 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-configure-recommended-labels",
         description: "Checks that Kubernetes Services use the recommended labels.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Service, (service, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!service.metadata || !service.metadata.labels) {
                 reportViolation("Kubernetes Services should use the recommended labels.");
             } else {

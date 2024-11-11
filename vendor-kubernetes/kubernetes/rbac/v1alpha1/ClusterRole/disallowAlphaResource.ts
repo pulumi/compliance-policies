@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-rbac-v1alpha1-clusterrole-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (rbac.v1alpha1.ClusterRole).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ClusterRole, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes ClusterRole shouldn't use an unstable API (rbac.v1alpha1.ClusterRole).");
         }),
     },

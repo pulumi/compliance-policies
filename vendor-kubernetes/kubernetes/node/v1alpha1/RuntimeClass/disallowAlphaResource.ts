@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "kubernetes-node-v1alpha1-runtimeclass-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) Kubernetes resouces (node.v1alpha1.RuntimeClass).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RuntimeClass, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes RuntimeClass shouldn't use an unstable API (node.v1alpha1.RuntimeClass).");
         }),
     },

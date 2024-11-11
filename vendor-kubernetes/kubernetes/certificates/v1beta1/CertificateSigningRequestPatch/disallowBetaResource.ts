@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-certificates-v1beta1-certificatesigningrequestpatch-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (certificates.v1beta1.CertificateSigningRequestPatch).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CertificateSigningRequestPatch, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes CertificateSigningRequestPatch shouldn't use an unstable API (certificates.v1beta1.CertificateSigningRequestPatch).");
         }),
     },

@@ -28,8 +28,13 @@ export const configureRecommendedLabels: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "kubernetes-apps-v1-daemonset-configure-recommended-labels",
         description: "Checks that Kubernetes DaemonSets have the recommended labels.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DaemonSet, (daemonSet, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (!daemonSet.metadata || !daemonSet.metadata.labels) {
                 reportViolation("Kubernetes DaemonSets should use the recommended labels.");
             } else {

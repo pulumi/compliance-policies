@@ -28,8 +28,13 @@ export const disallowZeroVoluntaryDisruption: ResourceValidationPolicy = policyM
     resourceValidationPolicy: {
         name: "kubernetes-policy-v1-poddisruptionbudget-disallow-zero-voluntary-disruption",
         description: "Checks that Kubernetes PodDisruptionBudgets have a voluntary disruption.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PodDisruptionBudget, (podDisruptionBudget, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (podDisruptionBudget.spec) {
                 if (podDisruptionBudget.spec.maxUnavailable !== undefined) {
                     switch (typeof podDisruptionBudget.spec.maxUnavailable) {

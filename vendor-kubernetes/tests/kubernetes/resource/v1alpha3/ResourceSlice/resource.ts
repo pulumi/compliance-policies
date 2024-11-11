@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ResourceSlice } from "@pulumi/kubernetes/resource/v1alpha3";
 
@@ -21,7 +22,7 @@ import { ResourceSlice } from "@pulumi/kubernetes/resource/v1alpha3";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ResourceSlice, {
         spec: {
             driver: "",
@@ -31,5 +32,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 resourceSliceCount: 1,
             },
         },
-    });
+    }, policyconfig, resourceName);
 }

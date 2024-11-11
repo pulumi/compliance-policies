@@ -28,8 +28,13 @@ export const disallowLoadBalancer: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-core-v1-service-disallow-load-balancer",
         description: "Checks that Kubernetes Services do not use a LoadBalancer as service type.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Service, (service, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (service.spec) {
                 if (service.spec.type && service.spec.type === "LoadBalancer") {
                     reportViolation("Kubernetes Services should not use a 'LoadBalancer' as a service type.");

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "kubernetes-flowcontrol-v1beta3-prioritylevelconfiguration-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) Kubernetes resouces (flowcontrol.v1beta3.PriorityLevelConfiguration).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PriorityLevelConfiguration, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Kubernetes PriorityLevelConfiguration shouldn't use an unstable API (flowcontrol.v1beta3.PriorityLevelConfiguration).");
         }),
     },

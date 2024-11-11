@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-containeranalysis-v1alpha1-occurrenceiammember-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (containeranalysis.v1alpha1.OccurrenceIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OccurrenceIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Containeranalysis OccurrenceIamMember shouldn't use an unstable API (containeranalysis.v1alpha1.OccurrenceIamMember).");
         }),
     },

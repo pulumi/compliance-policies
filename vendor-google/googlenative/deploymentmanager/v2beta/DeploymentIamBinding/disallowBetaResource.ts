@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-deploymentmanager-v2beta-deploymentiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (deploymentmanager.v2beta.DeploymentIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DeploymentIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Deploymentmanager DeploymentIamBinding shouldn't use an unstable API (deploymentmanager.v2beta.DeploymentIamBinding).");
         }),
     },

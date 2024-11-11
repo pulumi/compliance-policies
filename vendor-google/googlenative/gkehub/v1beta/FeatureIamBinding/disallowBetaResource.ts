@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-gkehub-v1beta-featureiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (gkehub.v1beta.FeatureIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FeatureIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gkehub FeatureIamBinding shouldn't use an unstable API (gkehub.v1beta.FeatureIamBinding).");
         }),
     },

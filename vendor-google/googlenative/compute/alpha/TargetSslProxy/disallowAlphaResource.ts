@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-targetsslproxy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.TargetSslProxy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TargetSslProxy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute TargetSslProxy shouldn't use an unstable API (compute.alpha.TargetSslProxy).");
         }),
     },

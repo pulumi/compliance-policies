@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-pubsub-v1beta2-subscription-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (pubsub.v1beta2.Subscription).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Subscription, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Pubsub Subscription shouldn't use an unstable API (pubsub.v1beta2.Subscription).");
         }),
     },

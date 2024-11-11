@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-regionbackendserviceiambinding-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.RegionBackendServiceIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegionBackendServiceIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute RegionBackendServiceIamBinding shouldn't use an unstable API (compute.alpha.RegionBackendServiceIamBinding).");
         }),
     },

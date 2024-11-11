@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-aiplatform-v1beta1-hyperparametertuningjob-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (aiplatform.v1beta1.HyperparameterTuningJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HyperparameterTuningJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Aiplatform HyperparameterTuningJob shouldn't use an unstable API (aiplatform.v1beta1.HyperparameterTuningJob).");
         }),
     },

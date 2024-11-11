@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-interconnectiammember-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.InterconnectIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InterconnectIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute InterconnectIamMember shouldn't use an unstable API (compute.alpha.InterconnectIamMember).");
         }),
     },

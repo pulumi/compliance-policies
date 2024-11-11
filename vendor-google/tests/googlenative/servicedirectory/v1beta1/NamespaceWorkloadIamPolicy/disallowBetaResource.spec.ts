@@ -61,6 +61,24 @@ describe("googlenative.servicedirectory.v1beta1.NamespaceWorkloadIamPolicy.disal
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Servicedirectory NamespaceWorkloadIamPolicy shouldn't use an unstable API (servicedirectory.v1beta1.NamespaceWorkloadIamPolicy)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Servicedirectory NamespaceWorkloadIamPolicy shouldn't use an unstable API (servicedirectory.v1beta1.NamespaceWorkloadIamPolicy)." });

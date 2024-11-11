@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-machineimage-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.MachineImage).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MachineImage, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute MachineImage shouldn't use an unstable API (compute.beta.MachineImage).");
         }),
     },

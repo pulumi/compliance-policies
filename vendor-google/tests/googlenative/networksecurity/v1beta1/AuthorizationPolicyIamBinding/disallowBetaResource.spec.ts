@@ -61,10 +61,26 @@ describe("googlenative.networksecurity.v1beta1.AuthorizationPolicyIamBinding.dis
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Networksecurity AuthorizationPolicyIamBinding shouldn't use an unstable API (networksecurity.v1beta1.AuthorizationPolicyIamBinding)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Networksecurity AuthorizationPolicyIamBinding shouldn't use an unstable API (networksecurity.v1beta1.AuthorizationPolicyIamBinding).",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Networksecurity AuthorizationPolicyIamBinding shouldn't use an unstable API (networksecurity.v1beta1.AuthorizationPolicyIamBinding)." });
     });
 });

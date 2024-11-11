@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-composer-v1beta1-environment-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (composer.v1beta1.Environment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Environment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Composer Environment shouldn't use an unstable API (composer.v1beta1.Environment).");
         }),
     },

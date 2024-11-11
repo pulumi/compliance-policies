@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-retail-v2alpha-servingconfig-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (retail.v2alpha.ServingConfig).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServingConfig, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Retail ServingConfig shouldn't use an unstable API (retail.v2alpha.ServingConfig).");
         }),
     },

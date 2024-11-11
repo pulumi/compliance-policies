@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-regionsslcertificate-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.RegionSslCertificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegionSslCertificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute RegionSslCertificate shouldn't use an unstable API (compute.alpha.RegionSslCertificate).");
         }),
     },

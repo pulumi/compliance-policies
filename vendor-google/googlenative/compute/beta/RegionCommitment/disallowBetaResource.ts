@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-regioncommitment-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.RegionCommitment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegionCommitment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute RegionCommitment shouldn't use an unstable API (compute.beta.RegionCommitment).");
         }),
     },

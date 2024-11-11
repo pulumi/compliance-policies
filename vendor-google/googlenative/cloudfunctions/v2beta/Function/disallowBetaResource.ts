@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudfunctions-v2beta-function-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudfunctions.v2beta.Function).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Function, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudfunctions Function shouldn't use an unstable API (cloudfunctions.v2beta.Function).");
         }),
     },

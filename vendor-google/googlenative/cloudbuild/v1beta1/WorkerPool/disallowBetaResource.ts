@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudbuild-v1beta1-workerpool-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudbuild.v1beta1.WorkerPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkerPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudbuild WorkerPool shouldn't use an unstable API (cloudbuild.v1beta1.WorkerPool).");
         }),
     },

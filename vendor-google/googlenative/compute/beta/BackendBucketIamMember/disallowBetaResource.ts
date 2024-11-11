@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-backendbucketiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.BackendBucketIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(BackendBucketIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute BackendBucketIamMember shouldn't use an unstable API (compute.beta.BackendBucketIamMember).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-regionsslcertificate-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.RegionSslCertificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegionSslCertificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute RegionSslCertificate shouldn't use an unstable API (compute.beta.RegionSslCertificate).");
         }),
     },

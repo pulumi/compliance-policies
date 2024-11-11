@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dataproc-v1beta2-workflowtemplateiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dataproc.v1beta2.WorkflowTemplateIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkflowTemplateIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dataproc WorkflowTemplateIamBinding shouldn't use an unstable API (dataproc.v1beta2.WorkflowTemplateIamBinding).");
         }),
     },

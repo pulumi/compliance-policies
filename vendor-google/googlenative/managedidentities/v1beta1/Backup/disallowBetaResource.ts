@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-managedidentities-v1beta1-backup-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (managedidentities.v1beta1.Backup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Backup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Managedidentities Backup shouldn't use an unstable API (managedidentities.v1beta1.Backup).");
         }),
     },

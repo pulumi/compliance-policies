@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-memcache-v1beta2-instance-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (memcache.v1beta2.Instance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Memcache Instance shouldn't use an unstable API (memcache.v1beta2.Instance).");
         }),
     },

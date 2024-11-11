@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-firewallpolicy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.FirewallPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute FirewallPolicy shouldn't use an unstable API (compute.alpha.FirewallPolicy).");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ProjectIamBinding } from "@pulumi/google-native/cloudresourcemanager/v1beta1";
 
@@ -21,10 +22,10 @@ import { ProjectIamBinding } from "@pulumi/google-native/cloudresourcemanager/v1
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ProjectIamBinding, {
         members: [""],
         name: "",
         role: "",
-    });
+    }, policyconfig, resourceName);
 }

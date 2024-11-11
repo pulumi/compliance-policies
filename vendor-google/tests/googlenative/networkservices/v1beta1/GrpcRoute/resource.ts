@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { GrpcRoute } from "@pulumi/google-native/networkservices/v1beta1";
 
@@ -21,7 +22,7 @@ import { GrpcRoute } from "@pulumi/google-native/networkservices/v1beta1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(GrpcRoute, {
         grpcRouteId: "",
         hostnames: [""],
@@ -30,5 +31,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 action: {},
             },
         ],
-    });
+    }, policyconfig, resourceName);
 }

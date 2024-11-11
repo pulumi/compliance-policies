@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-websecurityscanner-v1beta-scanconfig-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (websecurityscanner.v1beta.ScanConfig).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ScanConfig, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Websecurityscanner ScanConfig shouldn't use an unstable API (websecurityscanner.v1beta.ScanConfig).");
         }),
     },

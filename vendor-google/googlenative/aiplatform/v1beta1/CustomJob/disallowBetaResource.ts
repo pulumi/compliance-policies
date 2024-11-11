@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-aiplatform-v1beta1-customjob-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (aiplatform.v1beta1.CustomJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CustomJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Aiplatform CustomJob shouldn't use an unstable API (aiplatform.v1beta1.CustomJob).");
         }),
     },

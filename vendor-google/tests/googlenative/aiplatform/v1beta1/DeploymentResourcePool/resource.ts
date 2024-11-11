@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DeploymentResourcePool } from "@pulumi/google-native/aiplatform/v1beta1";
 
@@ -21,12 +22,12 @@ import { DeploymentResourcePool } from "@pulumi/google-native/aiplatform/v1beta1
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DeploymentResourcePool, {
         dedicatedResources: {
             machineSpec: {},
             minReplicaCount: 1,
         },
         deploymentResourcePoolId: "",
-    });
+    }, policyconfig, resourceName);
 }

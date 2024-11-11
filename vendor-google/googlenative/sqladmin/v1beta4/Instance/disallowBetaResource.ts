@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-sqladmin-v1beta4-instance-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (sqladmin.v1beta4.Instance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Sqladmin Instance shouldn't use an unstable API (sqladmin.v1beta4.Instance).");
         }),
     },

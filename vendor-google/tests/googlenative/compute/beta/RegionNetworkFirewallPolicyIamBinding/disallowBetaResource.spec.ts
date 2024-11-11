@@ -61,10 +61,26 @@ describe("googlenative.compute.beta.RegionNetworkFirewallPolicyIamBinding.disall
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Compute RegionNetworkFirewallPolicyIamBinding shouldn't use an unstable API (compute.beta.RegionNetworkFirewallPolicyIamBinding)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Compute RegionNetworkFirewallPolicyIamBinding shouldn't use an unstable API (compute.beta.RegionNetworkFirewallPolicyIamBinding).",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Compute RegionNetworkFirewallPolicyIamBinding shouldn't use an unstable API (compute.beta.RegionNetworkFirewallPolicyIamBinding)." });
     });
 });

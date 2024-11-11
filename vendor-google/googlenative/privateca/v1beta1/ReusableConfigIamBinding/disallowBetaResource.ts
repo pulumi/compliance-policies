@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-privateca-v1beta1-reusableconfigiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (privateca.v1beta1.ReusableConfigIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ReusableConfigIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Privateca ReusableConfigIamBinding shouldn't use an unstable API (privateca.v1beta1.ReusableConfigIamBinding).");
         }),
     },

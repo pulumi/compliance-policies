@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-httpshealthcheck-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.HttpsHealthCheck).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HttpsHealthCheck, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute HttpsHealthCheck shouldn't use an unstable API (compute.beta.HttpsHealthCheck).");
         }),
     },

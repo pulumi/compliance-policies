@@ -61,6 +61,24 @@ describe("googlenative.cloudresourcemanager.v2beta1.FolderIamMember.disallowBeta
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Cloudresourcemanager FolderIamMember shouldn't use an unstable API (cloudresourcemanager.v2beta1.FolderIamMember)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Cloudresourcemanager FolderIamMember shouldn't use an unstable API (cloudresourcemanager.v2beta1.FolderIamMember)." });

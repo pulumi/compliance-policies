@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-autoscaler-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.Autoscaler).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Autoscaler, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute Autoscaler shouldn't use an unstable API (compute.beta.Autoscaler).");
         }),
     },

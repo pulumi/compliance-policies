@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-datacatalog-v1beta1-taxonomyiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (datacatalog.v1beta1.TaxonomyIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TaxonomyIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datacatalog TaxonomyIamPolicy shouldn't use an unstable API (datacatalog.v1beta1.TaxonomyIamPolicy).");
         }),
     },

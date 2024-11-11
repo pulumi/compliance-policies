@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dns-v1beta2-responsepolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dns.v1beta2.ResponsePolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ResponsePolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dns ResponsePolicy shouldn't use an unstable API (dns.v1beta2.ResponsePolicy).");
         }),
     },

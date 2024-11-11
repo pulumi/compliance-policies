@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-managedidentities-v1beta1-peering-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (managedidentities.v1beta1.Peering).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Peering, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Managedidentities Peering shouldn't use an unstable API (managedidentities.v1beta1.Peering).");
         }),
     },

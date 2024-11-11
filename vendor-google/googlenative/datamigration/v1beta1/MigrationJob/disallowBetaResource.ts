@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-datamigration-v1beta1-migrationjob-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (datamigration.v1beta1.MigrationJob).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MigrationJob, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datamigration MigrationJob shouldn't use an unstable API (datamigration.v1beta1.MigrationJob).");
         }),
     },

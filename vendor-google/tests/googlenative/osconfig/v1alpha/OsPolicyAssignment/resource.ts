@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { OsPolicyAssignment } from "@pulumi/google-native/osconfig/v1alpha";
 
@@ -21,7 +22,7 @@ import { OsPolicyAssignment } from "@pulumi/google-native/osconfig/v1alpha";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(OsPolicyAssignment, {
         instanceFilter: {},
         osPolicies: [
@@ -44,5 +45,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
             disruptionBudget: {},
             minWaitDuration: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

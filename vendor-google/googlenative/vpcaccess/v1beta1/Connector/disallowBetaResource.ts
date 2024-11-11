@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-vpcaccess-v1beta1-connector-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (vpcaccess.v1beta1.Connector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Connector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Vpcaccess Connector shouldn't use an unstable API (vpcaccess.v1beta1.Connector).");
         }),
     },

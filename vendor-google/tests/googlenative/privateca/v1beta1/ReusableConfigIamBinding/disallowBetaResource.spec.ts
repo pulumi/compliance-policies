@@ -61,6 +61,24 @@ describe("googlenative.privateca.v1beta1.ReusableConfigIamBinding.disallowBetaRe
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Privateca ReusableConfigIamBinding shouldn't use an unstable API (privateca.v1beta1.ReusableConfigIamBinding)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Privateca ReusableConfigIamBinding shouldn't use an unstable API (privateca.v1beta1.ReusableConfigIamBinding)." });

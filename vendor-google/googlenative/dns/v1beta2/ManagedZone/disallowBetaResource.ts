@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dns-v1beta2-managedzone-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dns.v1beta2.ManagedZone).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ManagedZone, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dns ManagedZone shouldn't use an unstable API (dns.v1beta2.ManagedZone).");
         }),
     },

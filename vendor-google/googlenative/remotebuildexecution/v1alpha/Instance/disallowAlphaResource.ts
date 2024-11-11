@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-remotebuildexecution-v1alpha-instance-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (remotebuildexecution.v1alpha.Instance).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Instance, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Remotebuildexecution Instance shouldn't use an unstable API (remotebuildexecution.v1alpha.Instance).");
         }),
     },

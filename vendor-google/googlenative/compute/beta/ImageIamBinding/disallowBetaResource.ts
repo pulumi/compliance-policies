@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-imageiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.ImageIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ImageIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute ImageIamBinding shouldn't use an unstable API (compute.beta.ImageIamBinding).");
         }),
     },

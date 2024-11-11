@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-networkservices-v1beta1-endpointpolicyiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (networkservices.v1beta1.EndpointPolicyIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(EndpointPolicyIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networkservices EndpointPolicyIamBinding shouldn't use an unstable API (networkservices.v1beta1.EndpointPolicyIamBinding).");
         }),
     },

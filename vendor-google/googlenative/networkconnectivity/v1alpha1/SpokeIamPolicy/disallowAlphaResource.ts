@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-networkconnectivity-v1alpha1-spokeiampolicy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (networkconnectivity.v1alpha1.SpokeIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SpokeIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networkconnectivity SpokeIamPolicy shouldn't use an unstable API (networkconnectivity.v1alpha1.SpokeIamPolicy).");
         }),
     },

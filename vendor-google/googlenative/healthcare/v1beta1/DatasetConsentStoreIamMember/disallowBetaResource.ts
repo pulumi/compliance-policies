@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-healthcare-v1beta1-datasetconsentstoreiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (healthcare.v1beta1.DatasetConsentStoreIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatasetConsentStoreIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Healthcare DatasetConsentStoreIamMember shouldn't use an unstable API (healthcare.v1beta1.DatasetConsentStoreIamMember).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-networksecurity-v1beta1-addressgroup-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (networksecurity.v1beta1.AddressGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AddressGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networksecurity AddressGroup shouldn't use an unstable API (networksecurity.v1beta1.AddressGroup).");
         }),
     },

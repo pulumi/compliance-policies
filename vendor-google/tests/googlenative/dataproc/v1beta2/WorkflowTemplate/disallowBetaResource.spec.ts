@@ -61,6 +61,24 @@ describe("googlenative.dataproc.v1beta2.WorkflowTemplate.disallowBetaResource", 
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Dataproc WorkflowTemplate shouldn't use an unstable API (dataproc.v1beta2.WorkflowTemplate)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Dataproc WorkflowTemplate shouldn't use an unstable API (dataproc.v1beta2.WorkflowTemplate)." });

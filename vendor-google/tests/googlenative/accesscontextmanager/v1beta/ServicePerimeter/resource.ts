@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ServicePerimeter } from "@pulumi/google-native/accesscontextmanager/v1beta";
 
@@ -21,8 +22,8 @@ import { ServicePerimeter } from "@pulumi/google-native/accesscontextmanager/v1b
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ServicePerimeter, {
         accessPolicyId: "",
-    });
+    }, policyconfig, resourceName);
 }

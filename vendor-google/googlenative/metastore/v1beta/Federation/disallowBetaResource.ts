@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-metastore-v1beta-federation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (metastore.v1beta.Federation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Federation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Metastore Federation shouldn't use an unstable API (metastore.v1beta.Federation).");
         }),
     },

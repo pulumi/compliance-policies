@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CertificateAuthorityCertificateRevocationListIamMember } from "@pulumi/google-native/privateca/v1beta1";
 
@@ -21,10 +22,10 @@ import { CertificateAuthorityCertificateRevocationListIamMember } from "@pulumi/
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CertificateAuthorityCertificateRevocationListIamMember, {
         member: "",
         name: "",
         role: "",
-    });
+    }, policyconfig, resourceName);
 }

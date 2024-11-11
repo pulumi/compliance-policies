@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudidentity-v1beta1-membership-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudidentity.v1beta1.Membership).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Membership, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudidentity Membership shouldn't use an unstable API (cloudidentity.v1beta1.Membership).");
         }),
     },

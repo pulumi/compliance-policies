@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-globalpublicdelegatedprefix-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.GlobalPublicDelegatedPrefix).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GlobalPublicDelegatedPrefix, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute GlobalPublicDelegatedPrefix shouldn't use an unstable API (compute.alpha.GlobalPublicDelegatedPrefix).");
         }),
     },

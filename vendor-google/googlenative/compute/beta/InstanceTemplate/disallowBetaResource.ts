@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-instancetemplate-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.InstanceTemplate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstanceTemplate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute InstanceTemplate shouldn't use an unstable API (compute.beta.InstanceTemplate).");
         }),
     },

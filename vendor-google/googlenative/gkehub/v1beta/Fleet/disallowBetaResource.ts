@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-gkehub-v1beta-fleet-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (gkehub.v1beta.Fleet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Fleet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gkehub Fleet shouldn't use an unstable API (gkehub.v1beta.Fleet).");
         }),
     },

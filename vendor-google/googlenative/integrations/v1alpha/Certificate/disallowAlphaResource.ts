@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-integrations-v1alpha-certificate-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (integrations.v1alpha.Certificate).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Certificate, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Integrations Certificate shouldn't use an unstable API (integrations.v1alpha.Certificate).");
         }),
     },

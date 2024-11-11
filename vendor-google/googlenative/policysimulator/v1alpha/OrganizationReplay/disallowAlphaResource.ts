@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-policysimulator-v1alpha-organizationreplay-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (policysimulator.v1alpha.OrganizationReplay).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OrganizationReplay, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Policysimulator OrganizationReplay shouldn't use an unstable API (policysimulator.v1alpha.OrganizationReplay).");
         }),
     },

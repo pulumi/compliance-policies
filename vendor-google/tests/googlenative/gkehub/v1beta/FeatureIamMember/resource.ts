@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { FeatureIamMember } from "@pulumi/google-native/gkehub/v1beta";
 
@@ -21,10 +22,10 @@ import { FeatureIamMember } from "@pulumi/google-native/gkehub/v1beta";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(FeatureIamMember, {
         member: "",
         name: "",
         role: "",
-    });
+    }, policyconfig, resourceName);
 }

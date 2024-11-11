@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { WorkstationClusterWorkstationConfigIamPolicy } from "@pulumi/google-native/workstations/v1beta";
 
@@ -21,9 +22,9 @@ import { WorkstationClusterWorkstationConfigIamPolicy } from "@pulumi/google-nat
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(WorkstationClusterWorkstationConfigIamPolicy, {
         workstationClusterId: "",
         workstationConfigId: "",
-    });
+    }, policyconfig, resourceName);
 }

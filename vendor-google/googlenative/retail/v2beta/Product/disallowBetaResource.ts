@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-retail-v2beta-product-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (retail.v2beta.Product).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Product, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Retail Product shouldn't use an unstable API (retail.v2beta.Product).");
         }),
     },

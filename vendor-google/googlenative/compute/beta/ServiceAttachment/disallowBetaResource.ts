@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-serviceattachment-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.ServiceAttachment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServiceAttachment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute ServiceAttachment shouldn't use an unstable API (compute.beta.ServiceAttachment).");
         }),
     },

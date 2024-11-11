@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-instantsnapshotiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.InstantSnapshotIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstantSnapshotIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute InstantSnapshotIamMember shouldn't use an unstable API (compute.beta.InstantSnapshotIamMember).");
         }),
     },

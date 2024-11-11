@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-globalpublicdelegatedprefix-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.GlobalPublicDelegatedPrefix).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GlobalPublicDelegatedPrefix, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute GlobalPublicDelegatedPrefix shouldn't use an unstable API (compute.beta.GlobalPublicDelegatedPrefix).");
         }),
     },

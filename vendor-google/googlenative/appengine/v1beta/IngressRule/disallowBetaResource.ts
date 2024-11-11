@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-appengine-v1beta-ingressrule-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (appengine.v1beta.IngressRule).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(IngressRule, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Appengine IngressRule shouldn't use an unstable API (appengine.v1beta.IngressRule).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-appengine-v1alpha-domainmapping-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (appengine.v1alpha.DomainMapping).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DomainMapping, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Appengine DomainMapping shouldn't use an unstable API (appengine.v1alpha.DomainMapping).");
         }),
     },

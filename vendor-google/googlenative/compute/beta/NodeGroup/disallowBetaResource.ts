@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-nodegroup-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.NodeGroup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NodeGroup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute NodeGroup shouldn't use an unstable API (compute.beta.NodeGroup).");
         }),
     },

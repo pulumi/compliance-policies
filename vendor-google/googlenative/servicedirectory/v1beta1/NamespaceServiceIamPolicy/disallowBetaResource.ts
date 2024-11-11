@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-servicedirectory-v1beta1-namespaceserviceiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (servicedirectory.v1beta1.NamespaceServiceIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NamespaceServiceIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Servicedirectory NamespaceServiceIamPolicy shouldn't use an unstable API (servicedirectory.v1beta1.NamespaceServiceIamPolicy).");
         }),
     },

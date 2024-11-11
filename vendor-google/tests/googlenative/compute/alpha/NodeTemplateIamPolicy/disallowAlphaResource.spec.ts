@@ -61,6 +61,24 @@ describe("googlenative.compute.alpha.NodeTemplateIamPolicy.disallowAlphaResource
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Compute NodeTemplateIamPolicy shouldn't use an unstable API (compute.alpha.NodeTemplateIamPolicy)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Compute NodeTemplateIamPolicy shouldn't use an unstable API (compute.alpha.NodeTemplateIamPolicy)." });

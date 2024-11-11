@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-compute-alpha-instancegroupmanagerresizerequest-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (compute.alpha.InstanceGroupManagerResizeRequest).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstanceGroupManagerResizeRequest, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute InstanceGroupManagerResizeRequest shouldn't use an unstable API (compute.alpha.InstanceGroupManagerResizeRequest).");
         }),
     },

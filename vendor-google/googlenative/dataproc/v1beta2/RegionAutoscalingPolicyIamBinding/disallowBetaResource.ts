@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dataproc-v1beta2-regionautoscalingpolicyiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dataproc.v1beta2.RegionAutoscalingPolicyIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegionAutoscalingPolicyIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dataproc RegionAutoscalingPolicyIamBinding shouldn't use an unstable API (dataproc.v1beta2.RegionAutoscalingPolicyIamBinding).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-futurereservation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.FutureReservation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FutureReservation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute FutureReservation shouldn't use an unstable API (compute.beta.FutureReservation).");
         }),
     },

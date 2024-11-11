@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-metastore-v1beta-servicebackupiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (metastore.v1beta.ServiceBackupIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServiceBackupIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Metastore ServiceBackupIamPolicy shouldn't use an unstable API (metastore.v1beta.ServiceBackupIamPolicy).");
         }),
     },

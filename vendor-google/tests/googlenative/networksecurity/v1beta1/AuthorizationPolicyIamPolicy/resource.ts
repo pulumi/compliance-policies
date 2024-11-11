@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { AuthorizationPolicyIamPolicy } from "@pulumi/google-native/networksecurity/v1beta1";
 
@@ -21,8 +22,8 @@ import { AuthorizationPolicyIamPolicy } from "@pulumi/google-native/networksecur
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(AuthorizationPolicyIamPolicy, {
         authorizationPolicyId: "",
-    });
+    }, policyconfig, resourceName);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Listing } from "@pulumi/google-native/analyticshub/v1beta1";
 
@@ -21,11 +22,11 @@ import { Listing } from "@pulumi/google-native/analyticshub/v1beta1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Listing, {
         bigqueryDataset: {},
         dataExchangeId: "",
         displayName: "",
         listingId: "",
-    });
+    }, policyconfig, resourceName);
 }

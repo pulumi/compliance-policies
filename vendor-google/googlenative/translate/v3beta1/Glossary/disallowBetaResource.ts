@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-translate-v3beta1-glossary-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (translate.v3beta1.Glossary).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Glossary, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Translate Glossary shouldn't use an unstable API (translate.v3beta1.Glossary).");
         }),
     },

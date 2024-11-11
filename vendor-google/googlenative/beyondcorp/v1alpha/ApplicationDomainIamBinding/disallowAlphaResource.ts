@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-beyondcorp-v1alpha-applicationdomainiambinding-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (beyondcorp.v1alpha.ApplicationDomainIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApplicationDomainIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Beyondcorp ApplicationDomainIamBinding shouldn't use an unstable API (beyondcorp.v1alpha.ApplicationDomainIamBinding).");
         }),
     },

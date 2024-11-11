@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-tpu-v2alpha1-queuedresource-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (tpu.v2alpha1.QueuedResource).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(QueuedResource, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Tpu QueuedResource shouldn't use an unstable API (tpu.v2alpha1.QueuedResource).");
         }),
     },

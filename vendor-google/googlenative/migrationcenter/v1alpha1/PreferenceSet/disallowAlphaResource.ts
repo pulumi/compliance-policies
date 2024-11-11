@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-migrationcenter-v1alpha1-preferenceset-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (migrationcenter.v1alpha1.PreferenceSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PreferenceSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Migrationcenter PreferenceSet shouldn't use an unstable API (migrationcenter.v1alpha1.PreferenceSet).");
         }),
     },

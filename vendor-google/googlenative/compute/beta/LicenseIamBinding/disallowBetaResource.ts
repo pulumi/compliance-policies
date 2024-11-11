@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-licenseiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.LicenseIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(LicenseIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute LicenseIamBinding shouldn't use an unstable API (compute.beta.LicenseIamBinding).");
         }),
     },

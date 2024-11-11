@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-cloudfunctions-v2alpha-functioniambinding-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (cloudfunctions.v2alpha.FunctionIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FunctionIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudfunctions FunctionIamBinding shouldn't use an unstable API (cloudfunctions.v2alpha.FunctionIamBinding).");
         }),
     },

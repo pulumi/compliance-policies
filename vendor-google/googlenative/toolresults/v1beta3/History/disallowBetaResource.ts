@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-toolresults-v1beta3-history-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (toolresults.v1beta3.History).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(History, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Toolresults History shouldn't use an unstable API (toolresults.v1beta3.History).");
         }),
     },

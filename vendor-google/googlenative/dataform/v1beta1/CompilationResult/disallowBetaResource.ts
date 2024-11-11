@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dataform-v1beta1-compilationresult-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dataform.v1beta1.CompilationResult).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CompilationResult, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dataform CompilationResult shouldn't use an unstable API (dataform.v1beta1.CompilationResult).");
         }),
     },

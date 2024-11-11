@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { ProxyConfig } from "@pulumi/google-native/beyondcorp/v1alpha";
 
@@ -21,7 +22,7 @@ import { ProxyConfig } from "@pulumi/google-native/beyondcorp/v1alpha";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(ProxyConfig, {
         organizationId: "",
         proxyUri: "",
@@ -32,5 +33,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         transportInfo: {
             serverCaCertPem: "",
         },
-    });
+    }, policyconfig, resourceName);
 }

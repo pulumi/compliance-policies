@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-datastream-v1alpha1-privateconnection-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (datastream.v1alpha1.PrivateConnection).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PrivateConnection, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datastream PrivateConnection shouldn't use an unstable API (datastream.v1alpha1.PrivateConnection).");
         }),
     },

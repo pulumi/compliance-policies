@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-gkehub-v1beta-namespace-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (gkehub.v1beta.Namespace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Namespace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gkehub Namespace shouldn't use an unstable API (gkehub.v1beta.Namespace).");
         }),
     },

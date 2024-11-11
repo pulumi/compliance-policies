@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-appengine-v1beta-version-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (appengine.v1beta.Version).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Version, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Appengine Version shouldn't use an unstable API (appengine.v1beta.Version).");
         }),
     },

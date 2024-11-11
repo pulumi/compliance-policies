@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dialogflow-v3beta1-intent-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dialogflow.v3beta1.Intent).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Intent, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dialogflow Intent shouldn't use an unstable API (dialogflow.v3beta1.Intent).");
         }),
     },

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { LbRouteExtension } from "@pulumi/google-native/networkservices/v1beta1";
 
@@ -21,7 +22,7 @@ import { LbRouteExtension } from "@pulumi/google-native/networkservices/v1beta1"
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(LbRouteExtension, {
         extensionChains: [
             {
@@ -42,5 +43,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         forwardingRules: [""],
         lbRouteExtensionId: "",
         loadBalancingScheme: "LOAD_BALANCING_SCHEME_UNSPECIFIED",
-    });
+    }, policyconfig, resourceName);
 }

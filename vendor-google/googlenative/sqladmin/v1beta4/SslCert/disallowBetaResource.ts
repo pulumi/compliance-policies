@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-sqladmin-v1beta4-sslcert-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (sqladmin.v1beta4.SslCert).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SslCert, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Sqladmin SslCert shouldn't use an unstable API (sqladmin.v1beta4.SslCert).");
         }),
     },

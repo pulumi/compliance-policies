@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-packetmirroring-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.PacketMirroring).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PacketMirroring, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute PacketMirroring shouldn't use an unstable API (compute.beta.PacketMirroring).");
         }),
     },

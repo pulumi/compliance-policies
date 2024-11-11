@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-vmmigration-v1alpha1-source-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (vmmigration.v1alpha1.Source).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Source, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Vmmigration Source shouldn't use an unstable API (vmmigration.v1alpha1.Source).");
         }),
     },

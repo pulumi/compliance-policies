@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-aiplatform-v1beta1-featurestoreiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (aiplatform.v1beta1.FeaturestoreIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FeaturestoreIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Aiplatform FeaturestoreIamPolicy shouldn't use an unstable API (aiplatform.v1beta1.FeaturestoreIamPolicy).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-vmmigration-v1alpha1-datacenterconnector-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (vmmigration.v1alpha1.DatacenterConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DatacenterConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Vmmigration DatacenterConnector shouldn't use an unstable API (vmmigration.v1alpha1.DatacenterConnector).");
         }),
     },

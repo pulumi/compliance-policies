@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-externalvpngateway-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.ExternalVpnGateway).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ExternalVpnGateway, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute ExternalVpnGateway shouldn't use an unstable API (compute.beta.ExternalVpnGateway).");
         }),
     },

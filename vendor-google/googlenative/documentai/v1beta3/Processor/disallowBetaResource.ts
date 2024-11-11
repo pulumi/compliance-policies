@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-documentai-v1beta3-processor-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (documentai.v1beta3.Processor).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Processor, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Documentai Processor shouldn't use an unstable API (documentai.v1beta3.Processor).");
         }),
     },

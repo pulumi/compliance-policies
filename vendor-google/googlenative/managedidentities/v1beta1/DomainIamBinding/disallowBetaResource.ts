@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-managedidentities-v1beta1-domainiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (managedidentities.v1beta1.DomainIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DomainIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Managedidentities DomainIamBinding shouldn't use an unstable API (managedidentities.v1beta1.DomainIamBinding).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-secretmanager-v1beta1-secretiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (secretmanager.v1beta1.SecretIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SecretIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Secretmanager SecretIamPolicy shouldn't use an unstable API (secretmanager.v1beta1.SecretIamPolicy).");
         }),
     },

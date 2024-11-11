@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-runtimeconfig-v1beta1-configiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (runtimeconfig.v1beta1.ConfigIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConfigIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Runtimeconfig ConfigIamBinding shouldn't use an unstable API (runtimeconfig.v1beta1.ConfigIamBinding).");
         }),
     },

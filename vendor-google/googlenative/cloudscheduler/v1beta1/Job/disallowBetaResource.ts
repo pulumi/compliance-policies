@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudscheduler-v1beta1-job-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudscheduler.v1beta1.Job).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Job, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudscheduler Job shouldn't use an unstable API (cloudscheduler.v1beta1.Job).");
         }),
     },

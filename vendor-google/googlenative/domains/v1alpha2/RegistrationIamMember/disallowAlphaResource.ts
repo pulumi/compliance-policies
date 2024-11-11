@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-domains-v1alpha2-registrationiammember-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (domains.v1alpha2.RegistrationIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegistrationIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Domains RegistrationIamMember shouldn't use an unstable API (domains.v1alpha2.RegistrationIamMember).");
         }),
     },

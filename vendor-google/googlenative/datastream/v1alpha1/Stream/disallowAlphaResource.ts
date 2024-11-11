@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-datastream-v1alpha1-stream-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (datastream.v1alpha1.Stream).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Stream, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datastream Stream shouldn't use an unstable API (datastream.v1alpha1.Stream).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-domains-v1beta1-registrationiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (domains.v1beta1.RegistrationIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(RegistrationIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Domains RegistrationIamBinding shouldn't use an unstable API (domains.v1beta1.RegistrationIamBinding).");
         }),
     },

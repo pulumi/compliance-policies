@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-networksecurity-v1beta1-firewallendpointassociation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (networksecurity.v1beta1.FirewallEndpointAssociation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallEndpointAssociation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networksecurity FirewallEndpointAssociation shouldn't use an unstable API (networksecurity.v1beta1.FirewallEndpointAssociation).");
         }),
     },

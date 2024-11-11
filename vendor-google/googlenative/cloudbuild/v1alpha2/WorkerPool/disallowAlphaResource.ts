@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-cloudbuild-v1alpha2-workerpool-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (cloudbuild.v1alpha2.WorkerPool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkerPool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudbuild WorkerPool shouldn't use an unstable API (cloudbuild.v1alpha2.WorkerPool).");
         }),
     },

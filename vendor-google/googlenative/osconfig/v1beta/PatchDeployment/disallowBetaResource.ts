@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-osconfig-v1beta-patchdeployment-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (osconfig.v1beta.PatchDeployment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PatchDeployment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Osconfig PatchDeployment shouldn't use an unstable API (osconfig.v1beta.PatchDeployment).");
         }),
     },

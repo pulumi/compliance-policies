@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-analyticshub-v1beta1-dataexchangeiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (analyticshub.v1beta1.DataExchangeIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DataExchangeIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Analyticshub DataExchangeIamBinding shouldn't use an unstable API (analyticshub.v1beta1.DataExchangeIamBinding).");
         }),
     },

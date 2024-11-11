@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-servicedirectory-v1beta1-endpoint-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (servicedirectory.v1beta1.Endpoint).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Endpoint, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Servicedirectory Endpoint shouldn't use an unstable API (servicedirectory.v1beta1.Endpoint).");
         }),
     },

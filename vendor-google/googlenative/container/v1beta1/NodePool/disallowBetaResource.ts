@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-container-v1beta1-nodepool-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (container.v1beta1.NodePool).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NodePool, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Container NodePool shouldn't use an unstable API (container.v1beta1.NodePool).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-toolresults-v1beta3-perfsampleseries-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (toolresults.v1beta3.PerfSampleSeries).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(PerfSampleSeries, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Toolresults PerfSampleSeries shouldn't use an unstable API (toolresults.v1beta3.PerfSampleSeries).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-gkehub-v1alpha-namespace-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (gkehub.v1alpha.Namespace).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Namespace, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gkehub Namespace shouldn't use an unstable API (gkehub.v1alpha.Namespace).");
         }),
     },

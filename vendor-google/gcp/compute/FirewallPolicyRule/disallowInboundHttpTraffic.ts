@@ -28,8 +28,13 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "gcp-compute-firewallpolicyrule-disallow-inbound-http-traffic",
         description: "Check that Firewall Policy Rules do not allow inbound HTTP traffic.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallPolicyRule, (firewallPolicyRule, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (firewallPolicyRule.action === "allow" && firewallPolicyRule.direction === "INGRESS") {
                 firewallPolicyRule.match.layer4Configs.forEach((l4Config) => {
                     if (l4Config.ipProtocol === "tcp") {

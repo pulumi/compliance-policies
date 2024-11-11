@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-metastore-v1alpha-servicedatabasetableiambinding-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (metastore.v1alpha.ServiceDatabaseTableIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServiceDatabaseTableIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Metastore ServiceDatabaseTableIamBinding shouldn't use an unstable API (metastore.v1alpha.ServiceDatabaseTableIamBinding).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-gkehub-v1alpha-membershipiammember-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (gkehub.v1alpha.MembershipIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MembershipIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gkehub MembershipIamMember shouldn't use an unstable API (gkehub.v1alpha.MembershipIamMember).");
         }),
     },

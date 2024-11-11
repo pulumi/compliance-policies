@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-bigqueryconnection-v1beta1-connectioniammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (bigqueryconnection.v1beta1.ConnectionIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ConnectionIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Bigqueryconnection ConnectionIamMember shouldn't use an unstable API (bigqueryconnection.v1beta1.ConnectionIamMember).");
         }),
     },

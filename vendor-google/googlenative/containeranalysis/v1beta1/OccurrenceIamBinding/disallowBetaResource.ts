@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-containeranalysis-v1beta1-occurrenceiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (containeranalysis.v1beta1.OccurrenceIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OccurrenceIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Containeranalysis OccurrenceIamBinding shouldn't use an unstable API (containeranalysis.v1beta1.OccurrenceIamBinding).");
         }),
     },

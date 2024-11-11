@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-networkservices-v1beta1-meshiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (networkservices.v1beta1.MeshIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(MeshIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networkservices MeshIamMember shouldn't use an unstable API (networkservices.v1beta1.MeshIamMember).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-oslogin-v1beta-sshpublickey-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (oslogin.v1beta.SshPublicKey).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(SshPublicKey, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Oslogin SshPublicKey shouldn't use an unstable API (oslogin.v1beta.SshPublicKey).");
         }),
     },

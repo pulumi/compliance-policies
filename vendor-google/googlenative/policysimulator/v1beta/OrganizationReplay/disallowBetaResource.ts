@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-policysimulator-v1beta-organizationreplay-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (policysimulator.v1beta.OrganizationReplay).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OrganizationReplay, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Policysimulator OrganizationReplay shouldn't use an unstable API (policysimulator.v1beta.OrganizationReplay).");
         }),
     },

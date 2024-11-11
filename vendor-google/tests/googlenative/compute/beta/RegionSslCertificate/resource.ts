@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { RegionSslCertificate } from "@pulumi/google-native/compute/beta";
 
@@ -21,8 +22,8 @@ import { RegionSslCertificate } from "@pulumi/google-native/compute/beta";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(RegionSslCertificate, {
         region: "",
-    });
+    }, policyconfig, resourceName);
 }

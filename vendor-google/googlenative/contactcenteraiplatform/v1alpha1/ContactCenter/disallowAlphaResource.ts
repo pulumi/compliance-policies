@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-contactcenteraiplatform-v1alpha1-contactcenter-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (contactcenteraiplatform.v1alpha1.ContactCenter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ContactCenter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Contactcenteraiplatform ContactCenter shouldn't use an unstable API (contactcenteraiplatform.v1alpha1.ContactCenter).");
         }),
     },

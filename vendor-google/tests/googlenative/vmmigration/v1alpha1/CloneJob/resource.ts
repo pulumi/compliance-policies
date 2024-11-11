@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { CloneJob } from "@pulumi/google-native/vmmigration/v1alpha1";
 
@@ -21,10 +22,10 @@ import { CloneJob } from "@pulumi/google-native/vmmigration/v1alpha1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(CloneJob, {
         cloneJobId: "",
         migratingVmId: "",
         sourceId: "",
-    });
+    }, policyconfig, resourceName);
 }

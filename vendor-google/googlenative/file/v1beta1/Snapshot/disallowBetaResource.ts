@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-file-v1beta1-snapshot-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (file.v1beta1.Snapshot).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Snapshot, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("File Snapshot shouldn't use an unstable API (file.v1beta1.Snapshot).");
         }),
     },

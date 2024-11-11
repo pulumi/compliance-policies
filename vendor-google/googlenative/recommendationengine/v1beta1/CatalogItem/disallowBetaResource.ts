@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-recommendationengine-v1beta1-catalogitem-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (recommendationengine.v1beta1.CatalogItem).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CatalogItem, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Recommendationengine CatalogItem shouldn't use an unstable API (recommendationengine.v1beta1.CatalogItem).");
         }),
     },

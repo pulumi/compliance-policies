@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudresourcemanager-v1beta1-organizationiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudresourcemanager.v1beta1.OrganizationIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OrganizationIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudresourcemanager OrganizationIamMember shouldn't use an unstable API (cloudresourcemanager.v1beta1.OrganizationIamMember).");
         }),
     },

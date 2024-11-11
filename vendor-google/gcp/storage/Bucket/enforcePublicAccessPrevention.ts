@@ -28,8 +28,13 @@ export const enforcePublicAccessPrevention: ResourceValidationPolicy = policyMan
     resourceValidationPolicy: {
         name: "gcp-storage-bucket-enforce-public-access-prevention",
         description: "Check that Storage Bucket Public Access Prevention is enforced.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Bucket, (bucket, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (bucket.publicAccessPrevention) {
                 if (bucket.publicAccessPrevention.toLowerCase() !== "enforced") {
                     reportViolation("Storage Buckets should set the Public Access Prevent to 'enforced'.");

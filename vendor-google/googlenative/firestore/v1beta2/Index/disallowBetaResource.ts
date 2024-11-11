@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-firestore-v1beta2-index-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (firestore.v1beta2.Index).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Index, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Firestore Index shouldn't use an unstable API (firestore.v1beta2.Index).");
         }),
     },

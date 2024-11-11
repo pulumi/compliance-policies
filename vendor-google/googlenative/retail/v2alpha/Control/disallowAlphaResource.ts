@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-retail-v2alpha-control-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (retail.v2alpha.Control).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Control, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Retail Control shouldn't use an unstable API (retail.v2alpha.Control).");
         }),
     },

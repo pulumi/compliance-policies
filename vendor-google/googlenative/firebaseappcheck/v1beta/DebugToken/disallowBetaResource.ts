@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-firebaseappcheck-v1beta-debugtoken-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (firebaseappcheck.v1beta.DebugToken).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DebugToken, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Firebaseappcheck DebugToken shouldn't use an unstable API (firebaseappcheck.v1beta.DebugToken).");
         }),
     },

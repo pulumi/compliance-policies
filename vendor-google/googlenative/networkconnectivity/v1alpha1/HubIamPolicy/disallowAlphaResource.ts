@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-networkconnectivity-v1alpha1-hubiampolicy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (networkconnectivity.v1alpha1.HubIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(HubIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Networkconnectivity HubIamPolicy shouldn't use an unstable API (networkconnectivity.v1alpha1.HubIamPolicy).");
         }),
     },

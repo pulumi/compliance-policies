@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-genomics-v1alpha2-pipeline-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (genomics.v1alpha2.Pipeline).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Pipeline, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Genomics Pipeline shouldn't use an unstable API (genomics.v1alpha2.Pipeline).");
         }),
     },

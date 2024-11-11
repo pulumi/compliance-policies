@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { DatasetHl7V2StoreIamPolicy } from "@pulumi/google-native/healthcare/v1beta1";
 
@@ -21,9 +22,9 @@ import { DatasetHl7V2StoreIamPolicy } from "@pulumi/google-native/healthcare/v1b
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(DatasetHl7V2StoreIamPolicy, {
         datasetId: "",
         hl7V2StoreId: "",
-    });
+    }, policyconfig, resourceName);
 }

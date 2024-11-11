@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-alloydb-v1beta-user-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (alloydb.v1beta.User).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(User, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Alloydb User shouldn't use an unstable API (alloydb.v1beta.User).");
         }),
     },

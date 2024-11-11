@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-firebasehosting-v1beta1-site-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (firebasehosting.v1beta1.Site).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Site, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Firebasehosting Site shouldn't use an unstable API (firebasehosting.v1beta1.Site).");
         }),
     },

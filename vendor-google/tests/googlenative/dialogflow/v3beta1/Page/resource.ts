@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { Page } from "@pulumi/google-native/dialogflow/v3beta1";
 
@@ -21,10 +22,10 @@ import { Page } from "@pulumi/google-native/dialogflow/v3beta1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(Page, {
         agentId: "",
         displayName: "",
         flowId: "",
-    });
+    }, policyconfig, resourceName);
 }

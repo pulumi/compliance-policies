@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-dataform-v1beta1-workflowinvocation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (dataform.v1beta1.WorkflowInvocation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkflowInvocation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Dataform WorkflowInvocation shouldn't use an unstable API (dataform.v1beta1.WorkflowInvocation).");
         }),
     },

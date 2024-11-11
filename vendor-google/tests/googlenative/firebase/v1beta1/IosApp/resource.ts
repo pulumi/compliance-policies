@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { IosApp } from "@pulumi/google-native/firebase/v1beta1";
 
@@ -21,6 +22,6 @@ import { IosApp } from "@pulumi/google-native/firebase/v1beta1";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
-    return createResourceValidationArgs(IosApp, {});
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
+    return createResourceValidationArgs(IosApp, {}, policyconfig, resourceName);
 }

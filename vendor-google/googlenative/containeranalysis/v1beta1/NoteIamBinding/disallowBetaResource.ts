@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-containeranalysis-v1beta1-noteiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (containeranalysis.v1beta1.NoteIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(NoteIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Containeranalysis NoteIamBinding shouldn't use an unstable API (containeranalysis.v1beta1.NoteIamBinding).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-apigateway-v1beta-apiiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (apigateway.v1beta.ApiIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ApiIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Apigateway ApiIamMember shouldn't use an unstable API (apigateway.v1beta.ApiIamMember).");
         }),
     },

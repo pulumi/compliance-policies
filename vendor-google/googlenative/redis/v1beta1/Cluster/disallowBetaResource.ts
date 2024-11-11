@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-redis-v1beta1-cluster-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (redis.v1beta1.Cluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Redis Cluster shouldn't use an unstable API (redis.v1beta1.Cluster).");
         }),
     },

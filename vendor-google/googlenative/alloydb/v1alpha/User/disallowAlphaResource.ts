@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-alloydb-v1alpha-user-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (alloydb.v1alpha.User).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(User, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Alloydb User shouldn't use an unstable API (alloydb.v1alpha.User).");
         }),
     },

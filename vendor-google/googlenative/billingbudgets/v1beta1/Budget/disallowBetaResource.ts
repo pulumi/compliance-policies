@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-billingbudgets-v1beta1-budget-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (billingbudgets.v1beta1.Budget).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Budget, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Billingbudgets Budget shouldn't use an unstable API (billingbudgets.v1beta1.Budget).");
         }),
     },

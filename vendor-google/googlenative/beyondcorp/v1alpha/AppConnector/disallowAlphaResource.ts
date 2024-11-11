@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-beyondcorp-v1alpha-appconnector-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (beyondcorp.v1alpha.AppConnector).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AppConnector, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Beyondcorp AppConnector shouldn't use an unstable API (beyondcorp.v1alpha.AppConnector).");
         }),
     },

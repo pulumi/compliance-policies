@@ -61,10 +61,26 @@ describe("googlenative.networkmanagement.v1beta1.ConnectivityTestIamBinding.disa
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Networkmanagement ConnectivityTestIamBinding shouldn't use an unstable API (networkmanagement.v1beta1.ConnectivityTestIamBinding)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
-        await assertHasResourceViolation(policy, args, {
-            message: "Networkmanagement ConnectivityTestIamBinding shouldn't use an unstable API (networkmanagement.v1beta1.ConnectivityTestIamBinding).",
-        });
+        await assertHasResourceViolation(policy, args, { message: "Networkmanagement ConnectivityTestIamBinding shouldn't use an unstable API (networkmanagement.v1beta1.ConnectivityTestIamBinding)." });
     });
 });

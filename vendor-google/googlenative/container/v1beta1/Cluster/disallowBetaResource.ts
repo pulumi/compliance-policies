@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-container-v1beta1-cluster-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (container.v1beta1.Cluster).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Cluster, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Container Cluster shouldn't use an unstable API (container.v1beta1.Cluster).");
         }),
     },

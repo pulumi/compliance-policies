@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-metastore-v1alpha-federationiampolicy-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (metastore.v1alpha.FederationIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FederationIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Metastore FederationIamPolicy shouldn't use an unstable API (metastore.v1alpha.FederationIamPolicy).");
         }),
     },

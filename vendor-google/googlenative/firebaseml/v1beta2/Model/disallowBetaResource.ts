@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-firebaseml-v1beta2-model-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (firebaseml.v1beta2.Model).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Model, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Firebaseml Model shouldn't use an unstable API (firebaseml.v1beta2.Model).");
         }),
     },

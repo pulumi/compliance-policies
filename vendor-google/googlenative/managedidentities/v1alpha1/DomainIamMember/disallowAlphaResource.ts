@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-managedidentities-v1alpha1-domainiammember-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (managedidentities.v1alpha1.DomainIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(DomainIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Managedidentities DomainIamMember shouldn't use an unstable API (managedidentities.v1alpha1.DomainIamMember).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-datafusion-v1beta1-instancenamespaceiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (datafusion.v1beta1.InstanceNamespaceIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstanceNamespaceIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datafusion InstanceNamespaceIamMember shouldn't use an unstable API (datafusion.v1beta1.InstanceNamespaceIamMember).");
         }),
     },

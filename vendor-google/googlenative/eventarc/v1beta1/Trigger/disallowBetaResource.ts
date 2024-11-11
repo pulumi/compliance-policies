@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-eventarc-v1beta1-trigger-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (eventarc.v1beta1.Trigger).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Trigger, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Eventarc Trigger shouldn't use an unstable API (eventarc.v1beta1.Trigger).");
         }),
     },

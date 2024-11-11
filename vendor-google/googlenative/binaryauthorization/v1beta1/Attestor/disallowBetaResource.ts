@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-binaryauthorization-v1beta1-attestor-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (binaryauthorization.v1beta1.Attestor).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Attestor, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Binaryauthorization Attestor shouldn't use an unstable API (binaryauthorization.v1beta1.Attestor).");
         }),
     },

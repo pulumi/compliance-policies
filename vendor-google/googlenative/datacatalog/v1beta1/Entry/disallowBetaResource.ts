@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-datacatalog-v1beta1-entry-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (datacatalog.v1beta1.Entry).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Entry, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datacatalog Entry shouldn't use an unstable API (datacatalog.v1beta1.Entry).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-runtimeconfig-v1beta1-waiter-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (runtimeconfig.v1beta1.Waiter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Waiter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Runtimeconfig Waiter shouldn't use an unstable API (runtimeconfig.v1beta1.Waiter).");
         }),
     },

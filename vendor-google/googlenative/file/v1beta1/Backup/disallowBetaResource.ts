@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-file-v1beta1-backup-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (file.v1beta1.Backup).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Backup, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("File Backup shouldn't use an unstable API (file.v1beta1.Backup).");
         }),
     },

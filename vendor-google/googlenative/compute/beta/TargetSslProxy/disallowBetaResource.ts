@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-targetsslproxy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.TargetSslProxy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TargetSslProxy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute TargetSslProxy shouldn't use an unstable API (compute.beta.TargetSslProxy).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-interconnect-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.Interconnect).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Interconnect, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute Interconnect shouldn't use an unstable API (compute.beta.Interconnect).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudfunctions-v2beta-functioniambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudfunctions.v2beta.FunctionIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FunctionIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudfunctions FunctionIamBinding shouldn't use an unstable API (cloudfunctions.v2beta.FunctionIamBinding).");
         }),
     },

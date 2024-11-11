@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudtasks-v2beta2-queueiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudtasks.v2beta2.QueueIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(QueueIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudtasks QueueIamPolicy shouldn't use an unstable API (cloudtasks.v2beta2.QueueIamPolicy).");
         }),
     },

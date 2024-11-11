@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-datalabeling-v1beta1-annotationspecset-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (datalabeling.v1beta1.AnnotationSpecSet).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AnnotationSpecSet, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Datalabeling AnnotationSpecSet shouldn't use an unstable API (datalabeling.v1beta1.AnnotationSpecSet).");
         }),
     },

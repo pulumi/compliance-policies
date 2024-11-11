@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { PatchDeployment } from "@pulumi/google-native/osconfig/v1beta";
 
@@ -21,7 +22,7 @@ import { PatchDeployment } from "@pulumi/google-native/osconfig/v1beta";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(PatchDeployment, {
         instanceFilter: {},
         oneTimeSchedule: {
@@ -43,5 +44,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
                 dayOfWeek: "DAY_OF_WEEK_UNSPECIFIED",
             },
         },
-    });
+    }, policyconfig, resourceName);
 }

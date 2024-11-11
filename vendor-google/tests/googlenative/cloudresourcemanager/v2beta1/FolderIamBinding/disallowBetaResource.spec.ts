@@ -61,6 +61,24 @@ describe("googlenative.cloudresourcemanager.v2beta1.FolderIamBinding.disallowBet
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Cloudresourcemanager FolderIamBinding shouldn't use an unstable API (cloudresourcemanager.v2beta1.FolderIamBinding)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Cloudresourcemanager FolderIamBinding shouldn't use an unstable API (cloudresourcemanager.v2beta1.FolderIamBinding)." });

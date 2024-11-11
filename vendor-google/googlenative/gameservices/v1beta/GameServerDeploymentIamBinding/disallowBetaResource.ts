@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-gameservices-v1beta-gameserverdeploymentiambinding-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (gameservices.v1beta.GameServerDeploymentIamBinding).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(GameServerDeploymentIamBinding, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Gameservices GameServerDeploymentIamBinding shouldn't use an unstable API (gameservices.v1beta.GameServerDeploymentIamBinding).");
         }),
     },

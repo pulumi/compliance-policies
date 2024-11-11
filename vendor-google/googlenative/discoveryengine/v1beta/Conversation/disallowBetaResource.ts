@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-discoveryengine-v1beta-conversation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (discoveryengine.v1beta.Conversation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Conversation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Discoveryengine Conversation shouldn't use an unstable API (discoveryengine.v1beta.Conversation).");
         }),
     },

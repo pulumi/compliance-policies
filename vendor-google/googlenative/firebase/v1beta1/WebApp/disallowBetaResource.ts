@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-firebase-v1beta1-webapp-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (firebase.v1beta1.WebApp).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WebApp, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Firebase WebApp shouldn't use an unstable API (firebase.v1beta1.WebApp).");
         }),
     },

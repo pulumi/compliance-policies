@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-deploymentmanager-alpha-compositetype-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (deploymentmanager.alpha.CompositeType).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CompositeType, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Deploymentmanager CompositeType shouldn't use an unstable API (deploymentmanager.alpha.CompositeType).");
         }),
     },

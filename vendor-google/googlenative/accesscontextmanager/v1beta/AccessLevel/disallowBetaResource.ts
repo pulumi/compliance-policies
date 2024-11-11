@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-accesscontextmanager-v1beta-accesslevel-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (accesscontextmanager.v1beta.AccessLevel).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(AccessLevel, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Accesscontextmanager AccessLevel shouldn't use an unstable API (accesscontextmanager.v1beta.AccessLevel).");
         }),
     },

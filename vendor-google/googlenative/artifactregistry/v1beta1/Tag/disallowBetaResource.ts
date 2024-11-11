@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-artifactregistry-v1beta1-tag-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (artifactregistry.v1beta1.Tag).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Tag, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Artifactregistry Tag shouldn't use an unstable API (artifactregistry.v1beta1.Tag).");
         }),
     },

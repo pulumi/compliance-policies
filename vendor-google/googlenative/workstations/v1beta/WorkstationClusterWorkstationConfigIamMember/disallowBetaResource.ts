@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-workstations-v1beta-workstationclusterworkstationconfigiammember-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (workstations.v1beta.WorkstationClusterWorkstationConfigIamMember).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(WorkstationClusterWorkstationConfigIamMember, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Workstations WorkstationClusterWorkstationConfigIamMember shouldn't use an unstable API (workstations.v1beta.WorkstationClusterWorkstationConfigIamMember).");
         }),
     },

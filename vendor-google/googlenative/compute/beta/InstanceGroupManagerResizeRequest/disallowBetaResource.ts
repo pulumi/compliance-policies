@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-instancegroupmanagerresizerequest-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.InstanceGroupManagerResizeRequest).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InstanceGroupManagerResizeRequest, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute InstanceGroupManagerResizeRequest shouldn't use an unstable API (compute.beta.InstanceGroupManagerResizeRequest).");
         }),
     },

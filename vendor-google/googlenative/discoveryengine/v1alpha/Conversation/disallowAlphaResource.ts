@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-discoveryengine-v1alpha-conversation-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (discoveryengine.v1alpha.Conversation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Conversation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Discoveryengine Conversation shouldn't use an unstable API (discoveryengine.v1alpha.Conversation).");
         }),
     },

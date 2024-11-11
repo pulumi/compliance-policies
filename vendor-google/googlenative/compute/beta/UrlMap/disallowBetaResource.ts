@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-compute-beta-urlmap-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (compute.beta.UrlMap).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(UrlMap, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Compute UrlMap shouldn't use an unstable API (compute.beta.UrlMap).");
         }),
     },

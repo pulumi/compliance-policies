@@ -61,6 +61,24 @@ describe("googlenative.eventarc.v1beta1.TriggerIamPolicy.disallowBetaResource", 
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Eventarc TriggerIamPolicy shouldn't use an unstable API (eventarc.v1beta1.TriggerIamPolicy)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Eventarc TriggerIamPolicy shouldn't use an unstable API (eventarc.v1beta1.TriggerIamPolicy)." });

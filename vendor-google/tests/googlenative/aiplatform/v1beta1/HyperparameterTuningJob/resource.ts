@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { HyperparameterTuningJob } from "@pulumi/google-native/aiplatform/v1beta1";
 
@@ -21,7 +22,7 @@ import { HyperparameterTuningJob } from "@pulumi/google-native/aiplatform/v1beta
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(HyperparameterTuningJob, {
         displayName: "",
         maxTrialCount: 1,
@@ -42,5 +43,5 @@ export function getResourceValidationArgs(): ResourceValidationArgs {
         trialJobSpec: {
             workerPoolSpecs: [{}],
         },
-    });
+    }, policyconfig, resourceName);
 }

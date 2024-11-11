@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-accesscontextmanager-v1beta-serviceperimeter-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (accesscontextmanager.v1beta.ServicePerimeter).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(ServicePerimeter, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Accesscontextmanager ServicePerimeter shouldn't use an unstable API (accesscontextmanager.v1beta.ServicePerimeter).");
         }),
     },

@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-integrations-v1alpha-templatesversion-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (integrations.v1alpha.TemplatesVersion).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(TemplatesVersion, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Integrations TemplatesVersion shouldn't use an unstable API (integrations.v1alpha.TemplatesVersion).");
         }),
     },

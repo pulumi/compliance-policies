@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { ResourceValidationArgs } from "@pulumi/policy";
+import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 import { SfdcChannel } from "@pulumi/google-native/integrations/v1alpha";
 
@@ -21,9 +22,9 @@ import { SfdcChannel } from "@pulumi/google-native/integrations/v1alpha";
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(): ResourceValidationArgs {
+export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
     return createResourceValidationArgs(SfdcChannel, {
         productId: "",
         sfdcInstanceId: "",
-    });
+    }, policyconfig, resourceName);
 }

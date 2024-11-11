@@ -29,8 +29,13 @@ export const disallowInboundHttpTraffic: ResourceValidationPolicy = policyManage
     resourceValidationPolicy: {
         name: "googlenative-compute-v1-firewallpolicy-disallow-inbound-http-traffic",
         description: "Check that Firewall Policy Rules do not allow inbound HTTP traffic.",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FirewallPolicy, (firewallPolicy, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             if (firewallPolicy.rules && firewallPolicy.rules.length > 0) {
                 firewallPolicy.rules.forEach((rule) => {
                     if (rule.match) {

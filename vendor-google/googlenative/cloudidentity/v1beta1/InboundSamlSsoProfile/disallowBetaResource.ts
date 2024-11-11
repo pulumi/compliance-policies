@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-cloudidentity-v1beta1-inboundsamlssoprofile-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (cloudidentity.v1beta1.InboundSamlSsoProfile).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(InboundSamlSsoProfile, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Cloudidentity InboundSamlSsoProfile shouldn't use an unstable API (cloudidentity.v1beta1.InboundSamlSsoProfile).");
         }),
     },

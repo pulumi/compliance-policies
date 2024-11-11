@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-privateca-v1beta1-certificateauthoritycertificaterevocationlistiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (privateca.v1beta1.CertificateAuthorityCertificateRevocationListIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(CertificateAuthorityCertificateRevocationListIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation(
                 "Privateca CertificateAuthorityCertificateRevocationListIamPolicy shouldn't use an unstable API (privateca.v1beta1.CertificateAuthorityCertificateRevocationListIamPolicy)."
             );

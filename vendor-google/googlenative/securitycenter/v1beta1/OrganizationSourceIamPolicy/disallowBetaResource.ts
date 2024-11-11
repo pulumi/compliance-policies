@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-securitycenter-v1beta1-organizationsourceiampolicy-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (securitycenter.v1beta1.OrganizationSourceIamPolicy).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OrganizationSourceIamPolicy, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Securitycenter OrganizationSourceIamPolicy shouldn't use an unstable API (securitycenter.v1beta1.OrganizationSourceIamPolicy).");
         }),
     },

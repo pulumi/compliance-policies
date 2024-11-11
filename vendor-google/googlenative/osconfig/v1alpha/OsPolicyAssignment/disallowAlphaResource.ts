@@ -31,8 +31,13 @@ export const disallowAlphaResource: ResourceValidationPolicy = policyManager.reg
     resourceValidationPolicy: {
         name: "googlenative-osconfig-v1alpha-ospolicyassignment-disallow-alpha-resource",
         description: "Disallow the use of non-stable (Alpha) resouces (osconfig.v1alpha.OsPolicyAssignment).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(OsPolicyAssignment, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Osconfig OsPolicyAssignment shouldn't use an unstable API (osconfig.v1alpha.OsPolicyAssignment).");
         }),
     },

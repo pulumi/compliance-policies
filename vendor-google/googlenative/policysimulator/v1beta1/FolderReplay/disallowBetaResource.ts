@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-policysimulator-v1beta1-folderreplay-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (policysimulator.v1beta1.FolderReplay).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(FolderReplay, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Policysimulator FolderReplay shouldn't use an unstable API (policysimulator.v1beta1.FolderReplay).");
         }),
     },

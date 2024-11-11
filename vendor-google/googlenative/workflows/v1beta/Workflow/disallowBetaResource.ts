@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-workflows-v1beta-workflow-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (workflows.v1beta.Workflow).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Workflow, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Workflows Workflow shouldn't use an unstable API (workflows.v1beta.Workflow).");
         }),
     },

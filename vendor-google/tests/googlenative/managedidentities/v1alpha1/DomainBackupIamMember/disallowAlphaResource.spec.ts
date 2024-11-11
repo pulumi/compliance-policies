@@ -61,6 +61,24 @@ describe("googlenative.managedidentities.v1alpha1.DomainBackupIamMember.disallow
         assertCodeQuality(this.test?.parent?.title, __filename);
     });
 
+    it("policy-config-include", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "corp-resource" ],
+        });
+        await assertHasResourceViolation(policy, args, { message: "Managedidentities DomainBackupIamMember shouldn't use an unstable API (managedidentities.v1alpha1.DomainBackupIamMember)." });
+    });
+
+    it("policy-config-exclude", async function () {
+        const args = getResourceValidationArgs("corp-resource", {
+            excludeFor: [ "corp-.*" ],
+            ignoreCase: false,
+            includeFor: [ "my-.*", "some-resource" ],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
     it("#1", async function () {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, { message: "Managedidentities DomainBackupIamMember shouldn't use an unstable API (managedidentities.v1alpha1.DomainBackupIamMember)." });

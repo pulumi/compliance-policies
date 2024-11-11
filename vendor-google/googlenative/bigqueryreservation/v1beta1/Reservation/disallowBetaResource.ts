@@ -31,8 +31,13 @@ export const disallowBetaResource: ResourceValidationPolicy = policyManager.regi
     resourceValidationPolicy: {
         name: "googlenative-bigqueryreservation-v1beta1-reservation-disallow-beta-resource",
         description: "Disallow the use of non-stable (Beta) resouces (bigqueryreservation.v1beta1.Reservation).",
+        configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
         validateResource: validateResourceOfType(Reservation, (_, args, reportViolation) => {
+            if (! policyManager.shouldEvalPolicy(args)) {
+                return;
+            }
+
             reportViolation("Bigqueryreservation Reservation shouldn't use an unstable API (bigqueryreservation.v1beta1.Reservation).");
         }),
     },

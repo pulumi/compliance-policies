@@ -17,13 +17,13 @@
         "kubernetes"
     ],
     "dependencies": {
-        "@pulumi/compliance-policy-manager": "^0.1.4",
-        "@pulumi/kubernetes": "^4.18.1",
+        "@pulumi/compliance-policy-manager": "0.1.4",
+        "@pulumi/kubernetes": "4.18.1",
         "@pulumi/policy": "^1.12.0",
         "@pulumi/pulumi": "^3.133.0"
     },
     "devDependencies": {
-        "@pulumi/compliance-policies-unit-test-helpers": "^0.1.4",
+        "@pulumi/compliance-policies-unit-test-helpers": "0.1.4",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

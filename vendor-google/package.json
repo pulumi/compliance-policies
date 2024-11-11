@@ -19,10 +19,10 @@
     ],
     "dependencies": {
         "@pulumi/compliance-policy-manager": "0.1.5",
-        "@pulumi/gcp": "8.2.0",
+        "@pulumi/gcp": "8.8.0",
         "@pulumi/google-native": "0.32.0",
-        "@pulumi/policy": "^1.12.0",
-        "@pulumi/pulumi": "^3.133.0"
+        "@pulumi/policy": "^1.13.0",
+        "@pulumi/pulumi": "^3.138.0"
     },
     "devDependencies": {
         "@pulumi/compliance-policies-unit-test-helpers": "0.1.5",

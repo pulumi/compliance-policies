@@ -16,7 +16,7 @@ FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/azure/ tests/azurena
 # The value can be changed at runtime with MAKEJOBS=1 make test
 MAKEJOBS := $(shell /bin/sh -c "test ! -z "$$MAKEJOBS" && echo "$$MAKEJOBS" || echo $$(($$(nproc)/2))")
 
-.PHONY: build lint publish test fasttest sequentialtest fastsequentialtest docfix $(TARGETS)
+.PHONY: build lint publish test fasttest sequentialtest fastsequentialtest docfix validateunittestfiles $(TARGETS)
 
 build:: prepare
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."

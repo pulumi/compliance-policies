@@ -6,6 +6,9 @@
         "line_length": 100,
         "tables": false
     },
+    "MD024": {
+        "siblings_only": true
+    },
     "MD040": false,
     "MD044": {
         "code_blocks": false,
@@ -13,6 +16,9 @@
             "JavaScript",
             "TypeScript",
             "Pulumi",
+            "Pulumi",
+            "@pulumi",
+            "@pulumi/pulumi",
             "Policy Pack",
             "Premium Policy",
             "Premium Policies"

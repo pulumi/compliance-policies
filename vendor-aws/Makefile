@@ -3,6 +3,7 @@ include ../build/common.mk
 
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
 NEXT_VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME) --next)
+PREVIOUS_VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME) --previous)
 
 # List all services in each provider directory, but search search path is excluded from the results.
 # The command hasn't been tested in MacOS
@@ -43,9 +44,28 @@ tag:
 	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
 	@echo 'You should now run `git push && git push --tags` to trigger a new release'
 
-publish:
-	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
+publish: verifyrelease publishrelease publishnpm
+
+# verify the release has all the correct information
+verifyrelease:
+	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You can't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
+	@test -f "$(CHANGELOG_FILE)" || echo "Missing $(CHANGELOG_FILE) file"
+	@test -f "$(CHANGELOG_FILE)" || exit 1
+	@test ! -z "$$NPM_TOKEN" || echo "Missing NPM_TOKEN variable"
+	@test ! -z "$$NPM_TOKEN" || exit 1
+	@test ! -z "$$NODE_AUTH_TOKEN" || echo "Missing NODE_AUTH_TOKEN variable"
+	@test ! -z "$$NODE_AUTH_TOKEN" || exit 1
+
+# publish the github release with the changelog
+publishrelease:
+	@sed -n "/## $(shell echo "$(PACKAGE_NAME)" | sed 's|/|\\/|;') $(VERSION)/,/## $(shell echo "$(PACKAGE_NAME)" | sed 's|/|\\/|;') $(PREVIOUS_VERSION)/p;" CHANGELOG.md | sed 'N;$!P;$!D;$d' > .CHANGELOG.md
+	@test -s .CHANGELOG.md || echo "The extracted changelog appears to be empty. Not publishing a release without a changelog."
+	@test -s .CHANGELOG.md || exit 1
+	@gh release create "$(PROJECT_NAME)-$(VERSION)" --notes-file .CHANGELOG.md
+
+# publish the package on npm
+publishnpm:
 	@/bin/bash ../build/publish.sh
 
 stats:

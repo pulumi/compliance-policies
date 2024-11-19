@@ -5,7 +5,10 @@
 set -o nounset -o errexit -o pipefail
 
 usage() {
-    echo "Usage: get-version.sh [ --tagprefix tag ] [ --commitish git_commitish ] [ --nextversion | --next | --previousversion | --previous]"
+    echo "Usage: get-version.sh --tagprefix tag [ --nextversion | --next | --previousversion | --previous] [ --nodirty ] [ --commitish git_commitish ]"
+    echo "       --tagprefix tag:            A valid git tag prefix to search for."
+    echo "       --[previous|next](version): The previous or next version for the provided tag. If ommitted, the most recent version is shown."
+    echo "       --nodirty:                  when used with --next(version), do not include the -dirty suffix"
     exit 2
 }
 
@@ -17,8 +20,12 @@ DIRTY_TAG=""
 # -1 = previous version, will be determined based on git tags, one before last
 REQUESTED_VERSION=0
 
+# request to not include `-dirty`. This is helpful when building a new
+# entry on the CHANGELOG.md file while still working.
+NO_DIRTY=0
+
 SHORTOPTS="h"
-LONGOPTS="tagprefix:,commitish:,help,nextversion,next,previousversion,previous"
+LONGOPTS="tagprefix:,commitish:,help,nextversion,next,previousversion,previous,nodirty"
 OPTS=$(getopt  --name="$0" --options=$SHORTOPTS --longoptions=$LONGOPTS -- "$@")
 VALID_ARGUMENTS=$# # Returns the count of arguments that are in short or long options
 
@@ -37,6 +44,10 @@ while /bin/true; do
         --commitish)
             COMMITISH="$2"
             shift 2
+            ;;
+        --nodirty)
+            NO_DIRTY=1
+            shift 1
             ;;
         -h | --help)
             usage
@@ -73,7 +84,7 @@ if [ -z "$TAG_PREFIX" ]; then
 fi
 
 # When requesting the next minor version,
-if [ "$REQUESTED_VERSION" -eq 1 ]; then
+if [ "$REQUESTED_VERSION" -eq 1 -a "$NO_DIRTY" -eq 0 ]; then
     # Figure out if the worktree is dirty, we run update-index first
     # as we've seen cases in Travis where not doing so causes git to
     # treat the worktree as dirty when it is not.

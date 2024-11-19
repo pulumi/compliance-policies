@@ -56,6 +56,8 @@ verifyrelease:
 	@test ! -z "$$NPM_TOKEN" || exit 1
 	@test ! -z "$$NODE_AUTH_TOKEN" || echo "Missing NODE_AUTH_TOKEN variable"
 	@test ! -z "$$NODE_AUTH_TOKEN" || exit 1
+	@test ! -z "$$GH_TOKEN" || echo "Missing GH_TOKEN variable"
+	@test ! -z "$$GH_TOKEN" || exit 1
 
 # publish the github release with the changelog
 publishrelease:

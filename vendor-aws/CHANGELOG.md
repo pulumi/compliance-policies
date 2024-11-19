@@ -24,12 +24,12 @@
 * ⏩ upgrade @pulumi/pulumi to 3.138.0
 * ⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.5
 
-## @pulumi/aws-compliance-policies 0.0.20
-
 ### Notes
 
 This is the first changelog  entry for [`@pulumi/aws-compliance-policies`](https://www.npmjs.com/package/@pulumi/aws-compliance-policies)
-Previous version up to 0.0.20 were not published on GitHub.
+Previous version up to 0.0.21 were not published on GitHub.
+
+## @pulumi/aws-compliance-policies 0.0.20
 
 ### Dependencies
 

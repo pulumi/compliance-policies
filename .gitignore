@@ -6,3 +6,4 @@ tmp
 **/yarn.lock
 yarn-error.log
 vendor-*/.bundle
+.CHANGELOG.md

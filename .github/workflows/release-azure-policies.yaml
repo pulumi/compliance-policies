@@ -24,4 +24,4 @@ jobs:
       - name: Build Azure Policies
         run: |
           cd vendor-azure
-          make build publish
+          make -j1 build publish

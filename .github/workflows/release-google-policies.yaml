@@ -24,4 +24,4 @@ jobs:
       - name: Build Google Policies
         run: |
           cd vendor-google
-          make build publish
+          make -j1 build publish

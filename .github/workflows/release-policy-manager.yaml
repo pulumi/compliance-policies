@@ -24,4 +24,4 @@ jobs:
       - name: Build Pulumi Policy Manager
         run: |
           cd policy-manager
-          make build publish
+          make -j1 build publish

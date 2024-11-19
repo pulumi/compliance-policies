@@ -24,4 +24,4 @@ jobs:
       - name: Build AWS Policies
         run: |
           cd vendor-aws
-          make build publish
+          make -j1 build publish

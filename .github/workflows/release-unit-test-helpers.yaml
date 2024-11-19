@@ -24,4 +24,4 @@ jobs:
       - name: Build Pulumi Unit Test Helpers
         run: |
           cd unit-test-helpers
-          make build publish
+          make -j1 build publish

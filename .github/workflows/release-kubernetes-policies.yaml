@@ -24,4 +24,4 @@ jobs:
       - name: Build Kubernetes Policies
         run: |
           cd vendor-kubernetes
-          make build publish
+          make -j1 build publish

@@ -13,11 +13,11 @@
 
 ### Dependencies
 
-⏩ upgrade @pulumi/gcp to 8.8.0
-⏩ upgrade @pulumi/compliance-policy-manager to 0.1.5
-⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.5
-⏩ upgrade @pulumi/policy to ^1.13.0
-⏩ upgrade @pulumi/pulumi to ^3.138.0
+* ⏩ upgrade @pulumi/gcp to 8.8.0
+* ⏩ upgrade @pulumi/compliance-policy-manager to 0.1.5
+* ⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.5
+* ⏩ upgrade @pulumi/policy to ^1.13.0
+* ⏩ upgrade @pulumi/pulumi to ^3.138.0
 
 ### Notes
 

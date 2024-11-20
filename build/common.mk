@@ -61,7 +61,7 @@ publishrelease::
 	@sed -n "/## $(shell echo "$(PACKAGE_NAME)" | sed 's|/|\\/|;') $(VERSION)/,/## $(shell echo "$(PACKAGE_NAME)" | sed 's|/|\\/|;')/p;" $(CHANGELOG_FILE) | sed 'N;$!P;$!D;$d' > .CHANGELOG.md
 	@test -s .CHANGELOG.md || echo "The extracted changelog appears to be empty. Not publishing a release without a changelog."
 	@test -s .CHANGELOG.md || exit 1
-# @gh release create "$(PROJECT_NAME)-$(VERSION)" --notes-file .CHANGELOG.md
+	@gh release create "$(PROJECT_NAME)-$(VERSION)" --notes-file .CHANGELOG.md
 
 # publish the package on npm
 publishnpm::

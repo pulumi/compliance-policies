@@ -20,6 +20,8 @@ prepare::
 	@test -d "node_modules" || yarn install
 
 newrelease:
+	@test -f CHANGELOG.md || echo "CHANGELOG.md doesn't exist. Creating one."
+	@test -f CHANGELOG.md || echo "# Changelog" > CHANGELOG.md
 	@grep -q '## $(PACKAGE_NAME) $(NEXT_CLEAN_VERSION)' CHANGELOG.md && echo "Version $(NEXT_CLEAN_VERSION) already exists in CHANGELOG.md" || echo ""
 	@grep -q '## $(PACKAGE_NAME) $(NEXT_CLEAN_VERSION)' CHANGELOG.md && exit 1 || echo ""
 	@sed '/# Changelog/r ../build/assets/CHANGELOG-TEMPLATE.md' CHANGELOG.md \

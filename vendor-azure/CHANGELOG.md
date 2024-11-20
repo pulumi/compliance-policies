@@ -43,4 +43,4 @@
 ### Notes
 
 This is the first changelog  entry for [`@pulumi/azure-compliance-policies`](https://www.npmjs.com/package/@pulumi/azure-compliance-policies)
-Previous version up to 0.0.21 were not published on GitHub.
+Previous versions and up to 0.1.4 were not published on GitHub.

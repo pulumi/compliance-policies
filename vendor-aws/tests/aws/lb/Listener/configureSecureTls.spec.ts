@@ -67,7 +67,7 @@ describe("aws.lb.Listener.configureSecureTls", function() {
             includeFor: [ "my-.*", "corp-resource" ],
         });
         args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
-        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption." });
     });
 
     it("policy-config-exclude", async function() {
@@ -87,25 +87,61 @@ describe("aws.lb.Listener.configureSecureTls", function() {
 
     it("#2", async function() {
         const args = getResourceValidationArgs();
-        args.props.sslPolicy = undefined;
-        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+        args.props.sslPolicy = "ELBSecurityPolicy-TLS13-1-2-2021-06";
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#3", async function() {
         const args = getResourceValidationArgs();
-        args.props.sslPolicy = "ELBSecurityPolicy-TLS-1-2-2017-01";
-        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+        args.props.sslPolicy = "ELBSecurityPolicy-TLS13-1-3-FIPS-2023-04";
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#4", async function() {
         const args = getResourceValidationArgs();
-        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
-        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+        args.props.sslPolicy = "ELBSecurityPolicy-TLS13-1-3-FIPS-2023-04";
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#5", async function() {
         const args = getResourceValidationArgs();
+        args.props.sslPolicy = "ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04";
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#6", async function() {
+        const args = getResourceValidationArgs();
+        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-2-Res-2020-10";
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#7", async function() {
+        const args = getResourceValidationArgs();
+        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-2-Res-2019-08";
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#8", async function() {
+        const args = getResourceValidationArgs();
+        args.props.sslPolicy = undefined;
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption." });
+    });
+
+    it("#9", async function() {
+        const args = getResourceValidationArgs();
+        args.props.sslPolicy = "ELBSecurityPolicy-TLS-1-2-2017-01";
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption." });
+    });
+
+    it("#10", async function() {
+        const args = getResourceValidationArgs();
         args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
-        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption with forward secrecy." });
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption." });
+    });
+
+    it("#11", async function() {
+        const args = getResourceValidationArgs();
+        args.props.sslPolicy = "ELBSecurityPolicy-FS-1-1-2019-08";
+        await assertHasResourceViolation(policy, args, { message: "Load Balancers should use secure/modern TLS encryption." });
     });
 });

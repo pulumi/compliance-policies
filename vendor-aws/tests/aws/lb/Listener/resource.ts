@@ -28,7 +28,7 @@ export function getResourceValidationArgs(resourceName?: string, policyconfig?: 
         loadBalancerArn: enums.alb.loadBalancerArn,
         port: 443,
         protocol: "HTTPS",
-        sslPolicy: "ELBSecurityPolicy-FS-1-2-2019-08", // TLSv1.2 and FS (Forward secrecy)
+        sslPolicy: "ELBSecurityPolicy-TLS13-1-3-2021-06", // TLSv1.3
         defaultActions: [{
             type: "forward",
             targetGroupArn: enums.alb.targetGroupArn,

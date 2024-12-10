@@ -22,7 +22,7 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * @severity high
  * @frameworks iso27001, pcidss
  * @topics encryption, network
- * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies
+ * @link https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html
  */
 export const configureSecureTls: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
@@ -36,8 +36,12 @@ export const configureSecureTls: ResourceValidationPolicy = policyManager.regist
             }
 
             if ((listener.port && listener.port === 443) || (listener.protocol && listener.protocol === "HTTPS")) {
-                if (!listener.sslPolicy || !listener.sslPolicy.includes("ELBSecurityPolicy-FS-1-2")) {
-                    reportViolation("Load Balancers should use secure/modern TLS encryption with forward secrecy.");
+                if (!listener.sslPolicy || ! (
+                    listener.sslPolicy.includes("ELBSecurityPolicy-TLS13-1-2-2021-06") || listener.sslPolicy.includes("ELBSecurityPolicy-TLS13-1-3-2021-06") ||             // TLS security policies
+                    listener.sslPolicy.includes("ELBSecurityPolicy-TLS13-1-3-FIPS-2023-04") || listener.sslPolicy.includes("ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04") ||   // FIPS security policies
+                    listener.sslPolicy.includes("ELBSecurityPolicy-FS-1-2-Res-2020-10") || listener.sslPolicy.includes("ELBSecurityPolicy-FS-1-2-Res-2019-08")              // FS supported policies
+                )) {
+                    reportViolation("Load Balancers should use secure/modern TLS encryption.");
                 }
             }
         }),

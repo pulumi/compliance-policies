@@ -29,6 +29,9 @@ prepare::
 tag::
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || exit 1
+	@test ! -z "$(shell grep '^## $(PACKAGE_NAME) $(NEXT_VERSION)' $(CHANGELOG_FILE))" || echo "Missing change logs entry for $(PACKAGE_NAME) $(NEXT_VERSION) in $(CHANGELOG_FILE)"
+	@test ! -z "$(shell grep '^## $(PACKAGE_NAME) $(NEXT_VERSION)' $(CHANGELOG_FILE))" || exit 1
+	@test -z "$(shell grep '^## $(PACKAGE_NAME) $(NEXT_VERSION)' $(CHANGELOG_FILE))" || echo "Found change logs entry for '$(PACKAGE_NAME) $(NEXT_VERSION) in $(CHANGELOG_FILE)"
 	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
 	@echo 'You should now run `git push && git push --tags` to trigger a new release'
 

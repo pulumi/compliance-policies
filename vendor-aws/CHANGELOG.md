@@ -1,5 +1,22 @@
 # Changelog
 
+## @pulumi/aws-compliance-policies 0.0.22
+
+### Major new features
+
+* n/a
+
+### Noteworthy changes
+
+* ✨ update alb/lb listeners policies to support more listener policies
+* 🐛 update vendor link to TLS policies
+
+### Dependencies
+
+* ⏩ upgrade @pulumi/aws to 6.64.0
+* ⏩ upgrade @pulumi/aws-native to 1.14.0
+* ⏩ upgrade @pulumi/pulumi to 3.142.0
+
 ## @pulumi/aws-compliance-policies 0.0.21
 
 ### Major new features

@@ -180,7 +180,12 @@ export interface PolicyConfigSchemaArgs {
     /**
      * When set to `true`, perform case-insensitive searches. `false` makes the searches case-sensitive.
      */
-    ignoreCase: boolean;
+    ignoreCase?: boolean;
+    /**
+     * When enabled (`true`), Policy Manager will emit a message to indicate which resource was excluded from policy evaluation.
+     * If undefined or set to `false`, the resource evaluation is skipped silently.
+     */
+    logExcludedResources?: boolean;
 };
 
 /**
@@ -264,7 +269,6 @@ export class PolicyManager {
             ignoreCase: {
                 type: "boolean",
                 description: "Case-insensitive search.",
-                default: false,
             },
         },
     };
@@ -296,7 +300,7 @@ export class PolicyManager {
                 }
 
                 let flag = undefined;
-                if (polConfig.ignoreCase) {
+                if (polConfig.ignoreCase === true) {
                     flag = "i";
                 }
 
@@ -328,6 +332,14 @@ export class PolicyManager {
                     const result = re.exec(args.name);
 
                     if (result !== null) {
+
+                        /**
+                         * It's currently not possible to show the policy name as this is not exposed within the policy.
+                         * TODO: Once the policy can be exposed, then display the policy name alongside the resource name.
+                         */
+                        if (polConfig.logExcludedResources === true) {
+                            console.warn(`The resource '${args.name}' configuration will not be evaluated for policy violation. (urn: '${args.urn}', type: '${args.type}')`);
+                        }
                         return false;
                     }
 

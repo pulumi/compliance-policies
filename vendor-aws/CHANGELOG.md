@@ -1,5 +1,27 @@
 # Changelog
 
+## @pulumi/aws-compliance-policies 0.0.23
+
+### Major new features
+
+* n/a
+
+### Noteworthy changes
+
+* n/a
+
+### Bug fixes
+
+* 🐛 update `.PHONY` rules list
+
+### Dependencies
+
+* ⏩ update `@pulumi/aws` to 6.68.0
+* ⏩ update `@pulumi/aws-native` to 1.25.0
+* ⏩ update `@pulumi/compliance-policy-manager` to 0.1.6
+* ⏩ update `@pulumi/pulumi` to 3.150.0
+* ⏩ update `@pulumi/compliance-policies-unit-test-helpers` to 0.1.6
+
 ## @pulumi/aws-compliance-policies 0.0.22
 
 ### Major new features

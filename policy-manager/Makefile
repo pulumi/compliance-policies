@@ -20,16 +20,10 @@ build:: prepare lint
 lint:: prepare
 	@yarn run lint
 
+# As a developer, you should run `make tag` to prepare for a new
+# release. Once the tag is pushed, GitHub actions will create and
+# publish a new release.
 tag::
-	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."
-	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || exit 1
-	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
-	@echo 'You should now run `git push && git push --tags` to trigger a new release'
-
-publish::
-	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
-	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
-	@/bin/bash ../build/publish.sh
 
 upgrade::
 	@yarn upgrade $(shell cat package.json | jq .dependencies | jq -r 'keys[] + "@latest"') --save

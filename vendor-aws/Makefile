@@ -8,7 +8,7 @@ TARGETS := 0-internal $(shell /bin/bash -c "find tests/aws/ tests/awsnative/ -mi
 # same as above, except that only modified unit tests (unstagged or modified) are taken into account
 FAST_TARGETS := 0-internal $(shell /bin/bash -c 'find tests/aws/ tests/awsnative/ -mindepth 1 -maxdepth 1 -type d | grep -v 0-internal | sed "s/^tests\///g;" | sort -du | while read D; do test ! -z "$$(git status --porcelain "tests/$$D")" && echo "$$D"; done')
 
-.PHONY: build lint publish verifyrelease publishrelease publishnpm test fasttest sequentialtest fastsequentialtest docfix validateunittestfiles $(TARGETS)
+.PHONY: build lint lintfix tag test stats fasttest upgrade sequentialtest fastsequentialtest docfix validateunittestfiles $(TARGETS)
 
 build:: prepare
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."

@@ -24,13 +24,13 @@ upgrade:: prepare
 	@yarn upgrade @pulumi/policy@latest --save
 	@yarn upgrade @pulumi/compliance-policy-manager@latest --exact --save
 
-tag:
+tag::
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || echo "You shouldn't tag a package from a dirty working dir."
 	@test -z "$(shell echo "$(NEXT_VERSION)" | grep 'dirty')" || exit 1
 	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
 	@echo 'You should now run `git push && git push --tags` to trigger a new release'
 
-publish:
+publish::
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || echo "You shouldn't publish a package from a dirty working dir."
 	@test -z "$(shell echo "$(VERSION)" | grep 'dirty')" || exit 1
 	@/bin/bash ../build/publish.sh

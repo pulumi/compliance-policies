@@ -20,7 +20,7 @@
     "dependencies": {
         "@babel/parser": "^7.20.7",
         "@babel/types": "^7.20.7",
-        "@pulumi/compliance-policy-manager": "0.1.5",
+        "@pulumi/compliance-policy-manager": "0.1.6",
         "@pulumi/policy": "^1.13.0",
         "@pulumi/pulumi": "^3.0.0",
         "@types/mocha": "^10.0.1",

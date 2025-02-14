@@ -10,10 +10,14 @@ n/a
 
 * 🛠 proper package pinning in `package.json`
 * 🛠 update `Makefile` accordingly
+* 📄 add `CHANGELOG.md` for `@pulumi/compliance-policies-unit-test-helpers`
+* 🌿 empty out `tag` rule and add a comment for developers
 
 ### Bug fixes
 
 * 🐛 fix syntax in `Makefile`
+* 🐛 add missing `.PHONY` rules
+* 🔥 remove `publish` rule from `Makefile` as it's now common rule
 
 ### Dependencies
 

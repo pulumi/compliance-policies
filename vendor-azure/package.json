@@ -18,14 +18,14 @@
         "azure"
     ],
     "dependencies": {
-        "@pulumi/azure": "6.8.0",
-        "@pulumi/azure-native": "2.71.0",
-        "@pulumi/compliance-policy-manager": "0.1.5",
+        "@pulumi/azure": "6.19.0",
+        "@pulumi/azure-native": "2.87.0",
+        "@pulumi/compliance-policy-manager": "0.1.6",
         "@pulumi/policy": "^1.13.0",
-        "@pulumi/pulumi": "^3.138.0"
+        "@pulumi/pulumi": "^3.150.0"
     },
     "devDependencies": {
-        "@pulumi/compliance-policies-unit-test-helpers": "0.1.5",
+        "@pulumi/compliance-policies-unit-test-helpers": "0.1.6",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

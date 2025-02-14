@@ -13,3 +13,4 @@
 // limitations under the License.
 
 export * as RoleManagementPolicyAssignment from "./RoleManagementPolicyAssignment";
+export * as RoleManagementPolicy from "./RoleManagementPolicy";

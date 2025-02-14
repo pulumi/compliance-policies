@@ -4,7 +4,7 @@ include ../build/common.mk
 VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME))
 NEXT_VERSION := $(shell /bin/bash ../build/get-version.sh --tagprefix $(PROJECT_NAME) --next)
 
-.PHONY: build lint publish
+.PHONY: build lint tag upgrade
 
 build:: prepare lint
 	@test ! -z "$(VERSION)" || echo "Unable to determine the package VERSION. Exiting."

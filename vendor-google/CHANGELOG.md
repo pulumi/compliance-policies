@@ -1,5 +1,26 @@
 # Changelog
 
+## @pulumi/google-compliance-policies 0.1.6
+
+### Major new features
+
+n/a
+
+### Noteworthy changes
+
+n/a
+
+### Bug fixes
+
+n/a
+
+### Dependencies
+
+* ⏩ upgrade @pulumi/compliance-policy-manager to 0.1.6
+* ⏩ upgrade @pulumi/gcp to 8.19.1
+* ⏩ upgrade @pulumi/pulumi to ^3.150.0
+* ⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.6
+
 ## @pulumi/google-compliance-policies 0.1.5
 
 ### Major new features

@@ -18,14 +18,14 @@
         "google"
     ],
     "dependencies": {
-        "@pulumi/compliance-policy-manager": "0.1.5",
-        "@pulumi/gcp": "8.8.0",
+        "@pulumi/compliance-policy-manager": "0.1.6",
+        "@pulumi/gcp": "8.19.1",
         "@pulumi/google-native": "0.32.0",
         "@pulumi/policy": "^1.13.0",
-        "@pulumi/pulumi": "^3.138.0"
+        "@pulumi/pulumi": "^3.150.0"
     },
     "devDependencies": {
-        "@pulumi/compliance-policies-unit-test-helpers": "0.1.5",
+        "@pulumi/compliance-policies-unit-test-helpers": "0.1.6",
         "@types/mocha": "^10.0.1",
         "@types/node": "18",
         "@typescript-eslint/eslint-plugin": "^6.4.0",

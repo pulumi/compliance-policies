@@ -9,6 +9,9 @@
 ### Noteworthy changes
 
 * 🌿
+
+### Bug fixes
+
 * 🐛
 
 ### Dependencies

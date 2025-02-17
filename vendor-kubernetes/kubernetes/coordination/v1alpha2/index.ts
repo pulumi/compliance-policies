@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-export * as v1beta1 from "./v1beta1";
-export * as v1alpha1 from "./v1alpha1";
-export * as v1alpha2 from "./v1alpha2";
+export * as LeaseCandidate from "./LeaseCandidate";
+export * as LeaseCandidateList from "./LeaseCandidateList";
+export * as LeaseCandidatePatch from "./LeaseCandidatePatch";

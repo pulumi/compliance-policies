@@ -18,3 +18,9 @@ export * as ValidatingAdmissionPolicyBindingList from "./ValidatingAdmissionPoli
 export * as ValidatingAdmissionPolicyBindingPatch from "./ValidatingAdmissionPolicyBindingPatch";
 export * as ValidatingAdmissionPolicyList from "./ValidatingAdmissionPolicyList";
 export * as ValidatingAdmissionPolicyPatch from "./ValidatingAdmissionPolicyPatch";
+export * as MutatingAdmissionPolicy from "./MutatingAdmissionPolicy";
+export * as MutatingAdmissionPolicyBinding from "./MutatingAdmissionPolicyBinding";
+export * as MutatingAdmissionPolicyBindingList from "./MutatingAdmissionPolicyBindingList";
+export * as MutatingAdmissionPolicyBindingPatch from "./MutatingAdmissionPolicyBindingPatch";
+export * as MutatingAdmissionPolicyList from "./MutatingAdmissionPolicyList";
+export * as MutatingAdmissionPolicyPatch from "./MutatingAdmissionPolicyPatch";

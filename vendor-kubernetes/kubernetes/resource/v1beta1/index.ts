@@ -14,9 +14,6 @@
 export * as DeviceClass from "./DeviceClass";
 export * as DeviceClassList from "./DeviceClassList";
 export * as DeviceClassPatch from "./DeviceClassPatch";
-export * as PodSchedulingContext from "./PodSchedulingContext";
-export * as PodSchedulingContextList from "./PodSchedulingContextList";
-export * as PodSchedulingContextPatch from "./PodSchedulingContextPatch";
 export * as ResourceClaim from "./ResourceClaim";
 export * as ResourceClaimList from "./ResourceClaimList";
 export * as ResourceClaimPatch from "./ResourceClaimPatch";
@@ -24,5 +21,5 @@ export * as ResourceClaimTemplate from "./ResourceClaimTemplate";
 export * as ResourceClaimTemplateList from "./ResourceClaimTemplateList";
 export * as ResourceClaimTemplatePatch from "./ResourceClaimTemplatePatch";
 export * as ResourceSlice from "./ResourceSlice";
-export * as ResourceSlicePatch from "./ResourceSlicePatch";
 export * as ResourceSliceList from "./ResourceSliceList";
+export * as ResourceSlicePatch from "./ResourceSlicePatch";

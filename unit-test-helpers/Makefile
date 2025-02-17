@@ -28,3 +28,8 @@ upgrade:: prepare
 # release. Once the tag is pushed, GitHub actions will create and
 # publish a new release.
 tag::
+
+# As a developer, you should run `make changelog` to create a new
+# entry in the local `CHANGELOG.md` document. A simple template is
+# used and should provide the right blueprint to fill in the blanks.
+changelog::

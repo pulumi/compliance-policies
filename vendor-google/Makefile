@@ -34,6 +34,11 @@ lintfix:: prepare
 # publish a new release.
 tag::
 
+# As a developer, you should run `make changelog` to create a new
+# entry in the local `CHANGELOG.md` document. A simple template is
+# used and should provide the right blueprint to fill in the blanks.
+changelog::
+
 stats:
 	@echo -n "Number of policies for gcp: "
 	@find $$PWD/gcp -type f | grep -v index.ts | wc -l

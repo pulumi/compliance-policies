@@ -35,7 +35,7 @@ tag::
 	@git tag "$(PROJECT_NAME)-$(NEXT_VERSION)"
 	@echo 'You should now run `git push && git push --tags` to trigger a new release'
 
-newrelease:
+changelog::
 	@test -f $(CHANGELOG_FILE) || echo "$(CHANGELOG_FILE) doesn't exist. Creating one."
 	@test -f $(CHANGELOG_FILE) || echo "# Changelog" > $(CHANGELOG_FILE)
 	@grep -q '## $(PACKAGE_NAME) $(NEXT_CLEAN_VERSION)' $(CHANGELOG_FILE) && echo "Version $(NEXT_CLEAN_VERSION) already exists in $(CHANGELOG_FILE)" || echo ""

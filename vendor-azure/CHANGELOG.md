@@ -1,5 +1,28 @@
 # Changelog
 
+## @pulumi/azure-compliance-policies 0.1.6
+
+### Major new features
+
+n/a
+
+### Noteworthy changes
+
+* 🌿 generate new policies
+* 🔥 remove policies for which resources no longer exist
+
+### Bug fixes
+
+n/a
+
+### Dependencies
+
+* ⏩ upgrade @pulumi/azure to 6.19.0
+* ⏩ upgrade @pulumi/azure-native to 2.87.0
+* ⏩ upgrade @pulumi/compliance-policy-manager to 0.1.6
+* ⏩ upgrade @pulumi/pulumi to ^3.150.0
+* ⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.6
+
 ## @pulumi/azure-compliance-policies 0.1.5
 
 ### Major new features

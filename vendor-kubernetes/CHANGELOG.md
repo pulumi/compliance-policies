@@ -1,5 +1,26 @@
 # Changelog
 
+## @pulumi/kubernetes-compliance-policies 0.1.5
+
+### Major new features
+
+n/a
+
+### Noteworthy changes
+
+* 🌿 generate new policies for @pulumi/kubernetes 4.21.1
+
+### Bug fixes
+
+n/a
+
+### Dependencies
+
+* ⏩ upgrade @pulumi/compliance-policy-manager to 0.1.6
+* ⏩ upgrade @pulumi/kubernetes to 4.21.1
+* ⏩ upgrade @pulumi/pulumi to ^3.150.0
+* ⏩ upgrade @pulumi/compliance-policies-unit-test-helpers to 0.1.6
+
 ## @pulumi/kubernetes-compliance-policies 0.1.4
 
 ### Major new features

@@ -1,4 +1,4 @@
-// Copyright 2016-2024, Pulumi Corporation.
+// Copyright 2016-2025, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as Ami from "./Ami";
-export * as Instance from "./Instance";
-export * as LaunchConfiguration from "./LaunchConfiguration";
-export * as LaunchTemplate from "./LaunchTemplate";
-export * as SecurityGroup from "./SecurityGroup";
-export * as Snapshot from "./Snapshot";
+export { awsEc2SnapshotEnsureEncrypted } from "./awsEc2SnapshotEnsureEncrypted";
+export { awsEc2SnapshotEnsurePrivate } from "./awsEc2SnapshotEnsurePrivate";

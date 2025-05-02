@@ -14,3 +14,4 @@
 
 export { disallowUnencryptedVolume } from "./disallowUnencryptedVolume";
 export { configureCustomerManagedKey } from "./configureCustomerManagedKey";
+export { awsEbsVolumeEnsureEncrypted } from "./awsEbsVolumeEnsureEncrypted";

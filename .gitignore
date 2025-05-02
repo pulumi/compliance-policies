@@ -4,6 +4,8 @@ tmp
 *.tgz
 **/package-lock.json
 **/yarn.lock
+.yarn
+.yarnrc.yml
 yarn-error.log
 vendor-*/.bundle
 .CHANGELOG.md

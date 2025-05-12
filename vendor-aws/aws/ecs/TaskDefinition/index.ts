@@ -14,3 +14,4 @@
 
 export * from "./disallowHostPidMode";
 export * from "./disallowPrivilegedContainers";
+export * from "./disallowSecretsInEnvVars";

@@ -43,6 +43,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Specifically for AWS, within the `vendor-aws` folder, you have two subfolders because we have 2
   Pulumi providers, `pulumi-aws` and `pulumi-aws-native`. Policies need to be written for both
   providers when possible.
+- policy can only be implemented using the Pulumi resource input properties. These can be found
+  in the corresponding `Args` class for each resource type.
 - a policy should be written with the properties in the following order:
   - name
   - description

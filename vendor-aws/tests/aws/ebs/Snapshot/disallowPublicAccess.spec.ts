@@ -80,8 +80,8 @@ describe("aws.ebs.Snapshot.disallowPublicAccess", function() {
             userId: "",
             group: "all",
         }];
-        await assertHasResourceViolation(policy, args, { 
-            message: "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions." 
+        await assertHasResourceViolation(policy, args, {
+            message: "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions.",
         });
     });
 
@@ -95,10 +95,10 @@ describe("aws.ebs.Snapshot.disallowPublicAccess", function() {
             {
                 userId: "",
                 group: "all",
-            }
+            },
         ];
-        await assertHasResourceViolation(policy, args, { 
-            message: "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions." 
+        await assertHasResourceViolation(policy, args, {
+            message: "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions.",
         });
     });
 

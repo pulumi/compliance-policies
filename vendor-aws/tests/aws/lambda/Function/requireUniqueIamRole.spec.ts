@@ -1,4 +1,4 @@
-// Copyright 2016-2024, Pulumi Corporation.
+// Copyright 2016-2025, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("aws.ecs.TaskDefinition.disallowPrivilegedContainers", function() {
-    const policy = policies.aws.ecs.TaskDefinition.disallowPrivilegedContainers;
+describe("aws.lambda.Function.requireUniqueIamRole", function() {
+    const policy = policies.aws.lambda.Function.requireUniqueIamRole;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ecs-taskdefinition-disallow-privileged-containers");
+        assertResourcePolicyName(policy, "aws-lambda-function-require-unique-iam-role");
     });
 
     it("registration", async function() {
@@ -32,9 +32,9 @@ describe("aws.ecs.TaskDefinition.disallowPrivilegedContainers", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
-            services: ["ecs"],
+            services: ["lambda"],
             severity: "high",
-            topics: ["security", "containers"],
+            topics: ["security", "access-control", "principle-of-least-privilege"],
             frameworks: ["cis"],
         });
     });
@@ -57,7 +57,9 @@ describe("aws.ecs.TaskDefinition.disallowPrivilegedContainers", function() {
             ignoreCase: false,
             includeFor: [ "my-.*", "corp-resource" ],
         });
-        await assertNoResourceViolations(policy, args);
+        await assertHasResourceViolation(policy, args, {
+            message: /Please ensure that the IAM role/,
+        });
     });
 
     it("policy-config-exclude", async function() {
@@ -69,43 +71,61 @@ describe("aws.ecs.TaskDefinition.disallowPrivilegedContainers", function() {
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#1 - non-privileged containers pass", async function() {
+    it("#1 - standard lambda function with specific role", async function() {
         const args = getResourceValidationArgs();
+        args.props.role = "arn:aws:iam::123456789012:role/lambda-function-specific-role";
+        await assertHasResourceViolation(policy, args, {
+            message: /Please ensure that the IAM role 'lambda-function-specific-role' is dedicated to this Lambda function/,
+        });
+    });
+
+    it("#2 - lambda function with shared role name", async function() {
+        const args = getResourceValidationArgs();
+        args.props.role = "arn:aws:iam::123456789012:role/shared-lambda-role";
+        await assertHasResourceViolation(policy, args, {
+            message: /Lambda function appears to be using a shared IAM role 'shared-lambda-role'/,
+        });
+    });
+
+    it("#3 - lambda function with common role name", async function() {
+        const args = getResourceValidationArgs();
+        args.props.role = "arn:aws:iam::123456789012:role/LambdaBasicExecution";
+        await assertHasResourceViolation(policy, args, {
+            message: /Lambda function appears to be using a shared IAM role 'LambdaBasicExecution'/,
+        });
+    });
+
+    it("#4 - lambda function with exempt role", async function() {
+        const args = getResourceValidationArgs();
+        args.props.role = "arn:aws:iam::123456789012:role/shared-lambda-role";
+        args.getConfig = () => ({
+            exemptRoleNames: ["shared-lambda-role"],
+        });
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#2 - privileged container fails", async function() {
+    it("#5 - lambda function with exempt role pattern", async function() {
         const args = getResourceValidationArgs();
-        const containerDefs = JSON.parse(args.props.containerDefinitions as string);
-        containerDefs[0].privileged = true;
-        args.props.containerDefinitions = JSON.stringify(containerDefs);
+        args.props.role = "arn:aws:iam::123456789012:role/lambda-shared-microservice-role";
+        args.getConfig = () => ({
+            exemptRolePatterns: ["lambda-shared-microservice-.*"],
+        });
+        await assertNoResourceViolations(policy, args);
+    });
+
+    it("#6 - lambda function without role", async function() {
+        const args = getResourceValidationArgs();
+        args.props.role = undefined;
         await assertHasResourceViolation(policy, args, {
-            message: "Container 'app' in ECS task definition has 'privileged' set to true. Privileged containers can access host resources, which is a security risk.",
+            message: "Lambda function does not have an execution role specified.",
         });
     });
 
-    it("#3 - multiple containers with one privileged fails", async function() {
+    it("#7 - lambda function with malformed role ARN", async function() {
         const args = getResourceValidationArgs();
-        const containerDefs = JSON.parse(args.props.containerDefinitions as string);
-        containerDefs.push({
-            name: "sidecar",
-            image: "amazon/sidecar",
-            cpu: 128,
-            memory: 256,
-            essential: false,
-            privileged: true,
-        });
-        args.props.containerDefinitions = JSON.stringify(containerDefs);
+        args.props.role = "arn:aws:iam::123456789012:role";
         await assertHasResourceViolation(policy, args, {
-            message: "Container 'sidecar' in ECS task definition has 'privileged' set to true. Privileged containers can access host resources, which is a security risk.",
-        });
-    });
-
-    it("#4 - malformed container definitions fail", async function() {
-        const args = getResourceValidationArgs();
-        args.props.containerDefinitions = "{malformed json";
-        await assertHasResourceViolation(policy, args, {
-            message: "Unable to parse container definitions to check for privileged containers. Ensure the definitions are valid JSON.",
+            message: "Could not determine role name from ARN.",
         });
     });
 });

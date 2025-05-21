@@ -1,4 +1,4 @@
-// Copyright 2016-2024, Pulumi Corporation.
+// Copyright 2016-2025, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,15 +23,30 @@ import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-t
  *
  * @returns A `ResourceValidationArgs`.
  */
-export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
-    return createResourceValidationArgs(aws.ebs.Snapshot, {
-        description: "Test snapshot",
-        volumeId: "vol-12345678",
-        encrypted: true,
-        kmsKeyId: enums.kms.keyArn,
-        createVolumePermissions: [{
-            userId: "123456789012",
-            group: "",
-        }],
-    }, policyconfig, resourceName);
+export function getResourceValidationArgs(
+    resourceName?: string,
+    policyconfig?: PolicyConfigSchemaArgs,
+): ResourceValidationArgs {
+    return createResourceValidationArgs(
+        aws.ecs.Service,
+        {
+            name: "my-service",
+            cluster: "arn:aws:ecs:us-west-2:123456789012:cluster/my-cluster",
+            desiredCount: 1,
+            launchType: "FARGATE",
+            taskDefinition:
+        "arn:aws:ecs:us-west-2:123456789012:task-definition/my-task:1",
+            networkConfiguration: {
+                subnets: ["subnet-12345678"],
+                securityGroups: ["sg-12345678"],
+            },
+            tags: {
+                Environment: "production",
+                Project: "my-project",
+                Owner: "team-xyz",
+            },
+        },
+        policyconfig,
+        resourceName,
+    );
 }

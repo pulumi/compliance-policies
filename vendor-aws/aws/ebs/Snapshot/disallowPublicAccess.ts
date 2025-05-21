@@ -13,7 +13,10 @@
 // limitations under the License.
 
 import { Snapshot } from "@pulumi/aws/ebs";
-import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
+import {
+    ResourceValidationPolicy,
+    validateResourceOfType,
+} from "@pulumi/policy";
 import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
@@ -24,33 +27,37 @@ import { policyManager } from "@pulumi/compliance-policy-manager";
  * @topics security, storage
  * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html
  */
-export const disallowPublicAccess: ResourceValidationPolicy = policyManager.registerPolicy({
-    resourceValidationPolicy: {
-        name: "aws-ebs-snapshot-disallow-public-access",
-        description: "Ensures that EBS snapshots are not publicly accessible.",
-        configSchema: policyManager.policyConfigSchema,
-        enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(Snapshot, (snapshot, args, reportViolation) => {
-            if (!policyManager.shouldEvalPolicy(args)) {
-                return;
-            }
+export const disallowPublicAccess: ResourceValidationPolicy =
+  policyManager.registerPolicy({
+      resourceValidationPolicy: {
+          name: "aws-ebs-snapshot-disallow-public-access",
+          description: "Ensures that EBS snapshots are not publicly accessible.",
+          configSchema: policyManager.policyConfigSchema,
+          enforcementLevel: "advisory",
+          validateResource: validateResourceOfType(
+              Snapshot,
+              (snapshot, args, reportViolation) => {
+                  if (!policyManager.shouldEvalPolicy(args)) {
+                      return;
+                  }
 
-            // Check if createVolumePermissions contains the 'all' group
-            if (snapshot.createVolumePermissions) {
-                for (const permission of snapshot.createVolumePermissions) {
-                    if (permission.group === "all") {
-                        reportViolation(
-                            "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions."
-                        );
-                        break;
-                    }
-                }
-            }
-        }),
-    },
-    vendors: ["aws"],
-    services: ["ebs"],
-    severity: "high",
-    topics: ["security", "storage"],
-    frameworks: ["cis", "pcidss"],
-});
+                  // Check if createVolumePermissions contains the 'all' group
+                  if (snapshot.createVolumePermissions) {
+                      for (const permission of snapshot.createVolumePermissions) {
+                          if (permission.group === "all") {
+                              reportViolation(
+                                  "EBS snapshots should not be publicly accessible. Remove the 'all' group from createVolumePermissions.",
+                              );
+                              break;
+                          }
+                      }
+                  }
+              },
+          ),
+      },
+      vendors: ["aws"],
+      services: ["ebs"],
+      severity: "high",
+      topics: ["security", "storage"],
+      frameworks: ["cis", "pcidss"],
+  });

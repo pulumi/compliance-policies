@@ -13,3 +13,4 @@
 // limitations under the License.
 
 export * as TaskDefinition from "./TaskDefinition";
+export * as Service from "./Service";

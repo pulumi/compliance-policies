@@ -78,16 +78,16 @@ describe("aws.ebs.Snapshot.requireEncryption", function() {
     it("#2 - unencrypted snapshot fails", async function() {
         const args = getResourceValidationArgs();
         args.props.encrypted = false;
-        await assertHasResourceViolation(policy, args, { 
-            message: "EBS snapshots must be encrypted to protect sensitive data at rest." 
+        await assertHasResourceViolation(policy, args, {
+            message: "EBS snapshots must be encrypted to protect sensitive data at rest.",
         });
     });
 
     it("#3 - undefined encryption fails", async function() {
         const args = getResourceValidationArgs();
         args.props.encrypted = undefined;
-        await assertHasResourceViolation(policy, args, { 
-            message: "EBS snapshots must be encrypted to protect sensitive data at rest." 
+        await assertHasResourceViolation(policy, args, {
+            message: "EBS snapshots must be encrypted to protect sensitive data at rest.",
         });
     });
 });

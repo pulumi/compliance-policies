@@ -39,8 +39,8 @@ export const disallowPrivilegedContainers: ResourceValidationPolicy = policyMana
             if (taskDef.containerDefinitions) {
                 try {
                     // Parse containerDefinitions if it's a string
-                    const containerDefs = typeof taskDef.containerDefinitions === 'string' 
-                        ? JSON.parse(taskDef.containerDefinitions) 
+                    const containerDefs = typeof taskDef.containerDefinitions === "string"
+                        ? JSON.parse(taskDef.containerDefinitions)
                         : taskDef.containerDefinitions;
 
                     if (Array.isArray(containerDefs)) {

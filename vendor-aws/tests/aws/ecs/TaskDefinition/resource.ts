@@ -34,11 +34,11 @@ export function getResourceValidationArgs(resourceName?: string, policyconfig?: 
             portMappings: [
                 {
                     containerPort: 80,
-                    hostPort: 80
-                }
+                    hostPort: 80,
+                },
             ],
-            privileged: false
-        }
+            privileged: false,
+        },
     ]);
 
     return createResourceValidationArgs(aws.ecs.TaskDefinition, {

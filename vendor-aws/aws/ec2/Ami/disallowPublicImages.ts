@@ -45,7 +45,7 @@ export const disallowPublicImages: ResourceValidationPolicy = policyManager.regi
             // Also check LaunchPermissions for public access
             if (ami.imageLocation) {
                 const hasLaunchPermissions = ami.imagePermissions || [];
-                
+
                 // Check if any permission grants to 'all' (public)
                 for (const permission of hasLaunchPermissions) {
                     if (permission.group === "all") {

@@ -46,7 +46,7 @@ export const disallowSecretsInEnvVars: ResourceValidationPolicy = policyManager.
                         "(?i).*auth.*",
                         "(?i).*sign(ature)?.*",
                         "(?i).*cert(ificate)?.*",
-                        "(?i).*private.*"
+                        "(?i).*private.*",
                     ],
                 },
             },
@@ -61,14 +61,14 @@ export const disallowSecretsInEnvVars: ResourceValidationPolicy = policyManager.
             const { sensitiveEnvVarPatterns = [
                 "(?i).*pass(word)?.*",
                 "(?i).*secret.*",
-                "(?i).*key.*", 
+                "(?i).*key.*",
                 "(?i).*token.*",
                 "(?i).*credential.*",
                 "(?i).*access.*key.*",
                 "(?i).*auth.*",
                 "(?i).*sign(ature)?.*",
                 "(?i).*cert(ificate)?.*",
-                "(?i).*private.*"
+                "(?i).*private.*",
             ] } = args.getConfig<{
                 sensitiveEnvVarPatterns?: string[];
             }>() || {};
@@ -79,8 +79,8 @@ export const disallowSecretsInEnvVars: ResourceValidationPolicy = policyManager.
             if (taskDef.containerDefinitions) {
                 try {
                     // Parse containerDefinitions if it's a string
-                    const containerDefs = typeof taskDef.containerDefinitions === 'string' 
-                        ? JSON.parse(taskDef.containerDefinitions) 
+                    const containerDefs = typeof taskDef.containerDefinitions === "string"
+                        ? JSON.parse(taskDef.containerDefinitions)
                         : taskDef.containerDefinitions;
 
                     if (Array.isArray(containerDefs)) {
@@ -88,7 +88,7 @@ export const disallowSecretsInEnvVars: ResourceValidationPolicy = policyManager.
                             if (container.environment) {
                                 for (const envVar of container.environment) {
                                     const envName = envVar.name;
-                                    
+
                                     // Check if this env var name matches any of our sensitive patterns
                                     for (const pattern of patterns) {
                                         if (pattern.test(envName)) {

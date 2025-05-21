@@ -75,7 +75,7 @@ describe("aws.ecs.TaskDefinition.disallowSecretsInEnvVars", function() {
         containerDefs[0].environment = [
             { name: "PORT", value: "8080" },
             { name: "DEBUG", value: "true" },
-            { name: "APP_NAME", value: "my-app" }
+            { name: "APP_NAME", value: "my-app" },
         ];
         args.props.containerDefinitions = JSON.stringify(containerDefs);
         await assertNoResourceViolations(policy, args);
@@ -86,11 +86,11 @@ describe("aws.ecs.TaskDefinition.disallowSecretsInEnvVars", function() {
         const containerDefs = JSON.parse(args.props.containerDefinitions as string);
         containerDefs[0].environment = [
             { name: "PORT", value: "8080" },
-            { name: "DB_PASSWORD", value: "secret123" }
+            { name: "DB_PASSWORD", value: "secret123" },
         ];
         args.props.containerDefinitions = JSON.stringify(containerDefs);
-        await assertHasResourceViolation(policy, args, { 
-            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'DB_PASSWORD'. Use 'secrets' container definition property or AWS Secrets Manager instead." 
+        await assertHasResourceViolation(policy, args, {
+            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'DB_PASSWORD'. Use 'secrets' container definition property or AWS Secrets Manager instead.",
         });
     });
 
@@ -98,34 +98,34 @@ describe("aws.ecs.TaskDefinition.disallowSecretsInEnvVars", function() {
         const args = getResourceValidationArgs();
         const containerDefs = JSON.parse(args.props.containerDefinitions as string);
         containerDefs[0].environment = [
-            { name: "API_KEY", value: "abcdef123456" }
+            { name: "API_KEY", value: "abcdef123456" },
         ];
         args.props.containerDefinitions = JSON.stringify(containerDefs);
-        await assertHasResourceViolation(policy, args, { 
-            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'API_KEY'. Use 'secrets' container definition property or AWS Secrets Manager instead." 
+        await assertHasResourceViolation(policy, args, {
+            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'API_KEY'. Use 'secrets' container definition property or AWS Secrets Manager instead.",
         });
     });
 
     it("#4 - custom pattern detects sensitive env var", async function() {
         const args = getResourceValidationArgs();
-        args.getConfig = () => ({ 
-            sensitiveEnvVarPatterns: ["(?i).*connection_string.*"] 
+        args.getConfig = () => ({
+            sensitiveEnvVarPatterns: ["(?i).*connection_string.*"],
         });
         const containerDefs = JSON.parse(args.props.containerDefinitions as string);
         containerDefs[0].environment = [
-            { name: "CONNECTION_STRING", value: "server=myserver;user=admin;password=secret;" }
+            { name: "CONNECTION_STRING", value: "server=myserver;user=admin;password=secret;" },
         ];
         args.props.containerDefinitions = JSON.stringify(containerDefs);
-        await assertHasResourceViolation(policy, args, { 
-            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'CONNECTION_STRING'. Use 'secrets' container definition property or AWS Secrets Manager instead." 
+        await assertHasResourceViolation(policy, args, {
+            message: "Container 'app' in ECS task definition has potentially sensitive data in environment variable 'CONNECTION_STRING'. Use 'secrets' container definition property or AWS Secrets Manager instead.",
         });
     });
 
     it("#5 - malformed container definitions fail", async function() {
         const args = getResourceValidationArgs();
         args.props.containerDefinitions = "{malformed json";
-        await assertHasResourceViolation(policy, args, { 
-            message: "Unable to parse container definitions to check for secrets in environment variables. Ensure the definitions are valid JSON." 
+        await assertHasResourceViolation(policy, args, {
+            message: "Unable to parse container definitions to check for secrets in environment variables. Ensure the definitions are valid JSON.",
         });
     });
 });

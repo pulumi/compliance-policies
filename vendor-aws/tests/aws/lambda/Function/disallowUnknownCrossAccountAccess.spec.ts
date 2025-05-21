@@ -1,4 +1,4 @@
-// Copyright 2016-2024, Pulumi Corporation.
+// Copyright 2016-2025, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
-describe("aws.ec2.Ami.requireEncryption", function() {
-    const policy = policies.aws.ec2.Ami.requireEncryption;
+describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
+    const policy = policies.aws.lambda.Function.disallowUnknownCrossAccountAccess;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-ec2-ami-require-encryption");
+        assertResourcePolicyName(policy, "aws-lambda-function-disallow-unknown-cross-account-access");
     });
 
     it("registration", async function() {
@@ -32,10 +32,10 @@ describe("aws.ec2.Ami.requireEncryption", function() {
     it("metadata", async function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
-            services: ["ec2"],
+            services: ["lambda"],
             severity: "high",
-            topics: ["encryption", "storage"],
-            frameworks: ["cis", "pcidss", "hitrust", "iso27001"],
+            topics: ["security", "access-control"],
+            frameworks: ["cis"],
         });
     });
 
@@ -57,8 +57,9 @@ describe("aws.ec2.Ami.requireEncryption", function() {
             ignoreCase: false,
             includeFor: [ "my-.*", "corp-resource" ],
         });
-        args.props.ebsBlockDevices = undefined;
-        await assertNoResourceViolations(policy, args);
+        await assertHasResourceViolation(policy, args, {
+            message: /This policy can only check certain aspects of Lambda permissions/,
+        });
     });
 
     it("policy-config-exclude", async function() {
@@ -67,42 +68,55 @@ describe("aws.ec2.Ami.requireEncryption", function() {
             ignoreCase: false,
             includeFor: [ "my-.*", "some-resource" ],
         });
-        args.props.ebsBlockDevices = undefined;
         await assertNoResourceViolations(policy, args);
     });
 
-    it("#1", async function() {
+    it("#1 - standard lambda function with specific role", async function() {
         const args = getResourceValidationArgs();
-        await assertNoResourceViolations(policy, args);
+        await assertHasResourceViolation(policy, args, {
+            message: /This policy can only check certain aspects of Lambda permissions/,
+        });
     });
 
-    it("#2", async function() {
+    it("#2 - lambda function with permissions boundary", async function() {
         const args = getResourceValidationArgs();
-        args.props.ebsBlockDevices = [
+        args.props.permissionsBoundary = "arn:aws:iam::123456789012:policy/boundary-policy";
+        await assertHasResourceViolation(policy, args, {
+            message: "Lambda function has a permissions boundary policy attached. Review it to ensure it doesn't grant overly permissive cross-account access.",
+        });
+    });
+
+    it("#3 - lambda function with wildcard in role", async function() {
+        const args = getResourceValidationArgs();
+        args.props.role = "arn:aws:iam::123456789012:role/service-role/lambda-*-role";
+        await assertHasResourceViolation(policy, args, [
             {
-                deviceName: "/dev/sda1",
-                encrypted: false,
-                kmsKeyId: enums.kms.keyArn,
+                message: "Lambda function has a role with wildcard (*) in the ARN, which could lead to privilege escalation.",
             },
-        ];
-        await assertHasResourceViolation(policy, args, { message: "Amazon Machine Images (AMIs) should have encryption enabled for all EBS block devices." });
-    });
-
-    it("#3", async function() {
-        const args = getResourceValidationArgs();
-        args.props.ebsBlockDevices = [
             {
-                deviceName: "/dev/sda1",
-                encrypted: undefined,
-                kmsKeyId: enums.kms.keyArn,
+                message: /This policy can only check certain aspects of Lambda permissions/,
             },
-        ];
-        await assertHasResourceViolation(policy, args, { message: "Amazon Machine Images (AMIs) should have encryption enabled for all EBS block devices." });
+        ]);
     });
 
-    it("#4", async function() {
+    it("#4 - with custom allowed accounts", async function() {
         const args = getResourceValidationArgs();
-        args.props.ebsBlockDevices = undefined;
-        await assertNoResourceViolations(policy, args);
+        args.getConfig = () => ({
+            allowedAccountIds: ["123456789012", "210987654321"],
+            allowedServices: ["apigateway.amazonaws.com", "s3.amazonaws.com"],
+        });
+        await assertHasResourceViolation(policy, args, {
+            message: /This policy can only check certain aspects of Lambda permissions/,
+        });
+    });
+
+    it("#5 - with custom allowed organizations", async function() {
+        const args = getResourceValidationArgs();
+        args.getConfig = () => ({
+            allowedOrganizationIds: ["o-a1b2c3d4e5", "o-f6g7h8i9j0"],
+        });
+        await assertHasResourceViolation(policy, args, {
+            message: /This policy can only check certain aspects of Lambda permissions/,
+        });
     });
 });

@@ -78,8 +78,8 @@ describe("aws.ecs.TaskDefinition.disallowHostPidMode", function() {
     it("#2 - host pid mode fails", async function() {
         const args = getResourceValidationArgs();
         args.props.pidMode = "host";
-        await assertHasResourceViolation(policy, args, { 
-            message: "ECS task definitions should not have 'pidMode' set to 'host'. This setting allows containers to see all processes on the host, which is a security risk." 
+        await assertHasResourceViolation(policy, args, {
+            message: "ECS task definitions should not have 'pidMode' set to 'host'. This setting allows containers to see all processes on the host, which is a security risk.",
         });
     });
 

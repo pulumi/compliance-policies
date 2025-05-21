@@ -1,4 +1,4 @@
-// Copyright 2016-2024, Pulumi Corporation.
+// Copyright 2016-2025, Pulumi Corporation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,14 +24,7 @@ import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-t
  * @returns A `ResourceValidationArgs`.
  */
 export function getResourceValidationArgs(resourceName?: string, policyconfig?: PolicyConfigSchemaArgs): ResourceValidationArgs {
-    return createResourceValidationArgs(aws.ebs.Snapshot, {
-        description: "Test snapshot",
-        volumeId: "vol-12345678",
-        encrypted: true,
-        kmsKeyId: enums.kms.keyArn,
-        createVolumePermissions: [{
-            userId: "123456789012",
-            group: "",
-        }],
+    return createResourceValidationArgs(aws.ebs.SnapshotBlockPublicAccess, {
+        state: "block-all-sharing",
     }, policyconfig, resourceName);
 }

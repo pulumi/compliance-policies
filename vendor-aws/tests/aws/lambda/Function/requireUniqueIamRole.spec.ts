@@ -58,7 +58,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
             includeFor: [ "my-.*", "corp-resource" ],
         });
         await assertHasResourceViolation(policy, args, {
-            message: /Please ensure that the IAM role/,
+            message: "Please ensure that the IAM role 'ecsTaskExecutionRole' is dedicated to this Lambda function and not shared with other functions. Sharing roles between Lambda functions can lead to excessive permissions and violate the principle of least privilege.",
         });
     });
 
@@ -75,7 +75,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
         const args = getResourceValidationArgs();
         args.props.role = "arn:aws:iam::123456789012:role/lambda-function-specific-role";
         await assertHasResourceViolation(policy, args, {
-            message: /Please ensure that the IAM role 'lambda-function-specific-role' is dedicated to this Lambda function/,
+            message: "Please ensure that the IAM role 'lambda-function-specific-role' is dedicated to this Lambda function and not shared with other functions. Sharing roles between Lambda functions can lead to excessive permissions and violate the principle of least privilege.",
         });
     });
 
@@ -83,7 +83,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
         const args = getResourceValidationArgs();
         args.props.role = "arn:aws:iam::123456789012:role/shared-lambda-role";
         await assertHasResourceViolation(policy, args, {
-            message: /Lambda function appears to be using a shared IAM role 'shared-lambda-role'/,
+            message: "Lambda function appears to be using a shared IAM role 'shared-lambda-role'. Each Lambda function should have its own dedicated IAM role following the principle of least privilege.",
         });
     });
 
@@ -91,7 +91,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
         const args = getResourceValidationArgs();
         args.props.role = "arn:aws:iam::123456789012:role/LambdaBasicExecution";
         await assertHasResourceViolation(policy, args, {
-            message: /Lambda function appears to be using a shared IAM role 'LambdaBasicExecution'/,
+            message: "Lambda function appears to be using a shared IAM role 'LambdaBasicExecution'. Each Lambda function should have its own dedicated IAM role following the principle of least privilege.",
         });
     });
 
@@ -100,7 +100,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
         args.props.role = "arn:aws:iam::123456789012:role/shared-lambda-role";
         args.getConfig = () => ({
             exemptRoleNames: ["shared-lambda-role"],
-        });
+        } as any);
         await assertNoResourceViolations(policy, args);
     });
 
@@ -109,7 +109,7 @@ describe("aws.lambda.Function.requireUniqueIamRole", function() {
         args.props.role = "arn:aws:iam::123456789012:role/lambda-shared-microservice-role";
         args.getConfig = () => ({
             exemptRolePatterns: ["lambda-shared-microservice-.*"],
-        });
+        } as any);
         await assertNoResourceViolations(policy, args);
     });
 

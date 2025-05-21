@@ -60,7 +60,7 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
             includeFor: [ "my-.*", "corp-resource" ],
         });
         await assertHasResourceViolation(policy, args, {
-            message: /Lambda function permissions are primarily controlled through resource-based policies/,
+            message: "Lambda function permissions are primarily controlled through resource-based policies. Use 'aws.lambda.Permission' resources to explicitly manage access to this Lambda function. When configuring Lambda Permissions, ensure principals are specific and from allowed accounts only.",
         });
     });
 
@@ -76,7 +76,7 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
     it("#1 - standard lambda function with specific role", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, {
-            message: /Consider using the 'aws.lambda.Permission' resource/,
+            message: "Lambda function permissions are primarily controlled through resource-based policies. Use 'aws.lambda.Permission' resources to explicitly manage access to this Lambda function. When configuring Lambda Permissions, ensure principals are specific and from allowed accounts only.",
         });
     });
 
@@ -85,7 +85,7 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
         args.props.role = "arn:aws:iam::999999999999:role/lambda-role";
         args.getConfig = () => ({
             allowedAccountIds: ["123456789012", "210987654321"],
-        });
+        } as any);
         await assertHasResourceViolation(policy, args, {
             message: "Lambda function uses a role from account 999999999999 which is not in the allowed accounts list.",
         });
@@ -104,9 +104,9 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
         args.getConfig = () => ({
             allowedAccountIds: ["123456789012", "210987654321"],
             allowedServices: ["apigateway.amazonaws.com", "s3.amazonaws.com"],
-        });
+        } as any);
         await assertHasResourceViolation(policy, args, {
-            message: /Lambda function permissions are primarily controlled through resource-based policies/,
+            message: "Lambda function permissions are primarily controlled through resource-based policies. Use 'aws.lambda.Permission' resources to explicitly manage access to this Lambda function. When configuring Lambda Permissions, ensure principals are specific and from allowed accounts only.",
         });
     });
 

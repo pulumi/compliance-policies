@@ -110,7 +110,7 @@ describe("aws.ecs.TaskDefinition.disallowSecretsInEnvVars", function() {
         const args = getResourceValidationArgs();
         args.getConfig = () => ({
             sensitiveEnvVarPatterns: ["(?i).*connection_string.*"],
-        });
+        } as any);
         const containerDefs = JSON.parse(args.props.containerDefinitions as string);
         containerDefs[0].environment = [
             { name: "CONNECTION_STRING", value: "server=myserver;user=admin;password=secret;" },

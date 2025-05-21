@@ -92,7 +92,7 @@ describe("aws.ecs.Service.requireTags", function () {
         const args = getResourceValidationArgs();
         args.getConfig = () => ({
             requiredTags: ["Environment", "Owner"],
-        });
+        } as any);
         args.props.tags = {
             Environment: "production",
             Owner: "team-xyz",
@@ -122,7 +122,7 @@ describe("aws.ecs.Service.requireTags", function () {
         const args = getResourceValidationArgs();
         args.getConfig = () => ({
             requiredTags: ["Environment", "CostCenter", "Owner"],
-        });
+        } as any);
         args.props.tags = {
             Environment: "production",
             Owner: "team-xyz",
@@ -137,7 +137,7 @@ describe("aws.ecs.Service.requireTags", function () {
         const args = getResourceValidationArgs();
         args.getConfig = () => ({
             minTagCount: 4,
-        });
+        } as any);
         args.props.tags = {
             Environment: "production",
             Project: "my-project",

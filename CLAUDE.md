@@ -40,6 +40,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - the name of the policy is written all with hyphens between every word
   - the file containing the policy is named after what it is verifying without the resource type
   - the file containing the policy is written in camel case
+- Specifically for AWS, within the `vendor-aws` folder, you have two subfolders because we have 2
+  Pulumi providers, `pulumi-aws` and `pulumi-aws-native`. Policies need to be written for both
+  providers when possible.
 - a policy should be written with the properties in the following order:
   - name
   - description

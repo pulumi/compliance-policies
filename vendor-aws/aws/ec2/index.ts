@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+export * as Ami from "./Ami";
 export * as Instance from "./Instance";
 export * as LaunchConfiguration from "./LaunchConfiguration";
 export * as LaunchTemplate from "./LaunchTemplate";

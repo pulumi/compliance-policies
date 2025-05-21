@@ -15,3 +15,4 @@
 export { disallowPublicIp } from "./disallowPublicIp";
 export { disallowUnencryptedRootBlockDevice } from "./disallowUnencryptedRootBlockDevice";
 export { disallowUnencryptedBlockDevice } from "./disallowUnencryptedBlockDevice";
+export { requireApprovedAmi } from "./requireApprovedAmi";

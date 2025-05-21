@@ -1,9 +1,16 @@
-node_modules
 bin
 tmp
 *.tgz
+
+# Node, NPM, Yarn
+node_modules
 **/package-lock.json
 **/yarn.lock
+.yarn/
+.yarnrc.yml
 yarn-error.log
+
 vendor-*/.bundle
 .CHANGELOG.md
+
+**/.claude/settings.local.json

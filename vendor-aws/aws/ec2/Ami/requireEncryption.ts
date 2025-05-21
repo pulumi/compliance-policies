@@ -12,36 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Volume } from "@pulumi/aws/ebs";
+import { Ami } from "@pulumi/aws/ec2";
 import { ResourceValidationPolicy, validateResourceOfType } from "@pulumi/policy";
 import { policyManager } from "@pulumi/compliance-policy-manager";
 
 /**
- * Checks that EBS volumes are encrypted.
+ * Checks that Amazon Machine Images (AMIs) have encryption enabled for all EBS block devices.
  *
  * @severity high
- * @frameworks cis, hitrust, iso27001, pcidss
+ * @frameworks cis, pcidss, hitrust, iso27001
  * @topics encryption, storage
- * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html
+ * @link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
  */
-export const disallowUnencryptedVolume: ResourceValidationPolicy = policyManager.registerPolicy({
+export const requireEncryption: ResourceValidationPolicy = policyManager.registerPolicy({
     resourceValidationPolicy: {
-        name: "aws-ebs-volume-disallow-unencrypted-volume",
-        description: "Checks that EBS volumes are encrypted.",
+        name: "aws-ec2-ami-require-encryption",
+        description: "Ensures Amazon Machine Images (AMIs) are encrypted.",
         configSchema: policyManager.policyConfigSchema,
         enforcementLevel: "advisory",
-        validateResource: validateResourceOfType(Volume, (v, args, reportViolation) => {
-            if (! policyManager.shouldEvalPolicy(args)) {
+        validateResource: validateResourceOfType(Ami, (ami, args, reportViolation) => {
+            if (!policyManager.shouldEvalPolicy(args)) {
                 return;
             }
 
-            if (!v.encrypted) {
-                reportViolation("An EBS volume is currently not encrypted.");
+            if (ami.ebsBlockDevices) {
+                for (const device of ami.ebsBlockDevices) {
+                    if (device.encrypted === undefined || device.encrypted === false) {
+                        reportViolation("Amazon Machine Images (AMIs) should have encryption enabled for all EBS block devices.");
+                        break;
+                    }
+                }
             }
         }),
     },
     vendors: ["aws"],
-    services: ["ebs"],
+    services: ["ec2"],
     severity: "high",
     topics: ["encryption", "storage"],
     frameworks: ["cis", "pcidss", "hitrust", "iso27001"],

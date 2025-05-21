@@ -23,6 +23,8 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-lambda-function-disallow-unknown-cross-account-access");
+
+
     });
 
     it("registration", async function() {
@@ -58,7 +60,7 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
             includeFor: [ "my-.*", "corp-resource" ],
         });
         await assertHasResourceViolation(policy, args, {
-            message: /This policy can only check certain aspects of Lambda permissions/,
+            message: /Lambda function permissions are primarily controlled through resource-based policies/,
         });
     });
 
@@ -74,29 +76,27 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
     it("#1 - standard lambda function with specific role", async function() {
         const args = getResourceValidationArgs();
         await assertHasResourceViolation(policy, args, {
-            message: /This policy can only check certain aspects of Lambda permissions/,
+            message: /Consider using the 'aws.lambda.Permission' resource/,
         });
     });
 
-    it("#2 - lambda function with permissions boundary", async function() {
+    it("#2 - lambda function with cross-account role", async function() {
         const args = getResourceValidationArgs();
-        args.props.permissionsBoundary = "arn:aws:iam::123456789012:policy/boundary-policy";
+        args.props.role = "arn:aws:iam::999999999999:role/lambda-role";
+        args.getConfig = () => ({
+            allowedAccountIds: ["123456789012", "210987654321"],
+        });
         await assertHasResourceViolation(policy, args, {
-            message: "Lambda function has a permissions boundary policy attached. Review it to ensure it doesn't grant overly permissive cross-account access.",
+            message: "Lambda function uses a role from account 999999999999 which is not in the allowed accounts list.",
         });
     });
 
     it("#3 - lambda function with wildcard in role", async function() {
         const args = getResourceValidationArgs();
         args.props.role = "arn:aws:iam::123456789012:role/service-role/lambda-*-role";
-        await assertHasResourceViolation(policy, args, [
-            {
-                message: "Lambda function has a role with wildcard (*) in the ARN, which could lead to privilege escalation.",
-            },
-            {
-                message: /This policy can only check certain aspects of Lambda permissions/,
-            },
-        ]);
+        await assertHasResourceViolation(policy, args, {
+            message: "Lambda function has a role with wildcard (*) in the ARN, which could lead to privilege escalation.",
+        });
     });
 
     it("#4 - with custom allowed accounts", async function() {
@@ -106,17 +106,15 @@ describe("aws.lambda.Function.disallowUnknownCrossAccountAccess", function() {
             allowedServices: ["apigateway.amazonaws.com", "s3.amazonaws.com"],
         });
         await assertHasResourceViolation(policy, args, {
-            message: /This policy can only check certain aspects of Lambda permissions/,
+            message: /Lambda function permissions are primarily controlled through resource-based policies/,
         });
     });
 
-    it("#5 - with custom allowed organizations", async function() {
+    it("#5 - lambda function with missing role", async function() {
         const args = getResourceValidationArgs();
-        args.getConfig = () => ({
-            allowedOrganizationIds: ["o-a1b2c3d4e5", "o-f6g7h8i9j0"],
-        });
+        args.props.role = undefined;
         await assertHasResourceViolation(policy, args, {
-            message: /This policy can only check certain aspects of Lambda permissions/,
+            message: "Lambda function doesn't have a role specified. Each Lambda function should have a specific IAM role with least privilege.",
         });
     });
 });

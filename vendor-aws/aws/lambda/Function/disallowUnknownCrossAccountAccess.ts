@@ -79,26 +79,32 @@ export const disallowUnknownCrossAccountAccess: ResourceValidationPolicy = polic
                 allowedServices?: string[];
             }>() || {};
 
-            // Check the permission policy if available
-            if (lambdaFunction.permissionsBoundary) {
-                reportViolation("Lambda function has a permissions boundary policy attached. Review it to ensure it doesn't grant overly permissive cross-account access.");
-            }
-
-            // Check role assumption policies
+            // Check if the Lambda function has a role
             if (lambdaFunction.role) {
-                // We can't directly check the role's trust policy here as we don't have access to it
-                // Instead, we offer guidance
+                // Check role ARN for wildcards
                 const roleArn = lambdaFunction.role;
                 if (roleArn.includes("*")) {
                     reportViolation("Lambda function has a role with wildcard (*) in the ARN, which could lead to privilege escalation.");
                 }
+
+                // Extract account ID from role ARN if possible
+                const arnParts = roleArn.split(":");
+                if (arnParts.length >= 5) {
+                    const accountId = arnParts[4];
+                    // Check if the role is from a different account that's not in the allowed list
+                    if (accountId && accountId !== "aws" && !allowedAccountIds.includes(accountId)) {
+                        reportViolation(`Lambda function uses a role from account ${accountId} which is not in the allowed accounts list.`);
+                    }
+                }
+            } else {
+                reportViolation("Lambda function doesn't have a role specified. Each Lambda function should have a specific IAM role with least privilege.");
             }
 
-            // Warn about the need to check resource-based policies
+            // Guidance for resource-based policies
             reportViolation(
-                "This policy can only check certain aspects of Lambda permissions. Please ensure you manually review any resource-based policies " +
-                "attached to this Lambda function to verify they don't allow wildcard principals (*) or unknown cross-account access. " +
-                "Use AWS Lambda Permission resources with specific principals from your allowed list."
+                "Lambda function permissions are primarily controlled through resource-based policies. " +
+                            "Use 'aws.lambda.Permission' resources to explicitly manage access to this Lambda function. " +
+                            "When configuring Lambda Permissions, ensure principals are specific and from allowed accounts only."
             );
         }),
     },

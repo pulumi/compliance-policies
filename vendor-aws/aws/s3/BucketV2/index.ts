@@ -12,5 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as Bucket from "./Bucket";
-export * as BucketV2 from "./BucketV2";
+export { configureReplicationConfiguration } from "./configureReplicationConfiguration";
+export { configureServerSideEncryptionKms } from "./configureServerSideEncryptionKms";
+export { disallowPublicRead } from "./disallowPublicRead";
+export { enableReplicationConfiguration } from "./enableReplicationConfiguration";
+export { enableServerSideEncryption } from "./enableServerSideEncryption";

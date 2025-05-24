@@ -1,0 +1,695 @@
+{
+    "framework": "PCI DSS v4.0",
+    "description": "Payment Card Industry Data Security Standard",
+    "version": "4.0",
+    "requirements": [
+        {
+            "id": "1",
+            "title": "Install and maintain network security controls",
+            "description": "Network security controls (NSCs) are network policy enforcement points that control network traffic between two or more logical or physical network segments based on predetermined rules or criteria.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-ec2-security-group-disallow-public-internet-ingress",
+                "aws-ec2-security-group-disallow-inbound-http-traffic",
+                "aws-ec2-security-group-missing-description",
+                "aws-ec2-security-group-missing-egress-rule-description",
+                "aws-ec2-security-group-missing-ingress-rule-description"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["VPC", "Security Groups", "NACLs", "WAF"],
+                    "recommendations": [
+                        "Configure security groups with least privilege",
+                        "Use Network ACLs for additional protection",
+                        "Implement AWS WAF for web applications",
+                        "Enable VPC Flow Logs for monitoring"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Virtual Network", "NSG", "Azure Firewall"],
+                    "recommendations": [
+                        "Configure Network Security Groups",
+                        "Use Azure Firewall for centralized control",
+                        "Implement Azure WAF",
+                        "Enable NSG Flow Logs"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["VPC", "Firewall Rules", "Cloud Armor"],
+                    "recommendations": [
+                        "Configure VPC firewall rules",
+                        "Use Cloud Armor for DDoS protection",
+                        "Implement hierarchical firewall policies",
+                        "Enable VPC Flow Logs"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["NetworkPolicy", "Service Mesh"],
+                    "recommendations": [
+                        "Define network policies for pod communication",
+                        "Use service mesh for traffic control",
+                        "Implement ingress controllers with WAF",
+                        "Enable network monitoring"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Apply secure configurations to all system components",
+            "description": "Malicious individuals, both external and internal to an organization, often use default passwords and other vendor default settings to compromise systems.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-iam-account-password-policy-minimum-password-length",
+                "aws-iam-account-password-policy-password-reuse-prevention"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Systems Manager", "Config"],
+                    "recommendations": [
+                        "Use Parameter Store for secure password storage",
+                        "Implement password rotation policies",
+                        "Disable default accounts",
+                        "Use AWS Config for compliance monitoring"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Key Vault", "Azure Policy"],
+                    "recommendations": [
+                        "Store passwords in Azure Key Vault",
+                        "Use managed identities where possible",
+                        "Implement password policies",
+                        "Use Azure Policy for configuration management"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Secret Manager", "OS Config"],
+                    "recommendations": [
+                        "Use Secret Manager for password storage",
+                        "Implement automatic rotation",
+                        "Use service accounts with minimal permissions",
+                        "Use OS Config for patch management"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Secrets Management", "Pod Security"],
+                    "recommendations": [
+                        "Use external secret managers",
+                        "Avoid hardcoded credentials",
+                        "Implement RBAC for secret access",
+                        "Use Pod Security Standards"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Protect stored account data",
+            "description": "Protection methods such as encryption, truncation, masking, and hashing are critical components of account data protection.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-s3-bucket-enable-server-side-encryption",
+                "aws-s3-bucket-configure-server-side-encryption-kms",
+                "aws-s3-bucket-configure-server-side-encryption-customer-managed-key",
+                "aws-ebs-volume-disallow-unencrypted-volume",
+                "aws-rds-instance-disallow-unencrypted-storage",
+                "aws-rds-cluster-disallow-unencrypted-storage",
+                "aws-efs-file-system-disallow-unencrypted-file-system",
+                "aws-ecr-repository-disallow-unencrypted-repository"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["KMS", "S3", "EBS", "RDS"],
+                    "recommendations": [
+                        "Use KMS for encryption at rest",
+                        "Enable S3 bucket encryption",
+                        "Encrypt EBS volumes and RDS databases",
+                        "Implement data classification"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Key Vault", "Storage", "SQL Database"],
+                    "recommendations": [
+                        "Enable Azure Storage Service Encryption",
+                        "Use Transparent Data Encryption for databases",
+                        "Implement Azure Disk Encryption",
+                        "Use customer-managed keys"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud KMS", "Cloud Storage", "Cloud SQL"],
+                    "recommendations": [
+                        "Use default encryption for all storage",
+                        "Implement Cloud KMS for additional control",
+                        "Enable Application-layer Secrets Encryption",
+                        "Use customer-managed encryption keys"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Secrets", "Persistent Volumes"],
+                    "recommendations": [
+                        "Encrypt persistent volumes",
+                        "Use encryption providers for secrets",
+                        "Implement pod-level encryption",
+                        "Enable etcd encryption"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Protect cardholder data with strong cryptography during transmission over open, public networks",
+            "description": "Sensitive information must be encrypted during transmission over networks that are easy to intercept.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-alb-listener-disallow-unencrypted-traffic",
+                "aws-alb-listener-configure-secure-tls",
+                "aws-cloudfront-distribution-disallow-unencrypted-traffic",
+                "aws-cloudfront-distribution-configure-secure-tls",
+                "aws-cloudfront-distribution-configure-secure-tls-to-origin",
+                "aws-elb-load-balancer-disallow-unencrypted-traffic"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["ALB", "CloudFront", "ACM"],
+                    "recommendations": [
+                        "Use Application Load Balancer with HTTPS",
+                        "Configure CloudFront with SSL/TLS",
+                        "Use AWS Certificate Manager",
+                        "Enforce TLS 1.2 minimum"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Application Gateway", "Front Door"],
+                    "recommendations": [
+                        "Use Application Gateway with SSL",
+                        "Configure Azure Front Door",
+                        "Use Azure Key Vault for certificates",
+                        "Enforce TLS 1.2 minimum"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Load Balancing", "Cloud CDN"],
+                    "recommendations": [
+                        "Use HTTPS load balancers",
+                        "Configure Cloud CDN with SSL",
+                        "Use Google-managed certificates",
+                        "Enforce strong cipher suites"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Ingress", "Service Mesh"],
+                    "recommendations": [
+                        "Configure TLS on ingress controllers",
+                        "Use service mesh for mTLS",
+                        "Implement cert-manager",
+                        "Enable pod-to-pod encryption"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Protect all systems and networks from malicious software",
+            "description": "Malicious software (malware) can enter the network during many business-approved activities.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-ecr-repository-enable-image-scan",
+                "aws-ecr-repository-configure-image-scan"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["GuardDuty", "Inspector", "ECR"],
+                    "recommendations": [
+                        "Enable GuardDuty for threat detection",
+                        "Use Inspector for vulnerability scanning",
+                        "Enable ECR image scanning",
+                        "Deploy endpoint protection on EC2"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Defender for Cloud", "Security Center"],
+                    "recommendations": [
+                        "Use Microsoft Defender for Cloud",
+                        "Enable endpoint protection",
+                        "Configure vulnerability assessments",
+                        "Use Azure Container Registry scanning"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Binary Authorization"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Enable Binary Authorization",
+                        "Configure vulnerability scanning",
+                        "Use endpoint verification"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Admission Controllers", "Runtime Security"],
+                    "recommendations": [
+                        "Scan container images for vulnerabilities",
+                        "Use admission controllers for policy enforcement",
+                        "Implement runtime protection",
+                        "Monitor for anomalous behavior"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Develop and maintain secure systems and software",
+            "description": "Security vulnerabilities in bespoke and custom software are commonly exploited by malicious individuals.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["CodeBuild", "CodePipeline", "CodeCommit"],
+                    "recommendations": [
+                        "Implement secure build processes",
+                        "Scan for vulnerabilities in CI/CD",
+                        "Use least privilege IAM roles",
+                        "Enable build logs and monitoring"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure DevOps", "GitHub Actions"],
+                    "recommendations": [
+                        "Use Azure DevOps with security scanning",
+                        "Implement secure coding practices",
+                        "Configure branch protection policies",
+                        "Use dependency scanning"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Build", "Cloud Source Repositories"],
+                    "recommendations": [
+                        "Use Cloud Build with security checks",
+                        "Implement binary authorization",
+                        "Configure vulnerability scanning",
+                        "Use Container Analysis API"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["CI/CD", "Image Scanning"],
+                    "recommendations": [
+                        "Scan images before deployment",
+                        "Use GitOps for secure deployments",
+                        "Implement admission webhooks",
+                        "Monitor for runtime vulnerabilities"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "title": "Restrict access to system components and cardholder data by business need-to-know",
+            "description": "Critical data or systems should only be accessible to those individuals whose job requires such access.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-iam-user-policy-attachment-only-permissions-via-groups",
+                "aws-iam-policy-attachment-only-permissions-via-groups",
+                "aws-s3-bucket-disallow-public-read",
+                "aws-rds-instance-disallow-public-access",
+                "aws-rds-cluster-instance-disallow-public-access"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["IAM", "SSO"],
+                    "recommendations": [
+                        "Implement least privilege access",
+                        "Use IAM roles and policies",
+                        "Enable AWS SSO for centralized access",
+                        "Regular access reviews"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure AD", "RBAC"],
+                    "recommendations": [
+                        "Use Azure RBAC for access control",
+                        "Implement Just-In-Time access",
+                        "Use Privileged Identity Management",
+                        "Enable conditional access"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud IAM", "VPC Service Controls"],
+                    "recommendations": [
+                        "Use predefined roles",
+                        "Implement resource hierarchy",
+                        "Enable BeyondCorp for zero trust",
+                        "Use VPC Service Controls"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["RBAC", "Pod Security"],
+                    "recommendations": [
+                        "Define granular RBAC policies",
+                        "Use service accounts for applications",
+                        "Implement pod security standards",
+                        "Enable network policies"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "title": "Identify users and authenticate access to system components",
+            "description": "Assigning a unique identification (ID) to each person with access ensures that each individual is uniquely accountable for their actions.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["IAM", "Cognito", "Directory Service"],
+                    "recommendations": [
+                        "Enable MFA for all users",
+                        "Use strong password policies",
+                        "Implement identity federation",
+                        "Monitor authentication events"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure AD", "MFA"],
+                    "recommendations": [
+                        "Enable Azure AD Multi-Factor Authentication",
+                        "Use strong authentication methods",
+                        "Implement conditional access",
+                        "Monitor sign-in activities"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Identity", "2-Step Verification"],
+                    "recommendations": [
+                        "Enable 2-step verification",
+                        "Use security keys for high-privilege accounts",
+                        "Implement context-aware access",
+                        "Monitor authentication logs"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Authentication", "OIDC"],
+                    "recommendations": [
+                        "Use external identity providers",
+                        "Implement webhook token authentication",
+                        "Enable audit logging",
+                        "Use certificate-based authentication"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "title": "Restrict physical access to cardholder data",
+            "description": "Any physical access to data or systems that house cardholder data provides the opportunity for individuals to access devices or data and to remove systems or hardcopies.",
+            "compliance_level": "required",
+            "automation_possible": false,
+            "verification_method": "manual",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Data Centers"],
+                    "recommendations": [
+                        "Rely on AWS physical security controls",
+                        "Implement logical access controls",
+                        "Use AWS Direct Connect for dedicated connectivity",
+                        "Document shared responsibility model"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Data Centers"],
+                    "recommendations": [
+                        "Rely on Azure physical security controls",
+                        "Implement logical access controls",
+                        "Use ExpressRoute for dedicated connectivity",
+                        "Review Azure compliance reports"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Data Centers"],
+                    "recommendations": [
+                        "Rely on Google physical security controls",
+                        "Implement logical access controls",
+                        "Use Cloud Interconnect for dedicated connectivity",
+                        "Review Google security whitepapers"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Infrastructure Security"],
+                    "recommendations": [
+                        "Secure cluster infrastructure",
+                        "Implement node security",
+                        "Use private clusters",
+                        "Control physical access to nodes"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "title": "Log and monitor all access to network resources and cardholder data",
+            "description": "Logging mechanisms and the ability to track user activities are critical in preventing, detecting, or minimizing the impact of a data compromise.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [
+                "aws-alb-load-balancer-enable-access-logging",
+                "aws-alb-load-balancer-configure-access-logging",
+                "aws-cloudfront-distribution-enable-access-logging",
+                "aws-cloudfront-distribution-configure-access-logging",
+                "aws-elb-load-balancer-configure-access-logging"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["CloudTrail", "CloudWatch", "VPC Flow Logs"],
+                    "recommendations": [
+                        "Enable CloudTrail in all regions",
+                        "Configure CloudWatch Logs",
+                        "Enable VPC Flow Logs",
+                        "Implement log analysis and alerting"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure Monitor", "Activity Log", "NSG Flow Logs"],
+                    "recommendations": [
+                        "Enable Azure Monitor logs",
+                        "Configure Activity Log retention",
+                        "Enable NSG Flow Logs",
+                        "Use Log Analytics for analysis"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Logging", "Cloud Audit Logs", "VPC Flow Logs"],
+                    "recommendations": [
+                        "Enable Cloud Logging",
+                        "Configure audit logs for all services",
+                        "Enable VPC Flow Logs",
+                        "Use Cloud Monitoring for alerts"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Audit Logs", "Container Logs"],
+                    "recommendations": [
+                        "Enable API server audit logging",
+                        "Configure audit policies",
+                        "Use log aggregation tools",
+                        "Monitor container logs"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "title": "Test security of systems and networks regularly",
+            "description": "Vulnerabilities are being discovered continually by malicious individuals and researchers, and being introduced by new software.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Inspector", "Security Hub", "GuardDuty"],
+                    "recommendations": [
+                        "Use Amazon Inspector for vulnerability scanning",
+                        "Enable Security Hub for compliance monitoring",
+                        "Use GuardDuty for threat detection",
+                        "Conduct regular penetration testing"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Security Center", "Defender for Cloud"],
+                    "recommendations": [
+                        "Use Azure Security Center assessments",
+                        "Enable vulnerability scanning",
+                        "Use Microsoft Defender for Cloud",
+                        "Conduct regular security assessments"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Web Security Scanner"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Enable vulnerability scanning",
+                        "Use Web Security Scanner",
+                        "Conduct regular security reviews"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Security Scanning", "Compliance Tools"],
+                    "recommendations": [
+                        "Scan container images for vulnerabilities",
+                        "Use CIS benchmarks for assessment",
+                        "Implement compliance scanning",
+                        "Regular penetration testing"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "title": "Support information security with organizational policies and programs",
+            "description": "A strong security policy sets the security tone for the whole entity and informs personnel what is expected of them.",
+            "compliance_level": "required",
+            "automation_possible": false,
+            "verification_method": "manual",
+            "references": [
+                "https://www.pcisecuritystandards.org/document_library/"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Organizations", "Config"],
+                    "recommendations": [
+                        "Use AWS Organizations for governance",
+                        "Implement Service Control Policies",
+                        "Use AWS Config for compliance monitoring",
+                        "Document security procedures"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Management Groups", "Azure Policy"],
+                    "recommendations": [
+                        "Use Management Groups for governance",
+                        "Implement Azure Policy for compliance",
+                        "Use Azure Blueprints",
+                        "Document security policies"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Resource Hierarchy", "Organization Policies"],
+                    "recommendations": [
+                        "Use Resource Hierarchy for governance",
+                        "Implement organizational policies",
+                        "Use Policy Intelligence",
+                        "Document security procedures"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Policy Engines", "Governance"],
+                    "recommendations": [
+                        "Implement admission controllers",
+                        "Use policy as code",
+                        "Enable compliance scanning",
+                        "Document security policies"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "framework": "GDPR",
+    "description": "General Data Protection Regulation",
+    "version": "2018",
+    "chapters": [
+        {
+            "name": "Lawfulness of Processing",
+            "articles": [
+                {
+                    "id": "Article 6",
+                    "title": "Lawfulness of processing",
+                    "description": "Processing shall be lawful only if and to the extent that at least one of the lawful bases applies.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://gdpr-info.eu/art-6-gdpr/"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

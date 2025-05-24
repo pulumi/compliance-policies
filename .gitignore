@@ -13,4 +13,5 @@ yarn-error.log
 vendor-*/.bundle
 .CHANGELOG.md
 
+PR_MESSAGE.md
 **/.claude/settings.local.json

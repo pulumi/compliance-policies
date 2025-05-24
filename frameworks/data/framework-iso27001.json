@@ -1,0 +1,2082 @@
+{
+    "framework": "ISO/IEC 27001:2022",
+    "description": "International standard for information security management systems",
+    "version": "2022",
+    "domains": [
+        {
+            "name": "A.5 Information Security Policies",
+            "controls": [
+                {
+                    "id": "A.5.1",
+                    "title": "Policies for information security",
+                    "description": "Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals and if significant changes occur.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-iam-account-password-policy-minimum-password-length",
+                        "aws-iam-account-password-policy-password-reuse-prevention"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "Organizations"],
+                            "recommendations": [
+                                "Define IAM policies following least privilege principle",
+                                "Use AWS Organizations for policy management",
+                                "Implement Service Control Policies (SCPs)",
+                                "Enable AWS Config rules for compliance"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure Policy", "Azure AD"],
+                            "recommendations": [
+                                "Use Azure Policy for governance",
+                                "Implement conditional access policies",
+                                "Define custom policy definitions",
+                                "Use Management Groups for hierarchy"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud IAM", "Resource Manager"],
+                            "recommendations": [
+                                "Use organizational policies",
+                                "Implement IAM policies at appropriate levels",
+                                "Define custom roles with least privilege",
+                                "Use Policy Intelligence for recommendations"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC", "OPA"],
+                            "recommendations": [
+                                "Define RBAC policies",
+                                "Use Open Policy Agent for policy enforcement",
+                                "Implement Pod Security Standards",
+                                "Document security policies"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.6 Organization of Information Security",
+            "controls": [
+                {
+                    "id": "A.6.1",
+                    "title": "Internal organization",
+                    "description": "Roles and responsibilities for information security shall be defined and allocated.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "Organizations"],
+                            "recommendations": [
+                                "Define IAM roles matching organizational structure",
+                                "Use AWS SSO for centralized access",
+                                "Implement separation of duties",
+                                "Create security account structure"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "RBAC"],
+                            "recommendations": [
+                                "Define Azure AD groups for teams",
+                                "Implement Azure RBAC",
+                                "Use Privileged Identity Management",
+                                "Define custom roles as needed"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity", "IAM"],
+                            "recommendations": [
+                                "Use Cloud Identity groups",
+                                "Implement organizational hierarchy",
+                                "Define custom roles",
+                                "Use Workforce Identity Federation"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC"],
+                            "recommendations": [
+                                "Define roles and role bindings",
+                                "Use service accounts appropriately",
+                                "Implement namespace-based isolation",
+                                "Document role responsibilities"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.6.2",
+                    "title": "Mobile devices and teleworking",
+                    "description": "Rules for the use of mobile devices and teleworking shall be established and appropriate security measures shall be implemented.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["WorkSpaces", "Client VPN"],
+                            "recommendations": [
+                                "Use AWS WorkSpaces for virtual desktops",
+                                "Implement Client VPN with MFA",
+                                "Enable device compliance checks",
+                                "Use AWS Systems Manager for device management"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure Virtual Desktop", "Intune"],
+                            "recommendations": [
+                                "Deploy Azure Virtual Desktop",
+                                "Use Microsoft Intune for device management",
+                                "Implement conditional access based on device",
+                                "Enable Azure AD device registration"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["BeyondCorp", "Endpoint Verification"],
+                            "recommendations": [
+                                "Implement BeyondCorp zero trust",
+                                "Use Endpoint Verification",
+                                "Enable Context-Aware Access",
+                                "Implement device policies"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["VPN", "Zero Trust"],
+                            "recommendations": [
+                                "Implement VPN access to clusters",
+                                "Use zero trust networking",
+                                "Enable mutual TLS",
+                                "Restrict API server access"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.7 Human Resource Security",
+            "controls": [
+                {
+                    "id": "A.7.1",
+                    "title": "Prior to employment",
+                    "description": "Background verification checks on all candidates for employment shall be carried out in accordance with relevant laws, regulations and ethics.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM"],
+                            "recommendations": [
+                                "Implement identity verification process",
+                                "Use temporary credentials initially",
+                                "Grant minimal access initially",
+                                "Document access provisioning"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD"],
+                            "recommendations": [
+                                "Use Azure AD B2B for contractors",
+                                "Implement identity proofing",
+                                "Use Privileged Identity Management",
+                                "Enable access reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity"],
+                            "recommendations": [
+                                "Implement identity verification",
+                                "Use Cloud Identity groups",
+                                "Enable 2-step verification",
+                                "Document onboarding process"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC"],
+                            "recommendations": [
+                                "Create individual user accounts",
+                                "Implement least privilege",
+                                "Document access procedures",
+                                "Use external identity providers"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.7.2",
+                    "title": "During employment",
+                    "description": "Management shall require all employees and contractors to apply information security in accordance with the established policies and procedures of the organization.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudTrail", "Access Analyzer"],
+                            "recommendations": [
+                                "Monitor user activities with CloudTrail",
+                                "Use Access Analyzer for permission analysis",
+                                "Implement regular access reviews",
+                                "Enable security training tracking"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "Azure Monitor"],
+                            "recommendations": [
+                                "Use Azure AD access reviews",
+                                "Monitor with Azure Monitor",
+                                "Implement conditional access",
+                                "Track compliance training"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Audit Logs", "Cloud Identity"],
+                            "recommendations": [
+                                "Enable comprehensive audit logging",
+                                "Regular permission reviews",
+                                "Monitor suspicious activities",
+                                "Implement security awareness"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Audit Logs", "RBAC"],
+                            "recommendations": [
+                                "Enable audit logging",
+                                "Regular RBAC reviews",
+                                "Monitor API access",
+                                "Security training requirements"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.7.3",
+                    "title": "Termination and change of employment",
+                    "description": "Information security responsibilities and duties that remain valid after termination or change of employment shall be defined, communicated to the employee or contractor and enforced.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "SSO"],
+                            "recommendations": [
+                                "Automate access revocation",
+                                "Disable IAM users immediately",
+                                "Rotate shared credentials",
+                                "Review and remove permissions"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD"],
+                            "recommendations": [
+                                "Automate account disabling",
+                                "Remove from all groups",
+                                "Revoke all sessions",
+                                "Transfer ownership of resources"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity"],
+                            "recommendations": [
+                                "Suspend accounts immediately",
+                                "Transfer data ownership",
+                                "Revoke all tokens",
+                                "Update shared credentials"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC"],
+                            "recommendations": [
+                                "Remove user certificates",
+                                "Delete role bindings",
+                                "Rotate service account tokens",
+                                "Update cluster access"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.8 Asset Management",
+            "controls": [
+                {
+                    "id": "A.8.1",
+                    "title": "Responsibility for assets",
+                    "description": "Assets associated with information and information processing facilities shall be identified and an inventory of these assets shall be drawn up and maintained.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["AWS Config", "Systems Manager", "Resource Groups"],
+                            "recommendations": [
+                                "Use AWS Config for asset inventory",
+                                "Tag all resources consistently",
+                                "Use Systems Manager Inventory",
+                                "Implement Resource Groups"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Resource Graph", "Tags", "Management Groups"],
+                            "recommendations": [
+                                "Use Azure Resource Graph for inventory",
+                                "Implement comprehensive tagging",
+                                "Use Management Groups for organization",
+                                "Enable Azure Arc for hybrid assets"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Asset Inventory", "Resource Manager"],
+                            "recommendations": [
+                                "Use Cloud Asset Inventory API",
+                                "Implement labeling strategy",
+                                "Monitor asset changes",
+                                "Export inventory regularly"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["API Resources", "Labels"],
+                            "recommendations": [
+                                "Inventory all resources",
+                                "Use labels and annotations",
+                                "Monitor resource usage",
+                                "Document ownership"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.8.2",
+                    "title": "Information classification",
+                    "description": "Information shall be classified in terms of legal requirements, value, criticality and sensitivity to unauthorized disclosure or modification.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Macie", "Tags"],
+                            "recommendations": [
+                                "Use Amazon Macie for data classification",
+                                "Implement data classification tags",
+                                "Define classification schemes",
+                                "Monitor sensitive data"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Information Protection", "Purview"],
+                            "recommendations": [
+                                "Use Azure Information Protection",
+                                "Implement Microsoft Purview",
+                                "Define sensitivity labels",
+                                "Automate classification"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud DLP", "Data Catalog"],
+                            "recommendations": [
+                                "Use Cloud DLP for discovery",
+                                "Implement Data Catalog",
+                                "Define classification taxonomy",
+                                "Automate scanning"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Labels", "Namespaces"],
+                            "recommendations": [
+                                "Use labels for classification",
+                                "Separate by namespaces",
+                                "Implement RBAC by classification",
+                                "Document data types"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.8.3",
+                    "title": "Media handling",
+                    "description": "Procedures for the handling of removable media shall be implemented in accordance with the classification scheme adopted by the organization.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ebs-volume-disallow-unencrypted-volume",
+                        "aws-ebs-volume-configure-customer-managed-key"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["EBS", "S3"],
+                            "recommendations": [
+                                "Encrypt all EBS volumes",
+                                "Use S3 lifecycle policies",
+                                "Implement secure deletion",
+                                "Control snapshot sharing"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Managed Disks", "Storage"],
+                            "recommendations": [
+                                "Encrypt all managed disks",
+                                "Implement storage lifecycle",
+                                "Control disk exports",
+                                "Secure backup media"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Persistent Disks", "Cloud Storage"],
+                            "recommendations": [
+                                "Encrypt persistent disks",
+                                "Implement retention policies",
+                                "Control disk snapshots",
+                                "Secure data disposal"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Persistent Volumes"],
+                            "recommendations": [
+                                "Encrypt persistent volumes",
+                                "Implement volume policies",
+                                "Control volume access",
+                                "Secure volume deletion"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.9 Access Control",
+            "controls": [
+                {
+                    "id": "A.9.1",
+                    "title": "Business requirements of access control",
+                    "description": "An access control policy shall be established, documented and reviewed based on business and information security requirements.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-iam-user-policy-attachment-only-permissions-via-groups",
+                        "aws-iam-policy-attachment-only-permissions-via-groups"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "SCP"],
+                            "recommendations": [
+                                "Define comprehensive IAM policies",
+                                "Use Service Control Policies",
+                                "Implement least privilege",
+                                "Regular policy reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "RBAC"],
+                            "recommendations": [
+                                "Define RBAC structure",
+                                "Use conditional access",
+                                "Implement Just-In-Time access",
+                                "Regular access reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud IAM", "VPC SC"],
+                            "recommendations": [
+                                "Define IAM hierarchy",
+                                "Use VPC Service Controls",
+                                "Implement least privilege",
+                                "Context-aware access"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC", "PSP"],
+                            "recommendations": [
+                                "Define RBAC policies",
+                                "Use Pod Security Policies",
+                                "Namespace isolation",
+                                "Regular reviews"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.9.2",
+                    "title": "User access management",
+                    "description": "A formal user registration and de-registration process shall be implemented to enable assignment of access rights.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "SSO"],
+                            "recommendations": [
+                                "Automate user provisioning",
+                                "Use AWS SSO",
+                                "Implement access request workflow",
+                                "Automate de-provisioning"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "PIM"],
+                            "recommendations": [
+                                "Use Azure AD provisioning",
+                                "Implement PIM workflows",
+                                "Automate group membership",
+                                "Access request automation"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity", "Groups"],
+                            "recommendations": [
+                                "Automate user lifecycle",
+                                "Use Google Groups",
+                                "Implement approval workflows",
+                                "Regular access audits"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC", "ServiceAccounts"],
+                            "recommendations": [
+                                "Certificate-based auth",
+                                "Service account management",
+                                "Role binding automation",
+                                "Access tracking"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.9.3",
+                    "title": "User responsibilities",
+                    "description": "Users shall be required to follow the organization's practices in the use of secret authentication information.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-iam-account-password-policy-minimum-password-length",
+                        "aws-iam-account-password-policy-password-reuse-prevention"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "Secrets Manager"],
+                            "recommendations": [
+                                "Enforce password policies",
+                                "Require MFA",
+                                "Use Secrets Manager",
+                                "Monitor credential usage"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "Key Vault"],
+                            "recommendations": [
+                                "Password complexity rules",
+                                "MFA enforcement",
+                                "Use Key Vault",
+                                "Credential monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity", "Secret Manager"],
+                            "recommendations": [
+                                "2-step verification",
+                                "Password requirements",
+                                "Secret Manager usage",
+                                "Access monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Secrets", "RBAC"],
+                            "recommendations": [
+                                "External secret management",
+                                "Certificate rotation",
+                                "Token expiration",
+                                "Secret access logging"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.9.4",
+                    "title": "System and application access control",
+                    "description": "Access to information and application system functions shall be restricted in accordance with the access control policy.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ec2-security-group-disallow-public-internet-ingress",
+                        "aws-ec2-security-group-disallow-inbound-http-traffic",
+                        "aws-s3-bucket-disallow-public-read",
+                        "aws-rds-instance-disallow-public-access"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Security Groups", "NACLs", "IAM"],
+                            "recommendations": [
+                                "Restrict security group rules",
+                                "Use NACLs for subnet control",
+                                "Application-level IAM",
+                                "API access control"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["NSG", "Azure AD", "App Service"],
+                            "recommendations": [
+                                "Network Security Groups",
+                                "Application authentication",
+                                "API Management policies",
+                                "Conditional access"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Firewall", "IAM", "Cloud Endpoints"],
+                            "recommendations": [
+                                "VPC firewall rules",
+                                "Application-level IAM",
+                                "API Gateway controls",
+                                "Identity-Aware Proxy"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["NetworkPolicy", "RBAC", "ServiceMesh"],
+                            "recommendations": [
+                                "Network policies",
+                                "RBAC for applications",
+                                "Service mesh auth",
+                                "Ingress controls"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.10 Cryptography",
+            "controls": [
+                {
+                    "id": "A.10.1",
+                    "title": "Cryptographic controls",
+                    "description": "A policy on the use of cryptographic controls for protection of information shall be developed and implemented.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-s3-bucket-enable-server-side-encryption",
+                        "aws-s3-bucket-configure-server-side-encryption-kms",
+                        "aws-ebs-volume-disallow-unencrypted-volume",
+                        "aws-rds-instance-disallow-unencrypted-storage",
+                        "aws-efs-file-system-disallow-unencrypted-file-system",
+                        "aws-ecr-repository-disallow-unencrypted-repository",
+                        "aws-kms-key-enable-key-rotation"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["KMS", "CloudHSM", "ACM"],
+                            "recommendations": [
+                                "Use AWS KMS for key management",
+                                "Enable encryption at rest everywhere",
+                                "Use CloudHSM for compliance",
+                                "Enforce TLS 1.2 minimum"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Key Vault", "Azure HSM", "TDE"],
+                            "recommendations": [
+                                "Use Azure Key Vault",
+                                "Enable encryption by default",
+                                "Transparent Data Encryption",
+                                "TLS enforcement"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud KMS", "Cloud HSM", "CMEK"],
+                            "recommendations": [
+                                "Use Cloud KMS",
+                                "Customer-managed encryption keys",
+                                "Application-layer encryption",
+                                "TLS everywhere"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Secrets", "etcd", "ServiceMesh"],
+                            "recommendations": [
+                                "Encrypt secrets at rest",
+                                "etcd encryption",
+                                "Service mesh mTLS",
+                                "Ingress TLS"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.10.2",
+                    "title": "Key management",
+                    "description": "A policy on the use, protection and lifetime of cryptographic keys shall be developed and implemented through their whole lifecycle.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-kms-key-enable-key-rotation",
+                        "aws-secretsmanager-secret-configure-customer-managed-key",
+                        "aws-appflow-connectorprofile-configure-customer-managed-key"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["KMS", "Secrets Manager"],
+                            "recommendations": [
+                                "Enable automatic key rotation",
+                                "Define key policies",
+                                "Monitor key usage",
+                                "Implement key lifecycle"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Key Vault", "Managed HSM"],
+                            "recommendations": [
+                                "Key rotation policies",
+                                "Access policies",
+                                "Key versioning",
+                                "Backup procedures"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud KMS", "Secret Manager"],
+                            "recommendations": [
+                                "Rotation schedules",
+                                "IAM bindings",
+                                "Key versioning",
+                                "Audit logging"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["External KMS", "cert-manager"],
+                            "recommendations": [
+                                "External key management",
+                                "Certificate rotation",
+                                "Secret rotation",
+                                "Key access control"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.11 Physical and Environmental Security",
+            "controls": [
+                {
+                    "id": "A.11.1",
+                    "title": "Secure areas",
+                    "description": "Physical security perimeters shall be defined and used to protect areas that contain either sensitive or critical information and information processing facilities.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Data Centers"],
+                            "recommendations": [
+                                "Rely on AWS physical security",
+                                "Use AWS Outposts for on-premises",
+                                "Document shared responsibility",
+                                "Regular compliance attestations"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Data Centers"],
+                            "recommendations": [
+                                "Rely on Azure physical security",
+                                "Use Azure Stack for on-premises",
+                                "Review compliance reports",
+                                "Understand shared model"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Data Centers"],
+                            "recommendations": [
+                                "Rely on Google physical security",
+                                "Use Anthos for hybrid",
+                                "Review security whitepapers",
+                                "Compliance certifications"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Infrastructure"],
+                            "recommendations": [
+                                "Secure cluster infrastructure",
+                                "Physical node security",
+                                "Access controls to servers",
+                                "Environmental monitoring"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.11.2",
+                    "title": "Equipment",
+                    "description": "Equipment shall be protected from physical and environmental threats.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["EC2", "Hardware"],
+                            "recommendations": [
+                                "Use multiple Availability Zones",
+                                "Implement auto-recovery",
+                                "Monitor hardware health",
+                                "Plan for hardware failures"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["VMs", "Hardware"],
+                            "recommendations": [
+                                "Use Availability Zones",
+                                "Implement VM redundancy",
+                                "Monitor resource health",
+                                "Disaster recovery planning"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Compute Engine", "Hardware"],
+                            "recommendations": [
+                                "Use multiple zones",
+                                "Live migration capability",
+                                "Hardware monitoring",
+                                "Preemptible instances planning"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Nodes", "Hardware"],
+                            "recommendations": [
+                                "Node redundancy",
+                                "Hardware monitoring",
+                                "Cluster autoscaling",
+                                "Node maintenance planning"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.12 Operations Security",
+            "controls": [
+                {
+                    "id": "A.12.1",
+                    "title": "Operational procedures and responsibilities",
+                    "description": "Operating procedures shall be documented and made available to all users who need them.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Systems Manager", "CloudFormation"],
+                            "recommendations": [
+                                "Use Systems Manager documents",
+                                "Infrastructure as Code",
+                                "Automated runbooks",
+                                "Change management process"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Automation", "ARM Templates"],
+                            "recommendations": [
+                                "Azure Automation runbooks",
+                                "ARM template deployment",
+                                "Azure DevOps integration",
+                                "Change tracking"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Build", "Deployment Manager"],
+                            "recommendations": [
+                                "Automated deployments",
+                                "Configuration management",
+                                "CI/CD pipelines",
+                                "Change documentation"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["GitOps", "Operators"],
+                            "recommendations": [
+                                "GitOps workflows",
+                                "Kubernetes operators",
+                                "Helm charts",
+                                "Change control"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.2",
+                    "title": "Protection from malware",
+                    "description": "Detection, prevention and recovery controls to protect against malware shall be implemented, combined with appropriate user awareness.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ecr-repository-enable-image-scan",
+                        "aws-ecr-repository-configure-image-scan"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["GuardDuty", "Inspector", "Macie"],
+                            "recommendations": [
+                                "Enable GuardDuty threat detection",
+                                "Use Inspector for vulnerabilities",
+                                "ECR image scanning",
+                                "Endpoint protection on EC2"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Defender", "Security Center"],
+                            "recommendations": [
+                                "Microsoft Defender for Cloud",
+                                "Endpoint protection",
+                                "Container scanning",
+                                "Threat intelligence"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Security Command Center", "Container Analysis"],
+                            "recommendations": [
+                                "Enable threat detection",
+                                "Container vulnerability scanning",
+                                "Binary Authorization",
+                                "Endpoint verification"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Admission Control", "Runtime Security"],
+                            "recommendations": [
+                                "Image scanning admission",
+                                "Runtime protection",
+                                "Network policies",
+                                "Security monitoring"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.3",
+                    "title": "Backup",
+                    "description": "Backup copies of information, software and system images shall be taken and tested regularly in accordance with an agreed backup policy.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-rds-instance-enable-backup-retention",
+                        "aws-rds-instance-configure-backup-retention",
+                        "aws-rds-cluster-enable-backup-retention",
+                        "aws-rds-cluster-configure-backup-retention"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["AWS Backup", "Snapshots", "S3"],
+                            "recommendations": [
+                                "Use AWS Backup service",
+                                "Automated snapshot policies",
+                                "Cross-region replication",
+                                "Regular restore testing"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure Backup", "Recovery Services"],
+                            "recommendations": [
+                                "Azure Backup policies",
+                                "Recovery Services vaults",
+                                "Geo-redundant storage",
+                                "Backup testing procedures"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Backup", "Snapshots"],
+                            "recommendations": [
+                                "Backup and DR service",
+                                "Persistent disk snapshots",
+                                "Multi-regional storage",
+                                "Recovery drills"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Velero", "Volume Snapshots"],
+                            "recommendations": [
+                                "Cluster backup tools",
+                                "Persistent volume snapshots",
+                                "etcd backups",
+                                "Application-level backups"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.4",
+                    "title": "Logging and monitoring",
+                    "description": "Event logs recording user activities, exceptions, faults and information security events shall be produced, kept and regularly reviewed.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-alb-load-balancer-enable-access-logging",
+                        "aws-alb-load-balancer-configure-access-logging",
+                        "aws-cloudfront-distribution-enable-access-logging",
+                        "aws-cloudfront-distribution-configure-access-logging",
+                        "aws-elb-load-balancer-configure-access-logging"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudTrail", "CloudWatch", "X-Ray"],
+                            "recommendations": [
+                                "Enable CloudTrail in all regions",
+                                "CloudWatch Logs centralization",
+                                "Application tracing with X-Ray",
+                                "Log analysis and alerting"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Monitor", "Log Analytics", "Application Insights"],
+                            "recommendations": [
+                                "Azure Monitor configuration",
+                                "Log Analytics workspaces",
+                                "Application Insights",
+                                "Alert rules and dashboards"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Logging", "Cloud Monitoring", "Cloud Trace"],
+                            "recommendations": [
+                                "Centralized logging",
+                                "Monitoring dashboards",
+                                "Distributed tracing",
+                                "Log-based metrics"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Audit Logs", "Prometheus", "Fluentd"],
+                            "recommendations": [
+                                "API server audit logging",
+                                "Metrics collection",
+                                "Log aggregation",
+                                "Monitoring stack"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.5",
+                    "title": "Control of operational software",
+                    "description": "Procedures shall be implemented to control the installation of software on operational systems.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Systems Manager", "Config"],
+                            "recommendations": [
+                                "Patch Manager policies",
+                                "Software inventory tracking",
+                                "Approved AMI process",
+                                "Configuration compliance"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Update Management", "Policy"],
+                            "recommendations": [
+                                "Update Management policies",
+                                "Software inventory",
+                                "Image gallery process",
+                                "Compliance assessment"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["OS Config", "Binary Authorization"],
+                            "recommendations": [
+                                "OS policy management",
+                                "Software package control",
+                                "Container image policies",
+                                "Compliance monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Admission Control", "OPA"],
+                            "recommendations": [
+                                "Image admission policies",
+                                "Allowed registries",
+                                "Package management",
+                                "Policy enforcement"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.6",
+                    "title": "Technical vulnerability management",
+                    "description": "Information about technical vulnerabilities of information systems being used shall be obtained in a timely fashion, the organization's exposure to such vulnerabilities evaluated and appropriate measures taken to address the associated risk.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ecr-repository-enable-image-scan"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Inspector", "Security Hub", "Systems Manager"],
+                            "recommendations": [
+                                "Regular vulnerability assessments",
+                                "Security Hub findings",
+                                "Patch management automation",
+                                "CVE monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Security Center", "Update Management"],
+                            "recommendations": [
+                                "Vulnerability assessment",
+                                "Security recommendations",
+                                "Automated patching",
+                                "Threat intelligence"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Security Command Center", "Container Analysis"],
+                            "recommendations": [
+                                "Vulnerability scanning",
+                                "Security insights",
+                                "Patch deployment",
+                                "Risk assessment"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Scanning Tools", "Operators"],
+                            "recommendations": [
+                                "Image vulnerability scanning",
+                                "Runtime scanning",
+                                "Patch operators",
+                                "Security benchmarks"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.12.7",
+                    "title": "Information systems audit considerations",
+                    "description": "Audit requirements and activities involving verification of operational systems shall be carefully planned and agreed to minimize disruptions to business processes.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudTrail", "Config", "Audit Manager"],
+                            "recommendations": [
+                                "Continuous audit trails",
+                                "Compliance monitoring",
+                                "Audit Manager frameworks",
+                                "Evidence collection"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Activity Log", "Policy", "Compliance Manager"],
+                            "recommendations": [
+                                "Activity log retention",
+                                "Policy compliance",
+                                "Compliance score",
+                                "Audit readiness"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Audit Logs", "Access Transparency"],
+                            "recommendations": [
+                                "Comprehensive audit logs",
+                                "Access transparency",
+                                "Compliance reports",
+                                "Audit configuration"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Audit Logs", "Compliance Tools"],
+                            "recommendations": [
+                                "Audit policy configuration",
+                                "Log retention",
+                                "Compliance scanning",
+                                "Audit analysis tools"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.13 Communications Security",
+            "controls": [
+                {
+                    "id": "A.13.1",
+                    "title": "Network security management",
+                    "description": "Networks shall be managed and controlled to protect information in systems and applications.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ec2-security-group-disallow-public-internet-ingress",
+                        "aws-ec2-security-group-disallow-inbound-http-traffic"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["VPC", "Security Groups", "Network Firewall"],
+                            "recommendations": [
+                                "VPC design and segmentation",
+                                "Security group least privilege",
+                                "Network ACLs",
+                                "AWS Network Firewall"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Virtual Network", "NSG", "Azure Firewall"],
+                            "recommendations": [
+                                "VNet segmentation",
+                                "Network Security Groups",
+                                "Azure Firewall policies",
+                                "Network Watcher"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["VPC", "Firewall Rules", "Cloud Armor"],
+                            "recommendations": [
+                                "VPC network design",
+                                "Firewall rule management",
+                                "Cloud Armor policies",
+                                "Network monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["NetworkPolicy", "Service Mesh"],
+                            "recommendations": [
+                                "Network policy enforcement",
+                                "Service mesh security",
+                                "Ingress controls",
+                                "CNI security"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.13.2",
+                    "title": "Information transfer",
+                    "description": "Formal transfer policies, procedures and controls shall be in place to protect the transfer of information through the use of all types of communication facilities.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-alb-listener-disallow-unencrypted-traffic",
+                        "aws-alb-listener-configure-secure-tls",
+                        "aws-cloudfront-distribution-disallow-unencrypted-traffic",
+                        "aws-cloudfront-distribution-configure-secure-tls"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Transfer Family", "Direct Connect", "VPN"],
+                            "recommendations": [
+                                "Encrypted data transfer",
+                                "Private connectivity options",
+                                "Transfer Family for protocols",
+                                "VPN for secure access"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["ExpressRoute", "VPN Gateway", "Private Link"],
+                            "recommendations": [
+                                "ExpressRoute private peering",
+                                "Site-to-site VPN",
+                                "Private endpoints",
+                                "Encrypted protocols"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Interconnect", "Cloud VPN", "Private Access"],
+                            "recommendations": [
+                                "Dedicated interconnect",
+                                "Cloud VPN tunnels",
+                                "Private Google Access",
+                                "Encryption in transit"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Ingress", "Service Mesh", "mTLS"],
+                            "recommendations": [
+                                "TLS termination",
+                                "Mutual TLS",
+                                "Encrypted service communication",
+                                "Secure ingress"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.14 System Acquisition, Development and Maintenance",
+            "controls": [
+                {
+                    "id": "A.14.1",
+                    "title": "Security requirements of information systems",
+                    "description": "Information security related requirements shall be included in the requirements for new information systems or enhancements to existing information systems.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudFormation", "Service Catalog"],
+                            "recommendations": [
+                                "Security in IaC templates",
+                                "Service Catalog constraints",
+                                "Security review process",
+                                "Compliance validation"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["ARM Templates", "Blueprints"],
+                            "recommendations": [
+                                "Security in ARM templates",
+                                "Azure Blueprints",
+                                "Policy enforcement",
+                                "Security assessments"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Deployment Manager", "Cloud Build"],
+                            "recommendations": [
+                                "Security in deployments",
+                                "Build security checks",
+                                "Policy constraints",
+                                "Security scanning"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Helm", "Operators", "GitOps"],
+                            "recommendations": [
+                                "Security in Helm charts",
+                                "Operator security",
+                                "GitOps security",
+                                "Policy enforcement"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.14.2",
+                    "title": "Development and support processes",
+                    "description": "Rules for the development of software and systems shall be established and applied.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CodeCommit", "CodeBuild", "CodePipeline"],
+                            "recommendations": [
+                                "Secure CI/CD pipelines",
+                                "Code security scanning",
+                                "Automated testing",
+                                "Deployment controls"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure DevOps", "GitHub Actions"],
+                            "recommendations": [
+                                "Secure DevOps practices",
+                                "Pipeline security",
+                                "Code scanning",
+                                "Release management"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Build", "Cloud Source Repositories"],
+                            "recommendations": [
+                                "Build security",
+                                "Source code protection",
+                                "Automated scanning",
+                                "Deployment automation"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["CI/CD", "GitOps"],
+                            "recommendations": [
+                                "Secure CI/CD for K8s",
+                                "GitOps security",
+                                "Image scanning",
+                                "Deployment validation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.14.3",
+                    "title": "Test data",
+                    "description": "Test data shall be selected carefully, protected and controlled.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["S3", "RDS", "DynamoDB"],
+                            "recommendations": [
+                                "Data masking for test",
+                                "Separate test accounts",
+                                "Access controls on test data",
+                                "Data retention policies"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Storage", "SQL Database"],
+                            "recommendations": [
+                                "Test data isolation",
+                                "Data masking",
+                                "Access restrictions",
+                                "Compliance controls"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Storage", "Cloud SQL"],
+                            "recommendations": [
+                                "Test data protection",
+                                "Data anonymization",
+                                "Access controls",
+                                "Lifecycle policies"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Persistent Volumes", "ConfigMaps"],
+                            "recommendations": [
+                                "Test data volumes",
+                                "Secret management",
+                                "Namespace isolation",
+                                "Data cleanup"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.15 Supplier Relationships",
+            "controls": [
+                {
+                    "id": "A.15.1",
+                    "title": "Information security in supplier relationships",
+                    "description": "Information security requirements for mitigating the risks associated with supplier's access to the organization's assets shall be agreed with the supplier and documented.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Organizations", "Control Tower"],
+                            "recommendations": [
+                                "Separate AWS accounts for suppliers",
+                                "Cross-account access policies",
+                                "Service Control Policies",
+                                "Audit supplier access"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD B2B", "Lighthouse"],
+                            "recommendations": [
+                                "B2B collaboration controls",
+                                "Azure Lighthouse for MSPs",
+                                "Conditional access for guests",
+                                "Access reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Identity", "IAM"],
+                            "recommendations": [
+                                "External identity federation",
+                                "Constrained IAM roles",
+                                "Access monitoring",
+                                "Regular reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC", "Namespaces"],
+                            "recommendations": [
+                                "Namespace isolation",
+                                "Limited RBAC for vendors",
+                                "Audit logging",
+                                "Access reviews"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.15.2",
+                    "title": "Supplier service delivery management",
+                    "description": "Organizations shall regularly monitor, review and audit supplier service delivery.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudWatch", "CloudTrail"],
+                            "recommendations": [
+                                "Monitor supplier activities",
+                                "CloudTrail for audit",
+                                "Performance metrics",
+                                "SLA monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Monitor", "Activity Log"],
+                            "recommendations": [
+                                "Activity monitoring",
+                                "Performance tracking",
+                                "Compliance monitoring",
+                                "Service health"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Monitoring", "Cloud Logging"],
+                            "recommendations": [
+                                "Service monitoring",
+                                "Access logging",
+                                "Performance metrics",
+                                "Compliance tracking"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Monitoring", "Logging"],
+                            "recommendations": [
+                                "Service monitoring",
+                                "Performance metrics",
+                                "Access tracking",
+                                "Resource usage"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.16 Information Security Incident Management",
+            "controls": [
+                {
+                    "id": "A.16.1",
+                    "title": "Management of information security incidents and improvements",
+                    "description": "A consistent and effective approach to the management of information security incidents shall be ensured, including communication on security events and weaknesses.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Security Hub", "GuardDuty", "Detective"],
+                            "recommendations": [
+                                "Security Hub for centralization",
+                                "GuardDuty threat detection",
+                                "Automated response with Lambda",
+                                "Incident tracking"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Sentinel", "Security Center"],
+                            "recommendations": [
+                                "Azure Sentinel SIEM",
+                                "Automated playbooks",
+                                "Incident investigation",
+                                "Threat intelligence"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Security Command Center", "Chronicle"],
+                            "recommendations": [
+                                "Security Command Center",
+                                "Chronicle SIEM",
+                                "Automated response",
+                                "Incident workflow"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Falco", "Security Tools"],
+                            "recommendations": [
+                                "Runtime threat detection",
+                                "Incident response tools",
+                                "Alert aggregation",
+                                "Forensics capability"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.17 Information Security Aspects of Business Continuity Management",
+            "controls": [
+                {
+                    "id": "A.17.1",
+                    "title": "Information security continuity",
+                    "description": "Information security continuity shall be embedded in the organization's business continuity management systems.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-rds-cluster-disallow-single-availability-zone",
+                        "aws-elb-load-balancer-configure-multi-availability-zone",
+                        "aws-s3-bucket-enable-replication-configuration",
+                        "aws-s3-bucket-configure-replication-configuration"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Backup", "Disaster Recovery"],
+                            "recommendations": [
+                                "Multi-region deployment",
+                                "AWS Backup policies",
+                                "Disaster recovery planning",
+                                "Regular DR testing"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Site Recovery", "Backup"],
+                            "recommendations": [
+                                "Azure Site Recovery",
+                                "Geo-redundant storage",
+                                "Backup policies",
+                                "Recovery drills"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Backup and DR", "Multi-region"],
+                            "recommendations": [
+                                "Multi-region architecture",
+                                "Backup and DR service",
+                                "High availability design",
+                                "Recovery procedures"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Velero", "Multi-cluster"],
+                            "recommendations": [
+                                "Multi-cluster setup",
+                                "Backup solutions",
+                                "Disaster recovery",
+                                "Failover procedures"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.17.2",
+                    "title": "Redundancies",
+                    "description": "Information processing facilities shall be implemented with redundancy sufficient to meet availability requirements.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [
+                        "aws-elb-load-balancer-configure-multi-availability-zone",
+                        "aws-rds-cluster-disallow-single-availability-zone"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Auto Scaling", "ELB", "Multi-AZ"],
+                            "recommendations": [
+                                "Multi-AZ deployments",
+                                "Auto Scaling groups",
+                                "Load balancer redundancy",
+                                "Regional failover"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Availability Sets", "Load Balancer"],
+                            "recommendations": [
+                                "Availability zones",
+                                "VM Scale Sets",
+                                "Load balancer HA",
+                                "Regional pairs"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Instance Groups", "Load Balancing"],
+                            "recommendations": [
+                                "Multi-zone deployment",
+                                "Managed instance groups",
+                                "Global load balancing",
+                                "Regional redundancy"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["ReplicaSets", "HA"],
+                            "recommendations": [
+                                "Multi-replica deployments",
+                                "Pod disruption budgets",
+                                "Node redundancy",
+                                "Cluster federation"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "A.18 Compliance",
+            "controls": [
+                {
+                    "id": "A.18.1",
+                    "title": "Compliance with legal and contractual requirements",
+                    "description": "All relevant legislative statutory, regulatory, contractual requirements and the organization's approach to meet these requirements shall be explicitly identified, documented and kept up to date.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Artifact", "Config", "Audit Manager"],
+                            "recommendations": [
+                                "AWS Artifact for compliance docs",
+                                "Config rules for compliance",
+                                "Audit Manager frameworks",
+                                "Compliance monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Compliance Manager", "Policy"],
+                            "recommendations": [
+                                "Compliance Manager",
+                                "Regulatory compliance",
+                                "Policy enforcement",
+                                "Compliance score"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Compliance Reports", "Policy"],
+                            "recommendations": [
+                                "Compliance certifications",
+                                "Policy constraints",
+                                "Audit reports",
+                                "Compliance monitoring"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Policy Engines", "Compliance Tools"],
+                            "recommendations": [
+                                "Policy enforcement",
+                                "Compliance scanning",
+                                "Audit capabilities",
+                                "Documentation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "A.18.2",
+                    "title": "Information security reviews",
+                    "description": "The organization's approach to managing information security and its implementation shall be reviewed independently at planned intervals or when significant changes occur.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.iso.org/standard/75652.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Security Hub", "Well-Architected"],
+                            "recommendations": [
+                                "Security Hub assessments",
+                                "Well-Architected reviews",
+                                "Trusted Advisor",
+                                "Regular audits"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Security Center", "Advisor"],
+                            "recommendations": [
+                                "Security Center assessments",
+                                "Azure Advisor",
+                                "Security score",
+                                "Review cycles"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Security Command Center", "Recommender"],
+                            "recommendations": [
+                                "Security insights",
+                                "Recommender API",
+                                "Risk assessment",
+                                "Periodic reviews"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Benchmarks", "Audit Tools"],
+                            "recommendations": [
+                                "CIS benchmarks",
+                                "Security audits",
+                                "Compliance checks",
+                                "Review processes"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

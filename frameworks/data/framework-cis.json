@@ -1,0 +1,1012 @@
+{
+    "framework": "CIS Controls v8.0",
+    "description": "Center for Internet Security Controls",
+    "version": "8.0",
+    "controls": [
+        {
+            "id": "1",
+            "title": "Inventory and Control of Enterprise Assets",
+            "description": "Actively manage (inventory, track, and correct) all enterprise assets (end-user devices, including portable and mobile; network devices; non-computing/IoT devices; and servers) connected to the infrastructure physically, virtually, remotely, and those within cloud environments, to accurately know the totality of assets that need to be monitored and protected within the enterprise.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["AWS Config", "Systems Manager", "Resource Groups"],
+                    "recommendations": [
+                        "Use AWS Config for asset inventory",
+                        "Tag all resources consistently",
+                        "Use Systems Manager Inventory",
+                        "Implement Resource Groups for organization"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Resource Graph", "Tags", "Management Groups"],
+                    "recommendations": [
+                        "Use Azure Resource Graph for inventory",
+                        "Implement comprehensive tagging strategy",
+                        "Use Management Groups for organization",
+                        "Enable Azure Arc for hybrid assets"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Asset Inventory", "Resource Manager"],
+                    "recommendations": [
+                        "Use Cloud Asset Inventory API",
+                        "Implement labeling strategy",
+                        "Monitor asset changes",
+                        "Export inventory regularly"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["API Resources", "Labels"],
+                    "recommendations": [
+                        "Inventory all Kubernetes resources",
+                        "Use labels and annotations consistently",
+                        "Monitor resource usage",
+                        "Document resource ownership"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Inventory and Control of Software Assets",
+            "description": "Actively manage (inventory, track, and correct) all software (operating systems and applications) on the network so that only authorized software is installed and can execute, and that unauthorized and unmanaged software is found and prevented from installation or execution.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-ecr-repository-enable-image-scan",
+                "aws-ecr-repository-configure-image-scan",
+                "aws-ecr-repository-disallow-mutable-image"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Systems Manager", "ECR", "Inspector"],
+                    "recommendations": [
+                        "Use Systems Manager for software inventory",
+                        "Scan container images with ECR",
+                        "Use Inspector for vulnerability assessment",
+                        "Maintain approved software catalog"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Update Management", "Security Center"],
+                    "recommendations": [
+                        "Use Update Management for software tracking",
+                        "Enable vulnerability assessment",
+                        "Use Security Center recommendations",
+                        "Implement software whitelisting"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["OS Config", "Binary Authorization"],
+                    "recommendations": [
+                        "Use OS Config for software management",
+                        "Implement Binary Authorization",
+                        "Use Container Analysis API",
+                        "Monitor software deployments"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Admission Controllers", "Image Scanning"],
+                    "recommendations": [
+                        "Use admission controllers for image policies",
+                        "Scan container images for vulnerabilities",
+                        "Implement image signing",
+                        "Monitor running containers"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Data Protection",
+            "description": "Develop processes and technical controls to identify, classify, securely handle, retain, and dispose of data.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-s3-bucket-enable-server-side-encryption",
+                "aws-s3-bucket-configure-server-side-encryption-kms",
+                "aws-ebs-volume-disallow-unencrypted-volume",
+                "aws-rds-instance-disallow-unencrypted-storage",
+                "aws-efs-file-system-disallow-unencrypted-file-system"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["KMS", "Macie", "S3"],
+                    "recommendations": [
+                        "Use Amazon Macie for data classification",
+                        "Implement encryption at rest and in transit",
+                        "Use AWS KMS for key management",
+                        "Classify data using tags"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Information Protection", "Key Vault"],
+                    "recommendations": [
+                        "Use Azure Information Protection",
+                        "Implement data classification",
+                        "Enable encryption for all storage",
+                        "Use Azure Key Vault for keys"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud DLP", "Cloud KMS"],
+                    "recommendations": [
+                        "Use Cloud DLP for data discovery",
+                        "Implement data classification",
+                        "Enable encryption by default",
+                        "Use Cloud KMS for key management"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Secrets", "Encryption"],
+                    "recommendations": [
+                        "Encrypt persistent volumes",
+                        "Use secrets management",
+                        "Implement pod security policies",
+                        "Enable etcd encryption"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Secure Configuration of Enterprise Assets and Software",
+            "description": "Establish and maintain the secure configuration of enterprise assets (end-user devices, including portable and mobile; network devices; non-computing/IoT devices; and servers) and software (operating systems and applications).",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Config", "Systems Manager"],
+                    "recommendations": [
+                        "Use AWS Config rules for compliance",
+                        "Implement Systems Manager for patching",
+                        "Use Service Control Policies",
+                        "Baseline secure configurations"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Policy", "Update Management"],
+                    "recommendations": [
+                        "Use Azure Policy for configuration management",
+                        "Implement Update Management",
+                        "Use Azure Blueprints",
+                        "Deploy security baselines"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "OS Config"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Implement OS Config Management",
+                        "Use organizational policies",
+                        "Deploy CIS benchmarks"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Pod Security", "OPA"],
+                    "recommendations": [
+                        "Use admission controllers",
+                        "Implement pod security standards",
+                        "Use GitOps for configuration",
+                        "Deploy OPA for policy enforcement"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "title": "Account Management",
+            "description": "Use processes and tools to assign and manage authorization to credentials for user accounts, including administrator accounts, as well as service accounts, to enterprise assets and software.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-iam-user-policy-attachment-only-permissions-via-groups",
+                "aws-iam-policy-attachment-only-permissions-via-groups"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["IAM", "SSO"],
+                    "recommendations": [
+                        "Implement centralized identity management",
+                        "Use AWS SSO for federation",
+                        "Enable MFA for all users",
+                        "Regular access reviews"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure AD", "PIM"],
+                    "recommendations": [
+                        "Use Azure AD for identity management",
+                        "Implement conditional access",
+                        "Enable MFA for all users",
+                        "Use Privileged Identity Management"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Identity", "IAM"],
+                    "recommendations": [
+                        "Use Cloud Identity for user management",
+                        "Implement context-aware access",
+                        "Enable 2-factor authentication",
+                        "Use Google Workspace integration"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["RBAC", "ServiceAccounts"],
+                    "recommendations": [
+                        "Integrate with enterprise identity providers",
+                        "Use service accounts properly",
+                        "Implement RBAC",
+                        "Regular permission audits"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "title": "Access Control Management",
+            "description": "Use processes and tools to create, assign, manage, and revoke access credentials and privileges for user, administrator, and service accounts for enterprise assets and software.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-s3-bucket-disallow-public-read",
+                "aws-rds-instance-disallow-public-access",
+                "aws-ec2-instance-disallow-public-ip"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["IAM", "Access Analyzer"],
+                    "recommendations": [
+                        "Use least privilege principle",
+                        "Implement just-in-time access",
+                        "Use Access Analyzer for permissions",
+                        "Regular access reviews"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["RBAC", "Azure AD"],
+                    "recommendations": [
+                        "Use Azure RBAC",
+                        "Implement conditional access",
+                        "Use Azure AD access reviews",
+                        "Monitor privileged access"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["IAM", "VPC Service Controls"],
+                    "recommendations": [
+                        "Use IAM conditions",
+                        "Implement VPC Service Controls",
+                        "Use IAM Recommender",
+                        "Regular permission audits"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["RBAC", "Network Policies"],
+                    "recommendations": [
+                        "Implement granular RBAC",
+                        "Use network policies",
+                        "Service account best practices",
+                        "Regular RBAC reviews"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "title": "Continuous Vulnerability Management",
+            "description": "Develop a plan to continuously assess and track vulnerabilities on all enterprise assets within the enterprise's infrastructure, in order to remediate, and minimize, the window of opportunity for attackers.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-ecr-repository-enable-image-scan"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Inspector", "Security Hub"],
+                    "recommendations": [
+                        "Use Amazon Inspector for vulnerability scanning",
+                        "Enable Security Hub for centralized findings",
+                        "Use patch management with Systems Manager",
+                        "Regular vulnerability assessments"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Security Center", "Update Management"],
+                    "recommendations": [
+                        "Use Azure Security Center assessments",
+                        "Enable vulnerability assessment",
+                        "Use Update Management for patching",
+                        "Monitor security recommendations"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Container Analysis"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Enable vulnerability scanning",
+                        "Use Container Analysis API",
+                        "Implement patch management"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Image Scanning", "Runtime Security"],
+                    "recommendations": [
+                        "Scan container images regularly",
+                        "Use runtime security tools",
+                        "Implement vulnerability management",
+                        "Monitor for CVEs"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "title": "Audit Log Management",
+            "description": "Collect, alert, review, and retain audit logs of events that could help detect, understand, or recover from an attack.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-alb-load-balancer-enable-access-logging",
+                "aws-cloudfront-distribution-enable-access-logging",
+                "aws-elb-load-balancer-configure-access-logging"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["CloudTrail", "CloudWatch Logs"],
+                    "recommendations": [
+                        "Enable CloudTrail in all regions",
+                        "Configure log retention policies",
+                        "Use CloudWatch for log analysis",
+                        "Implement log monitoring"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure Monitor", "Log Analytics"],
+                    "recommendations": [
+                        "Enable comprehensive logging",
+                        "Use Log Analytics workspaces",
+                        "Configure log retention",
+                        "Implement log queries and alerts"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Logging", "Cloud Audit Logs"],
+                    "recommendations": [
+                        "Enable audit logs for all services",
+                        "Configure log sinks",
+                        "Use Cloud Logging for analysis",
+                        "Implement log-based metrics"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Audit Logs", "Container Logs"],
+                    "recommendations": [
+                        "Enable API server audit logging",
+                        "Configure audit policies",
+                        "Use log aggregation tools",
+                        "Monitor security events"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "title": "Email and Web Browser Protections",
+            "description": "Improve protections and detections of threats from email and web vectors, as these are opportunities for attackers to manipulate human behavior through direct engagement.",
+            "compliance_level": "recommended",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["SES", "WorkMail", "WAF"],
+                    "recommendations": [
+                        "Use AWS WAF for web application protection",
+                        "Implement email security with SES",
+                        "Use CloudFront for web security",
+                        "Deploy threat detection"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Microsoft 365", "Azure WAF"],
+                    "recommendations": [
+                        "Use Microsoft 365 security features",
+                        "Implement Azure WAF",
+                        "Use Advanced Threat Protection",
+                        "Configure Safe Links and Attachments"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Gmail", "Cloud Armor"],
+                    "recommendations": [
+                        "Use Gmail security features",
+                        "Implement Cloud Armor",
+                        "Use Workspace security controls",
+                        "Configure phishing protection"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Ingress", "Service Mesh"],
+                    "recommendations": [
+                        "Implement ingress security",
+                        "Use service mesh for protection",
+                        "Configure web application firewalls",
+                        "Monitor web traffic"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "title": "Malware Defenses",
+            "description": "Prevent or control the installation, spread, and execution of malicious applications, code, or scripts on enterprise assets.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-ecr-repository-enable-image-scan",
+                "aws-ecr-repository-configure-image-scan"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["GuardDuty", "Inspector"],
+                    "recommendations": [
+                        "Enable GuardDuty for threat detection",
+                        "Use Inspector for malware scanning",
+                        "Scan container images",
+                        "Monitor for malicious activity"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Defender for Cloud", "Security Center"],
+                    "recommendations": [
+                        "Use Microsoft Defender for Cloud",
+                        "Enable antimalware protection",
+                        "Scan container images",
+                        "Monitor security alerts"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Binary Authorization"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Implement Binary Authorization",
+                        "Scan container images",
+                        "Monitor for threats"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Admission Controllers", "Runtime Security"],
+                    "recommendations": [
+                        "Use admission controllers for validation",
+                        "Implement runtime security",
+                        "Scan images for malware",
+                        "Monitor container behavior"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "title": "Data Recovery",
+            "description": "Establish and maintain data recovery practices sufficient to restore in-scope enterprise assets to a pre-incident and trusted state.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-rds-instance-enable-backup-retention",
+                "aws-rds-cluster-enable-backup-retention",
+                "aws-s3-bucket-enable-replication-configuration"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["AWS Backup", "S3 Cross-Region Replication"],
+                    "recommendations": [
+                        "Use AWS Backup for centralized backup",
+                        "Implement cross-region replication",
+                        "Test backup restoration regularly",
+                        "Automate backup processes"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure Backup", "Site Recovery"],
+                    "recommendations": [
+                        "Use Azure Backup policies",
+                        "Implement Azure Site Recovery",
+                        "Test disaster recovery procedures",
+                        "Use geo-redundant storage"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Backup", "Persistent Disk Snapshots"],
+                    "recommendations": [
+                        "Use Cloud Backup and DR",
+                        "Implement persistent disk snapshots",
+                        "Test recovery procedures",
+                        "Use regional persistent disks"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Velero", "Volume Snapshots"],
+                    "recommendations": [
+                        "Use Velero for cluster backup",
+                        "Implement volume snapshots",
+                        "Backup etcd regularly",
+                        "Test recovery procedures"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "title": "Network Infrastructure Management",
+            "description": "Establish, implement, and actively manage (track, report, correct) network devices, in order to prevent attackers from exploiting vulnerable network services and access points.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [
+                "aws-ec2-security-group-disallow-public-internet-ingress",
+                "aws-ec2-security-group-disallow-inbound-http-traffic"
+            ],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["VPC", "Security Groups", "Network ACLs"],
+                    "recommendations": [
+                        "Implement network segmentation",
+                        "Use security groups effectively",
+                        "Configure Network ACLs",
+                        "Monitor network traffic"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Virtual Network", "NSG", "Azure Firewall"],
+                    "recommendations": [
+                        "Use Virtual Network segmentation",
+                        "Configure Network Security Groups",
+                        "Deploy Azure Firewall",
+                        "Monitor network security"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["VPC", "Firewall Rules", "Cloud NAT"],
+                    "recommendations": [
+                        "Implement VPC network design",
+                        "Configure firewall rules",
+                        "Use Cloud NAT for outbound traffic",
+                        "Monitor network flows"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Network Policies", "Service Mesh"],
+                    "recommendations": [
+                        "Implement network policies",
+                        "Use service mesh for security",
+                        "Configure ingress controllers",
+                        "Monitor network traffic"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "title": "Network Monitoring and Defense",
+            "description": "Operate processes and tooling to establish and maintain comprehensive network monitoring and defense against security threats across the enterprise's network infrastructure and user base.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["GuardDuty", "VPC Flow Logs", "Network Firewall"],
+                    "recommendations": [
+                        "Enable GuardDuty for threat detection",
+                        "Use VPC Flow Logs for monitoring",
+                        "Deploy AWS Network Firewall",
+                        "Implement intrusion detection"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Sentinel", "Network Watcher", "DDoS Protection"],
+                    "recommendations": [
+                        "Use Azure Sentinel for SIEM",
+                        "Enable Network Watcher",
+                        "Configure DDoS Protection",
+                        "Monitor network security"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud IDS", "VPC Flow Logs", "Cloud Armor"],
+                    "recommendations": [
+                        "Use Cloud IDS for intrusion detection",
+                        "Enable VPC Flow Logs",
+                        "Configure Cloud Armor",
+                        "Monitor network threats"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Falco", "Network Monitoring"],
+                    "recommendations": [
+                        "Use Falco for runtime security",
+                        "Implement network monitoring",
+                        "Monitor east-west traffic",
+                        "Detect anomalous behavior"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "title": "Security Awareness and Skills Training",
+            "description": "Establish and maintain a security awareness program to influence behavior among the workforce to be security conscious and properly skilled to reduce cybersecurity risks to the enterprise.",
+            "compliance_level": "required",
+            "automation_possible": false,
+            "verification_method": "manual",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Training and Certification"],
+                    "recommendations": [
+                        "Use AWS training resources",
+                        "Implement security awareness programs",
+                        "Track training completion",
+                        "Regular security updates"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Microsoft Learn"],
+                    "recommendations": [
+                        "Use Microsoft Learn for training",
+                        "Implement security awareness",
+                        "Track user education",
+                        "Regular security communications"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Training"],
+                    "recommendations": [
+                        "Use Google Cloud training",
+                        "Implement security education",
+                        "Track learning progress",
+                        "Regular security briefings"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Community Training"],
+                    "recommendations": [
+                        "Use Kubernetes security training",
+                        "Implement best practices education",
+                        "Regular security workshops",
+                        "Community engagement"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "title": "Service Provider Management",
+            "description": "Develop a process to evaluate service providers who hold sensitive data, or are responsible for an enterprise's critical IT platforms or processes, to ensure these providers are protecting those platforms and data appropriately.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Organizations", "Control Tower"],
+                    "recommendations": [
+                        "Use AWS Organizations for governance",
+                        "Implement Control Tower for multi-account",
+                        "Monitor third-party access",
+                        "Regular vendor assessments"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure Lighthouse", "Azure AD B2B"],
+                    "recommendations": [
+                        "Use Azure Lighthouse for MSPs",
+                        "Implement B2B for external users",
+                        "Monitor partner access",
+                        "Regular compliance reviews"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Resource Hierarchy", "IAM"],
+                    "recommendations": [
+                        "Use resource hierarchy for control",
+                        "Implement constrained IAM for vendors",
+                        "Monitor external access",
+                        "Regular permission reviews"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["RBAC", "Namespaces"],
+                    "recommendations": [
+                        "Use namespace isolation for vendors",
+                        "Implement limited RBAC",
+                        "Monitor vendor activities",
+                        "Regular access audits"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "title": "Application Software Security",
+            "description": "Manage the security life cycle of all in-house developed and acquired software in order to prevent, detect, and correct security weaknesses.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["CodeSuite", "Inspector"],
+                    "recommendations": [
+                        "Use AWS CodeSuite for secure SDLC",
+                        "Implement security testing in pipelines",
+                        "Use Inspector for application scanning",
+                        "Regular security assessments"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Azure DevOps", "Security Center"],
+                    "recommendations": [
+                        "Use Azure DevOps with security scanning",
+                        "Implement secure coding practices",
+                        "Use Security Center for app assessment",
+                        "Regular penetration testing"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Cloud Build", "Container Analysis"],
+                    "recommendations": [
+                        "Use Cloud Build with security checks",
+                        "Implement vulnerability scanning",
+                        "Use Container Analysis API",
+                        "Regular security reviews"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["CI/CD Security", "Image Scanning"],
+                    "recommendations": [
+                        "Implement secure CI/CD pipelines",
+                        "Scan container images",
+                        "Use security linting",
+                        "Monitor application security"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "title": "Incident Response Management",
+            "description": "Establish a program to develop and maintain an incident response capability (e.g., policies, plans, procedures, defined roles, training, and communications) to prepare, detect, and quickly respond to an attack.",
+            "compliance_level": "required",
+            "automation_possible": true,
+            "verification_method": "automated",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Security Hub", "GuardDuty", "Detective"],
+                    "recommendations": [
+                        "Use Security Hub for centralized alerts",
+                        "Implement automated response with Lambda",
+                        "Use Detective for investigation",
+                        "Develop incident response playbooks"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Sentinel", "Security Center"],
+                    "recommendations": [
+                        "Use Azure Sentinel for SIEM",
+                        "Implement automated playbooks",
+                        "Use Security Center for alerts",
+                        "Develop response procedures"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Chronicle"],
+                    "recommendations": [
+                        "Use Security Command Center",
+                        "Implement automated response",
+                        "Use Chronicle for SIEM",
+                        "Develop incident workflows"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Security Monitoring", "Incident Tools"],
+                    "recommendations": [
+                        "Implement security monitoring",
+                        "Use incident response tools",
+                        "Develop response playbooks",
+                        "Train on Kubernetes incidents"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "title": "Penetration Testing",
+            "description": "Test the effectiveness and resiliency of enterprise assets through identifying and exploiting weaknesses in controls (people, processes, and technology), and simulating the objectives and actions of an attacker.",
+            "compliance_level": "recommended",
+            "automation_possible": false,
+            "verification_method": "manual",
+            "references": [
+                "https://www.cisecurity.org/controls/cis-controls-list"
+            ],
+            "pulumi_policies": [],
+            "clouds": [
+                {
+                    "cloud": "AWS",
+                    "services": ["Inspector", "Security Hub"],
+                    "recommendations": [
+                        "Regular penetration testing",
+                        "Use automated security scanning",
+                        "Follow AWS penetration testing guidelines",
+                        "Document findings and remediation"
+                    ]
+                },
+                {
+                    "cloud": "Azure",
+                    "services": ["Security Center", "Penetration Testing"],
+                    "recommendations": [
+                        "Conduct regular penetration tests",
+                        "Use security assessments",
+                        "Follow Azure testing guidelines",
+                        "Track remediation efforts"
+                    ]
+                },
+                {
+                    "cloud": "Google",
+                    "services": ["Security Command Center", "Testing"],
+                    "recommendations": [
+                        "Perform regular penetration testing",
+                        "Use security scanning tools",
+                        "Follow Google Cloud guidelines",
+                        "Document security improvements"
+                    ]
+                },
+                {
+                    "cloud": "Kubernetes",
+                    "services": ["Security Testing", "Compliance Tools"],
+                    "recommendations": [
+                        "Test Kubernetes security controls",
+                        "Use cluster penetration testing tools",
+                        "Test container security",
+                        "Regular security assessments"
+                    ]
+                }
+            ]
+        }
+    ]
+}

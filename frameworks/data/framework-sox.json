@@ -1,0 +1,25 @@
+{
+    "framework": "SOX",
+    "description": "Sarbanes-Oxley Act",
+    "version": "2002",
+    "sections": [
+        {
+            "name": "IT General Controls",
+            "controls": [
+                {
+                    "id": "Section 302",
+                    "title": "Corporate responsibility for financial reports",
+                    "description": "Principal executive and financial officers must certify the accuracy of financial statements.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.sox-online.com/act_section_302.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

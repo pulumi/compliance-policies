@@ -1,0 +1,25 @@
+{
+    "framework": "HITRUST CSF v11.2.0",
+    "description": "Health Information Trust Alliance Common Security Framework",
+    "version": "11.2.0",
+    "domains": [
+        {
+            "name": "Access Control",
+            "controls": [
+                {
+                    "id": "01.a",
+                    "title": "Access Control Policy",
+                    "description": "Access control policies are established and maintained.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://hitrustalliance.net/csf/"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

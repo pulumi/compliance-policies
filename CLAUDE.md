@@ -58,6 +58,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - frameworks
 - a policy requires documentation in JSDoc format, repeating the `severity`, `frameworks` and `topics` properties
 
+## Framework Documentation
+
+- The `frameworks.json` file is the master index of all compliance frameworks
+- Framework definitions are in `frameworks/data/framework-{name}.json` files
+- Cloud-specific implementation guides are organized in `frameworks/{cloud}/{framework}.md` directories:
+  - AWS guides: `frameworks/aws/soc2.md`, `frameworks/aws/pcidss.md`, etc.
+  - Azure guides: `frameworks/azure/soc2.md`, `frameworks/azure/pcidss.md`, etc.
+  - Google Cloud guides: `frameworks/google/soc2.md`, `frameworks/google/pcidss.md`, etc.
+  - Kubernetes guides: `frameworks/kubernetes/soc2.md`, `frameworks/kubernetes/cis.md`, etc.
+- When adding new policies, ensure the framework references match those defined in the framework JSON files
+- Supported frameworks: iso27001, pcidss, hitrust, cis, soc2, nist, hipaa, sox, gdpr, fedramp
+- Microsoft Cloud Security Benchmark (microsoftcloudsecuritybenchmark) is Azure-specific only
+
+### Maintaining Framework Files
+
+When updating framework documentation:
+1. Update the appropriate `frameworks/data/framework-{name}.json` file with complete control mappings
+2. Add `pulumi_policies` array to controls that have corresponding policies
+3. Ensure all domains and controls are included, even if no policies exist yet
+4. Update cloud-specific recommendations based on new services or features
+5. Keep compliance_level, automation_possible, and verification_method fields accurate
+6. Add references to official documentation and standards
+
+### Framework JSON Structure
+
+The master `frameworks.json` contains:
+- Framework ID as key
+- `file`: Path to the detailed framework JSON
+- `name`: Official framework name with version
+- `description`: Brief description
+
+Each framework file in `frameworks/data/` contains:
+- `framework`: Official framework name and version
+- `description`: Framework description
+- `version`: Framework version
+- `domains` or `requirements`: Major areas of the framework
+  - `controls`: Specific controls within each domain
+    - `id`: Official control identifier
+    - `title`: Control title
+    - `description`: Control description
+    - `pulumi_policies`: Array of Pulumi policy names that implement this control
+    - `compliance_level`: required/recommended/optional
+    - `automation_possible`: true/false
+    - `verification_method`: automated/manual
+    - `references`: Links to official documentation
+    - `clouds`: Cloud-specific implementations for AWS, Azure, Google, and Kubernetes
+
 ## Important Restrictions
 
 - **NEVER RUN GIT COMMIT**: Do not attempt to create commits. Only the user should create commits.

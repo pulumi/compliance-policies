@@ -1,0 +1,378 @@
+{
+    "framework": "SOC 2 Type II",
+    "description": "Service Organization Control 2 Type II",
+    "version": "2017",
+    "trust_services_criteria": [
+        {
+            "category": "Security",
+            "description": "Information and systems are protected against unauthorized access",
+            "controls": [
+                {
+                    "id": "CC6.1",
+                    "title": "Logical and physical access controls",
+                    "description": "The entity implements logical access security software, infrastructure, and architectures over protected information assets to protect them from security events to meet the entity's objectives.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [
+                        "aws-ec2-security-group-disallow-public-internet-ingress",
+                        "aws-s3-bucket-disallow-public-read",
+                        "aws-rds-instance-disallow-public-access"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["IAM", "CloudHSM", "Shield"],
+                            "recommendations": [
+                                "Implement IAM policies and roles",
+                                "Use CloudHSM for key management",
+                                "Enable AWS Shield for DDoS protection",
+                                "Configure MFA for all users"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure AD", "Key Vault", "DDoS Protection"],
+                            "recommendations": [
+                                "Use Azure Security Center",
+                                "Implement Azure AD conditional access",
+                                "Enable DDoS Protection",
+                                "Use Privileged Identity Management"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud IAM", "Cloud KMS", "Cloud Armor"],
+                            "recommendations": [
+                                "Use Security Command Center",
+                                "Implement BeyondCorp security model",
+                                "Enable Cloud Armor",
+                                "Use Context-Aware Access"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["RBAC", "Network Policies"],
+                            "recommendations": [
+                                "Implement pod security policies",
+                                "Use network policies",
+                                "Enable RBAC",
+                                "Configure admission controllers"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "CC6.8",
+                    "title": "Encryption of data at rest and in transit",
+                    "description": "The entity protects data at rest and in transit through encryption.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [
+                        "aws-s3-bucket-enable-server-side-encryption",
+                        "aws-ebs-volume-disallow-unencrypted-volume",
+                        "aws-rds-instance-disallow-unencrypted-storage",
+                        "aws-kms-key-enable-key-rotation",
+                        "aws-alb-listener-disallow-unencrypted-traffic"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["KMS", "S3", "ACM"],
+                            "recommendations": [
+                                "Use KMS for key management",
+                                "Enable S3 default encryption",
+                                "Use ACM for TLS certificates",
+                                "Encrypt all EBS volumes"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Key Vault", "Storage", "Front Door"],
+                            "recommendations": [
+                                "Use Azure Key Vault",
+                                "Enable Storage Service Encryption",
+                                "Use Azure Front Door for TLS",
+                                "Enable Transparent Data Encryption"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud KMS", "Cloud Storage"],
+                            "recommendations": [
+                                "Use Cloud KMS",
+                                "Enable encryption at rest by default",
+                                "Use Cloud Load Balancing for TLS",
+                                "Implement customer-managed encryption"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Secrets", "etcd", "Service Mesh"],
+                            "recommendations": [
+                                "Enable etcd encryption",
+                                "Use service mesh for mTLS",
+                                "Implement secrets encryption",
+                                "Configure TLS for all services"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Availability",
+            "description": "Information and systems are available for operation and use",
+            "controls": [
+                {
+                    "id": "A1.1",
+                    "title": "Capacity and performance management",
+                    "description": "The entity maintains, monitors, and evaluates current processing capacity and use of system components (infrastructure, data, and software) to manage capacity demand and to enable the implementation of additional capacity to help meet its objectives.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [
+                        "aws-elb-load-balancer-configure-multi-availability-zone",
+                        "aws-rds-cluster-disallow-single-availability-zone"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudWatch", "Auto Scaling", "ELB"],
+                            "recommendations": [
+                                "Use CloudWatch for monitoring",
+                                "Implement Auto Scaling",
+                                "Use Elastic Load Balancing",
+                                "Configure performance insights"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Azure Monitor", "VMSS", "Load Balancer"],
+                            "recommendations": [
+                                "Use Azure Monitor",
+                                "Implement Virtual Machine Scale Sets",
+                                "Use Azure Load Balancer",
+                                "Configure availability zones"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Monitoring", "Instance Groups"],
+                            "recommendations": [
+                                "Use Cloud Monitoring",
+                                "Implement Managed Instance Groups",
+                                "Use Cloud Load Balancing",
+                                "Configure regional resources"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["HPA", "Resource Quotas"],
+                            "recommendations": [
+                                "Use Horizontal Pod Autoscaler",
+                                "Implement resource quotas",
+                                "Use metrics server",
+                                "Configure cluster autoscaling"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Processing Integrity",
+            "description": "System processing is complete, valid, accurate, timely, and authorized",
+            "controls": [
+                {
+                    "id": "PI1.1",
+                    "title": "Data processing policies",
+                    "description": "The entity implements policies and procedures to provide reasonable assurance that data processing is complete, valid, accurate, timely, and authorized.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudTrail", "Config"],
+                            "recommendations": [
+                                "Use CloudTrail for audit logs",
+                                "Implement AWS Config rules",
+                                "Use EventBridge for processing",
+                                "Configure data validation"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Monitor", "Event Grid"],
+                            "recommendations": [
+                                "Use Azure Monitor logs",
+                                "Implement Event Grid",
+                                "Configure data pipelines",
+                                "Use Logic Apps for validation"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud Logging", "Dataflow"],
+                            "recommendations": [
+                                "Use Cloud Logging",
+                                "Implement Dataflow pipelines",
+                                "Configure Pub/Sub",
+                                "Use Cloud Functions for validation"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Jobs", "CronJobs"],
+                            "recommendations": [
+                                "Use Jobs for batch processing",
+                                "Implement CronJobs for scheduling",
+                                "Configure admission webhooks",
+                                "Use operators for automation"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Confidentiality",
+            "description": "Information designated as confidential is protected",
+            "controls": [
+                {
+                    "id": "C1.1",
+                    "title": "Protection of confidential information",
+                    "description": "The entity identifies and maintains confidential information to meet the entity's objectives related to confidentiality.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [
+                        "aws-s3-bucket-disallow-public-read",
+                        "aws-ec2-instance-disallow-public-ip",
+                        "aws-eks-cluster-disallow-api-endpoint-public-access"
+                    ],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["Macie", "VPC", "CloudTrail"],
+                            "recommendations": [
+                                "Use AWS Macie for data classification",
+                                "Implement bucket policies",
+                                "Enable CloudTrail for audit logging",
+                                "Use VPC for network isolation"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Information Protection", "Private Link"],
+                            "recommendations": [
+                                "Use Azure Information Protection",
+                                "Implement data loss prevention",
+                                "Enable audit logging",
+                                "Use Private Link for services"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud DLP", "VPC Service Controls"],
+                            "recommendations": [
+                                "Use Cloud DLP",
+                                "Implement VPC Service Controls",
+                                "Enable audit logging",
+                                "Use Private Google Access"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Network Policies", "RBAC"],
+                            "recommendations": [
+                                "Use network policies",
+                                "Implement RBAC",
+                                "Enable audit logging",
+                                "Use private clusters"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Privacy",
+            "description": "Personal information is collected, used, retained, disclosed, and disposed of in conformity with commitments in the entity's privacy notice",
+            "controls": [
+                {
+                    "id": "P1.1",
+                    "title": "Privacy program",
+                    "description": "The entity provides notice about its privacy practices and has procedures to address inquiries, complaints, and disputes.",
+                    "compliance_level": "required",
+                    "automation_possible": false,
+                    "verification_method": "manual",
+                    "references": [
+                        "https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": [
+                        {
+                            "cloud": "AWS",
+                            "services": ["CloudTrail", "S3 Lifecycle"],
+                            "recommendations": [
+                                "Implement data lifecycle management",
+                                "Use S3 lifecycle policies",
+                                "Configure automated data deletion",
+                                "Monitor data access patterns"
+                            ]
+                        },
+                        {
+                            "cloud": "Azure",
+                            "services": ["Information Protection", "Lifecycle"],
+                            "recommendations": [
+                                "Use Azure Information Protection",
+                                "Implement data retention policies",
+                                "Configure automated deletion",
+                                "Monitor data usage"
+                            ]
+                        },
+                        {
+                            "cloud": "Google",
+                            "services": ["Cloud DLP", "Lifecycle"],
+                            "recommendations": [
+                                "Use Cloud DLP for data governance",
+                                "Implement lifecycle policies",
+                                "Configure data retention",
+                                "Monitor data processing"
+                            ]
+                        },
+                        {
+                            "cloud": "Kubernetes",
+                            "services": ["Data Governance", "Policies"],
+                            "recommendations": [
+                                "Implement data governance policies",
+                                "Use persistent volume lifecycle",
+                                "Configure data retention",
+                                "Monitor data access"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

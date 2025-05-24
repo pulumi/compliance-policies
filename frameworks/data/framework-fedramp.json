@@ -1,0 +1,25 @@
+{
+    "framework": "FedRAMP",
+    "description": "Federal Risk and Authorization Management Program",
+    "version": "Revision 5",
+    "control_families": [
+        {
+            "name": "Access Control",
+            "controls": [
+                {
+                    "id": "AC-2",
+                    "title": "Account Management",
+                    "description": "The organization manages information system accounts.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.fedramp.gov/assets/resources/documents/FedRAMP_Security_Controls_Baseline.xlsx"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

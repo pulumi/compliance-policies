@@ -1,0 +1,47 @@
+{
+  "generated": "2025-05-23T22:09:41.334Z",
+  "frameworks": [
+    {
+      "id": "hitrust",
+      "name": "HITRUST CSF v11.2.0",
+      "file": "frameworks/data/framework-hitrust.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "nist",
+      "name": "NIST Cybersecurity Framework v1.1",
+      "file": "frameworks/data/framework-nist.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "hipaa",
+      "name": "HIPAA Security Rule",
+      "file": "frameworks/data/framework-hipaa.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "sox",
+      "name": "SOX",
+      "file": "frameworks/data/framework-sox.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR",
+      "file": "frameworks/data/framework-gdpr.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "fedramp",
+      "name": "FedRAMP",
+      "file": "frameworks/data/framework-fedramp.json",
+      "status": "template_generated"
+    },
+    {
+      "id": "mcsb",
+      "name": "Microsoft Cloud Security Benchmark v1",
+      "file": "frameworks/data/framework-mcsb.json",
+      "status": "template_generated"
+    }
+  ]
+}

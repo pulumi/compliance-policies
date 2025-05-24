@@ -1,0 +1,59 @@
+{
+    "frameworks": {
+        "iso27001": {
+            "file": "frameworks/data/framework-iso27001.json",
+            "name": "ISO/IEC 27001:2022",
+            "description": "International standard for information security management systems"
+        },
+        "pcidss": {
+            "file": "frameworks/data/framework-pcidss.json", 
+            "name": "PCI DSS v4.0",
+            "description": "Payment Card Industry Data Security Standard"
+        },
+        "hitrust": {
+            "file": "frameworks/data/framework-hitrust.json",
+            "name": "HITRUST CSF v11.2.0",
+            "description": "Health Information Trust Alliance Common Security Framework"
+        },
+        "cis": {
+            "file": "frameworks/data/framework-cis.json",
+            "name": "CIS Controls v8.0",
+            "description": "Center for Internet Security Controls"
+        },
+        "soc2": {
+            "file": "frameworks/data/framework-soc2.json",
+            "name": "SOC 2 Type II",
+            "description": "Service Organization Control 2"
+        },
+        "nist": {
+            "file": "frameworks/data/framework-nist.json",
+            "name": "NIST Cybersecurity Framework v1.1",
+            "description": "National Institute of Standards and Technology Cybersecurity Framework"
+        },
+        "hipaa": {
+            "file": "frameworks/data/framework-hipaa.json",
+            "name": "HIPAA Security Rule",
+            "description": "Health Insurance Portability and Accountability Act"
+        },
+        "sox": {
+            "file": "frameworks/data/framework-sox.json",
+            "name": "SOX",
+            "description": "Sarbanes-Oxley Act"
+        },
+        "gdpr": {
+            "file": "frameworks/data/framework-gdpr.json",
+            "name": "GDPR",
+            "description": "General Data Protection Regulation"
+        },
+        "fedramp": {
+            "file": "frameworks/data/framework-fedramp.json",
+            "name": "FedRAMP",
+            "description": "Federal Risk and Authorization Management Program"
+        },
+        "microsoftcloudsecuritybenchmark": {
+            "file": "frameworks/data/framework-mcsb.json",
+            "name": "Microsoft Cloud Security Benchmark v1",
+            "description": "Microsoft's comprehensive security best practices for cloud environments"
+        }
+    }
+}

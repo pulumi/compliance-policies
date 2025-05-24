@@ -1,0 +1,55 @@
+{
+    "framework": "NIST Cybersecurity Framework v1.1",
+    "description": "National Institute of Standards and Technology Cybersecurity Framework",
+    "version": "1.1",
+    "functions": [
+        {
+            "name": "Identify",
+            "categories": [
+                {
+                    "id": "ID.AM",
+                    "title": "Asset Management",
+                    "subcategories": [
+                        {
+                            "id": "ID.AM-1",
+                            "title": "Physical devices and systems inventory",
+                            "description": "Physical devices and systems within the organization are inventoried",
+                            "compliance_level": "recommended",
+                            "automation_possible": true,
+                            "verification_method": "automated",
+                            "references": [
+                                "https://www.nist.gov/cyberframework"
+                            ],
+                            "pulumi_policies": [],
+                            "clouds": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Protect",
+            "categories": [
+                {
+                    "id": "PR.AC",
+                    "title": "Identity Management and Access Control",
+                    "subcategories": [
+                        {
+                            "id": "PR.AC-1",
+                            "title": "Identities and credentials management",
+                            "description": "Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users and processes",
+                            "compliance_level": "required",
+                            "automation_possible": true,
+                            "verification_method": "automated",
+                            "references": [
+                                "https://www.nist.gov/cyberframework"
+                            ],
+                            "pulumi_policies": [],
+                            "clouds": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

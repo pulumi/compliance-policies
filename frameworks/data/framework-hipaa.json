@@ -1,0 +1,25 @@
+{
+    "framework": "HIPAA Security Rule",
+    "description": "Health Insurance Portability and Accountability Act Security Rule",
+    "version": "2003",
+    "safeguards": [
+        {
+            "name": "Administrative Safeguards",
+            "standards": [
+                {
+                    "id": "164.308(a)(1)",
+                    "title": "Security management process",
+                    "description": "Implement policies and procedures to prevent, detect, contain, and correct security violations.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

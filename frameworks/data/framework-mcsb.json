@@ -1,0 +1,25 @@
+{
+    "framework": "Microsoft Cloud Security Benchmark v1",
+    "description": "Microsoft's comprehensive security best practices for cloud environments",
+    "version": "1.0",
+    "domains": [
+        {
+            "name": "Network Security",
+            "controls": [
+                {
+                    "id": "NS-1",
+                    "title": "Implement security for internal traffic",
+                    "description": "Ensure that all Azure virtual networks are protected with network security groups that are configured with rules specific to the applications and services.",
+                    "compliance_level": "required",
+                    "automation_possible": true,
+                    "verification_method": "automated",
+                    "references": [
+                        "https://docs.microsoft.com/en-us/security/benchmark/azure/overview"
+                    ],
+                    "pulumi_policies": [],
+                    "clouds": []
+                }
+            ]
+        }
+    ]
+}

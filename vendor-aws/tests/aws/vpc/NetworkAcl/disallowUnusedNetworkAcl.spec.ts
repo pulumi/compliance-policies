@@ -18,12 +18,12 @@ import * as policies from "../../../../index";
 import * as enums from "../../enums";
 import { getStackValidationArgs } from "./resource";
 
-describe("aws.vpc.Vpc.enableFlowLogs", function() {
-    const policy = policies.aws.vpc.Vpc.enableFlowLogs;
-    const stackPolicy = policies.aws.vpc.Vpc.enableFlowLogsStackPolicy;
+describe("aws.vpc.NetworkAcl.disallowUnusedNetworkAcl", function() {
+    const policy = policies.aws.vpc.NetworkAcl.disallowUnusedNetworkAcl;
+    const stackPolicy = policies.aws.vpc.NetworkAcl.disallowUnusedNetworkAclStackPolicy;
 
     it("name", async function() {
-        assertResourcePolicyName(policy, "aws-vpc-vpc-enable-flow-logs");
+        assertResourcePolicyName(policy, "aws-vpc-networkacl-disallow-unused-network-acl");
     });
 
     it("registration", async function() {
@@ -34,9 +34,9 @@ describe("aws.vpc.Vpc.enableFlowLogs", function() {
         assertResourcePolicyRegistrationDetails(policy, {
             vendors: ["aws"],
             services: ["vpc"],
-            severity: "medium",
+            severity: "low",
             topics: ["network", "security"],
-            frameworks: ["cis", "nist800-53", "pcidss"],
+            frameworks: ["cis", "nist800-53"],
         });
     });
 
@@ -53,47 +53,52 @@ describe("aws.vpc.Vpc.enableFlowLogs", function() {
     });
 
     it("#1", async function() {
-        // VPC with flow logs enabled should pass
-        const args = getStackValidationArgs("ALL", true);
+        // Unused ACL should fail
+        const args = getStackValidationArgs(true, false, false, false);
+
+        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
+    });
+
+    it("#2", async function() {
+        // Used ACL with association should pass
+        const args = getStackValidationArgs(false, true, false, false);
 
         await assertNoStackViolations(stackPolicy, args);
     });
 
-    it("#2", async function() {
-        // VPC without flow logs should fail
-        const args = getStackValidationArgs("ALL", false);
-
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
-    });
-
     it("#3", async function() {
-        // VPC with flow logs using vpcId property should pass
-        const args = getStackValidationArgs("ALL", true, [], true);
+        // Default ACL should be skipped (pass)
+        const args = getStackValidationArgs(false, false, true, false);
 
         await assertNoStackViolations(stackPolicy, args);
     });
 
     it("#4", async function() {
-        // VPC with flow logs but wrong traffic type should fail
-        const args = getStackValidationArgs("ACCEPT", true, [], false, "REJECT");
-
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
-    });
-
-    it("#5", async function() {
-        // VPC with flow logs matching traffic type should pass
-        const args = getStackValidationArgs("ACCEPT", true, [], false, "ACCEPT");
+        // ACL with direct subnet associations should pass
+        const args = getStackValidationArgs(false, false, false, true);
 
         await assertNoStackViolations(stackPolicy, args);
     });
 
+    it("#5", async function() {
+        // Mix of used and unused ACLs should fail for unused
+        const args = getStackValidationArgs(true, true, false, false);
+
+        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
+    });
+
     it("#6", async function() {
-        // No VPCs in stack should pass (nothing to evaluate)
+        // Mix of default and unused ACLs should fail for unused only
+        const args = getStackValidationArgs(true, false, true, false);
+
+        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
+    });
+
+    it("#7", async function() {
+        // No Network ACLs should pass (nothing to evaluate)
         const args = {
             resources: [],
             getConfig: <T>() => ({
-                trafficType: "ALL",
-                vpcIds: [],
                 includeFor: [],
                 excludeFor: [],
                 ignoreCase: false,
@@ -103,17 +108,10 @@ describe("aws.vpc.Vpc.enableFlowLogs", function() {
         await assertNoStackViolations(stackPolicy, args);
     });
 
-    it("#7", async function() {
-        // VPC filtered out by vpcIds should pass
-        const args = getStackValidationArgs("ALL", false, ["vpc-different"]);
-
-        await assertNoStackViolations(stackPolicy, args);
-    });
-
     it("#8", async function() {
-        // VPC included in vpcIds without flow logs should fail
-        const args = getStackValidationArgs("ALL", false, ["vpc-12345678"]);
+        // All ACL types together should only fail for unused ACL
+        const args = getStackValidationArgs(true, true, true, true);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
+        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
     });
 });

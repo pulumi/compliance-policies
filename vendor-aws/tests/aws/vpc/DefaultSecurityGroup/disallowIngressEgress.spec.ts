@@ -19,91 +19,91 @@ import * as enums from "../../enums";
 import { getResourceValidationArgs } from "./resource";
 
 describe("aws.vpc.DefaultSecurityGroup.disallowIngressEgress", function() {
-	const policy = policies.aws.vpc.DefaultSecurityGroup.disallowIngressEgress;
+    const policy = policies.aws.vpc.DefaultSecurityGroup.disallowIngressEgress;
 
-	it("name", async function() {
-		assertResourcePolicyName(policy, "aws-vpc-defaultsecuritygroup-disallow-ingress-egress");
-	});
+    it("name", async function() {
+        assertResourcePolicyName(policy, "aws-vpc-defaultsecuritygroup-disallow-ingress-egress");
+    });
 
-	it("registration", async function() {
-		assertResourcePolicyIsRegistered(policy);
-	});
+    it("registration", async function() {
+        assertResourcePolicyIsRegistered(policy);
+    });
 
-	it("metadata", async function() {
-		assertResourcePolicyRegistrationDetails(policy, {
-			vendors: ["aws"],
-			services: ["vpc"],
-			severity: "high",
-			topics: ["network", "security"],
-			frameworks: ["nist800-53", "pcidss", "cis"],
-		});
-	});
+    it("metadata", async function() {
+        assertResourcePolicyRegistrationDetails(policy, {
+            vendors: ["aws"],
+            services: ["vpc"],
+            severity: "high",
+            topics: ["network", "security"],
+            frameworks: ["nist800-53", "pcidss", "cis"],
+        });
+    });
 
-	it("enforcementLevel", async function() {
-		assertResourcePolicyEnforcementLevel(policy);
-	});
+    it("enforcementLevel", async function() {
+        assertResourcePolicyEnforcementLevel(policy);
+    });
 
-	it("description", async function() {
-		assertResourcePolicyDescription(policy);
-	});
+    it("description", async function() {
+        assertResourcePolicyDescription(policy);
+    });
 
-	it("code", async function () {
-		assertCodeQuality(this.test?.parent?.title, __filename);
-	});
+    it("code", async function () {
+        assertCodeQuality(this.test?.parent?.title, __filename);
+    });
 
-	it("#1", async function() {
-		// Default security group with no rules should pass
-		const args = getResourceValidationArgs(undefined, undefined, false, false, true, false);
+    it("#1", async function() {
+        // Default security group with no rules should pass
+        const args = getResourceValidationArgs(undefined, undefined, false, false, true, false);
 
-		await assertNoResourceViolations(policy, args);
-	});
+        await assertNoResourceViolations(policy, args);
+    });
 
-	it("#2", async function() {
-		// Default security group with ingress rules should fail
-		const args = getResourceValidationArgs(undefined, undefined, true, false, true, false);
+    it("#2", async function() {
+        // Default security group with ingress rules should fail
+        const args = getResourceValidationArgs(undefined, undefined, true, false, true, false);
 
-		await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
-	});
+        await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
+    });
 
-	it("#3", async function() {
-		// Default security group with egress rules should fail
-		const args = getResourceValidationArgs(undefined, undefined, false, true, true, false);
+    it("#3", async function() {
+        // Default security group with egress rules should fail
+        const args = getResourceValidationArgs(undefined, undefined, false, true, true, false);
 
-		await assertHasResourceViolation(policy, args, { message: "outbound traffic rules" });
-	});
+        await assertHasResourceViolation(policy, args, { message: "outbound traffic rules" });
+    });
 
-	it("#4", async function() {
-		// Default security group with both ingress and egress rules should fail
-		const args = getResourceValidationArgs(undefined, undefined, true, true, true, false);
+    it("#4", async function() {
+        // Default security group with both ingress and egress rules should fail
+        const args = getResourceValidationArgs(undefined, undefined, true, true, true, false);
 
-		await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
-	});
+        await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
+    });
 
-	it("#5", async function() {
-		// Non-default security group with rules should pass
-		const args = getResourceValidationArgs(undefined, undefined, true, true, false, false);
+    it("#5", async function() {
+        // Non-default security group with rules should pass
+        const args = getResourceValidationArgs(undefined, undefined, true, true, false, false);
 
-		await assertNoResourceViolations(policy, args);
-	});
+        await assertNoResourceViolations(policy, args);
+    });
 
-	it("#6", async function() {
-		// Default security group with namePrefix and no rules should pass
-		const args = getResourceValidationArgs(undefined, undefined, false, false, true, true);
+    it("#6", async function() {
+        // Default security group with namePrefix and no rules should pass
+        const args = getResourceValidationArgs(undefined, undefined, false, false, true, true);
 
-		await assertNoResourceViolations(policy, args);
-	});
+        await assertNoResourceViolations(policy, args);
+    });
 
-	it("#7", async function() {
-		// Default security group with namePrefix and ingress rules should fail
-		const args = getResourceValidationArgs(undefined, undefined, true, false, true, true);
+    it("#7", async function() {
+        // Default security group with namePrefix and ingress rules should fail
+        const args = getResourceValidationArgs(undefined, undefined, true, false, true, true);
 
-		await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
-	});
+        await assertHasResourceViolation(policy, args, { message: "inbound traffic rules" });
+    });
 
-	it("#8", async function() {
-		// Default security group with namePrefix and egress rules should fail
-		const args = getResourceValidationArgs(undefined, undefined, false, true, true, true);
+    it("#8", async function() {
+        // Default security group with namePrefix and egress rules should fail
+        const args = getResourceValidationArgs(undefined, undefined, false, true, true, true);
 
-		await assertHasResourceViolation(policy, args, { message: "outbound traffic rules" });
-	});
+        await assertHasResourceViolation(policy, args, { message: "outbound traffic rules" });
+    });
 });

@@ -12,84 +12,95 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/* eslint-disable jsdoc/no-restricted-syntax */
+
 import * as aws from "@pulumi/aws";
 import { ResourceValidationArgs, StackValidationArgs } from "@pulumi/policy";
 import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
 
 /**
- * Create a VPC resource for stack validation tests
- * 
- * @returns A VPC resource configuration
+ * Create a VPC resource for stack validation tests.
+ *
+ * @returns A VPC resource configuration.
  */
 export function getVpcResource(id: string = "vpc-12345678", name: string = "my-vpc"): any {
-return {
-  type: "aws:ec2/vpc:Vpc",
-  name: name,
-  props: {
-    id: id,
-    cidrBlock: "10.0.0.0/16",
-    tags: {
-      Name: name
-    }
-  },
-  urn: `urn:pulumi:dev::test::aws:ec2/vpc:Vpc::${name}`,
-  options: {},
-  isPreview: false,
-};
+    return {
+        type: "aws:ec2/vpc:Vpc",
+        name: name,
+        props: {
+            id: id,
+            cidrBlock: "10.0.0.0/16",
+            tags: {
+                Name: name,
+            },
+        },
+        urn: `urn:pulumi:dev::test::aws:ec2/vpc:Vpc::${name}`,
+        options: {},
+        isPreview: false,
+    };
 }
 
 /**
- * Create a VPC endpoint resource for stack validation tests
- * 
- * @returns A VPC endpoint resource configuration
+ * Create a VPC endpoint resource for stack validation tests.
+ *
+ * @param vpcId VPC ID for the endpoint.
+ * @param serviceName AWS service name for the endpoint.
+ * @param name Name of the endpoint resource.
+ * @returns A VPC endpoint resource configuration.
  */
 export function getVpcEndpointResource(
-  vpcId: string = "vpc-12345678", 
-  serviceName: string = "s3", 
-  name: string = `${serviceName}-endpoint`
+    vpcId: string = "vpc-12345678",
+    serviceName: string = "s3",
+    name: string = `${serviceName}-endpoint`
 ): any {
-// Format the AWS service name if it's a simple service name
-const formattedServiceName = serviceName.includes(".") ? 
-  serviceName : 
-  `com.amazonaws.us-west-2.${serviceName}`;
+    // Format the AWS service name if it's a simple service name
+    const formattedServiceName = serviceName.includes(".") ?
+        serviceName :
+        `com.amazonaws.us-west-2.${serviceName}`;
 
-return {
-  type: "aws:ec2/vpcEndpoint:VpcEndpoint",
-  name: name,
-  props: {
-    vpcId: vpcId,
-    serviceName: formattedServiceName,
-    vpcEndpointType: "Gateway"
-  },
-  urn: `urn:pulumi:dev::test::aws:ec2/vpcEndpoint:VpcEndpoint::${name}`,
-  options: {},
-  isPreview: false,
-};
+    return {
+        type: "aws:ec2/vpcEndpoint:VpcEndpoint",
+        name: name,
+        props: {
+            vpcId: vpcId,
+            serviceName: formattedServiceName,
+            vpcEndpointType: "Gateway",
+        },
+        urn: `urn:pulumi:dev::test::aws:ec2/vpcEndpoint:VpcEndpoint::${name}`,
+        options: {},
+        isPreview: false,
+    };
 }
 
 /**
- * Create a `StackValidationArgs` for testing VPC endpoint policies
+ * Create a `StackValidationArgs` for testing VPC endpoint policies.
  *
- * @returns A `StackValidationArgs` with VPC and optional VPC endpoint resources
+ * @param services List of required services.
+ * @param includeEndpoints List of services to include endpoints for.
+ * @param vpcIds List of VPC IDs to filter by.
+ * @returns A `StackValidationArgs` with VPC and optional VPC endpoint resources.
  */
 export function getStackValidationArgs(
-  services: string[] = ["s3", "dynamodb"],
-  includeEndpoints: string[] = ["s3"],
-  vpcIds: string[] = []
+    services: string[] = ["s3", "dynamodb"],
+    includeEndpoints: string[] = ["s3"],
+    vpcIds: string[] = []
 ): StackValidationArgs {
-// Create base resources array with VPC
-const resources = [getVpcResource()];
+    // Create base resources array with VPC
+    const resources = [getVpcResource()];
 
-// Add VPC endpoints for specified services
-for (const service of includeEndpoints) {
-  resources.push(getVpcEndpointResource("vpc-12345678", service));
-}
+    // Add VPC endpoints for specified services
+    for (const service of includeEndpoints) {
+        resources.push(getVpcEndpointResource("vpc-12345678", service));
+    }
 
-return {
-  resources: resources,
-  getConfig: () => ({ 
-    services: services,
-    vpcIds: vpcIds
-  }),
-} as unknown as StackValidationArgs;
+    return {
+        resources: resources,
+        getConfig: <T>() => ({
+            services: services,
+            vpcIds: vpcIds,
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        } as T),
+    } as unknown as StackValidationArgs;
 }

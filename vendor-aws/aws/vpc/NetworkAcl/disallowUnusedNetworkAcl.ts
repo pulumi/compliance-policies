@@ -55,8 +55,8 @@ export const disallowUnusedNetworkAclStackPolicy: StackValidationPolicy = {
             if (!isUsed && !hasDirectAssociation) {
                 reportViolation(
                     `Network ACL '${aclName}' is not associated with any subnet. ` +
-                    "Unused network ACLs should be removed to maintain a clean and manageable environment. " +
-                    "Read more here: https://docs.aws.amazon.com/config/latest/developerguide/vpc-network-acl-unused-check.html"
+					"Unused network ACLs should be removed to maintain a clean and manageable environment. " +
+					"Read more here: https://docs.aws.amazon.com/config/latest/developerguide/vpc-network-acl-unused-check.html"
                 );
             }
         }

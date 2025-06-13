@@ -12,8 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * as DefaultSecurityGroup from "./DefaultSecurityGroup";
-export * as NetworkAcl from "./NetworkAcl";
-export * as Vpc from "./Vpc";
-export * as VpcEndpoint from "./VpcEndpoint";
-export * as VpcPeeringConnection from "./VpcPeeringConnection";
+export * from "./enableDnsResolution";

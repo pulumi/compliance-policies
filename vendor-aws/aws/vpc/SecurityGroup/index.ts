@@ -13,3 +13,4 @@
 // limitations under the License.
 
 export * from "./disallowUnauthorizedPorts";
+export * from "./disallowSensitivePorts";

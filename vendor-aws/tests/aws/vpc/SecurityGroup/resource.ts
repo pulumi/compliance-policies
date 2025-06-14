@@ -93,13 +93,14 @@ export function getResourceValidationArgs(
         });
     }
 
+    const securityGroupName = resourceName || "test-security-group";
     const props = {
-        name: "test-security-group",
+        name: securityGroupName,
         description: "Test security group for authorized ports policy",
         vpcId: enums.ec2.vpcId,
         ingress: ingress,
         tags: {
-            Name: "test-security-group",
+            Name: securityGroupName,
         },
     };
 

@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import "mocha";
-import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasStackViolation, assertNoStackViolations } from "@pulumi/compliance-policies-unit-test-helpers";
+import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasResourceViolation, assertNoResourceViolations } from "@pulumi/compliance-policies-unit-test-helpers";
 import * as policies from "../../../../index";
 import * as enums from "../../enums";
-import { getStackValidationArgs } from "./resource";
+import { getResourceValidationArgs } from "./resource";
 
 describe("aws.vpc.VpcEndpoint.enforceEndpoints", function() {
     const policy = policies.aws.vpc.VpcEndpoint.enforceEndpoints;
-    const stackPolicy = policies.aws.vpc.VpcEndpoint.enforceEndpointsStackPolicy;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-vpc-vpcendpoint-enforce-endpoints");
@@ -53,65 +52,43 @@ describe("aws.vpc.VpcEndpoint.enforceEndpoints", function() {
     });
 
     it("#1", async function() {
-    // VPC with only s3 endpoint, but requiring s3 and dynamodb
-        const args = getStackValidationArgs(["s3", "dynamodb"], ["s3"]);
+        // VPC endpoint with proper vpcEndpointType should pass
+        const args = getResourceValidationArgs("s3-endpoint", undefined, "vpc-12345678", "s3", true);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "dynamodb" });
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#2", async function() {
-    // VPC with both required endpoints
-        const args = getStackValidationArgs(["s3", "dynamodb"], ["s3", "dynamodb"]);
+        // VPC endpoint without vpcEndpointType should fail
+        const args = getResourceValidationArgs("s3-endpoint", undefined, "vpc-12345678", "s3", false);
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertHasResourceViolation(policy, args, { message: "does not have a VPC endpoint type specified" });
     });
 
     it("#3", async function() {
-    // No endpoints but filtered to a different VPC
-        const args = getStackValidationArgs(["s3"], [], ["vpc-other"]);
+        // VPC endpoint filtered out by vpcIds should pass
+        const args = getResourceValidationArgs("s3-endpoint", {
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        }, "vpc-12345678", "s3", true);
 
-        await assertNoStackViolations(stackPolicy, args);
+        // Override getConfig to filter to different VPC IDs
+        args.getConfig = <T>() => ({
+            services: ["s3", "dynamodb"],
+            vpcIds: ["vpc-different"],
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        } as T);
+
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#4", async function() {
-    // Use a custom stack validation args with full AWS service name
-        const resources = [
-            {
-                type: "aws:ec2/vpc:Vpc",
-                name: "my-vpc",
-                props: {
-                    id: "vpc-12345678",
-                    cidrBlock: "10.0.0.0/16",
-                    tags: {
-                        Name: "my-vpc",
-                    },
-                },
-                urn: "urn:pulumi:dev::test::aws:ec2/vpc:Vpc::my-vpc",
-                options: {},
-                isPreview: false,
-            },
-            {
-                type: "aws:ec2/vpcEndpoint:VpcEndpoint",
-                name: "s3-endpoint",
-                props: {
-                    vpcId: "vpc-12345678",
-                    serviceName: "com.amazonaws.us-west-2.s3", // Full AWS service name format
-                    vpcEndpointType: "Gateway",
-                },
-                urn: "urn:pulumi:dev::test::aws:ec2/vpcEndpoint:VpcEndpoint::s3-endpoint",
-                options: {},
-                isPreview: false,
-            },
-        ];
+        // VPC endpoint with full AWS service name should pass
+        const args = getResourceValidationArgs("s3-endpoint", undefined, "vpc-12345678", "com.amazonaws.us-west-2.s3", true);
 
-        const args = {
-            resources: resources,
-            getConfig: <T>() => ({
-                services: ["s3"], // Requiring just s3
-                vpcIds: [],
-            } as T),
-        } as unknown as any;
-
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 });

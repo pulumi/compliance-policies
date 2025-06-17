@@ -17,6 +17,7 @@
 import * as aws from "@pulumi/aws";
 import { ResourceValidationArgs, StackValidationArgs } from "@pulumi/policy";
 import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
  * Create a VPC resource for stack validation tests.
@@ -103,4 +104,38 @@ export function getStackValidationArgs(
             ignoreCase: false,
         } as T),
     } as unknown as StackValidationArgs;
+}
+
+/**
+ * Create a `ResourceValidationArgs` for testing VPC endpoint policy.
+ *
+ * @param resourceName Name of the VPC endpoint resource.
+ * @param policyconfig Policy configuration.
+ * @param vpcId VPC ID for the endpoint.
+ * @param serviceName AWS service name for the endpoint.
+ * @param hasVpcEndpointType Whether to include vpcEndpointType.
+ * @returns A `ResourceValidationArgs` with VPC endpoint resource.
+ */
+export function getResourceValidationArgs(
+    resourceName?: string,
+    policyconfig?: PolicyConfigSchemaArgs,
+    vpcId: string = "vpc-12345678",
+    serviceName: string = "s3",
+    hasVpcEndpointType: boolean = true
+): ResourceValidationArgs {
+    // Format the AWS service name if it's a simple service name
+    const formattedServiceName = serviceName.includes(".") ?
+        serviceName :
+        `com.amazonaws.us-west-2.${serviceName}`;
+
+    const props: any = {
+        vpcId: vpcId,
+        serviceName: formattedServiceName,
+    };
+
+    if (hasVpcEndpointType) {
+        props.vpcEndpointType = "Gateway";
+    }
+
+    return createResourceValidationArgs(aws.ec2.VpcEndpoint, props, policyconfig, resourceName);
 }

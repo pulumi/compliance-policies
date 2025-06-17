@@ -15,8 +15,9 @@
 /* eslint-disable jsdoc/no-restricted-syntax */
 
 import * as aws from "@pulumi/aws";
-import { StackValidationArgs } from "@pulumi/policy";
+import { StackValidationArgs, ResourceValidationArgs } from "@pulumi/policy";
 import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
  * Create a Network ACL resource for stack validation tests.
@@ -128,4 +129,37 @@ export function getStackValidationArgs(
             ignoreCase: false,
         } as T),
     } as unknown as StackValidationArgs;
+}
+
+/**
+ * Create a `ResourceValidationArgs` for testing Network ACL unused check policy.
+ *
+ * @param resourceName Name of the Network ACL resource.
+ * @param policyconfig Policy configuration.
+ * @param isDefault Whether this is a default ACL.
+ * @param hasSubnetIds Whether to include subnetIds directly.
+ * @returns A `ResourceValidationArgs` with Network ACL resource.
+ */
+export function getResourceValidationArgs(
+    resourceName?: string,
+    policyconfig?: PolicyConfigSchemaArgs,
+    isDefault: boolean = false,
+    hasSubnetIds: boolean = false
+): ResourceValidationArgs {
+    const props: any = {
+        vpcId: "vpc-12345678",
+        tags: {
+            Name: resourceName || "test-acl",
+        },
+    };
+
+    if (isDefault) {
+        props.tags.default = "true";
+    }
+
+    if (hasSubnetIds) {
+        props.subnetIds = ["subnet-12345678"];
+    }
+
+    return createResourceValidationArgs(aws.ec2.NetworkAcl, props, policyconfig, resourceName);
 }

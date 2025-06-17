@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import "mocha";
-import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasStackViolation, assertNoStackViolations } from "@pulumi/compliance-policies-unit-test-helpers";
+import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasResourceViolation, assertNoResourceViolations } from "@pulumi/compliance-policies-unit-test-helpers";
 import * as policies from "../../../../index";
 import * as enums from "../../enums";
-import { getStackValidationArgs } from "./resource";
+import { getResourceValidationArgs } from "./resource";
 
 describe("aws.vpc.NetworkAcl.disallowUnusedNetworkAcl", function() {
     const policy = policies.aws.vpc.NetworkAcl.disallowUnusedNetworkAcl;
-    const stackPolicy = policies.aws.vpc.NetworkAcl.disallowUnusedNetworkAclStackPolicy;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-vpc-networkacl-disallow-unused-network-acl");
@@ -53,65 +52,38 @@ describe("aws.vpc.NetworkAcl.disallowUnusedNetworkAcl", function() {
     });
 
     it("#1", async function() {
-        // Unused ACL should fail
-        const args = getStackValidationArgs(true, false, false, false);
+        // Network ACL without subnetIds should fail (appears unused)
+        const args = getResourceValidationArgs(undefined, undefined, false, false);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
+        await assertHasResourceViolation(policy, args, { message: "appears to be unused" });
     });
 
     it("#2", async function() {
-        // Used ACL with association should pass
-        const args = getStackValidationArgs(false, true, false, false);
+        // Network ACL with subnetIds should pass
+        const args = getResourceValidationArgs(undefined, undefined, false, true);
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#3", async function() {
-        // Default ACL should be skipped (pass)
-        const args = getStackValidationArgs(false, false, true, false);
+        // Default Network ACL should pass (skipped)
+        const args = getResourceValidationArgs(undefined, undefined, true, false);
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#4", async function() {
-        // ACL with direct subnet associations should pass
-        const args = getStackValidationArgs(false, false, false, true);
+        // Network ACL with tags.default should pass (skipped)
+        const args = getResourceValidationArgs(undefined, undefined, false, false);
+        args.props.tags.default = true;
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#5", async function() {
-        // Mix of used and unused ACLs should fail for unused
-        const args = getStackValidationArgs(true, true, false, false);
+        // Network ACL with custom name but no subnetIds should fail
+        const args = getResourceValidationArgs("custom-acl", undefined, false, false);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
-    });
-
-    it("#6", async function() {
-        // Mix of default and unused ACLs should fail for unused only
-        const args = getStackValidationArgs(true, false, true, false);
-
-        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
-    });
-
-    it("#7", async function() {
-        // No Network ACLs should pass (nothing to evaluate)
-        const args = {
-            resources: [],
-            getConfig: <T>() => ({
-                includeFor: [],
-                excludeFor: [],
-                ignoreCase: false,
-            } as T),
-        } as unknown as any;
-
-        await assertNoStackViolations(stackPolicy, args);
-    });
-
-    it("#8", async function() {
-        // All ACL types together should only fail for unused ACL
-        const args = getStackValidationArgs(true, true, true, true);
-
-        await assertHasStackViolation(stackPolicy, args, { message: "is not associated with any subnet" });
+        await assertHasResourceViolation(policy, args, { message: "appears to be unused" });
     });
 });

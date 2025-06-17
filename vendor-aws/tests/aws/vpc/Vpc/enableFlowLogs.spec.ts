@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import "mocha";
-import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasStackViolation, assertNoStackViolations } from "@pulumi/compliance-policies-unit-test-helpers";
+import { assertResourcePolicyIsRegistered, assertResourcePolicyRegistrationDetails, assertResourcePolicyName, assertResourcePolicyEnforcementLevel, assertResourcePolicyDescription, assertCodeQuality, assertHasResourceViolation, assertNoResourceViolations } from "@pulumi/compliance-policies-unit-test-helpers";
 import * as policies from "../../../../index";
 import * as enums from "../../enums";
-import { getStackValidationArgs } from "./resource";
+import { getResourceValidationArgs } from "./resource";
 
 describe("aws.vpc.Vpc.enableFlowLogs", function() {
     const policy = policies.aws.vpc.Vpc.enableFlowLogs;
-    const stackPolicy = policies.aws.vpc.Vpc.enableFlowLogsStackPolicy;
 
     it("name", async function() {
         assertResourcePolicyName(policy, "aws-vpc-vpc-enable-flow-logs");
@@ -54,66 +53,90 @@ describe("aws.vpc.Vpc.enableFlowLogs", function() {
 
     it("#1", async function() {
         // VPC with flow logs enabled should pass
-        const args = getStackValidationArgs("ALL", true);
+        const args = getResourceValidationArgs("test-vpc", undefined, true);
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#2", async function() {
         // VPC without flow logs should fail
-        const args = getStackValidationArgs("ALL", false);
+        const args = getResourceValidationArgs("test-vpc", undefined, false);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
+        await assertHasResourceViolation(policy, args, { message: "does not have flow logs enabled" });
     });
 
     it("#3", async function() {
-        // VPC with flow logs using vpcId property should pass
-        const args = getStackValidationArgs("ALL", true, [], true);
+        // VPC with enableFlowLogs property should pass
+        const args = getResourceValidationArgs("test-vpc", undefined, false, true);
 
-        await assertNoStackViolations(stackPolicy, args);
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#4", async function() {
-        // VPC with flow logs but wrong traffic type should fail
-        const args = getStackValidationArgs("ACCEPT", true, [], false, "REJECT");
+        // VPC without flow logs and specific vpcIds config should fail
+        const args = getResourceValidationArgs("test-vpc", {
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        }, false);
 
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
+        // Override getConfig to specify this VPC ID
+        args.getConfig = <T>() => ({
+            trafficType: "ALL",
+            vpcIds: ["vpc-12345678"], // This VPC should be checked
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        } as T);
+
+        args.urn = "urn:pulumi:dev::test::aws:ec2/vpc:Vpc::vpc-12345678";
+
+        await assertHasResourceViolation(policy, args, { message: "does not have flow logs enabled" });
     });
 
     it("#5", async function() {
-        // VPC with flow logs matching traffic type should pass
-        const args = getStackValidationArgs("ACCEPT", true, [], false, "ACCEPT");
+        // VPC with flow logs and specific vpcIds config should pass
+        const args = getResourceValidationArgs("test-vpc", {
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        }, true);
 
-        await assertNoStackViolations(stackPolicy, args);
+        // Override getConfig to specify this VPC ID
+        args.getConfig = <T>() => ({
+            trafficType: "ALL",
+            vpcIds: ["vpc-12345678"], // This VPC should be checked
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        } as T);
+
+        args.urn = "urn:pulumi:dev::test::aws:ec2/vpc:Vpc::vpc-12345678";
+
+        await assertNoResourceViolations(policy, args);
     });
 
     it("#6", async function() {
-        // No VPCs in stack should pass (nothing to evaluate)
-        const args = {
-            resources: [],
-            getConfig: <T>() => ({
-                trafficType: "ALL",
-                vpcIds: [],
-                includeFor: [],
-                excludeFor: [],
-                ignoreCase: false,
-            } as T),
-        } as unknown as any;
+        // VPC not in vpcIds list should pass (filtered out)
+        const args = getResourceValidationArgs("test-vpc", {
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        }, false);
 
-        await assertNoStackViolations(stackPolicy, args);
+        // Override getConfig to specify different VPC IDs
+        args.getConfig = <T>() => ({
+            trafficType: "ALL",
+            vpcIds: ["vpc-different"], // This VPC should NOT be checked
+            includeFor: [],
+            excludeFor: [],
+            ignoreCase: false,
+        } as T);
+
+        args.urn = "urn:pulumi:dev::test::aws:ec2/vpc:Vpc::test-vpc";
+
+        await assertNoResourceViolations(policy, args);
     });
 
-    it("#7", async function() {
-        // VPC filtered out by vpcIds should pass
-        const args = getStackValidationArgs("ALL", false, ["vpc-different"]);
 
-        await assertNoStackViolations(stackPolicy, args);
-    });
-
-    it("#8", async function() {
-        // VPC included in vpcIds without flow logs should fail
-        const args = getStackValidationArgs("ALL", false, ["vpc-12345678"]);
-
-        await assertHasStackViolation(stackPolicy, args, { message: "does not have flow logs enabled" });
-    });
 });

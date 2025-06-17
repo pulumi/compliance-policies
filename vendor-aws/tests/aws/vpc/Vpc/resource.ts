@@ -15,8 +15,9 @@
 /* eslint-disable jsdoc/no-restricted-syntax */
 
 import * as aws from "@pulumi/aws";
-import { StackValidationArgs } from "@pulumi/policy";
+import { StackValidationArgs, ResourceValidationArgs } from "@pulumi/policy";
 import { PolicyConfigSchemaArgs } from "@pulumi/compliance-policy-manager";
+import { createResourceValidationArgs } from "@pulumi/compliance-policies-unit-test-helpers";
 
 /**
  * Create a VPC resource for stack validation tests.
@@ -138,4 +139,41 @@ export function getStackValidationArgs(
             ignoreCase: false,
         } as T),
     } as unknown as StackValidationArgs;
+}
+
+/**
+ * Create a `ResourceValidationArgs` for testing VPC flow logs policy.
+ *
+ * @param resourceName Name of the VPC resource.
+ * @param policyconfig Policy configuration.
+ * @param hasFlowLogs Whether the VPC has flow logs configured.
+ * @param enableFlowLogs Whether to add enableFlowLogs property.
+ * @returns A `ResourceValidationArgs` with VPC resource.
+ */
+export function getResourceValidationArgs(
+    resourceName?: string,
+    policyconfig?: PolicyConfigSchemaArgs,
+    hasFlowLogs: boolean = false,
+    enableFlowLogs: boolean = false
+): ResourceValidationArgs {
+    const props: any = {
+        cidrBlock: "10.0.0.0/16",
+        tags: {
+            Name: resourceName || "test-vpc",
+        },
+    };
+
+    if (hasFlowLogs) {
+        props.flowLogConfig = {
+            trafficType: "ALL",
+            logDestinationType: "cloud-watch-logs",
+            logGroupName: "/aws/vpc/flowlogs",
+        };
+    }
+
+    if (enableFlowLogs) {
+        props.enableFlowLogs = true;
+    }
+
+    return createResourceValidationArgs(aws.ec2.Vpc, props, policyconfig, resourceName);
 }

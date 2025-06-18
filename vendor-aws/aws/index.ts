@@ -31,3 +31,4 @@ export * as lambda from "./lambda";
 export * as rds from "./rds";
 export * as s3 from "./s3";
 export * as secretsmanager from "./secretsmanager";
+export * as vpc from "./vpc";

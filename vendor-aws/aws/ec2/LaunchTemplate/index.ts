@@ -15,3 +15,4 @@
 export { disallowPublicIp } from "./disallowPublicIp";
 export { disallowUnencryptedBlockDevice } from "./disallowUnencryptedBlockDevice";
 export { configureCustomerManagedKey } from "./configureCustomerManagedKey";
+export { enforceImdsv2 } from "./enforceImdsv2";

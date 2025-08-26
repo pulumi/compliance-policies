@@ -19,3 +19,4 @@ export { disallowUnencryptedPerformanceInsights } from "./disallowUnencryptedPer
 export { disallowPublicAccess } from "./disallowPublicAccess";
 export { disallowUnencryptedStorage } from "./disallowUnencryptedStorage";
 export { configureCustomerManagedKey } from "./configureCustomerManagedKey";
+export { disallowUnencryptedInTransit } from "./disallowUnencryptedInTransit";  

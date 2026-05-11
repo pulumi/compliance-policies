@@ -279,7 +279,7 @@ export class PolicyManager {
      * Configuration is checked against the resource name.
      *
      * This function checks first for explicit inclusions, then for explicit exclusions and finally
-     * returns `true` if no matches occured.
+     * returns `true` if no matches occurred.
      *
      * Note: This functon is primarily intented to be used within a policy.
      *
@@ -294,7 +294,7 @@ export class PolicyManager {
             for (let i = 0; i < polConfig.includeFor.length; i++) {
                 const expression = polConfig.includeFor[i];
 
-                // received and empty element, nothing to do.
+                // received an empty element, nothing to do.
                 if (expression.length < 1) {
                     continue;
                 }
@@ -322,7 +322,7 @@ export class PolicyManager {
             for (let i = 0; i < polConfig.excludeFor.length; i++) {
                 const expression = polConfig.excludeFor[i];
 
-                // received and empty element, nothing to do.
+                // received an empty element, nothing to do.
                 if (expression.length < 1) {
                     continue;
                 }

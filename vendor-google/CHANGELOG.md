@@ -1,5 +1,23 @@
 # Changelog
 
+## @pulumi/google-compliance-policies 0.1.7
+
+### Major new features
+
+n/a
+
+### Noteworthy changes
+
+n/a
+
+### Bug fixes
+
+n/a
+
+### Dependencies
+
+* ⏩ upgrade @pulumi/gcp to 10.0.0
+
 ## @pulumi/google-compliance-policies 0.1.6
 
 ### Major new features
